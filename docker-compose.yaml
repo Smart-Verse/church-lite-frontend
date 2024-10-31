@@ -1,0 +1,13 @@
+services:
+  church-lite:
+    image: church-lite
+    container_name: service_church-lite_frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ACCESS_TOKEN: ${ACCESS_TOKEN}
+    environment:
+      NODE_ENV: production
+    ports:
+      - 5070:80
