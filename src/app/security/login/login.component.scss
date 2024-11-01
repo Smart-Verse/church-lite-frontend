@@ -35,7 +35,15 @@ a{
             height: 50%;
             padding: 10px;
             width: 90%;
+            .image-logo{
+                height: 80px;
+                max-height: 80px;
+                background-image: url("./../../../assets/logo/smartverse-10024.png");
+                background-size: cover;
+                background-position: center;
+            }
         }
+        
     }
 }
 
