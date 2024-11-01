@@ -3,11 +3,11 @@
         <div class="formgrid grid">
             <div class="field col-12 md:col-12 image-logo">
             </div>
-            <div class="field col-12 md:col-12 c-margin">
+            <div class="field col-12 md:col-12">
                 <p class="text">Cadastre-se</p>
             </div>
-            <form class="field col-12 md:col-12 c-margin" action="" [formGroup]="signUp">
-                <div class="field ">
+            <form class="field col-12 md:col-12" action="" [formGroup]="signUp">
+                <div class="field">
                     <p-floatLabel >
                         <input pInputText id="entityName" class="w-full"  formControlName="name"/>
                         <label for="entityName">Nome</label>
@@ -32,12 +32,15 @@
                     </p-floatLabel>
                 </div>
             </form>
-            <div class="outline field col-12 md:col-12">
+            <div class="outline field col-12 md:col-12 ">
                 <p-button pRipple (onClick)="onRegister()" [outlined]="false"  styleClass="p-button-rounded w-full">
                     <div class="btn-tx">
                     Criar conta
                     </div>
                 </p-button>
+            </div>
+            <div class="w-full c-margin">
+                <div class="text-sign">Ja possui conta? <a (click)="onSign()">Entre</a></div>
             </div>
         </div>
     </div>

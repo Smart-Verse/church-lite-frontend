@@ -3,6 +3,7 @@ import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields.service';
 import { SignUp } from './signup';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -13,11 +14,13 @@ import { SignUp } from './signup';
 })
 export class SignupComponent implements OnInit {
 
+
   public signUp: FormGroup;
   
   constructor(
     private readonly fb: FormBuilder,
-    private readonly fieldsService: FieldsService
+    private readonly fieldsService: FieldsService,
+    private readonly router: Router
   ){
     this.signUp = this.fieldsService.onCreateFormBuiderDynamic(new SignUp().fields);
   }
@@ -28,5 +31,9 @@ export class SignupComponent implements OnInit {
 
   onRegister() {
     console.log(this.signUp.value);
+  }
+
+  onSign() {
+    this.router.navigate(["login"])
   }
 }
