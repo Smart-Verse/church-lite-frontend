@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FieldsService } from '../../shared/services/fields.service';
+import { SignUp } from './signup';
 
 @Component({
   selector: 'app-signup',
@@ -8,9 +11,22 @@ import { SharedCommonModule } from '../../shared/common/shared-common.module';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
 
-  onAlert() {
-    alert('clicou')
+  public signUp: FormGroup;
+  
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly fieldsService: FieldsService
+  ){
+    this.signUp = this.fieldsService.onCreateFormBuiderDynamic(new SignUp().fields);
+  }
+
+  ngOnInit(): void {
+    
+  }
+
+  onRegister() {
+    console.log(this.signUp.value);
   }
 }

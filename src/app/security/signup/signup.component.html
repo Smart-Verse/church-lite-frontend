@@ -6,32 +6,34 @@
             <div class="field col-12 md:col-12 c-margin">
                 <p class="text">Cadastre-se</p>
             </div>
-            <div class="field col-12 md:col-12 c-margin">
-                <p-floatLabel >
-                    <input pInputText id="entityName" class="w-full" />
-                    <label for="entityName">Nome</label>
-                </p-floatLabel>
-            </div>
-            <div class="field col-12 md:col-12 c-margin">
-                <p-floatLabel >
-                    <input pInputText id="entityName" class="w-full" />
-                    <label for="entityName">Email</label>
-                </p-floatLabel>
-            </div>
-            <div class="field col-12 md:col-12 c-margin">
-                <p-floatLabel >
-                    <input pInputText id="entityName" class="w-full" />
-                    <label for="entityName">Senha</label>
-                </p-floatLabel>
-            </div>
-            <div class="field col-12 md:col-12 c-margin">
-                <p-floatLabel >
-                    <input pInputText id="entityName" class="w-full" />
-                    <label for="entityName">Confirmação de senha</label>
-                </p-floatLabel>
-            </div>
+            <form class="field col-12 md:col-12 c-margin" action="" [formGroup]="signUp">
+                <div class="field ">
+                    <p-floatLabel >
+                        <input pInputText id="entityName" class="w-full"  formControlName="name"/>
+                        <label for="entityName">Nome</label>
+                    </p-floatLabel>
+                </div>
+                <div class="field c-margin">
+                    <p-floatLabel >
+                        <input pInputText id="entityName" class="w-full" formControlName="email"/>
+                        <label for="entityName">Email</label>
+                    </p-floatLabel>
+                </div>
+                <div class="field c-margin">
+                    <p-floatLabel >
+                        <input type="password" pInputText id="entityName" class="w-full" formControlName="password"/>
+                        <label for="entityName">Senha</label>
+                    </p-floatLabel>
+                </div>
+                <div class="field c-margin">
+                    <p-floatLabel >
+                        <input type="password" pInputText id="entityName" class="w-full" formControlName="confirPassword"/>
+                        <label for="entityName">Confirmação de senha</label>
+                    </p-floatLabel>
+                </div>
+            </form>
             <div class="outline field col-12 md:col-12">
-                <p-button pRipple [outlined]="false"  styleClass="p-button-rounded w-full">
+                <p-button pRipple (onClick)="onRegister()" [outlined]="false"  styleClass="p-button-rounded w-full">
                     <div class="btn-tx">
                     Criar conta
                     </div>

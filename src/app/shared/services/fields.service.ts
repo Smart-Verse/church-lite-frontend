@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, Subject, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -60,6 +60,33 @@ export class FieldsService {
   }
 
   private setValidators(fields: Fields): FormControl{
+    let formcontrol = new FormControl('');
+    let validators: any = [];
+
+    if(fields.required && !fields.hidden){
+      validators.push(Validators.required);
+    } 
+    if(fields.type === 'email'){
+      validators.push(Validators.email);
+    }
+    formcontrol.setValidators(validators);
+    formcontrol.updateValueAndValidity();
+    return formcontrol;
+  }
+
+  /*
+    Cria um FormBuilder Padrão
+  */
+  public onCreateFormBuiderDynamic(fields: any[]): FormGroup{
+    var form = this.formBuilder.group({});
+
+    fields.forEach(e => {
+      form.addControl(e.fieldName, this.onSetValidatoDynamic(fields));
+    })
+    return form;
+  }
+
+  private onSetValidatoDynamic(fields: any): FormControl{
     let formcontrol = new FormControl('');
     let validators: any = [];
 
