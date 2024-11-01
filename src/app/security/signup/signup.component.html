@@ -1,3 +1,4 @@
+<app-loading [showLoading]="showLoading"></app-loading>
 <div class="login">
     <div class="login-container">
         <div class="formgrid grid">
@@ -9,26 +10,26 @@
             <form class="field col-12 md:col-12" action="" [formGroup]="signUp">
                 <div class="field">
                     <p-floatLabel >
-                        <input pInputText id="entityName" class="w-full"  formControlName="name"/>
-                        <label for="entityName">Nome</label>
+                        <input pInputText id="name" class="w-full"  formControlName="name"/>
+                        <label for="name">Nome</label>
                     </p-floatLabel>
                 </div>
                 <div class="field c-margin">
                     <p-floatLabel >
-                        <input pInputText id="entityName" class="w-full" formControlName="email"/>
-                        <label for="entityName">Email</label>
+                        <input pInputText id="email" class="w-full" formControlName="email"/>
+                        <label for="email">Email</label>
                     </p-floatLabel>
                 </div>
                 <div class="field c-margin">
                     <p-floatLabel >
-                        <input type="password" pInputText id="entityName" class="w-full" formControlName="password"/>
-                        <label for="entityName">Senha</label>
+                        <input type="password" pInputText id="password" class="w-full" formControlName="password"/>
+                        <label for="password">Senha</label>
                     </p-floatLabel>
                 </div>
                 <div class="field c-margin">
                     <p-floatLabel >
-                        <input type="password" pInputText id="entityName" class="w-full" formControlName="confirPassword"/>
-                        <label for="entityName">Confirmação de senha</label>
+                        <input type="password" pInputText id="confirPassword" class="w-full" formControlName="confirPassword"/>
+                        <label for="confirPassword">Confirmação de senha</label>
                     </p-floatLabel>
                 </div>
             </form>

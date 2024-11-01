@@ -4,11 +4,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields.service';
 import { SignUp } from './signup';
 import {  Router } from '@angular/router';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [SharedCommonModule],
+  imports: [SharedCommonModule, LoadingComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -16,6 +17,7 @@ export class SignupComponent implements OnInit {
 
 
   public signUp: FormGroup;
+  public showLoading = false;
   
   constructor(
     private readonly fb: FormBuilder,
