@@ -8,6 +8,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { DropdownModule } from 'primeng/dropdown';
 import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { TimelineModule } from 'primeng/timeline';
     DropdownModule,
     FormsModule,
     HttpModule,
-    TimelineModule
+    TimelineModule,
+    FloatLabelModule
   ]
 })
 export class SharedCommonModule { }

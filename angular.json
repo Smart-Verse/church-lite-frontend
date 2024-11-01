@@ -20,7 +20,6 @@
             "outputPath": "dist/church-lite-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "baseHref": "church-lite",
             "polyfills": [
               "zone.js"
             ],
