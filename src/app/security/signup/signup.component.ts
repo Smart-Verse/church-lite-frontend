@@ -5,11 +5,14 @@ import { FieldsService } from '../../shared/services/fields.service';
 import { SignUp } from './signup';
 import {  Router } from '@angular/router';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { SecurityService } from '../services/security.service';
+import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [SharedCommonModule, LoadingComponent],
+  providers: [SecurityService,ToastService],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -22,7 +25,9 @@ export class SignupComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly fieldsService: FieldsService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly securityService: SecurityService,
+    private readonly toastService: ToastService,
   ){
     this.signUp = this.fieldsService.onCreateFormBuiderDynamic(new SignUp().fields);
   }
@@ -32,7 +37,14 @@ export class SignupComponent implements OnInit {
   }
 
   onRegister() {
-    console.log(this.signUp.value);
+    this.securityService.register(this.signUp.value).subscribe({
+      next: (res) => {
+        this.toastService.success({summary: "Usuario cadastrado com sucesso",detail: "Você receberá um email para continuação do cadastro!"});
+      },
+      error: (error) => {
+        this.toastService.error({summary: "Erro", detail: error});
+      }
+    })
   }
 
   onSign() {
