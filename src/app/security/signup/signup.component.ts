@@ -48,13 +48,16 @@ export class SignupComponent implements OnInit {
       this.toastService.info({summary: "Erro", detail: "Existem campos no formulario invalido"});
       return;
     }
+    this.showLoading = true;
     this.securityService.register(this.signUp.value).subscribe({
       next: (res) => {
         this.toastService.success({summary: "Usuario cadastrado com sucesso",detail: "Você receberá um email para continuação do cadastro!"});
+        this.showLoading = false;
         this.onSign();
       },
       error: (error) => {
         this.toastService.error({summary: "Erro", detail: "ocorreu um erro ao cadastrar usuário"});
+        this.showLoading = false;
       }
     })
   }
