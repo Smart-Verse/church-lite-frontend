@@ -81,7 +81,7 @@ export class FieldsService {
     var form = this.formBuilder.group({});
 
     fields.forEach(e => {
-      form.addControl(e.fieldName, this.onSetValidatoDynamic(fields));
+      form.addControl(e.fieldName, this.onSetValidatoDynamic(e));
     })
     return form;
   }

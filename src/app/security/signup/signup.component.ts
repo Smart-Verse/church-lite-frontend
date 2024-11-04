@@ -36,10 +36,22 @@ export class SignupComponent implements OnInit {
     
   }
 
+  onValidator(): boolean{
+    if(this.signUp.valid && this.signUp.value.confirPassword === this.signUp.value.password){
+      return true;
+    }
+    return false;
+  }
+
   onRegister() {
+    if(!this.onValidator()){
+      this.toastService.info({summary: "Erro", detail: "Existem campos no formulario invalido"});
+      return;
+    }
     this.securityService.register(this.signUp.value).subscribe({
       next: (res) => {
         this.toastService.success({summary: "Usuario cadastrado com sucesso",detail: "Você receberá um email para continuação do cadastro!"});
+        this.onSign();
       },
       error: (error) => {
         this.toastService.error({summary: "Erro", detail: "ocorreu um erro ao cadastrar usuário"});

@@ -3,19 +3,19 @@ export class SignUp{
     fields: any[] = [
         {
             fieldName: 'name',
-            required: false,
+            required: true,
             hidden: false,
             type: 'string'
         },
         {
             fieldName: 'email',
-            required: false,
+            required: true,
             hidden: false,
             type: 'email'
         },
         {
             fieldName: 'password',
-            required: false,
+            required: true,
             hidden: false,
             type: 'password'
         },
