@@ -42,7 +42,7 @@ export class SignupComponent implements OnInit {
         this.toastService.success({summary: "Usuario cadastrado com sucesso",detail: "Você receberá um email para continuação do cadastro!"});
       },
       error: (error) => {
-        this.toastService.error({summary: "Erro", detail: error});
+        this.toastService.error({summary: "Erro", detail: "ocorreu um erro ao cadastrar usuário"});
       }
     })
   }
