@@ -9,12 +9,14 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { LoadingComponent } from '../components/loading/loading.component';
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    LoadingComponent
   ],
   exports: [
     NgIf,
@@ -28,7 +30,8 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     FormsModule,
     HttpModule,
     TimelineModule,
-    FloatLabelModule
+    FloatLabelModule,
+    LoadingComponent
   ]
 })
 export class SharedCommonModule { }
