@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FieldsService } from '../../shared/services/fields.service';
+import { FieldsService } from '../../shared/services/fields/fields.service';
 import { SignUp } from './signup';
 import {  Router } from '@angular/router';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";

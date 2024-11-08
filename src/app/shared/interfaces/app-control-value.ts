@@ -1,6 +1,6 @@
 import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Component, Input, OnInit } from "@angular/core";
-import { FieldsService } from "../services/fields.service";
+import { FieldsService } from "../services/fields/fields.service";
 
 
 @Component({

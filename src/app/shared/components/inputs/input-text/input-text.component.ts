@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AppControlValueAccessor } from '../../../interfaces/app-control-value';
-import { FieldsService } from '../../../services/fields.service';
+import { FieldsService } from '../../../services/fields/fields.service';
 import { SharedCommonModule } from '../../../common/shared-common.module';
 
 @Component({
