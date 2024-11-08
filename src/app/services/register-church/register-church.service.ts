@@ -11,6 +11,6 @@ export class RegisterChurchService {
 
 
   public onValidURL(params: any) : Observable<any> {
-    return this.httpClient.get<any>(`validUrl?token=${params}`);
+    return this.httpClient.get<any>(`verifyURL?token=${params}`);
   }
 }

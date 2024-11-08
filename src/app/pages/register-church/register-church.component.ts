@@ -5,11 +5,13 @@ import { TranslateService } from '../../shared/services/translate/translate.serv
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterChurchService } from '../../services/register-church/register-church.service';
 import { error } from 'console';
+import { ToastService } from '../../services/toast/toast.service';
+
 
 @Component({
   selector: 'app-register-church',
   standalone: true,
-  providers: [RegisterChurchService],
+  providers: [RegisterChurchService, ToastService],
   imports: [SharedCommonModule],
   templateUrl: './register-church.component.html',
   styleUrl: './register-church.component.scss'
@@ -23,7 +25,8 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
     private readonly translateRegister: TranslateService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly registerChurchService: RegisterChurchService
+    private readonly registerChurchService: RegisterChurchService,
+    private readonly toast: ToastService
     
   ){
     super(translateRegister);
@@ -36,12 +39,15 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
 
       this.registerChurchService.onValidURL(this.token).subscribe({
         next: (res) => {
-          if(res.output){
-            this.showMessage = "Sua conta foi confirmada com sucesso, agora poderá logar no sistema";
+          if(res.authorize){
+            this.toast.success({summary:"Conta confirmada com suceesso",detail: "Conta confirmada com sucesso"});
+            this.router.navigate(["login"]);
           }
+          this.onShowLoading();
         },
         error: (error) => {
           this.showMessage = "Houve uma falha ao confirmar sua conta";
+          this.onShowLoading();
         }
       })
 
