@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
         this.toastService.error({summary: "Erro", detail: "ocorreu um erro ao cadastrar usuário"});
         this.showLoading = false;
       }
-    })
+    });
   }
 
   onSign() {

@@ -11,7 +11,7 @@ export class SecurityService {
 
 
   public login(params: any) : Observable<any> {
-    return this.http.post<String>(`dataOn/doClientPanel/login?login=${params.email}&pass=${params.password}&IsReset=${params.isReset}`, null);
+    return this.http.post<String>(`authenticate`, params);
   }
 
   public register(params: any) : Observable<any> {
