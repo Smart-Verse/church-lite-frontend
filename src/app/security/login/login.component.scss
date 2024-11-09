@@ -1,11 +1,40 @@
 .login{
     width: 100vw;
     height: 100vh;
+    display: flex;
     .login-container{
-        border-radius: 5%;
+        width: 30%;
+        padding: 16px;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        .image-logo{
+            height: 80px;
+            max-height: 80px;
+            background-image: url("./../../../assets/logo/smartverse-10024.png");
+            background-size: cover;
+            background-position: center;
+        }
+    }
+    .login-area{
+        width: 70%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #B993D6;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
+        .image-area{
+            height: 100%;
+            width: 100%;
+            background-image: url("./../../../assets/logo/smartverse-10024.png");
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
     }
 }
 .text{
@@ -33,7 +62,6 @@ a{
         align-items: center;
         justify-content: center;
         .login-container{
-            height: 50%;
             padding: 10px;
             width: 90%;
             .image-logo{
@@ -43,6 +71,11 @@ a{
                 background-size: cover;
                 background-position: center;
             }
+        }
+        .login-area{
+            background-color: black;
+            width: 0%;
+            height: 100%;
         }
         
     }
