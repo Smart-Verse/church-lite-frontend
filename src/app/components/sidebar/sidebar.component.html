@@ -1,0 +1,23 @@
+<div class="sidebar">
+    <ul class="menu-list"> 
+        <div class="logo">
+            <h3>S</h3>
+        </div>
+        <li *ngFor="let item of menuItems" 
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+        <span class="indicator"></span>
+        <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
+      </li>
+      <li class="logout-item">
+        <div class="footer">
+          <div class="user">
+          </div>
+        </div>
+      </li>
+    </ul>
+</div>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,95 @@
+/* sidebar.component.css */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .sidebar li {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+  }
+  
+  .sidebar li .indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: transparent; /* Inicialmente transparente */
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar li.active .indicator {
+    background-color: var(--active-indicator-color, lightpink);
+  }
+  
+  .sidebar li i {
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .sidebar li i:hover {
+    color: #ddd;
+  }
+  
+  .logo {
+    background-color: lightpink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    margin: 0px;
+    height: 60px;
+  }
+  
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .logout-item {
+    margin-top: auto;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+  }
+  .footer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .user{
+    height: 50px;
+    width: 50px;
+    background-color: lightblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png");
+    background-size: cover;
+  }
+  .content{
+    width: var(--sidebar-width - 100%);
+    margin-left: var(--sidebar-width);
+    height: 100%;
+  }

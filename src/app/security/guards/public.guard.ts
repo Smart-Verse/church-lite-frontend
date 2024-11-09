@@ -10,6 +10,10 @@ export const publicGuard: CanActivateFn = (route, state) => {
   const cookiesService = inject(CookiesService);
 
   const token = cookiesService.get(EnumCookie.AUTHORIZATION);
+
+  if(token){
+    router.navigate(["home"]);
+  }
   
   return true;
 };
