@@ -1,0 +1,25 @@
+<div class="sidebar-submenu">
+    <ul>
+        <div class="submenu-title">
+            <div class="icon">
+                <i class="pi pi-angle-left"></i>
+            </div>
+            <div class="text">
+                {{ menu.name }}
+            </div>
+        </div>
+        <li *ngFor="let item of menu.submenu; let i = index"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <div class="submenu-menu-text">
+                <div>
+                    {{ item.name }}
+                </div>
+                <div *ngIf="item.submenu">
+                    <i class="pi pi-angle-right"></i>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

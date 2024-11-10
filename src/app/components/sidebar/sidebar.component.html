@@ -1,23 +1,32 @@
-<div class="sidebar">
+<div class="sidebar" [class.expanded]="isExpanded">
     <ul class="menu-list"> 
-        <div class="logo">
-            <h3>S</h3>
+      <div class="logo">
+          <h3>S</h3>
+      </div>
+      <div class="menu-expanded">
+        <div class="menu-expanded-icon">
+          <li *ngFor="let item of menuItems; let i = index" (click)="toggleMenu(item)"
+            [routerLink]="item.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <span class="indicator"></span>
+            <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
+          </li>
         </div>
-        <li *ngFor="let item of menuItems" 
-          [routerLink]="item.route"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">
-        <span class="indicator"></span>
-        <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
-      </li>
-      <li class="logout-item">
-        <div class="footer">
-          <div class="user">
+        <div *ngIf="isExpanded" class="menu-expanded-submenu">
+          <app-sidebar-submenu [menu]="currentMenu"></app-sidebar-submenu>
+        </div>
+      </div>
+      <div class="logout">
+        <li class="logout-item">
+          <div class="footer">
+            <div class="user">
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      </div>
     </ul>
 </div>
-<div class="content">
+<div class="content" (click)="closeMenu()">
     <router-outlet></router-outlet>
 </div>

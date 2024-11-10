@@ -5,6 +5,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { privateGuard } from './security/guards/private.guard';
 import { SignupComponent } from './security/signup/signup.component';
 import { RegisterChurchComponent } from './pages/register-church/register-church.component';
+import { DashComponent } from './pages/dash/dash.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
     
@@ -17,11 +19,9 @@ export const routes: Routes = [
         canActivateChild: [privateGuard],
         children: [
             
-            // { path: 'dashboard', component: DashboardComponent },
-            // { path: 'my-pets', component: MyPetsComponent },
-            // { path: 'profile', component: ProfileComponent },
-            // { path: 'timeline/:id', component: TimelineComponent },
-            // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+            { path: 'dashboard', component: DashComponent },
+            { path: 'register', component: RegisterComponent },
         ]
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },

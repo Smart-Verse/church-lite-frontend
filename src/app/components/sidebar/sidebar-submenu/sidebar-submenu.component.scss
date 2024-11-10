@@ -1,0 +1,43 @@
+.sidebar-submenu{
+    height: 100%;
+    background-color: #1c1c1c;
+    .submenu-menu-text{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .submenu-title{
+        height: 50px;
+        display: flex;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        padding: 10px;
+        cursor: pointer;
+        .icon{
+            width: 20%;
+            
+        }
+        .text{
+            width: 80%;
+            text-align: center;
+        }
+    }
+    ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    li{
+        height: 50px;
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        cursor: pointer;
+        color: white;
+        font-size: 12px;
+    }
+}

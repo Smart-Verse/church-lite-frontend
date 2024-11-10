@@ -9,6 +9,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: width 0.3s;
+  }
+
+  .expanded{
+    width: var(--sidebar-expanded);
+  }
+
+  .logout{
+    width: var(--sidebar-width);
+  }
+  .menu-expanded{
+    display: flex;
+    height: 100%;
+    .menu-expanded-icon{
+      width: var(--sidebar-width);
+    }
+    .menu-expanded-submenu{
+      width: calc(100% - var(--sidebar-width));
+    }
   }
   
   .sidebar ul {
@@ -16,6 +35,7 @@
     padding: 0;
     margin: 0;
     width: 100%;
+
   }
   
   .sidebar li {
@@ -31,7 +51,7 @@
     top: 0;
     width: 4px;
     height: 100%;
-    background-color: transparent; /* Inicialmente transparente */
+    background-color: transparent;
     transition: background-color 0.3s;
   }
   
@@ -64,6 +84,7 @@
     flex-direction: column;
     flex-grow: 1;
   }
+  
   .logout-item {
     margin-top: auto;
     height: 70px;
@@ -71,12 +92,15 @@
     align-items: center;
     justify-items: center;
   }
+
+
   .footer{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
   }
+
   .user{
     height: 50px;
     width: 50px;
@@ -88,8 +112,14 @@
     background-image: url("https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png");
     background-size: cover;
   }
+
   .content{
-    width: var(--sidebar-width - 100%);
+    width: var(--sidebar-width + 100%);
     margin-left: var(--sidebar-width);
+    padding: 10px;
     height: 100%;
+  }
+  .content.expanded{
+    width: var(--sidebar-expanded + 100%);
+    margin-left: var(--sidebar-expanded);
   }

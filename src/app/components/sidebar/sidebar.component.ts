@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
+import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
 
 
 @Component({
@@ -16,39 +17,74 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     RouterLinkActive,
     AvatarModule,
     AvatarGroupModule,
-    RouterOutlet
+    RouterOutlet,
+    SidebarSubmenuComponent
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
 
+  isExpanded = false;
+  currentMenu: any;
+
   public menuItems = [
     {
       route: "dashboard",
       iconClass: 'pi pi-chart-bar',
-      tooltip: 'Dashboard'
+      tooltip: 'Dashboard',
+      name: 'Dashboard',
+      submenu: [
+        {
+          route: "dashboard",
+          name: 'Dashboard',
+        },
+        {
+          route: "dashboard",
+          name: 'Dashboard',
+        }
+      ]
     },
     {
-      route: "activities",
+      route: "register",
       iconClass: "pi pi-check-square",
-      tooltip: "Avaliações"
-    },
-    {
-      route: "class",
-      iconClass: "pi pi-user-edit",
-      tooltip: "Turmas"
-    },
-    {
-      route: "repository",
-      iconClass: "pi pi-folder-open",
-      tooltip: "Repositório"
-    },
-
-    {
-      route: "settings",
-      iconClass: 'pi pi-cog',
-      tooltip: 'Configurações'
+      tooltip: "Cadastros",
+      name: 'Cadastros',
+      submenu: [
+        {
+          route: "dashboard",
+          name: 'Pessoas',
+          submenu: [
+            {
+              route: "dashboard",
+              name: 'Membros',
+            },
+            {
+              route: "dashboard",
+              name: 'Fornecedores',
+            }
+          ]
+        },
+        {
+          route: "dashboard",
+          name: 'Outros',
+          submenu: [
+            {
+              route: "dashboard",
+              name: 'Cargos',
+            }
+          ]
+        }
+      ]
     }
   ];
+
+  toggleMenu(menu: any) {
+    this.isExpanded = true;
+    this.currentMenu = menu;
+  }
+  closeMenu(){
+    this.isExpanded = !this.isExpanded;
+  }
+  
 }
