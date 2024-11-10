@@ -41,11 +41,10 @@ export class SidebarComponent {
       name: 'Cadastros',
       submenu: [
         {
-          route: "register",
           name: 'Pessoas',
           submenu: [
             {
-              route: "dashboard",
+              route: "register",
               name: 'Membros',
             },
             {

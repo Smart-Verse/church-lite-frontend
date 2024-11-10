@@ -41,7 +41,7 @@ export class SidebarSubmenuComponent implements OnInit {
       this.router.navigate([contextMenu.route]);
       this.onColapsed();
     } else {
-      this.currentMenu = contextMenu.submenu;
+      this.currentMenu = contextMenu;
     }
   }
 }
