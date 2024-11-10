@@ -1,15 +1,16 @@
 <div class="sidebar-submenu">
     <ul>
-        <div class="submenu-title">
+        <div class="submenu-title" >
             <div class="icon">
                 <i class="pi pi-angle-left"></i>
             </div>
             <div class="text">
-                {{ menu.name }}
+                {{ currentMenu.name }}
             </div>
         </div>
-        <li *ngFor="let item of menu.submenu; let i = index"
-            [routerLink]="item.route"
+        <li *ngFor="let item of currentMenu.submenu; let i = index"
+            
+            (click)="onContextMenu(item)"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">
             <div class="submenu-menu-text">

@@ -34,25 +34,14 @@ export class SidebarComponent {
       iconClass: 'pi pi-chart-bar',
       tooltip: 'Dashboard',
       name: 'Dashboard',
-      submenu: [
-        {
-          route: "dashboard",
-          name: 'Dashboard',
-        },
-        {
-          route: "dashboard",
-          name: 'Dashboard',
-        }
-      ]
     },
     {
-      route: "register",
       iconClass: "pi pi-check-square",
       tooltip: "Cadastros",
       name: 'Cadastros',
       submenu: [
         {
-          route: "dashboard",
+          route: "register",
           name: 'Pessoas',
           submenu: [
             {
@@ -84,7 +73,7 @@ export class SidebarComponent {
     this.currentMenu = menu;
   }
   closeMenu(){
-    this.isExpanded = !this.isExpanded;
+    this.isExpanded = false;
   }
   
 }

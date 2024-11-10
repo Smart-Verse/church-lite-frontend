@@ -14,7 +14,7 @@
           </li>
         </div>
         <div *ngIf="isExpanded" class="menu-expanded-submenu">
-          <app-sidebar-submenu [menu]="currentMenu"></app-sidebar-submenu>
+          <app-sidebar-submenu (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
         </div>
       </div>
       <div class="logout">
