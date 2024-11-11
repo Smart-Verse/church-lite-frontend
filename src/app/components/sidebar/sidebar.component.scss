@@ -5,7 +5,7 @@
     top: 0;
     width: var(--sidebar-width);
     height: 100vh;
-    background-color: var(--primary-color);
+    background-color: #1c1c1c;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,12 +18,14 @@
 
   .logout{
     width: var(--sidebar-width);
+    background-color: var(--primary-color);
   }
   .menu-expanded{
     display: flex;
     height: 100%;
     .menu-expanded-icon{
       width: var(--sidebar-width);
+      background-color: var(--primary-color);
     }
     .menu-expanded-submenu{
       width: calc(100% - var(--sidebar-width));
