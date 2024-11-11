@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
@@ -23,10 +23,21 @@ import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.compo
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+
 
   isExpanded = false;
   currentMenu: any;
+  showSidebar: boolean = true;
+  showSidebarMobile: boolean = false;
+  screenWidth: number = 0;
+  isMobile: boolean = false;
+
+  ngOnInit(): void {
+    this.screenWidth = window.innerWidth;
+    this.onVerifyMobile();
+    this.onSetConfigurationMobile();      
+  }
 
   public menuItems = [
     {
@@ -70,8 +81,46 @@ export class SidebarComponent {
     this.isExpanded = true;
     this.currentMenu = menu;
   }
+
   closeMenu(){
     this.isExpanded = false;
+    if(this.isMobile){
+      this.showSidebar = false;
+      this.showSidebarMobile = true;
+    }
   }
-  
+
+  onMobileOpenMenu(){
+    this.isExpanded = true;
+    if(this.isMobile){
+      this.showSidebar = true;
+      this.showSidebarMobile = false;
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.screenWidth = window.innerWidth;
+    this.onVerifyMobile();
+    this.onSetConfigurationMobile();  
+  }
+
+  onVerifyMobile(){
+    if(this.screenWidth <= 600){
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+  }
+
+  onSetConfigurationMobile(){
+    if(this.isMobile) {
+      this.showSidebarMobile = true;
+      this.showSidebar = false;
+    } else {
+      this.showSidebarMobile = false;
+      this.showSidebar = true;
+    }
+  }
+
 }
