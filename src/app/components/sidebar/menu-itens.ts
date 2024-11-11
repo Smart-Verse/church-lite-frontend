@@ -2,6 +2,13 @@ export class MenuItens{
     menuItems = [
         {
             route: "dashboard",
+            iconClass: 'pi pi-bell',
+            tooltip: 'Notificações',
+            name: 'Notificações',
+            submenu: []
+        },
+        {
+            route: "dashboard",
             iconClass: 'pi pi-chart-bar',
             tooltip: 'Dashboard',
             name: 'Dashboard',
@@ -33,6 +40,21 @@ export class MenuItens{
                         name: 'Cargos',
                     }
                     ]
+                }
+            ]
+        },
+        {
+            iconClass: "pi pi-money-bill",
+            tooltip: "Financeiro",
+            name: 'Fiannceiro',
+            submenu: [
+                {
+                    name: 'Receitas',
+                    route:'register'
+                },
+                {
+                    name: 'Despesas',
+                    route: 'register'
                 }
             ]
         }
