@@ -54,7 +54,6 @@ export class SidebarComponent {
           ]
         },
         {
-          route: "dashboard",
           name: 'Outros',
           submenu: [
             {

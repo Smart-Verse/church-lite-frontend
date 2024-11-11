@@ -20,27 +20,36 @@ export class SidebarSubmenuComponent implements OnInit {
   @Input() menu: any;
   @Output() colapsed: EventEmitter<boolean> = new EventEmitter();
 
-  originalMenu: any;
   currentMenu: any;
+  stackMenu: any[] = [];
 
   constructor(
     private readonly router: Router
   ){}
 
   ngOnInit(): void {
-    this.originalMenu = this.menu;
-    this.currentMenu = this.originalMenu;
+
+    this.currentMenu = this.menu;
+    this.stackMenu.push(this.menu);
   }
 
-  onColapsed(){
-    this.colapsed.emit();
+  onColapsed(menu: any){
+    if(!menu || this.stackMenu.length === 1)
+      this.colapsed.emit();
+    else {
+      if(this.stackMenu.length > 1){
+        this.stackMenu.pop();
+        this.currentMenu = this.stackMenu[this.stackMenu.length - 1];
+      }
+    }
   }
 
   onContextMenu(contextMenu: any) {
     if(contextMenu.route){
-      this.router.navigate([contextMenu.route]);
-      this.onColapsed();
+      //this.router.navigate([contextMenu.route]);
+      this.onColapsed(null);
     } else {
+      this.stackMenu.push(contextMenu);
       this.currentMenu = contextMenu;
     }
   }

@@ -1,6 +1,6 @@
 <div class="sidebar-submenu">
     <ul>
-        <div class="submenu-title" >
+        <div class="submenu-title" (click)="onColapsed(currentMenu)">
             <div class="icon">
                 <i class="pi pi-angle-left"></i>
             </div>
@@ -9,7 +9,7 @@
             </div>
         </div>
         <li *ngFor="let item of currentMenu.submenu; let i = index"
-            
+            [routerLink]="item.route"
             (click)="onContextMenu(item)"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">
