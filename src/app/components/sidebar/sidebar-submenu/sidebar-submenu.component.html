@@ -8,7 +8,7 @@
                 {{ currentMenu.name }}
             </div>
         </div>
-        <li *ngFor="let item of currentMenu.submenu; let i = index"
+        <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index"
             [routerLink]="item.route"
             (click)="onContextMenu(item)"
             routerLinkActive="active"
