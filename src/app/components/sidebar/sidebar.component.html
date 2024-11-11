@@ -1,7 +1,7 @@
 <div class="toolbar" *ngIf="showSidebarMobile" (click)="onMobileOpenMenu()">
   <h3>SmartChurch</h3>
 </div>
-<div class="sidebar web" *ngIf="showSidebar" [class.expanded]="isExpanded">
+<div class="sidebar" *ngIf="showSidebar" [class.expanded]="isExpanded">
     <ul class="menu-list"> 
       <div class="logo">
           <h3>SmartChurch</h3>
@@ -17,7 +17,7 @@
           </li>
         </div>
         <div *ngIf="isExpanded" class="menu-expanded-submenu">
-          <app-sidebar-submenu (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
+          <app-sidebar-submenu [id]="currentMenu" (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
         </div>
       </div>
       <div class="logout">

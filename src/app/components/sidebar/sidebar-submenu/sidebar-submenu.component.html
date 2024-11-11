@@ -8,19 +8,22 @@
                 {{ currentMenu.name }}
             </div>
         </div>
-        <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index"
-            [routerLink]="item.route"
-            (click)="onContextMenu(item)"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            <div class="submenu-menu-text">
-                <div>
-                    {{ item.name }}
+        @if (currentMenu.submenu.length > 0) {
+            <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index"
+                [routerLink]="item.route"
+                (click)="onContextMenu(item)"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <div class="submenu-menu-text">
+                    <div>
+                        {{ item.name }}
+                    </div>
+                    <div *ngIf="item.submenu">
+                        <i class="pi pi-angle-right"></i>
+                    </div>
                 </div>
-                <div *ngIf="item.submenu">
-                    <i class="pi pi-angle-right"></i>
-                </div>
-            </div>
-        </li>
+            </li>
+        }
+        
     </ul>
 </div>

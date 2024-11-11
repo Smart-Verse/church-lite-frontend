@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SharedCommonModule } from '../../../shared/common/shared-common.module';
 
@@ -14,7 +14,7 @@ import { SharedCommonModule } from '../../../shared/common/shared-common.module'
   templateUrl: './sidebar-submenu.component.html',
   styleUrl: './sidebar-submenu.component.scss'
 })
-export class SidebarSubmenuComponent implements OnInit {
+export class SidebarSubmenuComponent implements OnInit, OnChanges {
 
 
   @Input() menu: any;
@@ -26,9 +26,14 @@ export class SidebarSubmenuComponent implements OnInit {
   constructor(
     private readonly router: Router
   ){}
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['menu']){
+      this.menu = changes['menu'].currentValue;
+    }
+    
+  }
 
   ngOnInit(): void {
-
     this.currentMenu = this.menu;
     this.stackMenu.push(this.menu);
   }

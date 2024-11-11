@@ -5,6 +5,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
+import { MenuItens } from './menu-itens';
 
 
 @Component({
@@ -25,61 +26,32 @@ import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.compo
 })
 export class SidebarComponent implements OnInit {
 
-
+  menu = new MenuItens();
   isExpanded = false;
+  menuItems: any;
   currentMenu: any;
   showSidebar: boolean = true;
   showSidebarMobile: boolean = false;
   screenWidth: number = 0;
   isMobile: boolean = false;
 
+  constructor(){
+    this.menuItems = this.menu.menuItems;
+    this.currentMenu = this.menuItems[0];
+  }
+
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
     this.onVerifyMobile();
-    this.onSetConfigurationMobile();      
+    this.onSetConfigurationMobile();
   }
 
-  public menuItems = [
-    {
-      route: "dashboard",
-      iconClass: 'pi pi-chart-bar',
-      tooltip: 'Dashboard',
-      name: 'Dashboard',
-    },
-    {
-      iconClass: "pi pi-check-square",
-      tooltip: "Cadastros",
-      name: 'Cadastros',
-      submenu: [
-        {
-          name: 'Pessoas',
-          submenu: [
-            {
-              route: "register",
-              name: 'Membros',
-            },
-            {
-              route: "dashboard",
-              name: 'Fornecedores',
-            }
-          ]
-        },
-        {
-          name: 'Outros',
-          submenu: [
-            {
-              route: "dashboard",
-              name: 'Cargos',
-            }
-          ]
-        }
-      ]
-    }
-  ];
-
   toggleMenu(menu: any) {
-    this.isExpanded = true;
-    this.currentMenu = menu;
+    this.isExpanded = false;
+    if(menu.submenu.length > 0){
+      this.isExpanded = true;
+      this.currentMenu = menu;
+    }
   }
 
   closeMenu(){
