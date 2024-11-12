@@ -9,7 +9,7 @@
             </div>
         </div>
         @if (currentMenu.submenu.length > 0) {
-            <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index"
+            <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index;"
                 [routerLink]="item.route"
                 (click)="onContextMenu(item)"
                 routerLinkActive="active"

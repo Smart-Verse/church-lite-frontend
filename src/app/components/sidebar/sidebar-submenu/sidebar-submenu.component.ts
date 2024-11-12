@@ -28,7 +28,7 @@ export class SidebarSubmenuComponent implements OnInit, OnChanges {
   ){}
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['menu']){
-      this.menu = changes['menu'].currentValue;
+      this.currentMenu = changes['menu'].currentValue;
     }
     
   }

@@ -8,7 +8,7 @@ export class MenuItens{
             submenu: []
         },
         {
-            route: "dashboard",
+            route: "register",
             iconClass: 'pi pi-chart-bar',
             tooltip: 'Dashboard',
             name: 'Dashboard',
