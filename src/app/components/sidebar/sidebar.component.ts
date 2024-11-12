@@ -50,8 +50,10 @@ export class SidebarComponent implements OnInit {
     this.isExpanded = false;
     if(menu.submenu.length > 0){
       this.isExpanded = true;
-      this.currentMenu = menu;
+      
     }
+    this.currentMenu = menu;
+    this.onDisableAndSetActiveLink();
   }
 
   closeMenu(){
@@ -60,7 +62,7 @@ export class SidebarComponent implements OnInit {
       this.showSidebar = false;
       this.showSidebarMobile = true;
     }
-    this.onDisableAndSetActiveLink()
+    this.onDisableAndSetActiveLink();
   }
 
 
@@ -81,6 +83,7 @@ export class SidebarComponent implements OnInit {
   }
 
   onMobileOpenMenu(){
+    this.onDisableAndSetActiveLink();
     this.isExpanded = true;
     if(this.isMobile){
       this.showSidebar = true;

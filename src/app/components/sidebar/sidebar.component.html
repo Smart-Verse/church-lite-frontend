@@ -10,9 +10,7 @@
         <div class="menu-expanded-icon">
           <li *ngFor="let item of menuItems;" (click)="toggleMenu(item)"
             [routerLink]="item.route"
-            [id]="item.name"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: false }">
+            [id]="item.name">
             <span class="indicator"></span>
             <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
           </li>

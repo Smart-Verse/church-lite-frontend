@@ -11,9 +11,7 @@
         @if (currentMenu.submenu.length > 0) {
             <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index;"
                 [routerLink]="item.route"
-                (click)="onContextMenu(item)"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">
+                (click)="onContextMenu(item)">
                 <div class="submenu-menu-text">
                     <div>
                         {{ item.name }}
