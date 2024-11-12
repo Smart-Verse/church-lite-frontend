@@ -1,14 +1,14 @@
 export class MenuItens{
     menuItems = [
         {
-            route: "dashboard",
+            route: "notification",
             iconClass: 'pi pi-bell',
             tooltip: 'Notificações',
             name: 'Notificações',
             submenu: []
         },
         {
-            route: "register",
+            route: "dashboard",
             iconClass: 'pi pi-chart-bar',
             tooltip: 'Dashboard',
             name: 'Dashboard',

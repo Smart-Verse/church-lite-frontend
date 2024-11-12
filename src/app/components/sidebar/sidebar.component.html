@@ -10,14 +10,15 @@
         <div class="menu-expanded-icon">
           <li *ngFor="let item of menuItems;" (click)="toggleMenu(item)"
             [routerLink]="item.route"
+            [id]="item.name"
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
+            [routerLinkActiveOptions]="{ exact: false }">
             <span class="indicator"></span>
             <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
           </li>
         </div>
         <div *ngIf="isExpanded" class="menu-expanded-submenu">
-          <app-sidebar-submenu [id]="currentMenu" (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
+          <app-sidebar-submenu (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
         </div>
       </div>
       <div class="logout">

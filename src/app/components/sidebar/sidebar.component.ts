@@ -60,6 +60,24 @@ export class SidebarComponent implements OnInit {
       this.showSidebar = false;
       this.showSidebarMobile = true;
     }
+    this.onDisableAndSetActiveLink()
+  }
+
+
+  onDisableAndSetActiveLink() {
+
+    this.menu.menuItems.forEach(e => {
+
+      const disableLink = document.getElementById(e.name);
+      if(disableLink){
+        disableLink.classList.remove('active');
+      }
+    })
+
+    const activeLink = document.getElementById(this.currentMenu.name);
+    if(activeLink){
+      activeLink.classList.add('active');
+    }
   }
 
   onMobileOpenMenu(){

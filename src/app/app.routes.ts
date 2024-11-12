@@ -7,6 +7,7 @@ import { SignupComponent } from './security/signup/signup.component';
 import { RegisterChurchComponent } from './pages/register-church/register-church.component';
 import { DashComponent } from './pages/dash/dash.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { NotificationComponent } from './pages/notification/notification.component';
 
 export const routes: Routes = [
     
@@ -22,6 +23,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
             { path: 'dashboard', component: DashComponent },
             { path: 'register', component: RegisterComponent },
+            { path: 'notification', component: NotificationComponent },
         ]
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
