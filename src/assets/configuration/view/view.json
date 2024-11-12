@@ -1,0 +1,25 @@
+[
+  {
+    "personMembers": {
+      "route": "person",
+      "filters": [
+        {
+          "field": "name",
+          "type": "string"
+        }
+      ],
+      "fields": [
+        {
+          "field": "name",
+          "header": "Nome",
+          "width": "70%"
+        },
+        {
+          "field": "idade",
+          "header": "Idade",
+          "width": "10%"
+        }
+      ]
+    }
+  }
+]
