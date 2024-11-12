@@ -15,7 +15,6 @@ import { MenuItens } from './menu-itens';
     SharedCommonModule,
     RouterLink,
     TooltipModule,
-    RouterLinkActive,
     AvatarModule,
     AvatarGroupModule,
     RouterOutlet,

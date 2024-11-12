@@ -1,0 +1,18 @@
+
+.register{
+    padding: 10px;
+    height: 100%;
+    .btnsp{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+:host::ng-deep {
+    .p-paginator {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+}

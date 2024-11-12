@@ -10,13 +10,15 @@ import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoadingComponent } from '../components/loading/loading.component';
+import { DatatableComponent } from '../../components/datatable/datatable.component';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    LoadingComponent
+    LoadingComponent,
+    DatatableComponent
   ],
   exports: [
     NgIf,
@@ -31,7 +33,8 @@ import { LoadingComponent } from '../components/loading/loading.component';
     HttpModule,
     TimelineModule,
     FloatLabelModule,
-    LoadingComponent
+    LoadingComponent,
+    DatatableComponent
   ]
 })
 export class SharedCommonModule { }

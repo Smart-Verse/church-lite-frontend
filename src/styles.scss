@@ -27,3 +27,8 @@ html{
     --content-bg-color: #f4f4f4;
     --active-indicator-color: linear-gradient(to right, #8CA6DB, #B993D6);
 }
+:host::ng-deep {
+    .p-button{
+        background-color: rgb(20, 13, 13);
+    }
+}

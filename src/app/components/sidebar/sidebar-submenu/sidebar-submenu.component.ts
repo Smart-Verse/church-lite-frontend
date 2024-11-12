@@ -8,7 +8,6 @@ import { SharedCommonModule } from '../../../shared/common/shared-common.module'
   standalone: true,
   imports: [
     SharedCommonModule,
-    RouterLinkActive,
     RouterLink
   ],
   templateUrl: './sidebar-submenu.component.html',

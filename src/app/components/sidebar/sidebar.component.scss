@@ -3,6 +3,7 @@
 /* sidebar.component.css */
 .sidebar {
   position: fixed;
+  z-index: 99999;
   left: 0;
   top: 0;
   width: var(--sidebar-width);

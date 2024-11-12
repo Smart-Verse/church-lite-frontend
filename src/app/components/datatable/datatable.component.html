@@ -1,0 +1,40 @@
+<div class="datatable">
+    <div class="btnsp">
+        <button
+            pButton 
+            pRipple 
+            label="Adicionar">
+        </button>
+        <button 
+            pButton 
+            pRipple 
+            icon="pi pi-filter">
+        </button>
+    </div>
+    <div class="table">
+        <p-table
+            [columns]="config.fields"
+            [value]="config.values"
+            [paginator]="true"
+            [rows]="10"
+            [rowsPerPageOptions]="[10, 20, 50]"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} entries"
+            [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{ col.header }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    <td *ngFor="let col of columns">
+                        {{ rowData[col.field] }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
