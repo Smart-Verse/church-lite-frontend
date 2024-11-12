@@ -33,11 +33,13 @@ export class RegisterComponent {
     this.datatable.fields = [
       {
         field: "name",
-        header: "Nome"
+        header: "Nome",
+        width: "70%"
       },
       {
         field: "idade",
-        header: "Idade"
+        header: "Idade",
+        width: "10%"
       }
     ];
   }
