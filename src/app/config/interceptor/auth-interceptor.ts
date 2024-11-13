@@ -16,24 +16,25 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
 
     let headers = new HttpHeaders();
     if(cookiesService.get(EnumCookie.AUTHORIZATION) !== null){
-        headers = headers.set('Authorization', cookiesService.get(EnumCookie.AUTHORIZATION));
+        headers = headers.set('Authorization', "Bearer " + cookiesService.get(EnumCookie.AUTHORIZATION));
     }
-    
+
 
     request = originalRequest.clone({
-        headers: headers,
-        url: `${environment.apiUrl}/${originalRequest.url}`,
+      headers: headers,
+      url: `${environment.apiUrl}/${originalRequest.url}`,
     });
 
     return next(request).pipe(
         catchError((error: HttpErrorResponse) => {
 
             if(error.status === 401 || error.status === 0){
-              cookiesService.delete(EnumCookie.AUTHORIZATION);
-              router.navigate(['login']);
+              //cookiesService.delete(EnumCookie.AUTHORIZATION);
+              //router.navigate(['login']);
             }
 
             return throwError(() => {
+
             });
           })
     );

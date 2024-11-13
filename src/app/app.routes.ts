@@ -10,7 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 
 export const routes: Routes = [
-    
+
     { path: "login", component: LoginComponent, pathMatch: "full", canActivate: [publicGuard] },
     { path: "singup", component: SignupComponent, pathMatch: "full", canActivate: [publicGuard] },
     { path: "register-church/:hash", component: RegisterChurchComponent, pathMatch: "full", canActivate: [publicGuard] },
@@ -19,10 +19,10 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivateChild: [privateGuard],
         children: [
-            
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
+
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashComponent },
-            { path: 'register', component: RegisterComponent },
+            { path: 'register/:hash', component: RegisterComponent },
             { path: 'notification', component: NotificationComponent },
         ]
     },

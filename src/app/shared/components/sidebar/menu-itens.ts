@@ -23,7 +23,7 @@ export class MenuItens{
                     name: 'Pessoas',
                     submenu: [
                     {
-                        route: "register",
+                        route: "register/personMembers",
                         name: 'Membros',
                     },
                     {
