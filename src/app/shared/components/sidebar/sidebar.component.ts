@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
+import { SharedCommonModule } from '../../common/shared-common.module';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
@@ -49,7 +49,7 @@ export class SidebarComponent implements OnInit {
     this.isExpanded = false;
     if(menu.submenu.length > 0){
       this.isExpanded = true;
-      
+
     }
     this.currentMenu = menu;
     this.onDisableAndSetActiveLink();
@@ -94,7 +94,7 @@ export class SidebarComponent implements OnInit {
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
     this.onVerifyMobile();
-    this.onSetConfigurationMobile();  
+    this.onSetConfigurationMobile();
   }
 
   onVerifyMobile(){

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { DataTable } from '../../components/datatable/datatable';
+import { DataTable } from '../../shared/components/datatable/datatable';
 import {RegisterService} from "../../services/register/register.service";
 
 @Component({
@@ -49,15 +49,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.registerService.loadModelRegister().subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
 
   }
 }

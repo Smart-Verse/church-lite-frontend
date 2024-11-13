@@ -10,7 +10,7 @@ import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoadingComponent } from '../components/loading/loading.component';
-import { DatatableComponent } from '../../components/datatable/datatable.component';
+import { DatatableComponent } from '../components/datatable/datatable.component';
 
 
 @NgModule({

@@ -6,17 +6,23 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslateService } from './shared/services/translate/translate.service';
+import {RegisterService} from "./services/register/register.service";
 
 export function loadTranslationsFactory(translationService: TranslateService) {
   return () => translationService.loadTranslations().pipe();
 }
 
+export function loadRegisterModelFactory(translationService: RegisterService) {
+  return () => translationService.loadModelRegister().pipe();
+}
+
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, 
+    provideRouter(routes,
       withHashLocation()
-    ), 
-    
+    ),
+
     provideClientHydration(),
     provideAnimations(),
     provideHttpClient(),
@@ -24,6 +30,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: loadTranslationsFactory,
       deps: [TranslateService],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadRegisterModelFactory,
+      deps: [RegisterService],
       multi: true
     }
   ]

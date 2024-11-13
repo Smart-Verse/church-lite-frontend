@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { SharedCommonModule } from '../../../shared/common/shared-common.module';
+import { SharedCommonModule } from '../../../common/shared-common.module';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class SidebarSubmenuComponent implements OnInit, OnChanges {
     if(changes['menu']){
       this.currentMenu = changes['menu'].currentValue;
     }
-    
+
   }
 
   ngOnInit(): void {
