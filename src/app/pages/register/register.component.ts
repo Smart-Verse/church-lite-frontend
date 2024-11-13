@@ -32,7 +32,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       private readonly activatedRoute: ActivatedRoute,
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
-      private readonly translateRegisterService: TranslateService
+      private readonly translateRegisterService: TranslateService,
+
   ){
     super(translateRegisterService);
     this.onShowLoading();
@@ -49,12 +50,12 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   onSetPropertiesDatatable(obj: any): void  {
     this.configuration = config.filter(e => e.view === obj.hash)[0];
     this.datatable.fields = obj.fields;
-    this.onGetAllData();
+    this.onGetAllData(new RequestData());
   }
 
 
-  onGetAllData(): void {
-    this.crudService.onGetAll(this.configuration.route,new RequestData()).subscribe({
+  onGetAllData(requestData: RequestData): void {
+    this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
         this.onShowLoading();
@@ -62,9 +63,58 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       error: (err) => {
         this.onShowLoading();
       }
-    })
+    });
   }
 
+  onLoadData(id: any): void {
+    this.onShowLoading();
+    this.crudService.onGet(this.configuration.route,id).subscribe({
+      next: (res) => {
+        this.datatable.values = res.contents;
+        this.onShowLoading();
+      },
+      error: (err) => {
+        this.onShowLoading();
+      }
+    });
+  }
 
+  onDelete(id: any): void {
+    this.onShowLoading();
+    this.crudService.onDelete(this.configuration.route,id).subscribe({
+      next: (res) => {
+        this.datatable.values = res.contents;
+        this.onGetAllData(new RequestData());
+      },
+      error: (err) => {
+        this.onShowLoading();
+      }
+    });
+  }
 
+  onSave(param: any): void {
+    this.onShowLoading();
+    this.crudService.onSave(this.configuration.route,param).subscribe({
+      next: (res) => {
+        this.datatable.values = res.contents;
+        this.onGetAllData(new RequestData());
+      },
+      error: (err) => {
+        this.onShowLoading();
+      }
+    });
+  }
+
+  onUpdate(param: any): void {
+    this.onShowLoading();
+    this.crudService.onUpdate(this.configuration.route,param.id,param).subscribe({
+      next: (res) => {
+        this.datatable.values = res.contents;
+        this.onGetAllData(new RequestData());
+      },
+      error: (err) => {
+        this.onShowLoading();
+      }
+    });
+  }
 }
