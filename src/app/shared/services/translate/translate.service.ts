@@ -20,10 +20,9 @@ export class TranslateService {
     if(isPlatformBrowser(this.platformId)){
       this.language = navigator.language || navigator.languages[0];
     }
-      
+
     return this.http.get<{ [key: string]: string }>(`/assets/i18n/${this.language}.json`).pipe(
       map((data) => {
-        console.log("a");
         this.translations = data;
       })
     );
