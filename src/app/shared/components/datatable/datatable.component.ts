@@ -4,10 +4,12 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { DataTable } from './datatable';
 import { SidebarModule } from 'primeng/sidebar';
+import {RequestData} from "../../interfaces/request-data";
 
 export enum Action {
   DELETE,
-  EDIT
+  EDIT,
+  ADD
 }
 
 @Component({
@@ -27,8 +29,10 @@ export class DatatableComponent {
 
   sidebarVisible: boolean = false;
   @Input() config: DataTable = new DataTable();
-  @Output() selectedRegister: EventEmitter<any> = new EventEmitter();
-  @Output() onAddRegister: EventEmitter<any> = new EventEmitter();
+
+  @Output() onRegister: EventEmitter<any> = new EventEmitter();
+  @Output() onRefresh: EventEmitter<RequestData> = new EventEmitter();
+
 
   pageChange($event: TablePageEvent) {
 
@@ -38,15 +42,16 @@ export class DatatableComponent {
     this.sidebarVisible = !this.sidebarVisible;
   }
 
-  onSelectedItem(item: any, action: Action){
+  onRegisterData(item: any, action: Action){
     let obj = {
-      item: item,
+      data: item,
       action: action
     }
-    this.selectedRegister.emit(obj);
+    this.onRegister.emit(obj);
   }
 
-  onAdd(){
-    this.onAddRegister.emit();
+  onRefreshData(){
+    this.onShowFilters();
+    this.onRefresh.emit(new RequestData());
   }
 }

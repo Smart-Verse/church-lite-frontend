@@ -1,12 +1,13 @@
 <div class="datatable">
     <div class="btnsp">
         <button
-            pButton 
-            pRipple 
+            pButton
+            pRipple
+            (click)="onRegisterData(null,2)"
             label="Adicionar">
         </button>
-        <button 
-            pButton 
+        <button
+            pButton
             pRipple
             (click)="onShowFilters()"
             icon="pi pi-filter">
@@ -44,20 +45,20 @@
                         {{ rowData[col.field] }}
                     </td>
                     <td style="width: 13%;">
-                        <button 
+                        <button
                             style="margin-right: 5px;"
-                            type="button" 
-                            pButton 
-                            pRipple 
-                            icon="pi pi-pencil" 
-                            (click)="onSelectedItem(rowData, 1)">
+                            type="button"
+                            pButton
+                            pRipple
+                            icon="pi pi-pencil"
+                            (click)="onRegisterData(rowData, 1)">
                         </button>
-                        <button 
-                            type="button" 
-                            pButton 
-                            pRipple 
-                            icon="pi pi-trash" 
-                            (click)="onSelectedItem(rowData, 0)">
+                        <button
+                            type="button"
+                            pButton
+                            pRipple
+                            icon="pi pi-trash"
+                            (click)="onRegisterData(rowData, 0)">
                         </button>
                     </td>
                 </tr>
@@ -71,7 +72,7 @@
             <span class="font-semibold text-xl">Filtros</span>
         </ng-template>
         <ng-template pTemplate="content">
-            <p-button pRipple  [outlined]="false"  styleClass="p-button-rounded w-full">
+            <p-button pRipple (onClick)="onRefreshData()"  [outlined]="false"  styleClass="p-button-rounded w-full">
                 <div class="btn-tx">
                     Filtrar
                 </div>

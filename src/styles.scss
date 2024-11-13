@@ -31,4 +31,7 @@ html{
     .p-button{
         background-color: rgb(20, 13, 13);
     }
+    .p-dialog-mask  {
+      z-index: 99999;
+    }
 }

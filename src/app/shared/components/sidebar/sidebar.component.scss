@@ -3,7 +3,7 @@
 /* sidebar.component.css */
 .sidebar {
   position: fixed;
-  z-index: 99999;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: var(--sidebar-width);
@@ -62,9 +62,9 @@
             background-image: url("https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png");
             background-size: cover;
           }
-        
+
         }
-      }      
+      }
     }
   }
 }
@@ -128,9 +128,9 @@
 .sidebar li i:hover {
   color: #ddd;
 }
-  
+
 @media (max-width: 600px){
-  
+
   .content{
     height: calc(100% - 60px);
     width: 100vw;

@@ -3,6 +3,7 @@ import {PersonMembersComponent} from "../../components/person-members/person-mem
 
 export const config: RegisterRoutes[] = [
   {
+    header: "Cadastro de membros",
     view: "personMembers",
     route: "person",
     component: PersonMembersComponent
@@ -10,8 +11,8 @@ export const config: RegisterRoutes[] = [
 ]
 
 export class RegisterRoutes {
-
+  header: string = "";
   view: string = "";
   route: string = "person";
-  component?: Type<any> | null;
+  component: Type<any> = PersonMembersComponent;
 }
