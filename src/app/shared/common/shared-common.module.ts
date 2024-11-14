@@ -13,6 +13,9 @@ import { LoadingComponent } from '../components/loading/loading.component';
 import { DatatableComponent } from '../components/datatable/datatable.component';
 import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
 import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
+import {DropdownComponent} from "../components/inputs/dropdown/dropdown.component";
+import {InputDateComponent} from "../components/inputs/input-date/input-date.component";
+import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.component";
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-com
     LoadingComponent,
     DatatableComponent,
     InputTextComponent,
-    AutoCompleteComponent
+    AutoCompleteComponent,
+    DropdownComponent,
+    InputDateComponent,
+    InputMaskComponent
   ],
   exports: [
     NgIf,
@@ -40,7 +46,10 @@ import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-com
     LoadingComponent,
     DatatableComponent,
     InputTextComponent,
-    AutoCompleteComponent
+    AutoCompleteComponent,
+    DropdownComponent,
+    InputDateComponent,
+    InputMaskComponent
   ]
 })
 export class SharedCommonModule { }

@@ -11,9 +11,7 @@ import {InputDateComponent} from "../../shared/components/inputs/input-date/inpu
   selector: 'app-person-members',
   standalone: true,
   imports: [
-    SharedCommonModule,
-    DropdownComponent,
-    InputDateComponent
+    SharedCommonModule
   ],
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
