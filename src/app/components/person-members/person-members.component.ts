@@ -5,13 +5,15 @@ import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {status} from "../../shared/util/constants";
 import {DropdownComponent} from "../../shared/components/inputs/dropdown/dropdown.component";
+import {InputDateComponent} from "../../shared/components/inputs/input-date/input-date.component";
 
 @Component({
   selector: 'app-person-members',
   standalone: true,
   imports: [
     SharedCommonModule,
-    DropdownComponent
+    DropdownComponent,
+    InputDateComponent
   ],
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
