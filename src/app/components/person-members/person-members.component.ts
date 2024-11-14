@@ -40,12 +40,16 @@ export class PersonMembersComponent extends BaseComponent {
 
 
   onSave() {
-    this.ref.close(null);
+    if(this.personFormGroup.valid) {
+      this.ref.close(this.personFormGroup.valid);
+    }
   }
 
   onCancel() {
     this.ref.close(null);
   }
+
+
 
 
 }
