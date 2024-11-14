@@ -1,0 +1,12 @@
+<p-floatLabel>
+  <p-autoComplete
+    (ngModelChange)="onChange($event)"
+    [ngModel]="value"
+    [suggestions]="itens"
+    (completeMethod)="onFilter($event)"
+    [optionLabel]="optionLabel" class="w-full"
+    appendTo="body"
+    [ngClass]="{'ng-invalid ng-dirty': !isValid}"/>
+  <label>{{label}}</label>
+</p-floatLabel>
+

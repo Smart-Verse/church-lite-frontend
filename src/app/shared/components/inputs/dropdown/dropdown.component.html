@@ -1,0 +1,11 @@
+<p-floatLabel>
+  <p-dropdown
+    (ngModelChange)="onChange($event)"
+    [ngModel]="value"
+    [options]="options"
+    [optionLabel]="optionLabel"
+    [ngClass]="{'ng-invalid ng-dirty': !isValid}"
+    appendTo="body"
+    class="w-full"/>
+  <label>{{label}}</label>
+</p-floatLabel>
