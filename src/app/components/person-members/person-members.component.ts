@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields/fields.service';
 import { Person } from './person';
 import { ToastService } from '../../services/toast/toast.service';
+import {DTOConverter} from "../../../core/dto/dto-converter";
 
 
 @Component({
@@ -25,6 +26,10 @@ import { ToastService } from '../../services/toast/toast.service';
 export class PersonMembersComponent extends BaseComponent {
 
   public personFormGroup: FormGroup;
+  public personAdressFormGroup: FormGroup;
+  public personDocsFormGroup: FormGroup;
+  public personPhoneFormGroup: FormGroup;
+  public personEmailFormGroup: FormGroup;
   protected readonly status = status;
 
   constructor(
@@ -35,18 +40,28 @@ export class PersonMembersComponent extends BaseComponent {
     public readonly translatePersonMembers: TranslateService
   ) {
     super();
-    this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().fields);
+    this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().person);
+    this.personAdressFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().personAddress);
+    this.personDocsFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().personDocs);
+    this.personPhoneFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().personTelphone);
+    this.personEmailFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().personEmail);
   }
 
 
   onSave() {
     if(this.personFormGroup.valid) {
-      this.ref.close(this.personFormGroup.valid);
+
+      this.ref.close(null);
     }
   }
 
   onCancel() {
     this.ref.close(null);
+  }
+
+  onSetValue(value: any) {
+    var person = this.personFormGroup.value;
+    person.telephone = value.telephone;
   }
 
 

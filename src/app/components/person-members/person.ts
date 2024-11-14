@@ -1,6 +1,6 @@
 export class Person {
 
-    fields: any[] = [
+    person: any[] = [
         {
           fieldName: 'id',
           required: false,
@@ -18,6 +18,14 @@ export class Person {
             required: true,
             hidden: false,
             type: 'string'
+        }
+    ]
+    personDocs: any[] = [
+        {
+          fieldName: 'id',
+          required: false,
+          hidden: false,
+          type: 'string'
         },
         {
             fieldName: 'cpf',
@@ -36,24 +44,14 @@ export class Person {
             required: false,
             hidden: false,
             type: 'date'
-        },
+        }
+    ]
+    personAddress: any[] = [
         {
-            fieldName: 'phone',
-            required: false,
-            hidden: false,
-            type: 'string'
-        },
-        {
-            fieldName: 'personalPhone',
-            required: false,
-            hidden: false,
-            type: 'string'
-        },
-        {
-            fieldName: 'email',
-            required: false,
-            hidden: false,
-            type: 'email'
+          fieldName: 'id',
+          required: false,
+          hidden: false,
+          type: 'string'
         },
         {
             fieldName: 'postalCode',
@@ -87,6 +85,41 @@ export class Person {
         },
         {
             fieldName: 'city',
+            required: false,
+            hidden: false,
+            type: 'string'
+        }
+    ]
+    personEmail: any[] = [
+        {
+          fieldName: 'id',
+          required: false,
+          hidden: false,
+          type: 'string'
+        },
+        {
+            fieldName: 'email',
+            required: false,
+            hidden: false,
+            type: 'email'
+        }
+    ]
+    personTelphone: any[] = [
+        {
+          fieldName: 'id',
+          required: false,
+          hidden: false,
+          type: 'string'
+        },
+
+        {
+            fieldName: 'phone',
+            required: false,
+            hidden: false,
+            type: 'string'
+        },
+        {
+            fieldName: 'personalPhone',
             required: false,
             hidden: false,
             type: 'string'

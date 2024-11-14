@@ -1,4 +1,22 @@
-
 {
-    
+  "common_action_save": "Save",
+  "common_action_cancel": "Cancel",
+
+  "personal_basic_data_title": "Basic Data",
+  "personal_field_name": "Full Name",
+  "personal_field_status": "Status",
+  "personal_field_cpf": "CPF",
+  "personal_field_rg": "RG",
+  "personal_field_birthdate": "Birthdate",
+  "personal_contact_data": "Phone and Email",
+  "personal_field_phone": "Landline Phone",
+  "personal_field_personalPhone": "Cell Phone",
+  "personal_field_email": "Email",
+  "personal_address_data": "Address",
+  "personal_field_postalCode": "Postal Code",
+  "personal_field_address": "Address",
+  "personal_field_number": "Number",
+  "personal_field_neighborhood": "Neighborhood",
+  "personal_field_complement": "Complement",
+  "personal_field_city": "City"
 }
