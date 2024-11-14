@@ -5,9 +5,7 @@ export class BaseComponent {
     public showLoading: boolean = false;
 
 
-    constructor(
-        private readonly translateService: TranslateService
-    ){}
+    constructor(){}
 
 
     public onShowLoading() {

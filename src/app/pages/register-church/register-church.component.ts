@@ -27,9 +27,9 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
     private readonly router: Router,
     private readonly registerChurchService: RegisterChurchService,
     private readonly toast: ToastService
-    
+
   ){
-    super(translateRegister);
+    super();
   }
 
   ngOnInit(): void {

@@ -2,6 +2,12 @@ export class Person {
 
     fields: any[] = [
         {
+          fieldName: 'id',
+          required: false,
+          hidden: false,
+          type: 'string'
+        },
+        {
             fieldName: 'name',
             required: true,
             hidden: false,

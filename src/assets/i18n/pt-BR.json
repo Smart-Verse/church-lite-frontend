@@ -1,5 +1,23 @@
 
 {
     "common_action_save": "Salvar",
-    "common_action_cancel": "Cancelar"
+    "common_action_cancel": "Cancelar",
+
+    "personal_basic_data_title": "Dados Basicos",
+    "personal_field_name": "Nome Completo",
+    "personal_field_status": "Status",
+    "personal_field_cpf": "CPF",
+    "personal_field_rg": "Rg",
+    "personal_field_birthdate": "Data Nascimento",
+    "personal_contact_data": "Telefone e email",
+    "personal_field_phone": "Telefone fixo",
+    "personal_field_personalPhone": "Telefone celular",
+    "personal_field_email": "Email",
+    "personal_address_data": "Endereço",
+    "personal_field_postalCode": "CEP",
+    "personal_field_address": "Endereço",
+    "personal_field_number": "Numero",
+    "personal_field_neighborhood": "Bairro",
+    "personal_field_complement": "Complemento",
+    "personal_field_city": "city"
 }

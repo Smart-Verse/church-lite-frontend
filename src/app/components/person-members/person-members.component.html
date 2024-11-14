@@ -1,97 +1,97 @@
 <div class="person-members formgrid grid">
-  <form [formGroup]="personFormGroup">
-    <div class="field col-12 md:col-12">Dados Basicos</div>
+  <form [formGroup]="personFormGroup" class="person-members formgrid grid">
+    <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_basic_data_title') }}</div>
     <app-input-text
       formControlName="name"
       class="field col-12 md:col-8 c-margin"
-      label="Nome Completo"
+      [label]="translatePersonMembers.translate('personal_field_name')"
       type="text">
     </app-input-text>
     <app-dropdown
       formControlName="status"
+      [label]="translatePersonMembers.translate('personal_field_status')"
       [options]="status"
       optionLabel="value"
-      class="field col-12 md:col-4 c-margin"
-      label="Ativo">
+      class="field col-12 md:col-4 c-margin">
     </app-dropdown>
     <app-input-mask
       formControlName="cpf"
       class="field col-12 md:col-4 c-margin"
-      label="CPF"
+      [label]="translatePersonMembers.translate('personal_field_cpf')"
       mask="999.999.999-99">
     </app-input-mask>
     <app-input-text
       formControlName="rg"
       class="field col-12 md:col-4 c-margin"
-      label="RG"
+      [label]="translatePersonMembers.translate('personal_field_rg')"
       type="text">
     </app-input-text>
     <app-input-date
       formControlName="birthdate"
       class="field col-12 md:col-4 c-margin"
-      label="Data Nascimento"
+      [label]="translatePersonMembers.translate('personal_field_birthdate')"
       type="date">
     </app-input-date>
     <div class="field col-12 md:col-12">
       <hr>
     </div>
-    <div class="field col-12 md:col-12">Telefone e email</div>
+    <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_field_personalPhone') }}</div>
     <app-input-mask
       formControlName="phone"
       class="field col-12 md:col-3 c-margin"
-      label="Telefone fixo"
+      [label]="translatePersonMembers.translate('personal_field_status')"
       mask="(99) 9999-9999">
     </app-input-mask>
     <app-input-mask
       formControlName="personalPhone"
       class="field col-12 md:col-3 c-margin"
-      label="Telefone celular"
+      [label]="translatePersonMembers.translate('personal_field_status')"
       mask="(99) 9 9999-9999">
     </app-input-mask>
     <app-input-text
       formControlName="email"
       class="field col-12 md:col-6 c-margin"
-      label="Email"
+      [label]="translatePersonMembers.translate('personal_field_status')"
       type="email">
     </app-input-text>
     <div class="field col-12 md:col-12">
       <hr>
     </div>
-    <div class="field col-12 md:col-12">Endereço</div>
+    <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_address_data') }}</div>
     <app-input-mask
       formControlName="postalCode"
       class="field col-12 md:col-3 c-margin"
-      label="CEP"
+      [label]="translatePersonMembers.translate('personal_field_postalCode')"
       mask="99999-999">
     </app-input-mask>
     <app-input-text
       formControlName="address"
       class="field col-12 md:col-9 c-margin"
-      label="Endereço"
+      [label]="translatePersonMembers.translate('personal_field_address')"
       type="text">
     </app-input-text>
     <app-input-text
       formControlName="number"
       class="field col-12 md:col-4 c-margin"
-      label="Numero"
+      [label]="translatePersonMembers.translate('personal_field_number')"
       type="text">
     </app-input-text>
     <app-input-text
       formControlName="neighborhood"
       class="field col-12 md:col-4 c-margin"
-      label="Bairro"
+      [label]="translatePersonMembers.translate('personal_field_neighborhood')"
       type="text">
     </app-input-text>
     <app-input-text
       formControlName="complement"
       class="field col-12 md:col-4 c-margin"
-      label="Complemento"
+      [label]="translatePersonMembers.translate('personal_field_complement')"
       type="text">
     </app-input-text>
     <app-auto-complete
       formControlName="city"
       class="field col-12 md:col-12 c-margin"
-      label="Cidade"
+      [label]="translatePersonMembers.translate('personal_field_city')"
       route="city"
       optionLabel="name"
       type="text">
@@ -100,9 +100,9 @@
 </div>
 <div class="buttons">
   <div style="margin-right: 10px">
-    <p-button  label="Cancelar" (onClick)="onCancel()"/>
+    <p-button  [label]="translatePersonMembers.translate('common_action_cancel')" (onClick)="onCancel()"/>
   </div>
   <div>
-    <p-button  label="Salvar" (onClick)="onSave()"/>
+    <p-button  [label]="translatePersonMembers.translate('common_action_save')" (onClick)="onSave()"/>
   </div>
 </div>

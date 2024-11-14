@@ -28,15 +28,15 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: APP_INITIALIZER,
-      useFactory: loadTranslationsFactory,
-      deps: [TranslateService],
+      useFactory: loadRegisterModelFactory,
+      deps: [RegisterService],
       multi: true
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: loadRegisterModelFactory,
-      deps: [RegisterService],
+      useFactory: loadTranslationsFactory,
+      deps: [TranslateService],
       multi: true
-    }
+    },
   ]
 };

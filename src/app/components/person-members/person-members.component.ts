@@ -22,7 +22,7 @@ import { ToastService } from '../../services/toast/toast.service';
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
 })
-export class PersonMembersComponent extends BaseComponent{
+export class PersonMembersComponent extends BaseComponent {
 
   public personFormGroup: FormGroup;
   protected readonly status = status;
@@ -30,11 +30,11 @@ export class PersonMembersComponent extends BaseComponent{
   constructor(
     public readonly ref: DynamicDialogRef,
     public readonly config: DynamicDialogConfig,
-    public readonly translatePersonMembers: TranslateService,
     private readonly fieldsService: FieldsService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    public readonly translatePersonMembers: TranslateService
   ) {
-    super(translatePersonMembers);
+    super();
     this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().fields);
   }
 

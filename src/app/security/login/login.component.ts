@@ -36,13 +36,13 @@ export class LoginComponent extends BaseComponent implements OnInit {
     private readonly toastService: ToastService,
     private readonly coockieService: CookiesService
   ){
-    super(translateLogin);
+    super();
     this.loginForm = this.fieldsService.onCreateFormBuiderDynamic(new Login().fields);
   }
 
 
   ngOnInit(): void {
-    
+
   }
 
 

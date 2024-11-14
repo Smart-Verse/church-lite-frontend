@@ -18,7 +18,6 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
   ],
   providers: [
     CrudService,
-    TranslateService,
     DialogService
   ],
   templateUrl: './register.component.html',
@@ -36,10 +35,9 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       private readonly activatedRoute: ActivatedRoute,
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
-      private readonly translateRegisterService: TranslateService,
       private readonly dialogService: DialogService
   ){
-    super(translateRegisterService);
+    super();
   }
 
   ngOnInit(): void {
