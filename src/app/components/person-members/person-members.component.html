@@ -1,86 +1,102 @@
 <div class="person-members formgrid grid">
-  <div class="field col-12 md:col-12">Dados Basicos</div>
-  <app-input-text
-    class="field col-12 md:col-8 c-margin"
-    label="Nome Completo"
-    type="text">
-  </app-input-text>
-  <app-dropdown
-    [options]="status"
-    optionLabel="value"
-    class="field col-12 md:col-4 c-margin"
-    label="Ativo">
-  </app-dropdown>
-  <app-input-mask
-    class="field col-12 md:col-4 c-margin"
-    label="CPF"
-    mask="999.999.999-99">
-  </app-input-mask>
-  <app-input-text
-    class="field col-12 md:col-4 c-margin"
-    label="RG"
-    type="text">
-  </app-input-text>
-  <app-input-date
-    class="field col-12 md:col-4 c-margin"
-    label="Data Nascimento"
-    type="date">
-  </app-input-date>
-  <div class="field col-12 md:col-12">
-    <hr>
-  </div>
-  <div class="field col-12 md:col-12">Telefone e email</div>
-  <app-input-mask
-    class="field col-12 md:col-3 c-margin"
-    label="Telefone fixo"
-    mask="(99) 9999-9999">
-  </app-input-mask>
-  <app-input-mask
-    class="field col-12 md:col-3 c-margin"
-    label="Telefone celular"
-    mask="(99) 9 9999-9999">
-  </app-input-mask>
-  <app-input-text
-    class="field col-12 md:col-6 c-margin"
-    label="Email"
-    type="email">
-  </app-input-text>
-  <div class="field col-12 md:col-12">
-    <hr>
-  </div>
-  <div class="field col-12 md:col-12">Endereço</div>
-  <app-input-mask
-    class="field col-12 md:col-3 c-margin"
-    label="CEP"
-    mask="99999-999">
-  </app-input-mask>
-  <app-input-text
-    class="field col-12 md:col-9 c-margin"
-    label="Endereço"
-    type="text">
-  </app-input-text>
-  <app-input-text
-    class="field col-12 md:col-4 c-margin"
-    label="Numero"
-    type="text">
-  </app-input-text>
-  <app-input-text
-    class="field col-12 md:col-4 c-margin"
-    label="Bairro"
-    type="text">
-  </app-input-text>
-  <app-input-text
-    class="field col-12 md:col-4 c-margin"
-    label="Complemento"
-    type="text">
-  </app-input-text>
-  <app-auto-complete
-    class="field col-12 md:col-12 c-margin"
-    label="Cidade"
-    route="city"
-    optionLabel="name"
-    type="text">
-  </app-auto-complete>
+  <form [formGroup]="personFormGroup">
+    <div class="field col-12 md:col-12">Dados Basicos</div>
+    <app-input-text
+      formControlName="name"
+      class="field col-12 md:col-8 c-margin"
+      label="Nome Completo"
+      type="text">
+    </app-input-text>
+    <app-dropdown
+      formControlName="status"
+      [options]="status"
+      optionLabel="value"
+      class="field col-12 md:col-4 c-margin"
+      label="Ativo">
+    </app-dropdown>
+    <app-input-mask
+      formControlName="cpf"
+      class="field col-12 md:col-4 c-margin"
+      label="CPF"
+      mask="999.999.999-99">
+    </app-input-mask>
+    <app-input-text
+      formControlName="rg"
+      class="field col-12 md:col-4 c-margin"
+      label="RG"
+      type="text">
+    </app-input-text>
+    <app-input-date
+      formControlName="birthdate"
+      class="field col-12 md:col-4 c-margin"
+      label="Data Nascimento"
+      type="date">
+    </app-input-date>
+    <div class="field col-12 md:col-12">
+      <hr>
+    </div>
+    <div class="field col-12 md:col-12">Telefone e email</div>
+    <app-input-mask
+      formControlName="phone"
+      class="field col-12 md:col-3 c-margin"
+      label="Telefone fixo"
+      mask="(99) 9999-9999">
+    </app-input-mask>
+    <app-input-mask
+      formControlName="personalPhone"
+      class="field col-12 md:col-3 c-margin"
+      label="Telefone celular"
+      mask="(99) 9 9999-9999">
+    </app-input-mask>
+    <app-input-text
+      formControlName="email"
+      class="field col-12 md:col-6 c-margin"
+      label="Email"
+      type="email">
+    </app-input-text>
+    <div class="field col-12 md:col-12">
+      <hr>
+    </div>
+    <div class="field col-12 md:col-12">Endereço</div>
+    <app-input-mask
+      formControlName="postalCode"
+      class="field col-12 md:col-3 c-margin"
+      label="CEP"
+      mask="99999-999">
+    </app-input-mask>
+    <app-input-text
+      formControlName="address"
+      class="field col-12 md:col-9 c-margin"
+      label="Endereço"
+      type="text">
+    </app-input-text>
+    <app-input-text
+      formControlName="number"
+      class="field col-12 md:col-4 c-margin"
+      label="Numero"
+      type="text">
+    </app-input-text>
+    <app-input-text
+      formControlName="neighborhood"
+      class="field col-12 md:col-4 c-margin"
+      label="Bairro"
+      type="text">
+    </app-input-text>
+    <app-input-text
+      formControlName="complement"
+      class="field col-12 md:col-4 c-margin"
+      label="Complemento"
+      type="text">
+    </app-input-text>
+    <app-auto-complete
+      formControlName="city"
+      class="field col-12 md:col-12 c-margin"
+      label="Cidade"
+      route="city"
+      optionLabel="name"
+      type="text">
+    </app-auto-complete>
+  </form>
 </div>
 <div class="buttons">
   <div style="margin-right: 10px">

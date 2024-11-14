@@ -23,7 +23,6 @@ export class SignupComponent implements OnInit {
   public showLoading = false;
   
   constructor(
-    private readonly fb: FormBuilder,
     private readonly fieldsService: FieldsService,
     private readonly router: Router,
     private readonly securityService: SecurityService,

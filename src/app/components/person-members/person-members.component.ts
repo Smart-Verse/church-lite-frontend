@@ -4,8 +4,11 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {status} from "../../shared/util/constants";
-import {DropdownComponent} from "../../shared/components/inputs/dropdown/dropdown.component";
-import {InputDateComponent} from "../../shared/components/inputs/input-date/input-date.component";
+import { FormGroup } from '@angular/forms';
+import { FieldsService } from '../../shared/services/fields/fields.service';
+import { Person } from './person';
+import { ToastService } from '../../services/toast/toast.service';
+
 
 @Component({
   selector: 'app-person-members',
@@ -13,17 +16,26 @@ import {InputDateComponent} from "../../shared/components/inputs/input-date/inpu
   imports: [
     SharedCommonModule
   ],
+  providers: [
+    ToastService
+  ],
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
 })
 export class PersonMembersComponent extends BaseComponent{
 
+  public personFormGroup: FormGroup;
+  protected readonly status = status;
+
   constructor(
     public readonly ref: DynamicDialogRef,
     public readonly config: DynamicDialogConfig,
-    public readonly translatePersonMembers: TranslateService
+    public readonly translatePersonMembers: TranslateService,
+    private readonly fieldsService: FieldsService,
+    private readonly toastService: ToastService
   ) {
     super(translatePersonMembers);
+    this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new Person().fields);
   }
 
 
@@ -35,5 +47,5 @@ export class PersonMembersComponent extends BaseComponent{
     this.ref.close(null);
   }
 
-  protected readonly status = status;
+
 }
