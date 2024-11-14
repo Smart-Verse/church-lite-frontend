@@ -1,6 +1,6 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <div class="register">
-    <h2>Cadastros de membros</h2>
+    <h2>{{configuration.header}}</h2>
     <hr>
     <app-datatable
       (onRefresh)="onGetAllData($event)"

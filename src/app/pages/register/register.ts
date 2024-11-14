@@ -1,5 +1,6 @@
 import {Type} from "@angular/core";
 import {PersonMembersComponent} from "../../components/person-members/person-members.component";
+import {PositionsComponent} from "../../components/positions/positions.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -7,6 +8,12 @@ export const config: RegisterRoutes[] = [
     view: "personMembers",
     route: "person",
     component: PersonMembersComponent
+  },
+  {
+    header: "Cadastro de cargos",
+    view: "positions",
+    route: "positions",
+    component: PositionsComponent
   }
 ]
 

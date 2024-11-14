@@ -35,10 +35,10 @@ export class MenuItens{
                 {
                     name: 'Outros',
                     submenu: [
-                    {
-                        route: "dashboard",
-                        name: 'Cargos',
-                    }
+                      {
+                          route: "register/positions",
+                          name: 'Cargos',
+                      }
                     ]
                 }
             ]

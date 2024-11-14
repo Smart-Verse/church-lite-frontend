@@ -15,6 +15,22 @@
         "width": "80%"
       }
     ]
-
+  },
+  {
+    "route": "positions",
+    "hash": "positions",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Descrição",
+        "width": "80%"
+      }
+    ]
   }
 ]

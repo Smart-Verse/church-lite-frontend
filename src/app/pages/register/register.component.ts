@@ -84,10 +84,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   }
 
   onDelete(id: any): void {
-    this.onShowLoading();
+
     this.crudService.onDelete(this.configuration.route,id).subscribe({
       next: (res) => {
         this.onGetAllData(new RequestData());
+        this.onShowLoading();
       },
       error: (err) => {
         this.onShowLoading();
@@ -139,7 +140,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         width: '80vw',
         modal:true,
         maximizable: false,
-        data: obj
+        data: obj,
+        baseZIndex: 999999,
       });
 
     this.ref.onClose.subscribe((obj: any) => {
