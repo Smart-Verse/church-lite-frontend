@@ -10,14 +10,10 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
     public value: any = '';
     public isValid: boolean = true;
 
-    @Input() public label: String = "Label";
-    @Input() public guidance: string | undefined;
-    @Input() public type: string | undefined = "text";
-    @Input() public entity?: FormGroup;
-    @Input() public name: string = '';
-    @Input() public mask: string = '';
-    
-    
+    @Input() label: string = "";
+    @Input() type: string = "";
+    @Input() guidance: string = "";
+
     constructor(private readonly fieldService: FieldsService){}
 
 
@@ -26,30 +22,30 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
           this.onValid();
         })
       }
-    
+
       writeValue(value: any): void {
         this.value = value;
       }
-    
+
       registerOnChange(fn: any): void {
         this.onChange = fn;
       }
-      
+
       registerOnTouched(fn: any): void {
         this.onTouch = fn;
       }
-    
+
       setDisabledState?(isDisabled: boolean): void {
         //throw new Error('Method not implemented.');
       }
-    
+
       onChange = (value: any) => {
       };
       onTouch = () => {};
-    
+
       onValid(){
         //let validator = this.entity.get(this.name)?.valid;
-        // this.isValid = validator === undefined ? true : validator;
-        // this.writeValue(this.value);
+        //this.isValid = validator === undefined ? true : validator;
+        this.writeValue(this.value);
       }
 }

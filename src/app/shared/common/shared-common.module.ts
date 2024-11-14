@@ -11,6 +11,8 @@ import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoadingComponent } from '../components/loading/loading.component';
 import { DatatableComponent } from '../components/datatable/datatable.component';
+import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
+import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { DatatableComponent } from '../components/datatable/datatable.component'
   imports: [
     CommonModule,
     LoadingComponent,
-    DatatableComponent
+    DatatableComponent,
+    InputTextComponent,
+    AutoCompleteComponent
   ],
   exports: [
     NgIf,
@@ -34,7 +38,9 @@ import { DatatableComponent } from '../components/datatable/datatable.component'
     TimelineModule,
     FloatLabelModule,
     LoadingComponent,
-    DatatableComponent
+    DatatableComponent,
+    InputTextComponent,
+    AutoCompleteComponent
   ]
 })
 export class SharedCommonModule { }

@@ -1,0 +1,9 @@
+.person-members{
+
+}
+
+:host::ng-deep {
+  .p-dropdown{
+    width: 100%;
+  }
+}

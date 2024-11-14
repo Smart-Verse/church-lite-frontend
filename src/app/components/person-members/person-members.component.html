@@ -1,1 +1,54 @@
-<p>person-members works!</p>
+<div class="person-members formgrid grid">
+  <app-input-text
+    class="field col-12 md:col-8 c-margin"
+    label="Nome Completo"
+    type="text">
+  </app-input-text>
+  <div class="field col-12 md:col-4 c-margin">
+    <p-floatLabel>
+      <p-dropdown
+        [options]="active"
+        optionLabel="value"
+        id="active"
+        class="w-full"/>
+      <label for="active">Ativo</label>
+    </p-floatLabel>
+  </div>
+  <hr>
+  <div class="field col-12 md:col-12">Endereço</div>
+  <app-input-text
+    class="field col-12 md:col-8 c-margin"
+    label="Endereço"
+    type="text">
+  </app-input-text>
+  <app-input-text
+    class="field col-12 md:col-4 c-margin"
+    label="Numero"
+    type="text">
+  </app-input-text>
+  <app-input-text
+    class="field col-12 md:col-6 c-margin"
+    label="Bairro"
+    type="text">
+  </app-input-text>
+  <app-input-text
+    class="field col-12 md:col-6 c-margin"
+    label="Complemento"
+    type="text">
+  </app-input-text>
+  <app-auto-complete
+    class="field col-12 md:col-12 c-margin"
+    label="Cidade"
+    route="city"
+    optionLabel="name"
+    type="text">
+  </app-auto-complete>
+</div>
+<div class="buttons">
+  <div style="margin-right: 10px">
+    <p-button  label="Cancelar" (onClick)="onCancel()"/>
+  </div>
+  <div>
+    <p-button  label="Salvar" (onClick)="onSave()"/>
+  </div>
+</div>
