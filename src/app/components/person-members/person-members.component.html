@@ -4,16 +4,12 @@
     label="Nome Completo"
     type="text">
   </app-input-text>
-  <div class="field col-12 md:col-4 c-margin">
-    <p-floatLabel>
-      <p-dropdown
-        [options]="active"
-        optionLabel="value"
-        id="active"
-        class="w-full"/>
-      <label for="active">Ativo</label>
-    </p-floatLabel>
-  </div>
+  <app-dropdown
+    [options]="status"
+    optionLabel="value"
+    class="field col-12 md:col-4 c-margin"
+    label="Ativo">
+  </app-dropdown>
   <hr>
   <div class="field col-12 md:col-12">Endereço</div>
   <app-input-text

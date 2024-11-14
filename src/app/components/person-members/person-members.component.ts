@@ -4,19 +4,19 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {status} from "../../shared/util/constants";
+import {DropdownComponent} from "../../shared/components/inputs/dropdown/dropdown.component";
 
 @Component({
   selector: 'app-person-members',
   standalone: true,
   imports: [
-    SharedCommonModule
+    SharedCommonModule,
+    DropdownComponent
   ],
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
 })
 export class PersonMembersComponent extends BaseComponent{
-
-  active: any[] = status;
 
   constructor(
     public readonly ref: DynamicDialogRef,
@@ -35,4 +35,5 @@ export class PersonMembersComponent extends BaseComponent{
     this.ref.close(null);
   }
 
+  protected readonly status = status;
 }
