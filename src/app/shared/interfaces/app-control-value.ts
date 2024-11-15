@@ -7,7 +7,7 @@ import { FieldsService } from "../services/fields/fields.service";
     template: '',
 })
 export abstract class AppControlValueAccessor implements ControlValueAccessor, OnInit{
-    public value: any = '';
+    public value: any = null;
     public isValid: boolean = true;
 
     @Input() label: string = "";

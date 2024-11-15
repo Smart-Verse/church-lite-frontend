@@ -17,7 +17,7 @@ export class FieldsService {
 
 
   constructor(
-    private readonly formBuilder: FormBuilder, 
+    private readonly formBuilder: FormBuilder,
     private readonly http: HttpClient) { }
 
 
@@ -65,7 +65,7 @@ export class FieldsService {
 
     if(fields.required && !fields.hidden){
       validators.push(Validators.required);
-    } 
+    }
     if(fields.type === 'email'){
       validators.push(Validators.email);
     }
@@ -81,7 +81,12 @@ export class FieldsService {
     var form = this.formBuilder.group({});
 
     fields.forEach(e => {
-      form.addControl(e.fieldName, this.onSetValidatoDynamic(e));
+      if(e.type === 'object'){
+        form.addControl(e.fieldName,this.onCreateFormBuiderDynamic(e.fields));
+      } else {
+        form.addControl(e.fieldName, this.onSetValidatoDynamic(e));
+      }
+
     })
     return form;
   }
@@ -92,7 +97,7 @@ export class FieldsService {
 
     if(fields.required && !fields.hidden){
       validators.push(Validators.required);
-    } 
+    }
     if(fields.type === 'email'){
       validators.push(Validators.email);
     }

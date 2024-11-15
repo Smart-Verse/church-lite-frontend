@@ -1,5 +1,5 @@
-<div>
-    <form [formGroup]="personFormGroup" class="person-members formgrid grid">
+<div [formGroup]="personFormGroup">
+    <div class="person-members formgrid grid">
       <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_basic_data_title') }}</div>
       <app-input-text
         formControlName="name"
@@ -14,8 +14,8 @@
         optionLabel="value"
         class="field col-12 md:col-4 c-margin">
       </app-dropdown>
-    </form>
-    <form [formGroup]="personDocsFormGroup" class="person-members formgrid grid">
+    </div>
+    <div formGroupName="personalDocs" class="person-members formgrid grid">
       <app-input-mask
         formControlName="cpf"
         class="field col-12 md:col-4 c-margin"
@@ -34,11 +34,11 @@
         [label]="translatePersonMembers.translate('personal_field_birthdate')"
         type="date">
       </app-input-date>
-    </form>
+    </div>
     <div class="field col-12 md:col-12" >
       <hr>
     </div>
-    <form [formGroup]="personPhoneFormGroup" class="person-members formgrid grid">
+    <div formGroupName="personalTelphone" class="person-members formgrid grid">
       <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_field_personalPhone') }}</div>
       <app-input-mask
         formControlName="phone"
@@ -47,24 +47,24 @@
         mask="(99) 9999-9999">
       </app-input-mask>
       <app-input-mask
-        formControlName="personalPhone"
+        formControlName="cellPhone"
         class="field col-12 md:col-6 c-margin"
         [label]="translatePersonMembers.translate('personal_field_personalPhone')"
         mask="(99) 9 9999-9999">
       </app-input-mask>
-    </form>
-    <form [formGroup]="personEmailFormGroup" class="person-members formgrid grid">
+    </div>
+    <div formGroupName="personalEmail"  class="person-members formgrid grid">
       <app-input-text
         formControlName="email"
         class="field col-12 md:col-12 c-margin"
         [label]="translatePersonMembers.translate('personal_field_email')"
         type="email">
       </app-input-text>
-    </form>
+    </div>
     <div class="field col-12 md:col-12">
       <hr>
     </div>
-    <form [formGroup]="personAdressFormGroup" class="person-members formgrid grid">
+    <div formGroupName="personAddress" class="person-members formgrid grid">
       <div class="field col-12 md:col-12">{{ translatePersonMembers.translate('personal_address_data') }}</div>
       <app-input-mask
         formControlName="postalCode"
@@ -104,7 +104,7 @@
         optionLabel="name"
         type="text">
       </app-auto-complete>
-    </form>
+    </div>
 </div>
 <div class="buttons">
   <div style="margin-right: 10px">

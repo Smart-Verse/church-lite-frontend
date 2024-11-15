@@ -144,7 +144,9 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
 
     this.ref.onClose.subscribe((obj: any) => {
       if (obj) {
-
+        if(obj.id === ""){
+          this.onSave(obj);
+        }
       }
       this.ref = undefined;
     });

@@ -5,7 +5,7 @@ import {FormGroup} from "@angular/forms";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {FieldsService} from "../../shared/services/fields/fields.service";
-import {Person} from "../person-members/person";
+import {PersonConfig} from "../person-members/person.config";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {Position} from "./position";
 
