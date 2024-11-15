@@ -100,6 +100,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       next: (res) => {
         this.datatable.values = res.contents;
         this.onGetAllData(new RequestData());
+        this.onShowLoading();
       },
       error: (err) => {
         this.onShowLoading();
@@ -144,11 +145,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
 
     this.ref.onClose.subscribe((obj: any) => {
       if (obj) {
-        if(obj.id === ""){
+        if(!obj.id){
           this.onSave(obj);
         }
       }
-      this.ref = undefined;
+      //this.ref = undefined;
     });
   }
 }

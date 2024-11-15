@@ -44,7 +44,7 @@ export class PersonConfig {
               type: 'string'
             },
             {
-              fieldName: 'birthdate',
+              fieldName: 'birthDate',
               required: false,
               hidden: false,
               type: 'date'

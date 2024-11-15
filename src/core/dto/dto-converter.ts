@@ -14,7 +14,7 @@ export class DTOConverter {
       personalTelphone: formGroup.get('personalTelphone')?.value,
       personalEmail: formGroup.get('personalEmail')?.value,
     };
-    person.personalDocs.birthdate = datePipe.transform(person.personalDocs.birthdate, 'yyyy-MM-dd')!;
+    person.personalDocs.birthDate = datePipe.transform(person.personalDocs.birthDate, 'yyyy-MM-dd')!;
     return person;
   }
 }

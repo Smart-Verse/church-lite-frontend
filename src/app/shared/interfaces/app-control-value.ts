@@ -18,34 +18,40 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
 
 
     ngOnInit(): void {
-        this.fieldService.invokeVerifyValid.subscribe(() => {
-          this.onValid();
-        })
-      }
+      this.fieldService.invokeVerifyValid.subscribe(() => {
+        this.onValid();
+      })
+    }
 
-      writeValue(value: any): void {
-        this.value = value;
-      }
+    writeValue(value: any): void {
+      this.value = value === '' ? null : value;
+    }
 
-      registerOnChange(fn: any): void {
-        this.onChange = fn;
-      }
+    registerOnChange(fn: any): void {
+      this.onChange = fn;
+    }
 
-      registerOnTouched(fn: any): void {
-        this.onTouch = fn;
-      }
+    registerOnTouched(fn: any): void {
+      this.onTouch = fn;
+    }
 
-      setDisabledState?(isDisabled: boolean): void {
-        //throw new Error('Method not implemented.');
-      }
+    setDisabledState?(isDisabled: boolean): void {
+      //throw new Error('Method not implemented.');
+    }
 
-      onChange = (value: any) => {
-      };
-      onTouch = () => {};
+    onChange = (value: any) => {
+      this.value = value === '' ? null : value;
+    };
+    onTouch = () => {};
 
-      onValid(){
-        //let validator = this.entity.get(this.name)?.valid;
-        //this.isValid = validator === undefined ? true : validator;
-        this.writeValue(this.value);
-      }
+    onValid(){
+      //let validator = this.entity.get(this.name)?.valid;
+      //this.isValid = validator === undefined ? true : validator;
+      this.writeValue(this.value);
+    }
+
+    onInput(value: string): void {
+      this.value = value === '' ? null : value;
+      this.onChange(this.value);
+    }
 }
