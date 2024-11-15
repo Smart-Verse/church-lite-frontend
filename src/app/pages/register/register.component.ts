@@ -113,6 +113,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.crudService.onUpdate(this.configuration.route,param.id,param).subscribe({
       next: (res) => {
         this.onGetAllData(new RequestData());
+        this.onShowLoading();
       },
       error: (err) => {
         this.onShowLoading();
@@ -147,6 +148,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       if (obj) {
         if(!obj.id){
           this.onSave(obj);
+        } else {
+          this.onUpdate(obj);
         }
       }
       //this.ref = undefined;

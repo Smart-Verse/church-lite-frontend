@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
@@ -24,7 +24,7 @@ import {DatePipe} from "@angular/common";
   templateUrl: './person-members.component.html',
   styleUrl: './person-members.component.scss'
 })
-export class PersonMembersComponent extends BaseComponent {
+export class PersonMembersComponent extends BaseComponent implements OnInit{
 
   public personFormGroup: FormGroup;
 
@@ -43,6 +43,11 @@ export class PersonMembersComponent extends BaseComponent {
     this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new PersonConfig().person);
   }
 
+  ngOnInit(): void {
+    if(this.config.data){
+      this.personFormGroup.patchValue(this.config.data);
+    }
+  }
 
   onSave() {
     if(this.personFormGroup.valid) {
@@ -53,5 +58,7 @@ export class PersonMembersComponent extends BaseComponent {
   onCancel() {
     this.ref.close(null);
   }
+
+
 
 }
