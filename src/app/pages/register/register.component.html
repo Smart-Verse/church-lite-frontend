@@ -3,7 +3,7 @@
     <h2>{{configuration.header}}</h2>
     <hr>
     <app-datatable
-      (onRefresh)="onGetAllData($event)"
+      (onRefresh)="onLoadAllData($event)"
       (onRegister)="onSelectedData($event)"
       [config]="datatable">
     </app-datatable>

@@ -39,7 +39,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
       private readonly dialogService: DialogService,
-      private readonly toastService: ToastService
+      private readonly toastService: ToastService,
+      private readonly translateService: TranslateService
   ){
     super();
   }
@@ -55,11 +56,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   onSetPropertiesDatatable(obj: any): void  {
     this.configuration = config.filter(e => e.view === obj.hash)[0];
     this.datatable.fields = obj.fields;
-    this.onGetAllData(new RequestData());
+    this.onLoadAllData(new RequestData());
   }
 
 
-  onGetAllData(requestData: RequestData): void {
+  onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
@@ -81,6 +82,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       },
       error: (err) => {
         this.onShowLoading();
+        this.onToast(0,err.error.message);
       }
     });
   }
@@ -89,11 +91,13 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.onShowLoading();
     this.crudService.onDelete(this.configuration.route,id).subscribe({
       next: (res) => {
-        this.onGetAllData(new RequestData());
+        this.onLoadAllData(new RequestData());
         this.onShowLoading();
+        this.onToast(1,"");
       },
       error: (err) => {
         this.onShowLoading();
+        this.onToast(0,err.error.message);
       }
     });
   }
@@ -103,13 +107,14 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.crudService.onSave(this.configuration.route,param).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
-        this.onGetAllData(new RequestData());
+        this.onLoadAllData(new RequestData());
         this.onShowLoading();
         this.originalClose(null);
+        this.onToast(1,"");
       },
       error: (err) => {
         this.onShowLoading();
-        this.toastService.error({summary: "Erro", detail: err.error.message});
+        this.onToast(0,err.error.message);
       }
     });
   }
@@ -118,13 +123,14 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.onShowLoading();
     this.crudService.onUpdate(this.configuration.route,param.id,param).subscribe({
       next: (res) => {
-        this.onGetAllData(new RequestData());
+        this.onLoadAllData(new RequestData());
         this.onShowLoading();
         this.originalClose(null);
+        this.onToast(1,"");
       },
       error: (err) => {
         this.onShowLoading();
-        this.toastService.error({summary: "Erro", detail: err.error.message});
+        this.onToast(0,err.error.message);
       }
     });
   }
@@ -165,5 +171,13 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         this.originalClose(null);
       }
     };
+  }
+
+  onToast(type: number, message: string): void {
+    if(type === 0){
+      this.toastService.error({summary: "Mensagem", detail: message});
+    } else {
+      this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
+    }
   }
 }

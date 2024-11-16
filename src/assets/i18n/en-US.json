@@ -1,6 +1,7 @@
 {
   "common_action_save": "Save",
   "common_action_cancel": "Cancel",
+  "common_message_success": "Saved successfully",
 
   "personal_basic_data_title": "Basic Data",
   "personal_field_name": "Full Name",
