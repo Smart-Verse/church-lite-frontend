@@ -1,20 +1,27 @@
-import { ControlValueAccessor, FormGroup, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { Component, Input, OnInit } from "@angular/core";
-import { FieldsService } from "../services/fields/fields.service";
+import {AbstractControl,
+  ControlValueAccessor,
+  FormGroup,
+  ValidationErrors,
+} from "@angular/forms";
+import {Component, Input, OnInit} from "@angular/core";
+import {FieldsService} from "../services/fields/fields.service";
 
 
 @Component({
-    template: '',
+  template: '',
 })
-export abstract class AppControlValueAccessor implements ControlValueAccessor, OnInit{
-    public value: any = null;
-    public isValid: boolean = true;
+export abstract class AppControlValueAccessor implements ControlValueAccessor, OnInit {
+  public value: any = null;
+  public isValid: boolean = true;
 
-    @Input() label: string = "";
-    @Input() type: string = "";
-    @Input() guidance: string = "";
+  @Input() label: string = "";
+  @Input() type: string = "";
+  @Input() guidance: string = "";
+  @Input() field?: FormGroup
+  @Input() name: string = "";
 
-    constructor(private readonly fieldService: FieldsService){}
+  constructor(private readonly fieldService: FieldsService) {
+  }
 
 
     ngOnInit(): void {
@@ -45,13 +52,21 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
     onTouch = () => {};
 
     onValid(){
-      //let validator = this.entity.get(this.name)?.valid;
-      //this.isValid = validator === undefined ? true : validator;
+      let validator = this.field?.get(this.name)?.valid;
+      this.isValid = validator === undefined ? true : validator;
       this.writeValue(this.value);
     }
 
     onInput(value: string): void {
       this.value = value === '' ? null : value;
       this.onChange(this.value);
+    }
+
+
+    validate(control: AbstractControl<any, any>): ValidationErrors | null {
+      throw new Error("Method not implemented.");
+    }
+    registerOnValidatorChange?(fn: () => void): void {
+      throw new Error("Method not implemented.");
     }
 }

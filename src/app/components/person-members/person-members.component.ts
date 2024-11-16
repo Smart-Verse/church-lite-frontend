@@ -34,6 +34,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
     public readonly config: DynamicDialogConfig,
     private readonly fieldsService: FieldsService,
     public readonly translatePersonMembers: TranslateService,
+    private readonly toastService: ToastService,
     private datePipe: DatePipe
   ) {
     super();
@@ -42,6 +43,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
 
   ngOnInit(): void {
     if(this.config.data){
+      this.config.data.status = status.find(e => e.key === this.config.data.status);
       this.personFormGroup.patchValue(this.config.data);
     }
   }
@@ -49,6 +51,9 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
   onSave() {
     if(this.personFormGroup.valid) {
       this.ref.close(DTOConverter.convertPersonToDTO(this.personFormGroup,this.datePipe));
+    }else {
+      this.toastService.warn({summary: "Mensagem", detail: "Existem campos inválidos"});
+      this.fieldsService.verifyIsValid();
     }
   }
 
