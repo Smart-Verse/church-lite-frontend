@@ -64,6 +64,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
+        this.datatable.totalRecords = res.total;
+        this.datatable.page = res.offset;
         this.onShowLoading();
       },
       error: (err) => {
