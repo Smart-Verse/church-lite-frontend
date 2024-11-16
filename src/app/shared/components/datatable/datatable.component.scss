@@ -1,10 +1,15 @@
 @import "../../styles/button";
 .datatable{
+  height: calc(90% - 20px);
     .btnsp{
         display: flex;
         justify-content: space-between;
         margin-bottom: 15px;
     }
+  .table{
+    max-height: 80%;
+    overflow: auto;
+  }
 }
 .filter {
     .btn-tx{
@@ -12,6 +17,9 @@
         width: 100%;
     }
 }
-.ng-star-inserted{
-    padding: 5px;
+.summary{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
 }

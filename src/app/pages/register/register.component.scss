@@ -8,11 +8,3 @@
     }
 }
 
-:host::ng-deep {
-    .p-paginator {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-    }
-}

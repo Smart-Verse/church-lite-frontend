@@ -3,6 +3,7 @@ export class DataTable {
     fields: Column[] = [];
     totalRecords: number = 0;
     page: number = 1;
+    size: number = 10;
     route: string = "";
     classBase?: Function;
     filters?: Filters

@@ -44,6 +44,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
   ngOnInit(): void {
     if(this.config.data){
       this.config.data.status = status.find(e => e.key === this.config.data.status);
+      this.config.data.personalDocs.birthDate =  this.config.data.personalDocs.birthDate != null ? new Date(this.config.data.personalDocs.birthDate) : null;
       this.personFormGroup.patchValue(this.config.data);
     }
   }

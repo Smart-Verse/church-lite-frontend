@@ -5,6 +5,11 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { DataTable } from './datatable';
 import { SidebarModule } from 'primeng/sidebar';
 import {RequestData} from "../../interfaces/request-data";
+import {Ripple} from "primeng/ripple";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
+import {InputTextModule} from "primeng/inputtext";
+import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 
 export enum Action {
   DELETE,
@@ -19,7 +24,12 @@ export enum Action {
     CommonModule,
     ButtonModule,
     TableModule,
-    SidebarModule
+    SidebarModule,
+    Ripple,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    PaginatorModule
   ],
   templateUrl: './datatable.component.html',
   styleUrl: './datatable.component.scss'
@@ -34,8 +44,11 @@ export class DatatableComponent {
   @Output() onRefresh: EventEmitter<RequestData> = new EventEmitter();
 
 
-  pageChange($event: TablePageEvent) {
-
+  pageChange($event: PaginatorState) {
+    var data = new RequestData();
+    data.size = $event.rows;
+    data.offset = $event.page ? $event.page + 1 : 0;
+    this.onRefresh.emit(data);
   }
 
   onShowFilters() {
@@ -51,7 +64,6 @@ export class DatatableComponent {
   }
 
   onRefreshData(){
-    this.onShowFilters();
     this.onRefresh.emit(new RequestData());
   }
 }

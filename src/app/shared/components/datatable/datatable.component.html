@@ -17,15 +17,26 @@
         <p-table
             [columns]="config.fields"
             [value]="config.values"
-            [paginator]="true"
             [rows]="10"
-            [totalRecords]="config.totalRecords"
-            dataKey="id"
-            [rowsPerPageOptions]="[10, 20, 50]"
-            [showCurrentPageReport]="true"
+            styleClass="p-datatable-sm"
+            [dataKey]="'id'"
+            [autoLayout]="true"
             (onPage)="pageChange($event)"
-            currentPageReportTemplate="Mostrando {first} para {last} de {totalRecords} entries"
-            [tableStyle]="{ 'min-width': '50rem' }">
+            [rowsPerPageOptions]="[10, 20, 50]"
+            [tableStyle]="{ 'min-width': '50rem'}">
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <p-iconField iconPosition="left" class="ml-auto">
+                <p-inputIcon>
+                  <i class="pi pi-search"></i>
+                </p-inputIcon>
+                <input
+                  pInputText
+                  type="text"
+                  placeholder="Buscar" />
+              </p-iconField>
+            </div>
+          </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
                     <th style="width: 2%"><p-tableHeaderCheckbox /></th>
@@ -63,6 +74,19 @@
                         </button>
                     </td>
                 </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="summary">
+                <p-button type="button" (onClick)="onRefreshData()" icon="pi pi-refresh" styleClass="p-button-text" />
+                <p-paginator
+                  (onPageChange)="pageChange($event)"
+                  [rows]="config.size"
+                  appendTo="body"
+                  dropdownAppendTo="body"
+                  [totalRecords]="config.totalRecords"
+                  [rowsPerPageOptions]="[5,10, 20, 30]" />
+              </div>
+
             </ng-template>
         </p-table>
     </div>
