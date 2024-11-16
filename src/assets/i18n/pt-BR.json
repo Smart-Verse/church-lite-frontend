@@ -3,8 +3,9 @@
     "common_action_save": "Salvar",
     "common_action_cancel": "Cancelar",
     "common_message_success": "Salvo com sucesso",
+    "common_message_invalid_fields": "Existem campos inválidos",
 
-  "personal_basic_data_title": "Dados Basicos",
+    "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",
     "personal_field_status": "Status",
     "personal_field_cpf": "CPF",
