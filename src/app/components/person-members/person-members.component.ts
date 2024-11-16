@@ -27,15 +27,12 @@ import {DatePipe} from "@angular/common";
 export class PersonMembersComponent extends BaseComponent implements OnInit{
 
   public personFormGroup: FormGroup;
-
-
   protected readonly status = status;
 
   constructor(
     public readonly ref: DynamicDialogRef,
     public readonly config: DynamicDialogConfig,
     private readonly fieldsService: FieldsService,
-    private readonly toastService: ToastService,
     public readonly translatePersonMembers: TranslateService,
     private datePipe: DatePipe
   ) {
@@ -58,7 +55,5 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
   onCancel() {
     this.ref.close(null);
   }
-
-
 
 }

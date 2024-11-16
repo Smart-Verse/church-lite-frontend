@@ -5,12 +5,12 @@ import { Router } from "@angular/router";
 import { inject } from "@angular/core";
 import { EnumCookie } from "../../services/cookies/cookie.enum";
 import { environment } from "../../../environments/environment";
-import { ToastService } from "../../services/toast/toast.service";
+import {MessageService} from "primeng/api";
 
 export function authInterceptor(originalRequest: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     const cookiesService = inject(CookiesService);
     const router = inject(Router);
-    //const toastService = inject(ToastService, { optional: true });
+    //const toastService = inject(MessageService);
 
     let request: HttpRequest<unknown>;
 
@@ -29,13 +29,13 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
         catchError((error: HttpErrorResponse) => {
 
             if(error.status === 401 || error.status === 0){
-              //cookiesService.delete(EnumCookie.AUTHORIZATION);
-              //router.navigate(['login']);
+              cookiesService.delete(EnumCookie.AUTHORIZATION);
+              router.navigate(['login']);
             }
+            if(error.status === 400 || error.status > 500){
 
-            return throwError(() => {
-
-            });
+            }
+            return throwError(() => error);
           })
     );
 }

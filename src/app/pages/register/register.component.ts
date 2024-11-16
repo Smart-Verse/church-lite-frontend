@@ -9,6 +9,7 @@ import {RequestData} from "../../shared/interfaces/request-data";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {ToastService} from "../../services/toast/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,8 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
   ],
   providers: [
     CrudService,
-    DialogService
+    DialogService,
+    ToastService
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -30,12 +32,14 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   datatable: DataTable = new DataTable();
   routeComponent: string | null = "";
   configuration: RegisterRoutes = new RegisterRoutes();
+  originalClose: any;
 
   constructor(
       private readonly activatedRoute: ActivatedRoute,
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
-      private readonly dialogService: DialogService
+      private readonly dialogService: DialogService,
+      private readonly toastService: ToastService
   ){
     super();
   }
@@ -82,7 +86,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   }
 
   onDelete(id: any): void {
-
+    this.onShowLoading();
     this.crudService.onDelete(this.configuration.route,id).subscribe({
       next: (res) => {
         this.onGetAllData(new RequestData());
@@ -101,9 +105,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         this.datatable.values = res.contents;
         this.onGetAllData(new RequestData());
         this.onShowLoading();
+        this.originalClose(null);
       },
       error: (err) => {
         this.onShowLoading();
+        this.toastService.error({summary: "Erro", detail: err.error.message});
       }
     });
   }
@@ -114,9 +120,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
       next: (res) => {
         this.onGetAllData(new RequestData());
         this.onShowLoading();
+        this.originalClose(null);
       },
       error: (err) => {
         this.onShowLoading();
+        this.toastService.error({summary: "Erro", detail: err.error.message});
       }
     });
   }
@@ -144,15 +152,18 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         baseZIndex: 999999,
       });
 
-    this.ref.onClose.subscribe((obj: any) => {
-      if (obj) {
-        if(!obj.id){
-          this.onSave(obj);
+
+    this.originalClose = this.ref.close.bind(this.ref);
+    this.ref.close = (result: any) => {
+      if (result) {
+        if(!result.id){
+          this.onSave(result);
         } else {
-          this.onUpdate(obj);
+          this.onUpdate(result);
         }
+      } else {
+        this.originalClose(null);
       }
-      //this.ref = undefined;
-    });
+    };
   }
 }
