@@ -59,7 +59,6 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     this.onLoadAllData(new RequestData());
   }
 
-
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
