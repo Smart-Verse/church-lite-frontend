@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://smartverse.com.br:5000/api/church-lite'
+    apiUrl: 'https://develop.smartverse.com.br/api/church-lite'
 };
