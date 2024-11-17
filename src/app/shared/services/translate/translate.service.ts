@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,11 @@ export class TranslateService {
     if(isPlatformBrowser(this.platformId)){
       this.language = navigator.language || navigator.languages[0];
     }
-
-    return this.http.get<{ [key: string]: string }>(`/assets/i18n/${this.language}.json`).pipe(
+    let urlProduction = "";
+    if(environment.production){
+      urlProduction = "/church-lite"
+    }
+    return this.http.get<{ [key: string]: string }>(`${urlProduction}/assets/i18n/${this.language}.json`).pipe(
       map((data) => {
         this.translations = data;
       })
