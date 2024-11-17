@@ -27,12 +27,11 @@ import { HttpModule } from './config/http/http.module';
 export class AppComponent implements OnInit{
   title = 'church-lite-frontend';
 
-  constructor(private config: PrimeNGConfig,
-              private router: Router) {
+  constructor(private config: PrimeNGConfig) {
     const basePath = '/church-lite';
     if (!location.pathname.startsWith(basePath)) {
       const target = `${basePath}/#${location.hash.replace('#', '')}`;
-      location.replace(target);
+      window.location.assign(target);
     }
   }
 
