@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
-import { provideRouter, withHashLocation } from '@angular/router';
+import {provideRouter, withHashLocation, withRouterConfig} from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
