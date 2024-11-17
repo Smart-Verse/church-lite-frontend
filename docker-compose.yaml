@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ACCESS_TOKEN: ${ACCESS_TOKEN}
+        GIT_TOKEN: ${GIT_TOKEN}
     environment:
       NODE_ENV: production
     ports:
-      - 5070:80
+      - 5051:80

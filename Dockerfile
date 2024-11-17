@@ -3,7 +3,7 @@ FROM node:20 as build
 
 
 ARG REPO_URL=https://github.com/Church-Lite/church-lite-frontend.git
-ARG ACCESS_TOKEN
+ARG GIT_TOKEN
 
 
 WORKDIR /app
@@ -12,7 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y git
 
 
-RUN git clone https://${ACCESS_TOKEN}:x-oauth-basic@github.com/Church-Lite/church-lite-frontend.git .
+RUN git clone https://${GIT_TOKEN}:x-oauth-basic@github.com/Church-Lite/church-lite-frontend.git .
 
 
 RUN npm install
