@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/church-lite-frontend",
-            "index": "src/index.html",
+            "index": "src/index.dev.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -48,7 +48,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "index": "src/index.prod.html",
+              "index": "src/index.html",
               "budgets": [
                 {
                   "type": "initial",
