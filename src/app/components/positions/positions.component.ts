@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {ToastService} from "../../services/toast/toast.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
 import {FormGroup} from "@angular/forms";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {TranslateService} from "../../shared/services/translate/translate.service";

@@ -7,7 +7,7 @@ import {TooltipModule} from "primeng/tooltip";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
 import {AutoCompleteModule} from "primeng/autocomplete";
-import {CrudService} from "../../../../services/crud/crud.service";
+import {CrudService} from "../../../services/crud/crud.service";
 import {RequestData} from "../../../interfaces/request-data";
 
 @Component({

@@ -6,7 +6,7 @@ import {TooltipModule} from "primeng/tooltip";
 import {DropdownModule} from "primeng/dropdown";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
-import {CrudService} from "../../../../services/crud/crud.service";
+import {CrudService} from "../../../services/crud/crud.service";
 import {AutoCompleteModule} from "primeng/autocomplete";
 
 

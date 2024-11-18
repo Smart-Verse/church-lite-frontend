@@ -1,9 +1,13 @@
 
 {
+    "common_action_yes": "Sim",
+    "common_action_no": "Não",
     "common_action_save": "Salvar",
     "common_action_cancel": "Cancelar",
     "common_message_success": "Salvo com sucesso",
     "common_message_invalid_fields": "Existem campos inválidos",
+    "common_message_confirmation_delete": "Deseja excluir o(s) registro(s) selecionado(s)?",
+    "common_message_header_confirmation_delete": "Exclusão de registro",
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",

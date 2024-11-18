@@ -6,7 +6,7 @@ import { SignUp } from './signup';
 import {  Router } from '@angular/router';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { SecurityService } from '../services/security.service';
-import { ToastService } from '../../services/toast/toast.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 @Component({
   selector: 'app-signup',

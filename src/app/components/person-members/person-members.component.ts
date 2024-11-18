@@ -7,7 +7,7 @@ import {status} from "../../shared/util/constants";
 import { FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields/fields.service';
 import { PersonConfig } from './person.config';
-import { ToastService } from '../../services/toast/toast.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
 import {DTOConverter} from "../../../core/dto/dto-converter";
 import {DatePipe} from "@angular/common";
 
