@@ -29,6 +29,6 @@
       </div>
     </ul>
 </div>
-<div class="content" (click)="closeMenu()">
+<div class="content" [class.menu-expanded]="isExpanded" (click)="closeMenu()">
     <router-outlet></router-outlet>
 </div>
