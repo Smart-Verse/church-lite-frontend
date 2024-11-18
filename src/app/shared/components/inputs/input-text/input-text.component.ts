@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import { AppControlValueAccessor } from '../../../interfaces/app-control-value';
 import { FieldsService } from '../../../services/fields/fields.service';
-import { SharedCommonModule } from '../../../common/shared-common.module';
 import {TooltipModule} from "primeng/tooltip";
 import {CommonModule} from "@angular/common";
 import {InputTextModule} from "primeng/inputtext";
 import {FloatLabelModule} from "primeng/floatlabel";
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-input-text',
@@ -17,7 +17,8 @@ import {FloatLabelModule} from "primeng/floatlabel";
     FormsModule,
     ReactiveFormsModule,
     FloatLabelModule,
-    TooltipModule
+    TooltipModule,
+    InputTextareaModule
   ],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
@@ -30,6 +31,8 @@ import {FloatLabelModule} from "primeng/floatlabel";
   ]
 })
 export class InputTextComponent extends AppControlValueAccessor{
+
+  @Input() fieldType: string = "input-text";
 
   constructor(private readonly fieldServiceInputText: FieldsService){
     super(fieldServiceInputText)

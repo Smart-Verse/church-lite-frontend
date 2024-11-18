@@ -8,6 +8,8 @@
     "common_message_invalid_fields": "Existem campos inválidos",
     "common_message_confirmation_delete": "Deseja excluir o(s) registro(s) selecionado(s)?",
     "common_message_header_confirmation_delete": "Exclusão de registro",
+    "common_description": "Descrição",
+    "common_name": "Nome",
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",

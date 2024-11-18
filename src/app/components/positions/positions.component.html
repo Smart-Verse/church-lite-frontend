@@ -1,1 +1,30 @@
-<p>positions works!</p>
+
+<div [formGroup]="positionFormGroup">
+    <div class="prositions formgrid grid">
+        <app-input-text
+            formControlName="name"
+            name="name"
+            [field]="positionFormGroup"
+            class="field col-12 md:col-12 c-margin"
+            [label]="translatePersonMembers.translate('common_name')"
+            type="text">
+        </app-input-text>
+        <app-input-text
+            fieldType="input-text-area"
+            formControlName="description"
+            name="description"
+            [field]="positionFormGroup"
+            class="field col-12 md:col-12 c-margin"
+            [label]="translatePersonMembers.translate('common_description')"
+            type="text">
+        </app-input-text>
+    </div>
+</div>
+<div class="buttons">
+    <div style="margin-right: 10px">
+        <p-button  [label]="translatePersonMembers.translate('common_action_cancel')" (onClick)="onCancel()"/>
+    </div>
+    <div>
+        <p-button  [label]="translatePersonMembers.translate('common_action_save')" (onClick)="onSave()"/>
+    </div>
+</div>
