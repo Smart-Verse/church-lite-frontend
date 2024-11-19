@@ -40,7 +40,7 @@
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns">
+          <th  [style]="'width:' + col.width " *ngFor="let col of columns">
             {{ col.header }}
           </th>
           <th style="width: 13%;">
@@ -53,6 +53,23 @@
           <td *ngFor="let col of columns; let i = index">
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
             {{ rowData[col.field] }}
+          </td>
+          <td style="width: 13%;">
+            <button
+              style="margin-right: 5px;"
+              type="button"
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              (click)="onRegisterData(rowData, 1)">
+            </button>
+            <button
+              type="button"
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              (click)="onDeleteData(rowData, 0)">
+            </button>
           </td>
         </tr>
       </ng-template>

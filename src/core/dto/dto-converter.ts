@@ -33,6 +33,7 @@ export class DTOConverter {
       description: formGroup.get('description')?.value,
       codeTree: formGroup.get('codeTree')?.value,
       type: formGroup.get('type')?.value["key"],
+      children: []
     };
     return dto;
   }
