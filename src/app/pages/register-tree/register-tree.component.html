@@ -1,0 +1,10 @@
+<app-loading [showLoading]="showLoading"></app-loading>
+<div class="register">
+  <h2>{{configuration.header}}</h2>
+  <hr>
+  <app-tree-datatable
+    (onRefresh)="onLoadAllData($event)"
+    (onRegister)="onSelectedData($event)"
+    [config]="datatable">
+  </app-tree-datatable>
+</div>
