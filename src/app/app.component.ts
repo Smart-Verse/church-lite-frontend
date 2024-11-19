@@ -28,11 +28,7 @@ export class AppComponent implements OnInit{
   title = 'church-lite-frontend';
 
   constructor(private config: PrimeNGConfig) {
-    const basePath = '/church-lite';
-    if (!location.pathname.startsWith(basePath)) {
-      const target = `${basePath}/#${location.hash.replace('#', '')}`;
-      window.location.assign(target);
-    }
+
   }
 
   ngOnInit(): void {

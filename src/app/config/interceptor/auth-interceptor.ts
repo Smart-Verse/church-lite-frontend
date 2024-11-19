@@ -30,7 +30,7 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
             console.log(error);
             if(error.status === 401 || error.status === 0){
               cookiesService.delete(EnumCookie.AUTHORIZATION);
-              router.navigate(['login']);
+              router.navigate(['/login']);
             }
             if(error.status === 400 || error.status > 500){
 
