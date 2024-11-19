@@ -32,5 +32,27 @@
         "width": "80%"
       }
     ]
+  },
+  {
+    "route": "planAccount",
+    "hash": "planAccount",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "codeTree",
+        "header": "Codigo Arvore",
+        "width": "20%"
+      }
+    ]
   }
 ]

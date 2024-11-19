@@ -5,7 +5,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
-import { MenuItens } from './menu-itens';
+import { MenuItens } from '../../../config/sidebar/menu-itens';
 
 
 @Component({

@@ -8,6 +8,7 @@ import { RegisterChurchComponent } from './pages/register-church/register-church
 import { DashComponent } from './pages/dash/dash.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotificationComponent } from './pages/notification/notification.component';
+import {RegisterTreeComponent} from "./pages/register-tree/register-tree.component";
 
 export const routes: Routes = [
 
@@ -19,11 +20,11 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivateChild: [privateGuard],
         children: [
-
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashComponent },
             { path: 'register/:hash', component: RegisterComponent },
+            { path: 'register-tree/:hash', component: RegisterTreeComponent },
             { path: 'notification', component: NotificationComponent },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ]
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },

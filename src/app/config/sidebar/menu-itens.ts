@@ -33,6 +33,15 @@ export class MenuItens{
                     ]
                 },
                 {
+                  name: 'Financeiro',
+                  submenu: [
+                    {
+                      route: "register-tree/planAccount",
+                      name: 'Plano de contas',
+                    }
+                  ]
+                },
+                {
                     name: 'Outros',
                     submenu: [
                       {
