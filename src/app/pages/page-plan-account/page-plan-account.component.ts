@@ -1,43 +1,61 @@
 import {Component, OnInit} from '@angular/core';
-import {BaseComponent} from "../../shared/common/base-component/base-component";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {DataTable} from "../../shared/components/datatable/datatable";
-
-import {ActivatedRoute} from "@angular/router";
+import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {CrudService} from "../../shared/services/crud/crud.service";
-import {RegisterService} from "../../services/register/register.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ToastService} from "../../shared/services/toast/toast.service";
+import {DataTable} from "../../shared/components/datatable/datatable";
+import {BaseComponent} from "../../shared/common/base-component/base-component";
+import {ActivatedRoute} from "@angular/router";
+import {RegisterService} from "../../services/register/register.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {RequestData} from "../../shared/interfaces/request-data";
-import {TreeDatatableComponent} from "../../shared/components/tree-datatable/tree-datatable.component";
-import {LoadingComponent} from "../../shared/components/loading/loading.component";
-import {RegisterChurchService} from "../../services/register-church/register-church.service";
-import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {config, RegisterTreeRoutes} from "./register-tree";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
+import {Ripple} from "primeng/ripple";
+import {TreeTableModule} from "primeng/treetable";
+import {PaginatorState} from "primeng/paginator";
+import {Action} from "../../shared/components/datatable/datatable.component";
+import {ConfirmationService} from "primeng/api";
+import {PlanAccountComponent} from "../../components/plan-account/plan-account.component";
 
 @Component({
-  selector: 'app-register-tree',
+  selector: 'app-page-plan-account',
   standalone: true,
   imports: [
     SharedCommonModule,
-    TreeDatatableComponent,
+    ConfirmDialogModule,
+    IconFieldModule,
+    InputIconModule,
+    Ripple,
+    TreeTableModule,
+
   ],
   providers: [
     CrudService,
     DialogService,
-    ToastService
+    ToastService,
+    ConfirmationService
   ],
-  templateUrl: './register-tree.component.html',
-  styleUrl: './register-tree.component.scss'
+  templateUrl: './page-plan-account.component.html',
+  styleUrl: './page-plan-account.component.scss'
 })
-export class RegisterTreeComponent extends BaseComponent implements OnInit  {
+export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
+
+
+  configuration: any = {
+    header: "Cadastro de plano de contas",
+    view: "planAccount",
+    route: "planAccount",
+    component: PlanAccountComponent
+  }
 
   ref: DynamicDialogRef | undefined;
 
   datatable: DataTable = new DataTable();
   routeComponent: string | null = "";
-  configuration: RegisterTreeRoutes = new RegisterTreeRoutes();
   originalClose: any;
+  sidebarVisible: boolean = false;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -45,21 +63,19 @@ export class RegisterTreeComponent extends BaseComponent implements OnInit  {
     private readonly registerService: RegisterService,
     private readonly dialogService: DialogService,
     private readonly toastService: ToastService,
-    private readonly translateService: TranslateService
+    private readonly translateService: TranslateService,
+    private confirmationService: ConfirmationService,
   ){
     super();
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.routeComponent = params.get('hash');
-      var obj = this.registerService.getModel(this.routeComponent || "");
-      this.onSetPropertiesDatatable(obj);
-    });
+
+    var obj = this.registerService.getModel("planAccount");
+    this.onSetPropertiesDatatable(obj);
   }
 
   onSetPropertiesDatatable(obj: any): void  {
-    this.configuration = config.filter(e => e.view === obj.hash)[0];
     this.datatable.fields = obj.fields;
     this.onLoadAllData(new RequestData());
   }
@@ -81,11 +97,13 @@ export class RegisterTreeComponent extends BaseComponent implements OnInit  {
     });
   }
 
-  onLoadData(id: any): void {
+  onLoadData(data: any): void {
     this.onShowLoading();
-    this.crudService.onGet(this.configuration.route,id).subscribe({
+    this.crudService.onGet(this.configuration.route,data.id).subscribe({
       next: (res) => {
         this.onShowLoading();
+        res.action = data.action;
+        res.parentCode = data.parentCode;
         this.onOpenModal(res);
       },
       error: (err) => {
@@ -143,18 +161,6 @@ export class RegisterTreeComponent extends BaseComponent implements OnInit  {
     });
   }
 
-  onSelectedData(obj: any): void {
-    if(obj.data){
-      if(obj.action === 0){// delete data
-        this.onDelete(obj.data.id);
-      } else {
-        this.onLoadData(obj.data.id);
-      }
-    } else{
-      this.onOpenModal(obj);
-    }
-  }
-
   onOpenModal(obj: any){
     this.ref = this.dialogService.open(this.configuration.component,
       {
@@ -181,12 +187,58 @@ export class RegisterTreeComponent extends BaseComponent implements OnInit  {
     };
   }
 
-  onToast(type: number, message: string): void {
-    if(type === 0){
-      this.toastService.error({summary: "Mensagem", detail: message});
-    } else {
-      this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
+  pageChange($event: PaginatorState) {
+    var data = new RequestData();
+    data.size = $event.rows;
+    data.offset = $event.page ? $event.page + 1 : 0;
+    this.onLoadAllData(data);
+  }
+
+  onRegisterData(item: any, action: Action, rowNode: any){
+    let obj = {
+      data: item,
+      action: action,
+      parent: null
     }
+
+    if(item){
+      if(obj.action === 0){// delete data
+        this.onDelete(obj.data.id);
+      } else {
+        obj.data.parentCode = (rowNode.parent === null ? null : rowNode.parent.data);
+        obj.data.action = action;
+        this.onLoadData(obj.data);
+      }
+    } else{
+      this.onOpenModal(obj);
+    }
+
+  }
+
+  onRefreshData(){
+    this.onLoadAllData(new RequestData());
+  }
+
+  onShowFilters() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  onDeleteData(item: any, action: Action){
+    this.confirmationService.confirm({
+      message: this.translateService.translate("common_message_confirmation_delete"),
+      header: this.translateService.translate("common_message_header_confirmation_delete"),
+      icon: 'pi pi-info-circle',
+      acceptButtonStyleClass:"p-button-danger p-button-text",
+      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptLabel: this.translateService.translate("common_action_yes"),
+      rejectLabel: this.translateService.translate("common_action_no"),
+      acceptIcon:"none",
+      rejectIcon:"none",
+      accept: () => {
+        this.onRegisterData(item, action, null)
+      },
+      reject: () => {}
+    });
   }
 
   onLoadChildren(obj: any[]): any[] {
@@ -208,6 +260,14 @@ export class RegisterTreeComponent extends BaseComponent implements OnInit  {
 
     });
     return tree;
+  }
+
+  onToast(type: number, message: string): void {
+    if(type === 0){
+      this.toastService.error({summary: "Mensagem", detail: message});
+    } else {
+      this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
+    }
   }
 
 }

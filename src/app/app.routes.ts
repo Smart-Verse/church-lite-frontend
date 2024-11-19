@@ -8,7 +8,7 @@ import { RegisterChurchComponent } from './pages/register-church/register-church
 import { DashComponent } from './pages/dash/dash.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotificationComponent } from './pages/notification/notification.component';
-import {RegisterTreeComponent} from "./pages/register-tree/register-tree.component";
+import {PagePlanAccountComponent} from "./pages/page-plan-account/page-plan-account.component";
 
 export const routes: Routes = [
 
@@ -22,7 +22,7 @@ export const routes: Routes = [
         children: [
             { path: 'dashboard', component: DashComponent },
             { path: 'register/:hash', component: RegisterComponent },
-            { path: 'register-tree/:hash', component: RegisterTreeComponent },
+            { path: 'planAccount', component: PagePlanAccountComponent },
             { path: 'notification', component: NotificationComponent },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ]

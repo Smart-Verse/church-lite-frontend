@@ -26,6 +26,7 @@ import {typePlanAccount} from "../../shared/util/constants";
 export class PlanAccountComponent extends BaseComponent implements OnInit{
 
   public formGroup: FormGroup;
+  public parent: any;
   protected readonly _planAccount = typePlanAccount;
 
   constructor(
@@ -40,15 +41,31 @@ export class PlanAccountComponent extends BaseComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.config.data){
-      this.config.data.type = this._planAccount.find(e => e.key === this.config.data.type);
-      this.formGroup.patchValue(this.config.data);
+    if(this.config.data) {
+      if(this.config.data.action === 1) {
+        this.parent = this.config.data.parentCode;
+        this.config.data.type = this._planAccount.find(e => e.key === this.config.data.type);
+        this.formGroup.patchValue(this.config.data);
+      } else {
+        this.parent = this.config.data;
+      }
     }
   }
 
   onSave() {
     if(this.formGroup.valid) {
-      this.ref.close(DTOConverter.convertPlanAccountToDTO(this.formGroup));
+      var dto = DTOConverter.convertPlanAccountToDTO(this.formGroup);
+      if(this.parent && this.config.data.action === 2){
+        dto.parentCode = this.parent;
+        this.ref.close(dto);
+      } else if(this.parent && this.config.data.action === 1){
+        dto.parentCode = this.parent;
+        delete dto.parentCode.children;
+        this.ref.close(dto);
+      } else{
+        this.ref.close(dto);
+      }
+
     }else {
       this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();

@@ -36,7 +36,7 @@ export class MenuItens{
                   name: 'Financeiro',
                   submenu: [
                     {
-                      route: "register-tree/planAccount",
+                      route: "planAccount",
                       name: 'Plano de contas',
                     }
                   ]

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeDatatableComponent } from './tree-datatable.component';
+import { PagePlanAccountComponent } from './page-plan-account.component';
 
-describe('TreeDatatableComponent', () => {
-  let component: TreeDatatableComponent;
-  let fixture: ComponentFixture<TreeDatatableComponent>;
+describe('PagePlanAccountComponent', () => {
+  let component: PagePlanAccountComponent;
+  let fixture: ComponentFixture<PagePlanAccountComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TreeDatatableComponent]
+      imports: [PagePlanAccountComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TreeDatatableComponent);
+    fixture = TestBed.createComponent(PagePlanAccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

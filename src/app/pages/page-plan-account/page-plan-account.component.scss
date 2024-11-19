@@ -1,4 +1,13 @@
-@import "../../styles/button";
+
+@import "../../shared/styles/button";
+.page-plan-account {
+  padding: 10px;
+  height: 100%;
+  .btnsp{
+    display: flex;
+    justify-content: space-between;
+  }
+}
 .tree-datatable{
   height: calc(90% - 20px);
   .btnsp{

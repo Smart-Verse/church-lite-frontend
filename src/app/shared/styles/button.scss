@@ -15,5 +15,12 @@
         font-size: 14px;
         padding: 0.35rem 0.90rem;
     }
+    .p-treetable .p-treetable-tbody > tr > td {
+      text-align: left;
+      border: none;
+      border-width: 0 0 1px 0;
+      font-size: 14px;
+      padding: 0.35rem 0.90rem;
+    }
 
 }
