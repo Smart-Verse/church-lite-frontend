@@ -5,7 +5,7 @@ import { TranslateService } from '../../shared/services/translate/translate.serv
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterChurchService } from '../../services/register-church/register-church.service';
 import { error } from 'console';
-import { ToastService } from '../../services/toast/toast.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
 
 
 @Component({

@@ -14,7 +14,7 @@ export class Position {
     },
     {
       fieldName: 'description',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     }

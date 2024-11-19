@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { CookiesService } from '../../services/cookies/cookies.service';
-import { EnumCookie } from '../../services/cookies/cookie.enum';
+import { CookiesService } from '../../shared/services/cookies/cookies.service';
+import { EnumCookie } from '../../shared/services/cookies/cookie.enum';
 
 
 

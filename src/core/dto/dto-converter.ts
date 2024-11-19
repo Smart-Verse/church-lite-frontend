@@ -5,7 +5,7 @@ import {DatePipe} from "@angular/common";
 export class DTOConverter {
 
   static convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe): any {
-     let person = {
+     let dto = {
       id: formGroup.get('id')?.value,
       name: formGroup.get('name')?.value,
       status: formGroup.get('status')?.value["key"],
@@ -14,7 +14,16 @@ export class DTOConverter {
       personalTelphone: formGroup.get('personalTelphone')?.value,
       personalEmail: formGroup.get('personalEmail')?.value,
     };
-    person.personalDocs.birthDate = datePipe.transform(person.personalDocs.birthDate, 'yyyy-MM-dd')!;
-    return person;
+    dto.personalDocs.birthDate = datePipe.transform(dto.personalDocs.birthDate, 'yyyy-MM-dd')!;
+    return dto;
   }
+
+  static convertPositionToDTO(formGroup: FormGroup): any {
+    let dto = {
+     id: formGroup.get('id')?.value,
+     name: formGroup.get('name')?.value,
+     description: formGroup.get('description')?.value
+   };
+   return dto;
+ }
 }

@@ -6,10 +6,10 @@ import { TranslateService } from '../../shared/services/translate/translate.serv
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields/fields.service';
 import { SecurityService } from '../services/security.service';
-import { ToastService } from '../../services/toast/toast.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
 import { Login } from './login';
-import { CookiesService } from '../../services/cookies/cookies.service';
-import { EnumCookie } from '../../services/cookies/cookie.enum';
+import { CookiesService } from '../../shared/services/cookies/cookies.service';
+import { EnumCookie } from '../../shared/services/cookies/cookie.enum';
 
 
 
