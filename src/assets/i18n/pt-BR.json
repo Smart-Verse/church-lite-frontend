@@ -10,6 +10,9 @@
     "common_message_header_confirmation_delete": "Exclusão de registro",
     "common_description": "Descrição",
     "common_name": "Nome",
+    "common_type": "Tipo",
+
+    "planAccount_codeTree": "Código Arvore",
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",

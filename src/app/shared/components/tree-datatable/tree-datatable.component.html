@@ -1,5 +1,19 @@
 <div class="tree-datatable">
   <p-confirmDialog />
+  <div class="btnsp">
+    <button
+      pButton
+      pRipple
+      (click)="onRegisterData(null,2)"
+      label="Adicionar">
+    </button>
+    <button
+      pButton
+      pRipple
+      (click)="onShowFilters()"
+      icon="pi pi-filter">
+    </button>
+  </div>
   <div class="table">
     <p-treeTable
       [value]="config.treeValues"

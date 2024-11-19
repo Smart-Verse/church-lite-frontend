@@ -26,4 +26,14 @@ export class DTOConverter {
    };
    return dto;
  }
+
+  static convertPlanAccountToDTO(formGroup: FormGroup): any {
+    let dto = {
+      id: formGroup.get('id')?.value,
+      description: formGroup.get('description')?.value,
+      codeTree: formGroup.get('codeTree')?.value,
+      type: formGroup.get('type')?.value["key"],
+    };
+    return dto;
+  }
 }
