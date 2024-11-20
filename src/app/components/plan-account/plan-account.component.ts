@@ -59,7 +59,8 @@ export class PlanAccountComponent extends BaseComponent implements OnInit{
         if(this.parent.parentCode){
           delete this.parent.parentCode;// exclui demais arvores
         }
-        dto.parentCode = this.parent;
+        if(this.parent.data !== null)
+          dto.parentCode = this.parent;
         this.ref.close(dto);
       } else if(this.parent && this.config.data.action === 1){
         dto.parentCode = this.parent;

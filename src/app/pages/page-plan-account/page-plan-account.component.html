@@ -47,7 +47,7 @@
             <th  [style]="'width:' + col.width " *ngFor="let col of columns">
               {{ col.header }}
             </th>
-            <th style="width: 13%;">
+            <th style="width: 18%;">
               Ações
             </th>
           </tr>
@@ -58,7 +58,7 @@
               <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />
               {{ rowData[col.field] }}
             </td>
-            <td style="width: 13%;">
+            <td style="width: 18%;">
               <button
                 style="margin-right: 5px;"
                 type="button"
@@ -84,6 +84,18 @@
               </button>
             </td>
           </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="summary">
+            <p-button type="button" (onClick)="onRefreshData()" icon="pi pi-refresh" styleClass="p-button-text" />
+            <p-paginator
+              (onPageChange)="pageChange($event)"
+              [rows]="datatable.size"
+              appendTo="body"
+              dropdownAppendTo="body"
+              [totalRecords]="datatable.totalRecords"
+              [rowsPerPageOptions]="[5,10, 20, 30]" />
+          </div>
         </ng-template>
       </p-treeTable>
     </div>

@@ -14,10 +14,11 @@ import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {Ripple} from "primeng/ripple";
 import {TreeTableModule} from "primeng/treetable";
-import {PaginatorState} from "primeng/paginator";
+import {PaginatorModule, PaginatorState} from "primeng/paginator";
 import {Action} from "../../shared/components/datatable/datatable.component";
 import {ConfirmationService} from "primeng/api";
 import {PlanAccountComponent} from "../../components/plan-account/plan-account.component";
+import {TableModule} from "primeng/table";
 
 @Component({
   selector: 'app-page-plan-account',
@@ -29,6 +30,8 @@ import {PlanAccountComponent} from "../../components/plan-account/plan-account.c
     InputIconModule,
     Ripple,
     TreeTableModule,
+    PaginatorModule,
+    TableModule,
 
   ],
   providers: [
