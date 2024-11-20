@@ -1,12 +1,23 @@
 
 <p-floatLabel>
-  <input [type]="type"
+  <input *ngIf="fieldType === 'input-text'"  [type]="type"
          [pTooltip]="guidance"
          pInputText
          (ngModelChange)="onChange($event)"
          [ngModel]="value"
          [ngClass]="{'ng-invalid ng-dirty': !isValid}"
          class="w-full outlined"/>
-  <label>{{label}}</label>
+  <textarea  *ngIf="fieldType === 'input-text-area'"
+        [pTooltip]="guidance"
+         rows="5"
+         cols="30"
+         [autoResize]="true"
+         pInputTextarea 
+         (ngModelChange)="onChange($event)"
+         [ngModel]="value"
+         [ngClass]="{'ng-invalid ng-dirty': !isValid}"
+         class="w-full outlined">
+  </textarea>
+  <label id="">{{label}}</label>
 </p-floatLabel>
 

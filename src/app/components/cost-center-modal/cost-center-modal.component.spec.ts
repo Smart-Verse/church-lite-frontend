@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonMembersComponent } from './person-members.component';
+import { CostCenterModalComponent } from './cost-center-modal.component';
 
-describe('PersonMembersComponent', () => {
-  let component: PersonMembersComponent;
-  let fixture: ComponentFixture<PersonMembersComponent>;
+describe('CostCenterModalComponent', () => {
+  let component: CostCenterModalComponent;
+  let fixture: ComponentFixture<CostCenterModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PersonMembersComponent]
+      imports: [CostCenterModalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PersonMembersComponent);
+    fixture = TestBed.createComponent(CostCenterModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

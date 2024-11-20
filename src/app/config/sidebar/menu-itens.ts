@@ -22,15 +22,40 @@ export class MenuItens{
                 {
                     name: 'Pessoas',
                     submenu: [
+                      {
+                          route: "register/personMembers",
+                          name: 'Membros',
+                      },
+                      {
+                        route: "register/personNewConvert",
+                        name: 'Novos Convertidos',
+                      },
+                      {
+                          route: "register/personSupplier",
+                          name: 'Fornecedores',
+                      },
+                      {
+                        route: "register/personVisitor",
+                        name: 'Visitantes',
+                      }
+                    ]
+                },
+                {
+                  name: 'Financeiro',
+                  submenu: [
                     {
-                        route: "register/personMembers",
-                        name: 'Membros',
+                      route: "planAccount",
+                      name: 'Plano de contas',
                     },
                     {
-                        route: "dashboard",
-                        name: 'Fornecedores',
+                      route: "costCenter",
+                      name: 'Centro de custo',
+                    },
+                    {
+                      route: "register/bank",
+                      name: 'Bancos',
                     }
-                    ]
+                  ]
                 },
                 {
                     name: 'Outros',

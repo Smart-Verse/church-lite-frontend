@@ -20,6 +20,11 @@ export class TranslateService {
   loadTranslations(): Observable<void> {
     if(isPlatformBrowser(this.platformId)){
       this.language = navigator.language || navigator.languages[0];
+      if(this.language.indexOf("en") > -1){
+        this.language = 'en-US';
+      } else if(this.language.indexOf("es") > -1){
+        this.language = 'es-ES';
+      }
     }
     let urlProduction = "";
     if(environment.production){

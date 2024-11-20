@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit{
   title = 'church-lite-frontend';
 
   constructor(private config: PrimeNGConfig) {
+
   }
 
   ngOnInit(): void {

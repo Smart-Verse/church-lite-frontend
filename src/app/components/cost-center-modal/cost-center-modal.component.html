@@ -1,0 +1,29 @@
+<div [formGroup]="formGroup">
+  <div class="person-members formgrid grid">
+    <app-input-text
+      formControlName="description"
+      name="description"
+      [field]="formGroup"
+      class="field col-12 md:col-12 c-margin"
+      [label]="translateService.translate('common_description')"
+      type="text">
+    </app-input-text>
+    <app-input-text
+      formControlName="codeTree"
+      name="codeTree"
+      [field]="formGroup"
+      class="field col-12 md:col-12 c-margin"
+      [label]="translateService.translate('planAccount_codeTree')"
+      type="text">
+    </app-input-text>
+  </div>
+</div>
+
+<div class="buttons">
+  <div style="margin-right: 10px">
+    <p-button  [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()"/>
+  </div>
+  <div>
+    <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
+  </div>
+</div>

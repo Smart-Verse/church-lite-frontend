@@ -8,6 +8,8 @@ import { RegisterChurchComponent } from './pages/register-church/register-church
 import { DashComponent } from './pages/dash/dash.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotificationComponent } from './pages/notification/notification.component';
+import {PagePlanAccountComponent} from "./pages/page-plan-account/page-plan-account.component";
+import {CostCenterComponent} from "./pages/cost-center/cost-center.component";
 
 export const routes: Routes = [
 
@@ -19,11 +21,12 @@ export const routes: Routes = [
         component: HomeComponent,
         canActivateChild: [privateGuard],
         children: [
-
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashComponent },
             { path: 'register/:hash', component: RegisterComponent },
+            { path: 'planAccount', component: PagePlanAccountComponent },
+            { path: 'costCenter', component: CostCenterComponent },
             { path: 'notification', component: NotificationComponent },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ]
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },

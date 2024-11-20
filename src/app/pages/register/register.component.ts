@@ -3,13 +3,13 @@ import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { DataTable } from '../../shared/components/datatable/datatable';
 import {RegisterService} from "../../services/register/register.service";
 import {ActivatedRoute} from "@angular/router";
-import {CrudService} from "../../services/crud/crud.service";
+import {CrudService} from "../../shared/services/crud/crud.service";
 import {config, RegisterRoutes} from "./register";
 import {RequestData} from "../../shared/interfaces/request-data";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {ToastService} from "../../services/toast/toast.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -61,6 +61,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
 
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
+    requestData = this.includeFilters(requestData);
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
@@ -181,5 +182,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     } else {
       this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
     }
+  }
+
+  private includeFilters(requestData: RequestData) {
+    var filter = this.configuration.defaultFilter;
+    requestData.filter = filter + requestData.filter;
+    return requestData;
   }
 }

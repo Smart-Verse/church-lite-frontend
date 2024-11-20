@@ -1,4 +1,4 @@
-export class Position {
+export class PositionConfig {
   fields: any[] = [
     {
       fieldName: 'id',
@@ -14,7 +14,7 @@ export class Position {
     },
     {
       fieldName: 'description',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     }

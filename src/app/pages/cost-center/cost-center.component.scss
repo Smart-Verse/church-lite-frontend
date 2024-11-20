@@ -1,0 +1,34 @@
+
+@import "../../shared/styles/button";
+.cost-center{
+  padding: 10px;
+  height: 100%;
+  .btnsp{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.tree-datatable{
+  height: calc(90% - 20px);
+  .btnsp{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  .table{
+    max-height: 80%;
+    overflow: auto;
+  }
+}
+.filter {
+  .btn-tx{
+    text-align: center;
+    width: 100%;
+  }
+}
+.summary{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+}

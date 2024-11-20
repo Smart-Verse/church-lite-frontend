@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { catchError, Observable, tap, throwError } from "rxjs";
-import { CookiesService } from "../../services/cookies/cookies.service";
+import { CookiesService } from "../../shared/services/cookies/cookies.service";
 import { Router } from "@angular/router";
 import { inject } from "@angular/core";
-import { EnumCookie } from "../../services/cookies/cookie.enum";
+import { EnumCookie } from "../../shared/services/cookies/cookie.enum";
 import { environment } from "../../../environments/environment";
 import {MessageService} from "primeng/api";
 
@@ -30,7 +30,7 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
             console.log(error);
             if(error.status === 401 || error.status === 0){
               cookiesService.delete(EnumCookie.AUTHORIZATION);
-              router.navigate(['login']);
+              router.navigate(['/login']);
             }
             if(error.status === 400 || error.status > 500){
 

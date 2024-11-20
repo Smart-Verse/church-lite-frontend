@@ -1,4 +1,5 @@
 <div class="datatable">
+    <p-confirmDialog />
     <div class="btnsp">
         <button
             pButton
@@ -70,7 +71,7 @@
                             pButton
                             pRipple
                             icon="pi pi-trash"
-                            (click)="onRegisterData(rowData, 0)">
+                            (click)="onDeleteData(rowData, 0)">
                         </button>
                     </td>
                 </tr>
@@ -86,7 +87,6 @@
                   [totalRecords]="config.totalRecords"
                   [rowsPerPageOptions]="[5,10, 20, 30]" />
               </div>
-
             </ng-template>
         </p-table>
     </div>

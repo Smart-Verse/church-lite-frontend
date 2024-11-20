@@ -17,6 +17,57 @@
     ]
   },
   {
+    "route": "person",
+    "hash": "personSupplier",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Nome",
+        "width": "80%"
+      }
+    ]
+  },
+  {
+    "route": "person",
+    "hash": "personVisitor",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Nome",
+        "width": "80%"
+      }
+    ]
+  },
+  {
+    "route": "person",
+    "hash": "personNewConvert",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Nome",
+        "width": "80%"
+      }
+    ]
+  },
+  {
     "route": "positions",
     "hash": "positions",
     "filters": [
@@ -30,6 +81,72 @@
         "field": "name",
         "header": "Descrição",
         "width": "80%"
+      }
+    ]
+  },
+  {
+    "route": "planAccount",
+    "hash": "planAccount",
+    "filters": [
+      {
+        "field": "description",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "codeTree",
+        "header": "Codigo Arvore",
+        "width": "20%"
+      }
+    ]
+  },
+  {
+    "route": "costCenter",
+    "hash": "costCenter",
+    "filters": [
+      {
+        "field": "description",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "codeTree",
+        "header": "Codigo Arvore",
+        "width": "20%"
+      }
+    ]
+  },
+  {
+    "route": "bank",
+    "hash": "bank",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Nome",
+        "width": "60%"
+      },
+      {
+        "field": "code",
+        "header": "Codigo",
+        "width": "20%"
       }
     ]
   }
