@@ -56,6 +56,9 @@ export class PlanAccountComponent extends BaseComponent implements OnInit{
     if(this.formGroup.valid) {
       var dto = DTOConverter.convertPlanAccountToDTO(this.formGroup);
       if(this.parent && this.config.data.action === 2){
+        if(this.parent.parentCode){
+          delete this.parent.parentCode;// exclui demais arvores
+        }
         dto.parentCode = this.parent;
         this.ref.close(dto);
       } else if(this.parent && this.config.data.action === 1){
