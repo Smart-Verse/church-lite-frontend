@@ -28,6 +28,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
 
   public personFormGroup: FormGroup;
   protected readonly status = status;
+  configPerson: PersonConfig = new PersonConfig();
 
   constructor(
     public readonly ref: DynamicDialogRef,
@@ -38,7 +39,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
     private datePipe: DatePipe
   ) {
     super();
-    this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(new PersonConfig().person);
+    this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configPerson.person);
   }
 
   ngOnInit(): void {
@@ -51,7 +52,7 @@ export class PersonMembersComponent extends BaseComponent implements OnInit{
 
   onSave() {
     if(this.personFormGroup.valid) {
-      this.ref.close(DTOConverter.convertPersonToDTO(this.personFormGroup,this.datePipe));
+      this.ref.close(this.configPerson.convertPersonToDTO(this.personFormGroup,this.datePipe));
     }else {
       this.toastService.warn({summary: "Mensagem", detail: "Existem campos inválidos"});
       this.fieldsService.verifyIsValid();
