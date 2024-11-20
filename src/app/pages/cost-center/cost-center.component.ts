@@ -1,26 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {CrudService} from "../../shared/services/crud/crud.service";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {ToastService} from "../../shared/services/toast/toast.service";
-import {DataTable} from "../../shared/components/datatable/datatable";
-import {BaseComponent} from "../../shared/common/base-component/base-component";
-import {RegisterService} from "../../services/register/register.service";
-import {TranslateService} from "../../shared/services/translate/translate.service";
-import {RequestData} from "../../shared/interfaces/request-data";
+
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
+import {PaginatorModule, PaginatorState} from "primeng/paginator";
+import {ConfirmationService} from "primeng/api";
 import {Ripple} from "primeng/ripple";
 import {TreeTableModule} from "primeng/treetable";
-import {PaginatorModule, PaginatorState} from "primeng/paginator";
-import {Action} from "../../shared/components/datatable/datatable.component";
-import {ConfirmationService} from "primeng/api";
-import {PlanAccountComponent} from "../../components/plan-account/plan-account.component";
+import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {TableModule} from "primeng/table";
+import {CrudService} from "../../shared/services/crud/crud.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {ToastService} from "../../shared/services/toast/toast.service";
+import {BaseComponent} from "../../shared/common/base-component/base-component";
+import {CostCenterModalComponent} from "../../components/cost-center-modal/cost-center-modal.component";
+import {DataTable} from "../../shared/components/datatable/datatable";
+import {RegisterService} from "../../services/register/register.service";
+import {TranslateService} from "../../shared/services/translate/translate.service";
+import {RequestData} from "../../shared/interfaces/request-data";
+import {Action} from "../../shared/components/datatable/datatable.component";
 
 @Component({
-  selector: 'app-page-plan-account',
+  selector: 'app-cost-center',
   standalone: true,
   imports: [
     SharedCommonModule,
@@ -31,7 +32,6 @@ import {TableModule} from "primeng/table";
     TreeTableModule,
     PaginatorModule,
     TableModule,
-
   ],
   providers: [
     CrudService,
@@ -39,17 +39,16 @@ import {TableModule} from "primeng/table";
     ToastService,
     ConfirmationService
   ],
-  templateUrl: './page-plan-account.component.html',
-  styleUrl: './page-plan-account.component.scss'
+  templateUrl: './cost-center.component.html',
+  styleUrl: './cost-center.component.scss'
 })
-export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
-
+export class CostCenterComponent  extends BaseComponent implements OnInit {
 
   configuration: any = {
-    header: "Cadastro de plano de contas",
-    view: "planAccount",
-    route: "planAccount",
-    component: PlanAccountComponent
+    header: "Cadastro de centro de custo",
+    view: "costCenter",
+    route: "costCenter",
+    component: CostCenterModalComponent
   }
 
   ref: DynamicDialogRef | undefined;
@@ -71,7 +70,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
 
   ngOnInit(): void {
 
-    var obj = this.registerService.getModel("planAccount");
+    var obj = this.registerService.getModel("costCenter");
     this.onSetPropertiesDatatable(obj);
   }
 
@@ -160,6 +159,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
       }
     });
   }
+
 
   onOpenModal(obj: any){
     this.ref = this.dialogService.open(this.configuration.component,

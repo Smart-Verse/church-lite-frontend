@@ -38,6 +38,10 @@ export class MenuItens{
                     {
                       route: "planAccount",
                       name: 'Plano de contas',
+                    },
+                    {
+                      route: "costCenter",
+                      name: 'Centro de custo',
                     }
                   ]
                 },

@@ -38,7 +38,29 @@
     "hash": "planAccount",
     "filters": [
       {
-        "field": "name",
+        "field": "description",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "codeTree",
+        "header": "Codigo Arvore",
+        "width": "20%"
+      }
+    ]
+  },
+  {
+    "route": "costCenter",
+    "hash": "costCenter",
+    "filters": [
+      {
+        "field": "description",
         "type": "string"
       }
     ],

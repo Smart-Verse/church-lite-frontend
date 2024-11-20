@@ -1,18 +1,22 @@
 import {Component, OnInit} from '@angular/core';
+import {Button} from "primeng/button";
+import {DropdownComponent} from "../../shared/components/inputs/dropdown/dropdown.component";
+import {InputTextComponent} from "../../shared/components/inputs/input-text/input-text.component";
+import {PaginatorModule} from "primeng/paginator";
+import {FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
-import {FormGroup} from "@angular/forms";
+import {typePlanAccount} from "../../shared/util/constants";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
-import {fieldsPlanAccount} from "./plan-account.config";
+import {fieldsPlanAccount} from "../plan-account/plan-account.config";
+import {fields} from "./cost-center.config";
 import {DTOConverter} from "../../../core/dto/dto-converter";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {typePlanAccount} from "../../shared/util/constants";
-
 
 @Component({
-  selector: 'app-plan-account',
+  selector: 'app-cost-center-modal',
   standalone: true,
   imports: [
     SharedCommonModule
@@ -20,14 +24,13 @@ import {typePlanAccount} from "../../shared/util/constants";
   providers: [
     ToastService
   ],
-  templateUrl: './plan-account.component.html',
-  styleUrl: './plan-account.component.scss'
+  templateUrl: './cost-center-modal.component.html',
+  styleUrl: './cost-center-modal.component.scss'
 })
-export class PlanAccountComponent extends BaseComponent implements OnInit {
+export class CostCenterModalComponent extends BaseComponent implements OnInit {
 
   public formGroup: FormGroup;
   public parent: any;
-  protected readonly _planAccount = typePlanAccount;
 
   constructor(
     public readonly ref: DynamicDialogRef,
@@ -37,14 +40,13 @@ export class PlanAccountComponent extends BaseComponent implements OnInit {
     private readonly toastService: ToastService
   ) {
     super();
-    this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(fieldsPlanAccount);
+    this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(fields);
   }
 
   ngOnInit(): void {
     if(this.config.data) {
       if(this.config.data.action === 1) {
         this.parent = this.config.data.parentCode;
-        this.config.data.type = this._planAccount.find(e => e.key === this.config.data.type);
         this.formGroup.patchValue(this.config.data);
       } else {
         this.parent = this.config.data;
