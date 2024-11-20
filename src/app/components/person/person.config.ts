@@ -153,12 +153,12 @@ export class PersonConfig {
         },
     ]
 
-    convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe): any {
+    convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string): any {
       let dto = {
         id: formGroup.get('id')?.value,
         name: formGroup.get('name')?.value,
         status: formGroup.get('status')?.value["key"],
-        type: 'MEMBER',
+        type: type,
         personAddress: formGroup.get('personAddress')?.value,
         personalDocs: formGroup.get('personalDocs')?.value,
         personalTelphone: formGroup.get('personalTelphone')?.value,

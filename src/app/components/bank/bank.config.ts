@@ -1,4 +1,6 @@
-export class Position {
+import {FormGroup} from "@angular/forms";
+
+export class BankConfig {
   fields: any[] = [
     {
       fieldName: 'id',
@@ -13,10 +15,19 @@ export class Position {
       type: 'string'
     },
     {
-      fieldName: 'description',
+      fieldName: 'code',
       required: false,
       hidden: false,
       type: 'string'
     }
   ]
+
+  convertToDTO(formGroup: FormGroup): any {
+    let dto = {
+      id: formGroup.get('id')?.value,
+      name: formGroup.get('name')?.value,
+      code: formGroup.get('code')?.value
+    };
+    return dto;
+  }
 }

@@ -61,6 +61,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
 
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
+    requestData = this.includeFilters(requestData);
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
@@ -181,5 +182,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     } else {
       this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
     }
+  }
+
+  private includeFilters(requestData: RequestData) {
+    var filter = this.configuration.defaultFilter;
+    requestData.filter = filter + requestData.filter;
+    return requestData;
   }
 }

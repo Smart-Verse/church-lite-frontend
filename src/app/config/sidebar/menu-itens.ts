@@ -22,14 +22,22 @@ export class MenuItens{
                 {
                     name: 'Pessoas',
                     submenu: [
-                    {
-                        route: "register/personMembers",
-                        name: 'Membros',
-                    },
-                    {
-                        route: "dashboard",
-                        name: 'Fornecedores',
-                    }
+                      {
+                          route: "register/personMembers",
+                          name: 'Membros',
+                      },
+                      {
+                        route: "register/personNewConvert",
+                        name: 'Novos Convertidos',
+                      },
+                      {
+                          route: "register/personSupplier",
+                          name: 'Fornecedores',
+                      },
+                      {
+                        route: "register/personVisitor",
+                        name: 'Visitantes',
+                      }
                     ]
                 },
                 {
@@ -42,6 +50,10 @@ export class MenuItens{
                     {
                       route: "costCenter",
                       name: 'Centro de custo',
+                    },
+                    {
+                      route: "register/bank",
+                      name: 'Bancos',
                     }
                   ]
                 },

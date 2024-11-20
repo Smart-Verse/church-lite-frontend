@@ -11,6 +11,7 @@
     "common_description": "Descrição",
     "common_name": "Nome",
     "common_type": "Tipo",
+    "common_code": "code",
 
     "planAccount_codeTree": "Código Arvore",
 
