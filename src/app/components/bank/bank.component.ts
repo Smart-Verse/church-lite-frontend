@@ -22,10 +22,11 @@ import {DTOConverter} from "../../../core/dto/dto-converter";
   templateUrl: './bank.component.html',
   styleUrl: './bank.component.scss'
 })
-export class BankComponent extends BaseComponent implements OnInit{
+export class BankComponent extends BaseComponent implements OnInit {
 
-  public formGroup: FormGroup;
+
   private configuration: BankConfig = new BankConfig();
+  public formGroup: FormGroup;
 
   constructor(
     public readonly ref: DynamicDialogRef,

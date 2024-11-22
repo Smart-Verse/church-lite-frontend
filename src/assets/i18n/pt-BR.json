@@ -14,6 +14,10 @@
     "common_code": "code",
 
     "planAccount_codeTree": "Código Arvore",
+    "cash_typeCash": "Tipo de conta",
+    "cash_numberAccount": "Numero da conta",
+    "cash_digit": "Digito",
+    "cash_bank": "Banco",
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",
