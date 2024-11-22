@@ -45,7 +45,7 @@ export class CashConfig {
       id: formGroup.get('id')?.value,
       description: formGroup.get('description')?.value,
       typeCash: formGroup.get('typeCash')?.value["key"],
-      bank: formGroup.get('bank')?.value,
+      bank: (formGroup.get('bank')?.value === "" ? null : formGroup.get('bank')?.value),
       numberAccount: formGroup.get('numberAccount')?.value,
       digit: formGroup.get('digit')?.value
     };

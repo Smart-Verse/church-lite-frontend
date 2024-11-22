@@ -49,6 +49,7 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
     onChange = (value: any) => {
       this.value = value === '' ? null : value;
     };
+
     onTouch = () => {};
 
     onValid(){
