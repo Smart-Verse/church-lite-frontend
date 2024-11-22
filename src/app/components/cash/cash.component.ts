@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
-import {BankConfig} from "../bank/bank.config";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FieldsService} from "../../shared/services/fields/fields.service";
@@ -8,7 +7,7 @@ import {TranslateService} from "../../shared/services/translate/translate.servic
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {CashConfig} from "./cash.config";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {status, typeCash} from "../../shared/util/constants";
+import {typeCash} from "../../shared/util/constants";
 
 @Component({
   selector: 'app-cash',
@@ -41,6 +40,7 @@ export class CashComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.config.data){
+      this.config.data.typeCash = this._typeCash.find(e => e.key === this.config.data.typeCash);
       this.formGroup.patchValue(this.config.data);
     }
   }
@@ -57,6 +57,4 @@ export class CashComponent extends BaseComponent implements OnInit {
   onCancel() {
     this.ref.close(null);
   }
-
-
 }
