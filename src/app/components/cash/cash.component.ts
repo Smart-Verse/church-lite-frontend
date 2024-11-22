@@ -1,17 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {ToastService} from "../../shared/services/toast/toast.service";
-import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {FormGroup} from "@angular/forms";
+import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {PositionConfig} from "../positions/position.config";
-import {BankConfig} from "./bank.config";
-import {DTOConverter} from "../../../core/dto/dto-converter";
+import {ToastService} from "../../shared/services/toast/toast.service";
+import {CashConfig} from "./cash.config";
+import {SharedCommonModule} from "../../shared/common/shared-common.module";
+import {typeCash} from "../../shared/util/constants";
 
 @Component({
-  selector: 'app-bank',
+  selector: 'app-cash',
   standalone: true,
   imports: [
     SharedCommonModule
@@ -19,20 +18,20 @@ import {DTOConverter} from "../../../core/dto/dto-converter";
   providers: [
     ToastService
   ],
-  templateUrl: './bank.component.html',
-  styleUrl: './bank.component.scss'
+  templateUrl: './cash.component.html',
+  styleUrl: './cash.component.scss'
 })
-export class BankComponent extends BaseComponent implements OnInit {
+export class CashComponent extends BaseComponent implements OnInit {
 
-
-  private configuration: BankConfig = new BankConfig();
+  private configuration: CashConfig = new CashConfig();
+  protected readonly _typeCash = typeCash;
   public formGroup: FormGroup;
 
   constructor(
     public readonly ref: DynamicDialogRef,
     public readonly config: DynamicDialogConfig,
     private readonly fieldsService: FieldsService,
-    public readonly translatePersonMembers: TranslateService,
+    public readonly translateService: TranslateService,
     private readonly toastService: ToastService
   ) {
     super();
@@ -41,6 +40,7 @@ export class BankComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.config.data){
+      this.config.data.typeCash = this._typeCash.find(e => e.key === this.config.data.typeCash);
       this.formGroup.patchValue(this.config.data);
     }
   }
@@ -49,7 +49,7 @@ export class BankComponent extends BaseComponent implements OnInit {
     if(this.formGroup.valid) {
       this.ref.close(this.configuration.convertToDTO(this.formGroup));
     }else {
-      this.toastService.warn({summary: "Mensagem", detail: "Existem campos inválidos"});
+      this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
     }
   }

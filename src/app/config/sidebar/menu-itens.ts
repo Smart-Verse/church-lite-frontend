@@ -52,6 +52,10 @@ export class MenuItens{
                       name: 'Centro de custo',
                     },
                     {
+                      route: "register/cash",
+                      name: 'Caixas',
+                    },
+                    {
                       route: "register/bank",
                       name: 'Bancos',
                     }

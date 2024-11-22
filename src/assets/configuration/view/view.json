@@ -149,5 +149,22 @@
         "width": "20%"
       }
     ]
+  },
+  {
+    "route": "cash",
+    "hash": "cash",
+    "filters": [
+      {
+        "field": "description",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Nome",
+        "width": "60%"
+      }
+    ]
   }
 ]

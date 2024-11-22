@@ -2,6 +2,7 @@ import {Type} from "@angular/core";
 import {PersonComponent} from "../../components/person/person.component";
 import {PositionsComponent} from "../../components/positions/positions.component";
 import {BankComponent} from "../../components/bank/bank.component";
+import {CashComponent} from "../../components/cash/cash.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -51,6 +52,14 @@ export const config: RegisterRoutes[] = [
     paramExtra: "",
     defaultFilter: "",
     component: BankComponent
+  },
+  {
+    header: "Cadastro de caixas",
+    view: "cash",
+    route: "cash",
+    paramExtra: "",
+    defaultFilter: "",
+    component: CashComponent
   }
 ]
 
