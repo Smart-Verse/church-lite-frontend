@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import { SharedCommonModule } from '../../common/shared-common.module';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
@@ -6,6 +6,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
 import { MenuItens } from '../../../config/sidebar/menu-itens';
+import {MenuModule} from "primeng/menu";
 
 
 @Component({
@@ -18,12 +19,13 @@ import { MenuItens } from '../../../config/sidebar/menu-itens';
     AvatarModule,
     AvatarGroupModule,
     RouterOutlet,
-    SidebarSubmenuComponent
+    SidebarSubmenuComponent,
+    MenuModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 
   menu = new MenuItens();
   isExpanded = false;
@@ -33,6 +35,22 @@ export class SidebarComponent implements OnInit {
   showSidebarMobile: boolean = false;
   screenWidth: number = 0;
   isMobile: boolean = false;
+  showPopupMenu = false;
+  items: any[] = [
+    {
+      label: 'Usuário',
+      items: [
+        {
+          label: 'Configurações',
+          icon: 'pi pi-settings'
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-logout'
+        }
+      ]
+    }
+  ];
 
   constructor(){
     this.menuItems = this.menu.menuItems;
@@ -43,6 +61,7 @@ export class SidebarComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.onVerifyMobile();
     this.onSetConfigurationMobile();
+    document.addEventListener('click', this.closePopupMenu.bind(this));
   }
 
   toggleMenu(menu: any) {
@@ -113,6 +132,19 @@ export class SidebarComponent implements OnInit {
       this.showSidebarMobile = false;
       this.showSidebar = true;
     }
+  }
+
+  togglePopupMenu(event: MouseEvent) {
+    event.stopPropagation();
+    this.showPopupMenu = !this.showPopupMenu;
+  }
+
+  closePopupMenu() {
+    this.showPopupMenu = false;
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.closePopupMenu.bind(this));
   }
 
 }
