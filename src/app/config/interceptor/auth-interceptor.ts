@@ -20,14 +20,20 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
     }
 
 
-    request = originalRequest.clone({
-      headers: headers,
-      url: `${environment.apiUrl}/${originalRequest.url}`,
-    });
+    if(urlPermission(originalRequest)){
+      request = originalRequest.clone({
+        url: `${originalRequest.url}`,
+      });
+    } else {
+      request = originalRequest.clone({
+        headers: headers,
+        url: `${environment.apiUrl}/${originalRequest.url}`,
+      });
+    }
+
 
     return next(request).pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log(error);
             if(error.status === 401 || error.status === 0){
               //cookiesService.delete(EnumCookie.AUTHORIZATION);
               //router.navigate(['/login']);
@@ -38,4 +44,8 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
             return throwError(() => error);
           })
     );
+}
+
+export function urlPermission(request: HttpRequest<unknown>): boolean {
+  return request.url.indexOf("amazon") > -1;
 }
