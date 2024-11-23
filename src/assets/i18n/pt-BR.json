@@ -30,6 +30,13 @@
     "financial_saveAndQuit": "Salvar e Quitar",
     "financial_reverse": "Estornar",
 
+
+    "dashboard": "Dashboard",
+
+    "notification": "Notificações",
+
+    "scheduler": "Agenda",
+
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",
     "personal_field_status": "Status",

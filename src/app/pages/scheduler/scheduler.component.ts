@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import {LoadingComponent} from "../../shared/components/loading/loading.component";
-
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
+import {LoadingComponent} from "../../shared/components/loading/loading.component";
 
 @Component({
-  selector: 'app-dash',
+  selector: 'app-scheduler',
   standalone: true,
   imports: [
-      LoadingComponent
+    LoadingComponent
   ],
-  templateUrl: './dash.component.html',
-  styleUrl: './dash.component.scss'
+  templateUrl: './scheduler.component.html',
+  styleUrl: './scheduler.component.scss'
 })
-export class DashComponent extends BaseComponent{
+export class SchedulerComponent  extends BaseComponent{
+
 
   constructor(
     public readonly translateService: TranslateService,

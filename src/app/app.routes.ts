@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NotificationComponent } from './pages/notification/notification.component';
 import {PagePlanAccountComponent} from "./pages/page-plan-account/page-plan-account.component";
 import {CostCenterComponent} from "./pages/cost-center/cost-center.component";
+import {SchedulerComponent} from "./pages/scheduler/scheduler.component";
 
 export const routes: Routes = [
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
         canActivateChild: [privateGuard],
         children: [
             { path: 'dashboard', component: DashComponent },
+            { path: 'scheduler', component: SchedulerComponent },
             { path: 'register/:hash', component: RegisterComponent },
             { path: 'planAccount', component: PagePlanAccountComponent },
             { path: 'costCenter', component: CostCenterComponent },

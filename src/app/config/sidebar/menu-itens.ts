@@ -115,7 +115,20 @@ export class MenuItens{
             },
             {
               name: 'Configurações do globais',
-              route:'register/revenues'
+              submenu: [
+                {
+                  name: 'Traduções',
+                  route:''
+                },
+                {
+                  name: 'Permissionamento',
+                  route:''
+                },
+                {
+                  name: 'Cabeçalho Relatórios',
+                  route:''
+                },
+              ]
             },
             {
               name: 'Cadastro de usuários',
