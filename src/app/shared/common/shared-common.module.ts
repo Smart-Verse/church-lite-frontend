@@ -17,6 +17,7 @@ import {DropdownComponent} from "../components/inputs/dropdown/dropdown.componen
 import {InputDateComponent} from "../components/inputs/input-date/input-date.component";
 import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.component";
 import {InputNumberComponent} from "../components/inputs/input-number/input-number.component";
+import {ImageUploadComponent} from "../components/inputs/image-upload/image-upload.component";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {InputNumberComponent} from "../components/inputs/input-number/input-numb
     DropdownComponent,
     InputDateComponent,
     InputMaskComponent,
-    InputNumberComponent
+    InputNumberComponent,
+    ImageUploadComponent
   ],
   exports: [
     NgIf,
@@ -52,7 +54,8 @@ import {InputNumberComponent} from "../components/inputs/input-number/input-numb
     DropdownComponent,
     InputDateComponent,
     InputMaskComponent,
-    InputNumberComponent
+    InputNumberComponent,
+    ImageUploadComponent
   ]
 })
 export class SharedCommonModule { }
