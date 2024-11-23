@@ -182,14 +182,48 @@
     ],
     "fields": [
       {
+        "field": "issueDate",
+        "header": "Data E.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "dueDate",
+        "header": "Data V.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "header": "Data P.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
         "field": "description",
         "header": "Descrição",
-        "width": "60%"
+        "width": "15%"
+      },
+      {
+        "field": "person.name",
+        "header": "Nome",
+        "width": "15%"
+      },
+      {
+        "field": "planAccount.description",
+        "header": "Plano Conta",
+        "width": "10%"
+      },
+      {
+        "field": "costCenter.description",
+        "header": "Centro custo",
+        "width": "10%"
       },
       {
         "field": "value",
         "header": "Valor",
-        "width": "20%"
+        "width": "10%",
+        "customValue": "MONEY"
       }
     ]
   },
@@ -208,14 +242,48 @@
     ],
     "fields": [
       {
+        "field": "issueDate",
+        "header": "Data E.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "dueDate",
+        "header": "Data V.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "header": "Data P.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
         "field": "description",
         "header": "Descrição",
-        "width": "60%"
+        "width": "15%"
+      },
+      {
+        "field": "person.name",
+        "header": "Nome",
+        "width": "15%"
+      },
+      {
+        "field": "planAccount.description",
+        "header": "Plano Conta",
+        "width": "10%"
+      },
+      {
+        "field": "costCenter.description",
+        "header": "Centro custo",
+        "width": "10%"
       },
       {
         "field": "value",
         "header": "Valor",
-        "width": "20%"
+        "width": "10%",
+        "customValue": "MONEY"
       }
     ]
   }

@@ -40,24 +40,24 @@
           </ng-template>
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th style="width: 2%"><p-tableHeaderCheckbox /></th>
+                    <th style="width: 1%"><p-tableHeaderCheckbox /></th>
                     <th [style]="'width:' + col.width " *ngFor="let col of columns">
                         {{ col.header }}
                     </th>
-                    <th style="width: 13%;">
+                    <th style="width: 10%;text-align: center">
                         Ações
                     </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr>
-                    <td style="width: 2%">
+                    <td style="width: 1%">
                         <p-tableCheckbox [value]="rowData" />
                     </td>
                     <td [style]="'width:' + col.width " *ngFor="let col of columns">
-                        {{ rowData[col.field] }}
+                        {{ onRowData(rowData,col.field, col) }}
                     </td>
-                    <td style="width: 13%;">
+                    <td style="width: 10%;">
                         <button
                             style="margin-right: 5px;"
                             type="button"

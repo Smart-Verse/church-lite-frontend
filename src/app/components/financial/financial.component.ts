@@ -30,6 +30,8 @@ export class FinancialComponent extends BaseComponent implements OnInit{
   public formGroup: FormGroup;
   _type: string = "REVENUES";
   configuration: FinancialConfig = new FinancialConfig();
+  _paidInvoice: boolean = false;
+  _buttonText: string = this.translateService.translate('financial_saveAndQuit');
 
   constructor(
     public readonly ref: DynamicDialogRef,
@@ -56,14 +58,24 @@ export class FinancialComponent extends BaseComponent implements OnInit{
       this.formGroup.get('issueDate')?.setValue(new Date());
       this.formGroup.get('dueDate')?.setValue(new Date());
     }
+
+    // verifica se esta quitada ou tem que estornar
+    if(this.config.data.paymentReceiptDate){
+      this._paidInvoice = true
+      this._buttonText = this.translateService.translate('financial_reverse');
+    }
   }
 
   onSave(action: number) {
     if(this.formGroup.valid) {
-      if(action == 1)
-        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, new Date()));
-      else
+      if(action == 1){
+        var date = this.config.data.paymentReceiptDate === null ? new Date() : null;
+        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, date));
+      }
+      else {
         this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, null));
+      }
+
     }else {
       this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
