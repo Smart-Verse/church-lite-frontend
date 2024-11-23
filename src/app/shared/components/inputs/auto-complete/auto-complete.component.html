@@ -2,6 +2,8 @@
   <p-autoComplete
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
+    pAutoFocus
+    [autofocus]="focus"
     [suggestions]="itens"
     (completeMethod)="onFilter($event)"
     [optionLabel]="optionLabel" class="w-full"

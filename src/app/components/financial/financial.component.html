@@ -4,6 +4,8 @@
       formControlName="issueDate"
       name="issueDate"
       [field]="formGroup"
+      pAutoFocus
+      [autofocus]="false"
       class="field col-12 md:col-4 c-margin"
       [label]="translateService.translate('financial_issueDate')"
       type="text">
@@ -25,8 +27,10 @@
       type="text">
     </app-input-date>
     <app-input-text
+      [focus]="true"
       formControlName="description"
       name="description"
+      autofocus
       [field]="formGroup"
       class="field col-12 md:col-8 c-margin"
       [label]="translateService.translate('common_description')"

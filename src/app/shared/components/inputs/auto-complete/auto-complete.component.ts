@@ -9,6 +9,7 @@ import {FieldsService} from "../../../services/fields/fields.service";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {CrudService} from "../../../services/crud/crud.service";
 import {RequestData} from "../../../interfaces/request-data";
+import {AutoFocusModule} from "primeng/autofocus";
 
 @Component({
   selector: 'app-auto-complete',
@@ -19,7 +20,8 @@ import {RequestData} from "../../../interfaces/request-data";
     FormsModule,
     ReactiveFormsModule,
     FloatLabelModule,
-    TooltipModule
+    TooltipModule,
+    AutoFocusModule
   ],
   providers: [
     CrudService,

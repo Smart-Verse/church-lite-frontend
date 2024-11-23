@@ -1,9 +1,9 @@
-import {AbstractControl,
+import {
   ControlValueAccessor,
   FormGroup,
-  ValidationErrors,
+
 } from "@angular/forms";
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, ElementRef, input, Input, OnInit, ViewChild} from "@angular/core";
 import {FieldsService} from "../services/fields/fields.service";
 
 
@@ -13,7 +13,9 @@ import {FieldsService} from "../services/fields/fields.service";
 export abstract class AppControlValueAccessor implements ControlValueAccessor, OnInit {
   public value: any = null;
   public isValid: boolean = true;
+  @ViewChild('inputElement', { static: false }) inputElement!: ElementRef;
 
+  @Input() focus: boolean = false;
   @Input() label: string = "";
   @Input() type: string = "";
   @Input() guidance: string = "";
@@ -22,7 +24,6 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
 
   constructor(private readonly fieldService: FieldsService) {
   }
-
 
     ngOnInit(): void {
       this.fieldService.invokeVerifyValid.subscribe(() => {
@@ -56,18 +57,5 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
       let validator = this.field?.get(this.name)?.valid;
       this.isValid = validator === undefined ? true : validator;
       this.writeValue(this.value);
-    }
-
-    onInput(value: string): void {
-      this.value = value === '' ? null : value;
-      this.onChange(this.value);
-    }
-
-
-    validate(control: AbstractControl<any, any>): ValidationErrors | null {
-      throw new Error("Method not implemented.");
-    }
-    registerOnValidatorChange?(fn: () => void): void {
-      throw new Error("Method not implemented.");
     }
 }

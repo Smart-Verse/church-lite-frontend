@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {ToastService} from "../../shared/services/toast/toast.service";
@@ -9,12 +9,14 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {ActivatedRoute} from "@angular/router";
+import {AutoFocus} from "primeng/autofocus";
 
 @Component({
   selector: 'app-financial',
   standalone: true,
   imports: [
-    SharedCommonModule
+    SharedCommonModule,
+    AutoFocus
   ],
   providers: [
     ToastService,
@@ -24,7 +26,6 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './financial.component.scss'
 })
 export class FinancialComponent extends BaseComponent implements OnInit{
-
 
   public formGroup: FormGroup;
   _type: string = "REVENUES";
@@ -55,7 +56,6 @@ export class FinancialComponent extends BaseComponent implements OnInit{
       this.formGroup.get('issueDate')?.setValue(new Date());
       this.formGroup.get('dueDate')?.setValue(new Date());
     }
-
   }
 
   onSave() {

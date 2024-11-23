@@ -7,6 +7,8 @@ import {CommonModule} from "@angular/common";
 import {InputTextModule} from "primeng/inputtext";
 import {FloatLabelModule} from "primeng/floatlabel";
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { AutoFocusModule } from 'primeng/autofocus';
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
   selector: 'app-input-text',
@@ -18,7 +20,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ReactiveFormsModule,
     FloatLabelModule,
     TooltipModule,
-    InputTextareaModule
+    InputTextareaModule,
+    AutoFocusModule,
+    AutoCompleteModule
   ],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',

@@ -2,6 +2,8 @@
   <p-dropdown
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
+    pAutoFocus
+    [autofocus]="focus"
     [options]="options"
     [optionLabel]="optionLabel"
     [ngClass]="{'ng-invalid ng-dirty': !isValid}"

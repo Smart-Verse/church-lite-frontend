@@ -5,6 +5,8 @@ import {CommonModule} from "@angular/common";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {TooltipModule} from "primeng/tooltip";
 import { InputNumberModule } from 'primeng/inputnumber';
+import {AutoFocusModule} from "primeng/autofocus";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
   selector: 'app-input-number',
@@ -15,7 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ReactiveFormsModule,
     FloatLabelModule,
     TooltipModule,
-    InputNumberModule
+    InputNumberModule,
+    AutoFocusModule,
+    AutoCompleteModule
   ],
   providers: [
     {

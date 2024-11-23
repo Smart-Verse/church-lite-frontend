@@ -6,6 +6,8 @@
     [ngModel]="value"
     [ngClass]="{'ng-invalid ng-dirty': !isValid}"
     class="w-full outlined"
+    pAutoFocus
+    [autofocus]="focus"
     [mask]="mask"/>
   <label>{{label}}</label>
 </p-floatLabel>
