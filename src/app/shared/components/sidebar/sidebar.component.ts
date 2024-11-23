@@ -1,12 +1,14 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import { SharedCommonModule } from '../../common/shared-common.module';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
 import { MenuItens } from '../../../config/sidebar/menu-itens';
 import {MenuModule} from "primeng/menu";
+import {CookiesService} from "../../services/cookies/cookies.service";
+import {EnumCookie} from "../../services/cookies/cookie.enum";
 
 
 @Component({
@@ -25,7 +27,7 @@ import {MenuModule} from "primeng/menu";
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit {
 
   menu = new MenuItens();
   isExpanded = false;
@@ -35,24 +37,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   showSidebarMobile: boolean = false;
   screenWidth: number = 0;
   isMobile: boolean = false;
-  showPopupMenu = false;
-  items: any[] = [
-    {
-      label: 'Usuário',
-      items: [
-        {
-          label: 'Configurações',
-          icon: 'pi pi-settings'
-        },
-        {
-          label: 'Logout',
-          icon: 'pi pi-logout'
-        }
-      ]
-    }
-  ];
 
-  constructor(){
+  constructor(
+  ){
     this.menuItems = this.menu.menuItems;
     this.currentMenu = this.menuItems[0];
   }
@@ -61,7 +48,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.screenWidth = window.innerWidth;
     this.onVerifyMobile();
     this.onSetConfigurationMobile();
-    document.addEventListener('click', this.closePopupMenu.bind(this));
+
   }
 
   toggleMenu(menu: any) {
@@ -82,7 +69,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
     this.onDisableAndSetActiveLink();
   }
-
 
   onDisableAndSetActiveLink() {
 
@@ -132,19 +118,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.showSidebarMobile = false;
       this.showSidebar = true;
     }
-  }
-
-  togglePopupMenu(event: MouseEvent) {
-    event.stopPropagation();
-    this.showPopupMenu = !this.showPopupMenu;
-  }
-
-  closePopupMenu() {
-    this.showPopupMenu = false;
-  }
-
-  ngOnDestroy() {
-    document.removeEventListener('click', this.closePopupMenu.bind(this));
   }
 
 }

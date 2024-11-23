@@ -84,8 +84,48 @@ export class MenuItens{
                 {
                     name: 'Despesas',
                     route: 'register/expenses'
+                },
+                {
+                  name: 'Movimentações',
+                  submenu: [
+                    {
+                      name: 'Caixas',
+                      route:'register/revenues'
+                    },
+                    {
+                      name: 'Extrato',
+                      route:'register/revenues'
+                    },
+                    {
+                      name: 'Histórico Fechamento',
+                      route:'register/revenues'
+                    },
+                  ]
                 }
             ]
-        }
+        },
+        {
+          iconClass: 'pi pi-cog',
+          tooltip: 'Configurações',
+          name: 'Configurações',
+          submenu: [
+            {
+              name: 'Configurações do usuário',
+              route:'register/revenues'
+            },
+            {
+              name: 'Configurações do globais',
+              route:'register/revenues'
+            },
+            {
+              name: 'Cadastro de usuários',
+              route:'register/revenues'
+            },
+            {
+              name: 'Logout',
+              route:'login'
+            },
+          ]
+        },
     ];
 }
