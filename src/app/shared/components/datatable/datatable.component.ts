@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { DataTable } from './datatable';
@@ -13,6 +13,7 @@ import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '../../services/translate/translate.service';
+import {fields} from "../../../components/cost-center-modal/cost-center.config";
 
 export enum Action {
   DELETE,
@@ -36,7 +37,8 @@ export enum Action {
     ConfirmDialogModule
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DatePipe
   ],
   templateUrl: './datatable.component.html',
   styleUrl: './datatable.component.scss'
@@ -52,9 +54,32 @@ export class DatatableComponent {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private readonly translateService: TranslateService
-  ){}
+    private readonly translateService: TranslateService,
+    private datePipe: DatePipe,
+  ){
+  }
 
+  onRowData(row: any, header: string, col: any){
+    const keys = header.split(".");
+    let value = keys.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : null), row);
+    return this.onCustomValue(value,col);
+  }
+
+  onCustomValue(value: any, col: any): any{
+    if(col.customValue){
+      switch (col.customValue){
+        case "MONEY":
+          value = parseFloat(value).toFixed(2);
+          break;
+        case "DATE":
+          value = this.datePipe.transform(value, 'dd/MM/yyyy')!;
+          break;
+        default:
+          break;
+      }
+    }
+    return value
+  }
 
   pageChange($event: PaginatorState) {
     var data = new RequestData();

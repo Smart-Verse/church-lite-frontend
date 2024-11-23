@@ -8,6 +8,7 @@ import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
 import {CrudService} from "../../../services/crud/crud.service";
 import {AutoCompleteModule} from "primeng/autocomplete";
+import {AutoFocusModule} from "primeng/autofocus";
 
 
 @Component({
@@ -20,7 +21,8 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     ReactiveFormsModule,
     FloatLabelModule,
     TooltipModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    AutoFocusModule
   ],
   providers: [
     {

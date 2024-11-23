@@ -3,6 +3,7 @@ import {PersonComponent} from "../../components/person/person.component";
 import {PositionsComponent} from "../../components/positions/positions.component";
 import {BankComponent} from "../../components/bank/bank.component";
 import {CashComponent} from "../../components/cash/cash.component";
+import {FinancialComponent} from "../../components/financial/financial.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -60,6 +61,22 @@ export const config: RegisterRoutes[] = [
     paramExtra: "",
     defaultFilter: "",
     component: CashComponent
+  },
+  {
+    header: "Cadastro de receitas",
+    view: "revenues",
+    route: "financial",
+    paramExtra: "",
+    defaultFilter: "typeFinancial eq 0",
+    component: FinancialComponent
+  },
+  {
+    header: "Cadastro de despesas",
+    view: "expenses",
+    route: "financial",
+    paramExtra: "",
+    defaultFilter: "typeFinancial eq 1",
+    component: FinancialComponent
   }
 ]
 

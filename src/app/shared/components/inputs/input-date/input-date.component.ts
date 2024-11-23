@@ -8,6 +8,8 @@ import {TooltipModule} from "primeng/tooltip";
 import {FieldsService} from "../../../services/fields/fields.service";
 import {CalendarModule} from "primeng/calendar";
 import {DropdownModule} from "primeng/dropdown";
+import {AutoFocusModule} from "primeng/autofocus";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
   selector: 'app-input-date',
@@ -20,6 +22,8 @@ import {DropdownModule} from "primeng/dropdown";
     FloatLabelModule,
     TooltipModule,
     DropdownModule,
+    AutoFocusModule,
+    AutoCompleteModule
   ],
   providers: [
     {

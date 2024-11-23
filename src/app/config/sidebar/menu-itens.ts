@@ -8,14 +8,21 @@ export class MenuItens{
             submenu: []
         },
         {
-            route: "dashboard",
-            iconClass: 'pi pi-chart-bar',
-            tooltip: 'Dashboard',
-            name: 'Dashboard',
-            submenu: []
+          route: "dashboard",
+          iconClass: 'pi pi-chart-bar',
+          tooltip: 'Dashboard',
+          name: 'Dashboard',
+          submenu: []
         },
         {
-            iconClass: "pi pi-check-square",
+          route: "scheduler",
+          iconClass: 'pi pi-calendar',
+          tooltip: 'Agenda',
+          name: 'Agenda',
+          submenu: []
+        },
+        {
+            iconClass: "pi pi-user-plus",
             tooltip: "Cadastros",
             name: 'Cadastros',
             submenu: [
@@ -79,13 +86,66 @@ export class MenuItens{
             submenu: [
                 {
                     name: 'Receitas',
-                    route:'register'
+                    route:'register/revenues'
                 },
                 {
                     name: 'Despesas',
-                    route: 'register'
+                    route: 'register/expenses'
+                },
+                {
+                  name: 'Movimentações',
+                  submenu: [
+                    {
+                      name: 'Caixas',
+                      route:'register/revenues'
+                    },
+                    {
+                      name: 'Extrato',
+                      route:'register/revenues'
+                    },
+                    {
+                      name: 'Histórico Fechamento',
+                      route:'register/revenues'
+                    },
+                  ]
                 }
             ]
-        }
+        },
+        {
+          iconClass: 'pi pi-cog',
+          tooltip: 'Configurações',
+          name: 'Configurações',
+          submenu: [
+            {
+              name: 'Configurações do usuário',
+              route:'user-configuration'
+            },
+            {
+              name: 'Configurações do globais',
+              submenu: [
+                {
+                  name: 'Traduções',
+                  route:''
+                },
+                {
+                  name: 'Permissionamento',
+                  route:''
+                },
+                {
+                  name: 'Cabeçalho Relatórios',
+                  route:''
+                },
+              ]
+            },
+            {
+              name: 'Cadastro de usuários',
+              route:'register/revenues'
+            },
+            {
+              name: 'Logout',
+              route:'login'
+            },
+          ]
+        },
     ];
 }

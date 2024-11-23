@@ -9,6 +9,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {InputMaskModule} from "primeng/inputmask";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
+import {AutoFocusModule} from "primeng/autofocus";
+import {AutoCompleteModule} from "primeng/autocomplete";
 
 
 @Component({
@@ -22,6 +24,8 @@ import {FieldsService} from "../../../services/fields/fields.service";
     FloatLabelModule,
     TooltipModule,
     DropdownModule,
+    AutoFocusModule,
+    AutoCompleteModule
   ],
   providers: [
     {

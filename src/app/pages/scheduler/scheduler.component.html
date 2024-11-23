@@ -1,0 +1,8 @@
+<app-loading [showLoading]="showLoading"></app-loading>
+<div class="scheduler">
+  <h2>{{translateService.translate("scheduler")}}</h2>
+  <hr>
+  <full-calendar
+    [options]="calendarOptions">
+  </full-calendar>
+</div>

@@ -59,7 +59,7 @@ export class PersonComponent extends BaseComponent implements OnInit{
     if(this.personFormGroup.valid) {
       this.ref.close(this.configPerson.convertPersonToDTO(this.personFormGroup,this.datePipe,this._type));
     }else {
-      this.toastService.warn({summary: "Mensagem", detail: "Existem campos inválidos"});
+      this.toastService.warn({summary: "Mensagem", detail: this.translatePersonMembers.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
     }
   }

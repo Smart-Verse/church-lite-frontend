@@ -1,15 +1,16 @@
-
 <p-floatLabel>
-  <p-inputMask
-    [pTooltip]="guidance"
+  <p-inputNumber
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
     [ngClass]="{'ng-invalid ng-dirty': !isValid}"
     class="w-full outlined"
+    [pTooltip]="guidance"
+    inputId="minmaxfraction"
+    mode="decimal"
+    [disabled]="disabled"
     pAutoFocus
     [autofocus]="focus"
-    [disabled]="disabled"
-    [mask]="mask"/>
-  <label>{{label}}</label>
+    [minFractionDigits]="2"
+    [maxFractionDigits]="5" />
+  <label id="">{{label}}</label>
 </p-floatLabel>
-
