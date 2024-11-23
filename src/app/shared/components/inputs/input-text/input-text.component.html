@@ -3,6 +3,7 @@
   <input *ngIf="fieldType === 'input-text'"  [type]="type"
          [pTooltip]="guidance"
          pAutoFocus
+         [disabled]="disabled"
          [autofocus]="focus"
          pInputText
          (ngModelChange)="onChange($event)"

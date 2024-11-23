@@ -58,9 +58,12 @@ export class FinancialComponent extends BaseComponent implements OnInit{
     }
   }
 
-  onSave() {
+  onSave(action: number) {
     if(this.formGroup.valid) {
-      this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, new Date()));
+      if(action == 1)
+        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, new Date()));
+      else
+        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, null));
     }else {
       this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();

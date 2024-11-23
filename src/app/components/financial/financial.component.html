@@ -22,6 +22,7 @@
       formControlName="paymentReceiptDate"
       name="paymentReceiptDate"
       [field]="formGroup"
+      [disabled]="true"
       class="field col-12 md:col-4 c-margin"
       [label]="translateService.translate('financial_paymentReceiptDate')"
       type="text">
@@ -91,7 +92,10 @@
   <div style="margin-right: 10px">
     <p-button  [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()"/>
   </div>
+  <div style="margin-right: 10px">
+    <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave(0)"/>
+  </div>
   <div>
-    <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
+    <p-button  [label]="translateService.translate('financial_saveAndQuit')" (onClick)="onSave(1)"/>
   </div>
 </div>

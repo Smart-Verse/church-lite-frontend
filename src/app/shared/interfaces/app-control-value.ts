@@ -16,6 +16,7 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor, O
   @ViewChild('inputElement', { static: false }) inputElement!: ElementRef;
 
   @Input() focus: boolean = false;
+  @Input() disabled: boolean = false;
   @Input() label: string = "";
   @Input() type: string = "";
   @Input() guidance: string = "";

@@ -73,7 +73,7 @@ export class FinancialConfig {
 
   ]
 
-  convertToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string,dateReceive: Date): any {
+  convertToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string,dateReceive: any): any {
     let dto = {
       id: formGroup.get('id')?.value,
       description: formGroup.get('description')?.value,
@@ -85,11 +85,13 @@ export class FinancialConfig {
       costCenter: formGroup.get('costCenter')?.value,
       issueDate: formGroup.get('issueDate')?.value,
       dueDate: formGroup.get('dueDate')?.value,
-      paymentReceiptDate: dateReceive.toDateString(),
+      paymentReceiptDate: dateReceive !== null ? dateReceive.toDateString() : null,
     };
     dto.issueDate = datePipe.transform(dto.issueDate, 'yyyy-MM-dd')!;
     dto.dueDate = datePipe.transform(dto.dueDate, 'yyyy-MM-dd')!;
-    dto.paymentReceiptDate = datePipe.transform(dto.paymentReceiptDate, 'yyyy-MM-dd')!;
+    if(dateReceive !== null){
+      dto.paymentReceiptDate = datePipe.transform(dto.paymentReceiptDate, 'yyyy-MM-dd')!;
+    }
     return dto;
   }
 }
