@@ -27,8 +27,7 @@ export class FinancialComponent extends BaseComponent implements OnInit{
 
 
   public formGroup: FormGroup;
-  _type: string = "MEMBER";
-  protected readonly status = status;
+  _type: string = "REVENUES";
   configuration: FinancialConfig = new FinancialConfig();
 
   constructor(
@@ -47,12 +46,16 @@ export class FinancialComponent extends BaseComponent implements OnInit{
   ngOnInit(): void {
     const segments = this.route.snapshot.url;
     this.setConfigContext(segments[segments.length - 1]?.path || '')
-    if(this.config.data){
+    if(this.config.data.data !== null){
       this.config.data.issueDate =  this.config.data.issueDate != null ? new Date(this.config.data.issueDate) : null;
       this.config.data.dueDate =  this.config.data.dueDate != null ? new Date(this.config.data.dueDate) : null;
       this.config.data.paymentReceiptDate =  this.config.data.paymentReceiptDate != null ? new Date(this.config.data.paymentReceiptDate) : null;
       this.formGroup.patchValue(this.config.data);
+    } else{
+      this.formGroup.get('issueDate')?.setValue(new Date());
+      this.formGroup.get('dueDate')?.setValue(new Date());
     }
+
   }
 
   onSave() {

@@ -24,7 +24,7 @@ export class FinancialConfig {
     },
     {
       fieldName: 'paymentReceiptDate',
-      required: true,
+      required: false,
       hidden: false,
       type: 'date'
     },
@@ -54,7 +54,7 @@ export class FinancialConfig {
     },
     {
       fieldName: 'typeFinancial',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     },

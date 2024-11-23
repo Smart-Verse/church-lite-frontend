@@ -67,7 +67,7 @@ export const config: RegisterRoutes[] = [
     view: "revenues",
     route: "financial",
     paramExtra: "",
-    defaultFilter: "",
+    defaultFilter: "typeFinancial eq 0",
     component: FinancialComponent
   },
   {
@@ -75,7 +75,7 @@ export const config: RegisterRoutes[] = [
     view: "expenses",
     route: "financial",
     paramExtra: "",
-    defaultFilter: "",
+    defaultFilter: "typeFinancial eq 1",
     component: FinancialComponent
   }
 ]
