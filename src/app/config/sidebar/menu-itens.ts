@@ -8,14 +8,21 @@ export class MenuItens{
             submenu: []
         },
         {
-            route: "dashboard",
-            iconClass: 'pi pi-chart-bar',
-            tooltip: 'Dashboard',
-            name: 'Dashboard',
-            submenu: []
+          route: "dashboard",
+          iconClass: 'pi pi-chart-bar',
+          tooltip: 'Dashboard',
+          name: 'Dashboard',
+          submenu: []
         },
         {
-            iconClass: "pi pi-check-square",
+          route: "scheduler",
+          iconClass: 'pi pi-calendar',
+          tooltip: 'Agenda',
+          name: 'Agenda',
+          submenu: []
+        },
+        {
+            iconClass: "pi pi-user-plus",
             tooltip: "Cadastros",
             name: 'Cadastros',
             submenu: [
@@ -111,7 +118,7 @@ export class MenuItens{
           submenu: [
             {
               name: 'Configurações do usuário',
-              route:'register/revenues'
+              route:'user-configuration'
             },
             {
               name: 'Configurações do globais',
