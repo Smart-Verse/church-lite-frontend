@@ -16,6 +16,7 @@ import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-com
 import {DropdownComponent} from "../components/inputs/dropdown/dropdown.component";
 import {InputDateComponent} from "../components/inputs/input-date/input-date.component";
 import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.component";
+import {InputNumberComponent} from "../components/inputs/input-number/input-number.component";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.com
     AutoCompleteComponent,
     DropdownComponent,
     InputDateComponent,
-    InputMaskComponent
+    InputMaskComponent,
+    InputNumberComponent
   ],
   exports: [
     NgIf,
@@ -49,7 +51,8 @@ import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.com
     AutoCompleteComponent,
     DropdownComponent,
     InputDateComponent,
-    InputMaskComponent
+    InputMaskComponent,
+    InputNumberComponent
   ]
 })
 export class SharedCommonModule { }

@@ -1,0 +1,13 @@
+<p-floatLabel>
+  <p-inputNumber
+    (ngModelChange)="onChange($event)"
+    [ngModel]="value"
+    [ngClass]="{'ng-invalid ng-dirty': !isValid}"
+    class="w-full outlined"
+    [pTooltip]="guidance"
+    inputId="minmaxfraction"
+    mode="decimal"
+    [minFractionDigits]="2"
+    [maxFractionDigits]="5" />
+  <label id="">{{label}}</label>
+</p-floatLabel>

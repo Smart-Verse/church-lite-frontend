@@ -79,11 +79,11 @@ export class MenuItens{
             submenu: [
                 {
                     name: 'Receitas',
-                    route:'register'
+                    route:'register/revenues'
                 },
                 {
                     name: 'Despesas',
-                    route: 'register'
+                    route: 'register/expenses'
                 }
             ]
         }

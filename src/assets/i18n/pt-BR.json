@@ -19,6 +19,15 @@
     "cash_digit": "Digito",
     "cash_bank": "Banco",
 
+    "financial_issueDate": "Data emissão",
+    "financial_dueDate": "Data vencimento",
+    "financial_paymentReceiptDate": "Data Pagamento/Recebimento",
+    "financial_value": "Valor",
+    "financial_person": "Pessoa",
+    "financial_cash": "Caixa ou conta bancária",
+    "financial_costCenter": "Centro de custo",
+    "financial_planAccount": "Plano de contas",
+
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",
     "personal_field_status": "Status",

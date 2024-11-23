@@ -166,5 +166,57 @@
         "width": "60%"
       }
     ]
+  },
+  {
+    "route": "revenues",
+    "hash": "revenues",
+    "filters": [
+      {
+        "field": "description",
+        "type": "string"
+      },
+      {
+        "field": "value",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "value",
+        "header": "Valor",
+        "width": "20%"
+      }
+    ]
+  },
+  {
+    "route": "expenses",
+    "hash": "expenses",
+    "filters": [
+      {
+        "field": "description",
+        "type": "string"
+      },
+      {
+        "field": "value",
+        "type": "string"
+      }
+    ],
+    "fields": [
+      {
+        "field": "description",
+        "header": "Descrição",
+        "width": "60%"
+      },
+      {
+        "field": "value",
+        "header": "Valor",
+        "width": "20%"
+      }
+    ]
   }
 ]
