@@ -11,6 +11,12 @@ export class UserConfigurationConfig {
       type: 'string'
     },
     {
+      fieldName: 'hash',
+      required: false,
+      hidden: false,
+      type: 'string'
+    },
+    {
       fieldName: 'name',
       required: true,
       hidden: false,
@@ -50,6 +56,7 @@ export class UserConfigurationConfig {
       userPhoto: foto,
       theme: formGroup.get('theme')?.value["key"],
       lang: formGroup.get('lang')?.value["key"],
+      hash: formGroup.get('hash')?.value,
     };
     return dto;
   }

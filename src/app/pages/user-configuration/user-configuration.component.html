@@ -5,7 +5,9 @@
   <div class="user-configuration-fields ">
     <div class="image-view">
       <app-image-upload
-        (eventLoading)="loading($event)"
+        [imageUrl]="urlImage"
+        (eventLoading)="loading()"
+        (eventImageToken)="onGetTokenImage($event)"
         [tokenImageUrl]="imageToken">
       </app-image-upload>
     </div>
@@ -47,7 +49,7 @@
     </div>
     <div class="buttons">
       <div>
-        <p-button  [label]="translateService.translate('common_action_save')" />
+        <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
       </div>
     </div>
 
