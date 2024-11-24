@@ -1,7 +1,4 @@
 @import "primeng/resources/primeng.css";
-@import 'primeng/resources/themes/aura-dark-purple/theme.css';
-@import 'primeng/resources/themes/aura-light-purple/theme.css';
-
 
 body{
     width: 100vw;
@@ -26,7 +23,7 @@ html{
 :root {
     --sidebar-width: 60px;
     --sidebar-expanded: 300px;
-    --primary-color: #333;
+    --custom-primary-color: #333;
     --content-bg-color: #f4f4f4;
     --active-indicator-color: linear-gradient(to right, #8CA6DB, #B993D6);
 }

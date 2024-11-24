@@ -31,7 +31,7 @@
       height: 100%;
       .menu-expanded-icon{
         width: var(--sidebar-width);
-        background-color: var(--primary-color);
+        background-color: var(--custom-primary-color);
       }
       .menu-expanded-submenu{
         width: calc(100% - var(--sidebar-width));
@@ -40,7 +40,7 @@
     .logout{
       box-shadow: 0px -2px 0px 0px rgba(1,1,1,1.1);
       width: var(--sidebar-width);
-      background-color: var(--primary-color);
+      background-color: var(--custom-primary-color);
       .logout-item {
         margin-top: auto;
         height: 70px;
