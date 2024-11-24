@@ -1,4 +1,5 @@
 export enum EnumCookie {
     AUTHORIZATION = "outh",
-    HASH = "hash"
+    HASH = "hash",
+    IMAGE = "image"
 }

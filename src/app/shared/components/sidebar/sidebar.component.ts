@@ -9,6 +9,8 @@ import { MenuItens } from '../../../config/sidebar/menu-itens';
 import {MenuModule} from "primeng/menu";
 import {CookiesService} from "../../services/cookies/cookies.service";
 import {EnumCookie} from "../../services/cookies/cookie.enum";
+import {UserConfigurationService} from "../../../services/user-configuration/user-configuration.service";
+import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
 
 
 @Component({
@@ -24,6 +26,10 @@ import {EnumCookie} from "../../services/cookies/cookie.enum";
     SidebarSubmenuComponent,
     MenuModule
   ],
+  providers: [
+    UserConfigurationService,
+    ImageUploadService
+  ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -37,8 +43,11 @@ export class SidebarComponent implements OnInit {
   showSidebarMobile: boolean = false;
   screenWidth: number = 0;
   isMobile: boolean = false;
+  image: string | null = null;
 
   constructor(
+    private readonly userConfigurationService: UserConfigurationService,
+    private readonly imageService: ImageUploadService
   ){
     this.menuItems = this.menu.menuItems;
     this.currentMenu = this.menuItems[0];
@@ -48,6 +57,7 @@ export class SidebarComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.onVerifyMobile();
     this.onSetConfigurationMobile();
+    this.onLoadImage();
 
   }
 
@@ -78,7 +88,7 @@ export class SidebarComponent implements OnInit {
       if(disableLink){
         disableLink.classList.remove('active');
       }
-    })
+    });
 
     const activeLink = document.getElementById(this.currentMenu.name);
     if(activeLink){
@@ -119,5 +129,20 @@ export class SidebarComponent implements OnInit {
       this.showSidebar = true;
     }
   }
+
+
+  //Exclusivo para uso aqui
+  onLoadImage(){
+    this.userConfigurationService.getUser().subscribe({
+      next: (res) => {
+        this.imageService.onRequestDonwload(res.output.userPhoto).subscribe({
+          next: (req) => {
+            this.image = req["url"];
+          }
+        });
+      }
+    });
+  }
+
 
 }
