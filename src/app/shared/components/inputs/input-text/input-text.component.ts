@@ -34,7 +34,7 @@ import {AutoCompleteModule} from "primeng/autocomplete";
     }
   ]
 })
-export class InputTextComponent extends AppControlValueAccessor{
+export class InputTextComponent extends AppControlValueAccessor {
 
   @Input() fieldType: string = "input-text";
 

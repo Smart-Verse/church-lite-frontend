@@ -1,8 +1,55 @@
 <app-loading [showLoading]="showLoading"></app-loading>
-<div class="notification">
+<div class="user-configuration">
   <h2>{{translateService.translate("user_configuration")}}</h2>
   <hr>
-  <div>
-    <app-image-upload></app-image-upload>
+  <div class="user-configuration-fields ">
+    <div class="image-view">
+      <app-image-upload
+        (eventLoading)="loading($event)"
+        [tokenImageUrl]="imageToken">
+      </app-image-upload>
+    </div>
+    <div class="user-fields formgrid grid" [formGroup]="formGroup">
+      <app-input-text
+        formControlName="name"
+        name="name"
+        [field]="formGroup"
+        class="field col-12 md:col-6 c-margin"
+        [label]="translateService.translate('personal_field_name')"
+        type="text">
+      </app-input-text>
+      <app-input-text
+        formControlName="email"
+        name="email"
+        [field]="formGroup"
+        class="field col-12 md:col-6 c-margin"
+        [label]="translateService.translate('personal_field_email')"
+        type="text">
+      </app-input-text>
+      <app-dropdown
+        formControlName="theme"
+        name="theme"
+        [field]="formGroup"
+        [label]="translateService.translate('personal_field_status')"
+        [options]="_theme"
+        optionLabel="value"
+        class="field col-12 md:col-6 c-margin">
+      </app-dropdown>
+      <app-dropdown
+        formControlName="lang"
+        name="lang"
+        [field]="formGroup"
+        [label]="translateService.translate('personal_field_status')"
+        [options]="_language"
+        optionLabel="value"
+        class="field col-12 md:col-6 c-margin">
+      </app-dropdown>
+    </div>
+    <div class="buttons">
+      <div>
+        <p-button  [label]="translateService.translate('common_action_save')" />
+      </div>
+    </div>
+
   </div>
 </div>

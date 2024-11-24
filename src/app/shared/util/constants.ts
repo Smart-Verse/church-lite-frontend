@@ -7,20 +7,35 @@ export const typePlanAccount = [
   { key: "ANALYTICAL", value: "Analítico" },
   { key: "SYNTHETIC", value: "Sintético" }
 ]
+
 export const typeCash = [
   { key: "CASH", value: "Caixa" },
   { key: "BANK", value: "Conta bancária" }
 ]
+
 export const typeFinancial = [
   { key: "REVENUE", value: "Receita" },
   { key: "EXPENSE", value: "Despesa" }
 ]
+
 export const transactionOperation = [
   { key: "OPEN_CASH", value: "Caixa aberto" },
   { key: "CLOSE_CASH", value: "Caixa fechado" },
   { key: "REVENUE", value: "Receita" },
   { key: "EXPENSE", value: "Despesa" }
 ]
+
+export const theme = [
+  { key: "DARK", value: "Escuro" },
+  { key: "LIGHT", value: "Claro" }
+]
+
+export const language = [
+  { key: "PORTUGUESE", value: "Português" },
+  { key: "ENGLISH", value: "Inglês" },
+  { key: "SPANISH", value: "Espanhol" }
+]
+
 
 export function generateUUIDv4(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

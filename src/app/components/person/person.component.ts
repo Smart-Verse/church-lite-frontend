@@ -8,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields/fields.service';
 import { PersonConfig } from './person.config';
 import { ToastService } from '../../shared/services/toast/toast.service';
-import {DTOConverter} from "../../../core/dto/dto-converter";
 import {DatePipe} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 
