@@ -87,7 +87,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
 
     this.imageService.onRequestDonwload(this.imageToken).subscribe({
       next: (res) => {
-        this.urlImage = res.url;
+        this.urlImage = res["url"];
         this.onShowLoading();
       },
       error: error => {
