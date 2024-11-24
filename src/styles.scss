@@ -1,12 +1,7 @@
 @import "primeng/resources/primeng.css";
+@import 'primeng/resources/themes/aura-dark-purple/theme.css';
 @import 'primeng/resources/themes/aura-light-purple/theme.css';
-body.aura-dark-purple {
-  @import 'primeng/resources/themes/aura-dark-purple/theme.css';
-}
 
-body.aura-light-purple {
-  @import 'primeng/resources/themes/aura-light-purple/theme.css';
-}
 
 body{
     width: 100vw;

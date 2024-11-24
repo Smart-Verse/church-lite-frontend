@@ -148,7 +148,7 @@ export class SidebarComponent implements OnInit {
 
   onSetTheme(primeTheme: string) {
     const body = document.body;
-    body.className = ''; // Limpa as classes existentes
+    body.className = '';
     body.classList.add(this.theme);
   }
 
