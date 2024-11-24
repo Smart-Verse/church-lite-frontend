@@ -60,6 +60,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
       next: (res) => {
         if(res.accessToken){
           this.coockieService.set(EnumCookie.AUTHORIZATION,res.accessToken);
+          this.coockieService.set(EnumCookie.HASH,res.token);
           this.router.navigate(["home"]);
         }
         this.onShowLoading();
