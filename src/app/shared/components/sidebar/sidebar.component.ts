@@ -35,6 +35,7 @@ import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
 })
 export class SidebarComponent implements OnInit {
 
+  theme: string = 'aura-dark-purple';
   menu = new MenuItens();
   isExpanded = false;
   menuItems: any;
@@ -138,10 +139,17 @@ export class SidebarComponent implements OnInit {
         this.imageService.onRequestDonwload(res.output.userPhoto).subscribe({
           next: (req) => {
             this.image = req["url"];
+            this.onSetTheme(res.output.theme);
           }
         });
       }
     });
+  }
+
+  onSetTheme(primeTheme: string) {
+    const body = document.body;
+    body.className = ''; // Limpa as classes existentes
+    body.classList.add(this.theme);
   }
 
 
