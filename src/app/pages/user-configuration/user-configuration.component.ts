@@ -10,6 +10,7 @@ import {UserConfigurationConfig} from "./user-configuration.config";
 import { language, theme } from "../../shared/util/constants";
 import {UserConfigurationService} from "../../services/user-configuration/user-configuration.service";
 import {ImageUploadService} from "../../shared/components/inputs/image-upload/image-upload.service";
+import {ThemeService} from "../../shared/services/theme/theme.service";
 
 @Component({
   selector: 'app-user-configuration',
@@ -40,7 +41,8 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
     private readonly fieldsService: FieldsService,
     private readonly toastService: ToastService,
     private readonly userConfigurationService: UserConfigurationService,
-    private readonly imageService: ImageUploadService
+    private readonly imageService: ImageUploadService,
+    private readonly  themeService: ThemeService
   ) {
     super();
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
@@ -57,6 +59,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
       let dto = this.configuration.convertToDTO(this.formGroup, this.imageToken);
       this.userConfigurationService.onUpdate(dto.id, dto).subscribe({
         next: data => {
+          this.themeService.onConfigurationTheme(dto.theme);
           this.onShowLoading();
         },
         error: error => {

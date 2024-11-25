@@ -24,4 +24,12 @@ export class ThemeService {
 
     this.renderer.setAttribute(this.themeLinkElement, 'href', themePath);
   }
+
+  onConfigurationTheme(theme: string): void {
+    if(theme === 'DARK'){
+      this.setTheme("aura-dark-purple");
+    } else {
+      this.setTheme("aura-light-purple");
+    }
+  }
 }

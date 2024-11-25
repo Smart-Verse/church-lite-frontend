@@ -1,0 +1,19 @@
+<app-loading [showLoading]="showLoading"></app-loading>
+<div class="transactions">
+  <h2>{{translateService.translate("transactions")}}</h2>
+  <hr>
+  <div class="btnsp">
+    <app-auto-complete
+      (onSelectChange)="onSelectedCash()"
+      [(ngModel)]="_currentCash"
+      name="cash"
+      defaultFilter="typeCash eq 0"
+      class="field col-12 md:col-4 c-margin"
+      [label]="translateService.translate('cash')"
+      route="cash"
+      optionLabel="description"
+      type="text">
+    </app-auto-complete>
+  </div>
+</div>
+

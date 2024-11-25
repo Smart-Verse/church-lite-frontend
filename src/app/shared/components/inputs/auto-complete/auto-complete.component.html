@@ -1,5 +1,6 @@
 <p-floatLabel>
   <p-autoComplete
+    (onSelect)="onSelected()"
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
     pAutoFocus

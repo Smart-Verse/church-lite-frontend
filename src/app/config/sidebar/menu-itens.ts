@@ -97,10 +97,10 @@ export class MenuItens{
                   submenu: [
                     {
                       name: 'Caixas',
-                      route:'register/revenues'
+                      route:'transactions'
                     },
                     {
-                      name: 'Extrato',
+                      name: 'Extrato Bancário',
                       route:'register/revenues'
                     },
                     {

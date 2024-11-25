@@ -1,16 +1,16 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { SharedCommonModule } from '../../common/shared-common.module';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import { RouterLink, RouterOutlet} from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { SidebarSubmenuComponent } from './sidebar-submenu/sidebar-submenu.component';
 import { MenuItens } from '../../../config/sidebar/menu-itens';
 import {MenuModule} from "primeng/menu";
-import {CookiesService} from "../../services/cookies/cookies.service";
-import {EnumCookie} from "../../services/cookies/cookie.enum";
+
 import {UserConfigurationService} from "../../../services/user-configuration/user-configuration.service";
 import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
+import {ThemeService} from "../../services/theme/theme.service";
 
 
 @Component({
@@ -48,7 +48,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private readonly userConfigurationService: UserConfigurationService,
-    private readonly imageService: ImageUploadService
+    private readonly imageService: ImageUploadService,
+    private readonly themeService: ThemeService
   ){
     this.menuItems = this.menu.menuItems;
     this.currentMenu = this.menuItems[0];
@@ -139,17 +140,11 @@ export class SidebarComponent implements OnInit {
         this.imageService.onRequestDonwload(res.output.userPhoto).subscribe({
           next: (req) => {
             this.image = req["url"];
-            this.onSetTheme(res.output.theme);
+            this.themeService.onConfigurationTheme(res.output.theme);
           }
         });
       }
     });
-  }
-
-  onSetTheme(primeTheme: string) {
-    const body = document.body;
-    body.className = '';
-    body.classList.add(this.theme);
   }
 
 

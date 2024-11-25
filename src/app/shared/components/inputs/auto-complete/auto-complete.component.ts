@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
@@ -38,6 +38,9 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
 
   @Input() optionLabel: string = "";
   @Input() route: string = "";
+  @Input() defaultFilter: string = "";
+
+  @Output() onSelectChange: EventEmitter<void> = new EventEmitter();
 
   public itens: any[] = [];
 
@@ -64,7 +67,11 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
     let req = new RequestData();
     req.size = 5;
     req.offset = 0;
-    req.filter = `${this.optionLabel} eq ${value.query}`;
+    req.filter = (this.defaultFilter !== "" ? this.defaultFilter + " and " : "") + ` ${this.optionLabel} eq ${value.query}`;
     return req;
+  }
+
+  onSelected(){
+    this.onSelectChange.emit();
   }
 }
