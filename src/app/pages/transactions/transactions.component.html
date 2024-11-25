@@ -2,18 +2,97 @@
 <div class="transactions">
   <h2>{{translateService.translate("transactions")}}</h2>
   <hr>
-  <div class="btnsp">
+  <div class="formgrid grid">
     <app-auto-complete
       (onSelectChange)="onSelectedCash()"
       [(ngModel)]="_currentCash"
       name="cash"
-      defaultFilter="typeCash eq 0"
+      defaultFilter="typeCash eq 0 and status eq 0"
       class="field col-12 md:col-4 c-margin"
-      [label]="translateService.translate('cash')"
+      [label]="translateService.translate('transactions_cash')"
       route="cash"
       optionLabel="description"
       type="text">
     </app-auto-complete>
+    <div class="field col-12 md:col-2 c-margin">
+      <p-button
+        styleClass="w-full"
+        [label]="translateService.translate('transactions_open_cash')" />
+    </div>
+    <div class="field col-12 md:col-2 c-margin">
+      <p-button
+        styleClass="w-full"
+        [label]="translateService.translate('transactions_close_cash')" />
+    </div>
+    <div class="field col-12 md:col-2 c-margin">
+      <p-button
+        styleClass="w-full"
+        [label]="translateService.translate('common_print')" />
+    </div>
+  </div>
+  <div class="table">
+    <p-table [tableStyle]="{ 'min-width': '50rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Valor</th>
+          <th>Operação</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.quantity }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="summary">
+          <p-button type="button" icon="pi pi-refresh" styleClass="p-button-text" />
+          <p-paginator
+            [rows]="10"
+            appendTo="body"
+            dropdownAppendTo="body"
+            [totalRecords]="10"
+            [rowsPerPageOptions]="[5,10, 20, 30]" />
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="formgrid grid">
+    <app-input-number
+      [(ngModel)]="_startBalance"
+      name="startBalance"
+      [disabled]="true"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_start_balance')"
+      >
+    </app-input-number>
+    <app-input-number
+      [(ngModel)]="_revenues"
+      name="revenues"
+      [disabled]="true"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_revenues')"
+      >
+    </app-input-number>
+    <app-input-number
+      [(ngModel)]="_expenses"
+      name="expenses"
+      [disabled]="true"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_expenses')"
+      >
+    </app-input-number>
+    <app-input-number
+      [disabled]="true"
+      [(ngModel)]="_endBalance"
+      name="endBalance"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_end_balance')">
+    </app-input-number>
   </div>
 </div>
 

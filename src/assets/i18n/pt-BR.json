@@ -4,6 +4,8 @@
     "common_action_no": "Não",
     "common_action_save": "Salvar",
     "common_action_cancel": "Cancelar",
+    "common_message": "Mensagem",
+    "common_print": "Imprimir",
     "common_message_success": "Salvo com sucesso",
     "common_message_invalid_fields": "Existem campos inválidos",
     "common_message_confirmation_delete": "Deseja excluir o(s) registro(s) selecionado(s)?",
@@ -11,7 +13,7 @@
     "common_description": "Descrição",
     "common_name": "Nome",
     "common_type": "Tipo",
-    "common_code": "code",
+    "common_code": "Código",
 
     "planAccount_codeTree": "Código Arvore",
     "cash_typeCash": "Tipo de conta",
@@ -40,6 +42,13 @@
     "user_configuration": "Configurações do usuário",
 
     "transactions": "Movimentações",
+    "transactions_cash": "Caixa",
+    "transactions_open_cash": "Abrir caixa",
+    "transactions_close_cash": "Fechar caixa",
+    "transactions_start_balance": "Saldo inicial",
+    "transactions_revenues": "Receitas",
+    "transactions_expenses": "Despesas",
+    "transactions_end_balance": "Total",
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",

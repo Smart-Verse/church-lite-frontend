@@ -37,17 +37,24 @@ export class CashConfig {
       required: false,
       hidden: false,
       type: 'string'
+    },
+    {
+      fieldName: 'status',
+      required: false,
+      hidden: false,
+      type: 'string'
     }
   ]
 
-  convertToDTO(formGroup: FormGroup): any {
+  convertToDTO(formGroup: FormGroup, status: string): any {
     let dto = {
       id: formGroup.get('id')?.value,
       description: formGroup.get('description')?.value,
       typeCash: formGroup.get('typeCash')?.value["key"],
       bank: (formGroup.get('bank')?.value === "" ? null : formGroup.get('bank')?.value),
       numberAccount: formGroup.get('numberAccount')?.value,
-      digit: formGroup.get('digit')?.value
+      digit: formGroup.get('digit')?.value,
+      status: (formGroup.get('typeCash')?.value["key"] === 'BANK' ? null : status)
     };
     return dto;
   }

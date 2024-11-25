@@ -2,3 +2,21 @@
   padding: 10px;
   height: 100%;
 }
+.cash-transactions {
+  display: flex;
+}
+.status-transaction{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table{
+  max-height: 60%;
+  overflow: auto;
+  margin-top: 10px
+}
+.summary{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
