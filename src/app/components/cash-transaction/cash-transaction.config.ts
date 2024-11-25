@@ -18,7 +18,7 @@ export class CashTransactionConfig {
     },
     {
       fieldName: 'balance',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     },
@@ -30,7 +30,7 @@ export class CashTransactionConfig {
     },
     {
       fieldName: 'finalBalance',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     },
@@ -42,13 +42,13 @@ export class CashTransactionConfig {
     },
     {
       fieldName: 'endDate',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     },
     {
       fieldName: 'previousBalance',
-      required: true,
+      required: false,
       hidden: false,
       type: 'string'
     },

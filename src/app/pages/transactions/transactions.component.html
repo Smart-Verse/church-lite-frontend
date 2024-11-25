@@ -16,12 +16,13 @@
     </app-auto-complete>
     <div class="field col-12 md:col-2 c-margin">
       <p-button
-        (onClick)="onOpenModal()"
+        (onClick)="onOpenModal(0)"
         styleClass="w-full"
         [label]="translateService.translate('transactions_open_cash')" />
     </div>
     <div class="field col-12 md:col-2 c-margin">
       <p-button
+        (onClick)="onOpenModal(1)"
         styleClass="w-full"
         [label]="translateService.translate('transactions_close_cash')" />
     </div>
@@ -96,4 +97,5 @@
     </app-input-number>
   </div>
 </div>
+
 
