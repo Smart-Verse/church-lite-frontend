@@ -49,6 +49,9 @@
     "transactions_revenues": "Receitas",
     "transactions_expenses": "Despesas",
     "transactions_end_balance": "Total",
+    "transactions_previousBalance": "saldo anterior",
+    "transactions_openingDate": "DataAbertura",
+
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",

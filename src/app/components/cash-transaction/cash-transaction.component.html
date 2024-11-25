@@ -1,0 +1,44 @@
+<div [formGroup]="formGroup">
+  <div class="cash-transaction formgrid grid">
+    <app-input-date
+      formControlName="startDate"
+      name="startDate"
+      [field]="formGroup"
+      pAutoFocus
+      [disabled]="true"
+      [autofocus]="false"
+      class="field col-12 md:col-4 c-margin"
+      [label]="translateService.translate('transactions_openingDate')"
+      type="text">
+    </app-input-date>
+    <app-auto-complete
+      formControlName="cash"
+      [field]="formGroup"
+      name="cash"
+      defaultFilter="typeCash eq 0"
+      class="field col-12 md:col-8 c-margin"
+      [label]="translateService.translate('transactions_cash')"
+      route="cash"
+      optionLabel="description"
+      type="text">
+    </app-auto-complete>
+    <app-input-number
+      formControlName="previousBalance"
+      name="previousBalance"
+      [disabled]="false"
+      [field]="formGroup"
+      class="field col-12 md:col-6 c-margin"
+      [label]="translateService.translate('transactions_previousBalance')"
+      type="text">
+    </app-input-number>
+    <app-input-number
+      formControlName="initialBalance"
+      name="initialBalance"
+      [disabled]="false"
+      [field]="formGroup"
+      class="field col-12 md:col-6 c-margin"
+      [label]="translateService.translate('transactions_start_balance')"
+      type="text">
+    </app-input-number>
+  </div>
+</div>
