@@ -5,6 +5,9 @@ import {Router, RouterOutlet} from '@angular/router';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
+import {UserConfigurationService} from "./services/user-configuration/user-configuration.service";
+import {ImageUploadService} from "./shared/components/inputs/image-upload/image-upload.service";
+import {ThemeService} from "./shared/services/theme/theme.service";
 
 
 
@@ -27,11 +30,15 @@ import { HttpModule } from './config/http/http.module';
 export class AppComponent implements OnInit{
   title = 'church-lite-frontend';
 
-  constructor(private config: PrimeNGConfig) {
+  constructor(
+    private config: PrimeNGConfig,
+    private themeService: ThemeService
+  ) {
 
   }
 
   ngOnInit(): void {
     this.config.ripple = true;
+    this.themeService.setTheme('aura-light-purple');
   }
 }

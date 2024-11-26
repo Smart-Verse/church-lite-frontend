@@ -1,0 +1,14 @@
+.user-configuration {
+  padding: 10px;
+  height: 100%;
+  .user-configuration-fields{
+    .image-view{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-fields{
+      margin-top: 20px;
+    }
+  }
+}

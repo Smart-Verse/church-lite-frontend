@@ -97,11 +97,11 @@ export class MenuItens{
                   submenu: [
                     {
                       name: 'Caixas',
-                      route:'register/revenues'
+                      route:'transactions'
                     },
                     {
-                      name: 'Extrato',
-                      route:'register/revenues'
+                      name: 'Extrato Bancário',
+                      route:'bank-statament'
                     },
                     {
                       name: 'Histórico Fechamento',

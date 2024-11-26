@@ -22,8 +22,8 @@
       <div class="logout">
         <li class="logout-item">
           <div class="footer" >
-            <div class="user">
-            </div>
+            <div *ngIf="!image" class="user">User</div>
+            <img *ngIf="image" class="user" [src]="image">
           </div>
         </li>
       </div>

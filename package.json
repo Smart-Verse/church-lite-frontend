@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng cache clean && ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:church-lite-frontend": "node dist/church-lite-frontend/server/server.mjs"

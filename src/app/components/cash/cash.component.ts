@@ -47,9 +47,14 @@ export class CashComponent extends BaseComponent implements OnInit {
 
   onSave() {
     if(this.formGroup.valid) {
-      this.ref.close(this.configuration.convertToDTO(this.formGroup));
+      if(this.config.data.id) {
+        this.ref.close(this.configuration.convertToDTO(this.formGroup, this.config.data.status));
+      } else {
+        this.ref.close(this.configuration.convertToDTO(this.formGroup, 'CLOSE_CASH'));
+      }
+
     }else {
-      this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
+      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
     }
   }

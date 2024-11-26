@@ -4,8 +4,6 @@ import {DatePipe} from "@angular/common";
 
 export class DTOConverter {
 
-
-
   static convertPositionToDTO(formGroup: FormGroup): any {
     let dto = {
      id: formGroup.get('id')?.value,

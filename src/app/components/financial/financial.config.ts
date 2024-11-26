@@ -80,7 +80,7 @@ export class FinancialConfig {
       typeFinancial: type,
       cash: formGroup.get('cash')?.value,
       value: formGroup.get('value')?.value,
-      person: formGroup.get('person')?.value,
+      person: (formGroup.get('person')?.value === "" ? null : formGroup.get('person')?.value),
       planAccount: formGroup.get('planAccount')?.value,
       costCenter: formGroup.get('costCenter')?.value,
       issueDate: formGroup.get('issueDate')?.value,

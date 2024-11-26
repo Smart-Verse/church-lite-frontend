@@ -1,6 +1,5 @@
-@import "primeng/resources/themes/aura-dark-purple/theme.css";
-@import "primeng/resources/themes/aura-light-purple/theme.css";
 @import "primeng/resources/primeng.css";
+
 body{
     width: 100vw;
     height: 100vh;
@@ -24,7 +23,7 @@ html{
 :root {
     --sidebar-width: 60px;
     --sidebar-expanded: 300px;
-    --primary-color: #333;
+    --custom-primary-color: #333;
     --content-bg-color: #f4f4f4;
     --active-indicator-color: linear-gradient(to right, #8CA6DB, #B993D6);
 }
@@ -38,6 +37,17 @@ html{
     .p-dropdown{
       width: 100%;
     }
+    p-inputnumber, .p-inputnumber {
+      width: 100% !important;
+    }
+}
+
+
+
+.btnsp{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
 ::-webkit-scrollbar {
