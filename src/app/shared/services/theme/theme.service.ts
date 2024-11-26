@@ -1,4 +1,5 @@
 import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,13 @@ export class ThemeService {
   }
 
   setTheme(theme: string): void {
-    const themePath = `assets/theme/${theme}/theme.css`;
+
+    let urlProduction = "";
+    if(environment.production){
+      urlProduction = "church-lite/"
+    }
+
+    const themePath = urlProduction + `assets/theme/${theme}/theme.css`;
 
     if (!this.themeLinkElement) {
       this.themeLinkElement = this.renderer.createElement('link');
