@@ -14,4 +14,8 @@ export class TransactionsService {
     return this.http.get<any>(`getIDCashTransaction?cash=${cash}`);
   }
 
+  public getSumValuesCash(cash: any) : Observable<any> {
+    return this.http.get<any>(`getSumValuesCash?cashTransaction=${cash}`);
+  }
+
 }

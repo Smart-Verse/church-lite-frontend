@@ -69,7 +69,7 @@ export class FinancialComponent extends BaseComponent implements OnInit{
   onSave(action: number) {
     if(this.formGroup.valid) {
       if(action == 1){
-        var date = this.config.data.paymentReceiptDate === null ? new Date() : null;
+        var date = (this.config.data.paymentReceiptDate === null || this.config.data.paymentReceiptDate === undefined) ? new Date() : null;
         this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, date));
       }
       else {

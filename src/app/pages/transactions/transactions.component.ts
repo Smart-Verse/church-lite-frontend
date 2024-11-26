@@ -35,7 +35,7 @@ export class TransactionsComponent extends BaseComponent{
 
   _currentCash: any;
   _startBalance: number = 0;
-  _endBalance: number = 0;
+  _totalBalance: number = 0;
   _revenues: number = 0;
   _expenses: number = 0;
   _transactionID: string = "";
@@ -123,11 +123,27 @@ export class TransactionsComponent extends BaseComponent{
         this._datatable.page = res.offset + 1;
         this._datatable.size = res.size;
         this.onShowLoading();
+        this.onGetTotal();
       },
       error: (err) => {
         this.onShowLoading();
       }
     });
+  }
+
+  onGetTotal(){
+    this.onShowLoading();
+    this.transactionsService.getSumValuesCash(this._transactionID).subscribe({
+      next: (res) => {
+        this._revenues = !res.revenues ? 0 : res.revenues;
+        this._expenses = !res.expenses ? 0 : res.expenses;
+        this._startBalance = !res.initialBalance ? 0 : res.initialBalance;
+        this._totalBalance = (this._startBalance + this._revenues - this._expenses);
+        this.onShowLoading();
+      }, error: err => {
+        this.onShowLoading();
+      }
+    })
   }
 
   private includeFilters(requestData: RequestData) {
