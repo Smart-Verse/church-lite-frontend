@@ -33,26 +33,28 @@
     </div>
   </div>
   <div class="table">
-    <p-table [tableStyle]="{ 'min-width': '50rem'}">
+    <p-table [tableStyle]="{ 'min-width': '50rem'}" [value]="_datatable.values">
       <ng-template pTemplate="header">
         <tr>
           <th>Data</th>
           <th>Descrição</th>
-          <th>Valor</th>
+          <th>Nome</th>
           <th>Operação</th>
+          <th>Valor</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-rowData>
         <tr>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
-          <td>{{ product.quantity }}</td>
+          <td>{{ rowData.dateTransaction }}</td>
+          <td>{{ rowData.description }}</td>
+          <td>{{ rowData.person?.name }}</td>
+          <td>{{ rowData.transactionOperation }}</td>
+          <td>{{ rowData.value }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="summary">
-          <p-button type="button" icon="pi pi-refresh" styleClass="p-button-text" />
+          <p-button type="button" (onClick)="onLoadAllData(_requestData)" icon="pi pi-refresh" styleClass="p-button-text" />
           <p-paginator
             [rows]="10"
             appendTo="body"

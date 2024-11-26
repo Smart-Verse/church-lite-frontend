@@ -8,6 +8,10 @@ import {PaginatorModule} from "primeng/paginator";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {CashTransactionComponent} from "../../components/cash-transaction/cash-transaction.component";
 import {TransactionsService} from "../../services/transactions/transactions.service";
+import {CrudService} from "../../shared/services/crud/crud.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
+import {RequestData} from "../../shared/interfaces/request-data";
+import {DataTable} from "../../shared/components/datatable/datatable";
 
 @Component({
   selector: 'app-transactions',
@@ -20,7 +24,9 @@ import {TransactionsService} from "../../services/transactions/transactions.serv
   ],
   providers: [
     DialogService,
-    TransactionsService
+    TransactionsService,
+    ToastService,
+    CrudService
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
@@ -32,19 +38,36 @@ export class TransactionsComponent extends BaseComponent{
   _endBalance: number = 0;
   _revenues: number = 0;
   _expenses: number = 0;
+  _transactionID: string = "";
+  _datatable: DataTable = new DataTable();
   ref: DynamicDialogRef | undefined;
   originalClose: any;
+  _requestData: RequestData = new RequestData();
 
   constructor(
     public readonly translateService: TranslateService,
     private readonly dialogService: DialogService,
     private readonly transactionsService: TransactionsService,
+    private readonly crudService : CrudService,
+    private readonly toastService: ToastService,
   ) {
     super();
   }
 
   onSelectedCash(){
+    this.onShowLoading();
+    this.transactionsService.getIDCashTransaction(this._currentCash.id).subscribe({
+      next: (result) => {
+        this._transactionID = result.cashTransaction;
+        this.onShowLoading();
+        this.onLoadAllData(new RequestData());
+      },
+      error: err => {
+        this.onShowLoading();
+      }
+    })
   }
+
 
   onOpenModal(action: number){
     this.ref = this.dialogService.open(CashTransactionComponent,
@@ -74,11 +97,43 @@ export class TransactionsComponent extends BaseComponent{
   }
 
   onOpenCash(obj: any){
-
+    this.crudService.onSave("cashTransactions", obj).subscribe({
+      next: (result) => {
+        this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
+        this.originalClose(null);
+      },
+      error: (err) => {
+        this.toastService.success({summary: "Mensagem", detail: err.error.message});
+      }
+    });
   }
 
   onCloseCash(obj: any){
 
+  }
+
+
+  onLoadAllData(requestData: RequestData): void {
+    this.onShowLoading();
+    requestData = this.includeFilters(requestData);
+    this.crudService.onGetAll("transactions",requestData).subscribe({
+      next: (res) => {
+        this._datatable.values = res.contents;
+        this._datatable.totalRecords = res.total;
+        this._datatable.page = res.offset + 1;
+        this._datatable.size = res.size;
+        this.onShowLoading();
+      },
+      error: (err) => {
+        this.onShowLoading();
+      }
+    });
+  }
+
+  private includeFilters(requestData: RequestData) {
+    requestData.filter = `cashTransaction eq ${this._transactionID}`;
+    requestData.displayFields = "description;value;transactionOperation;person.name;dateTransaction"
+    return requestData;
   }
 
 }
