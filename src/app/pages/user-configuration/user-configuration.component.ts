@@ -61,6 +61,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
         next: data => {
           this.themeService.onConfigurationTheme(dto.theme);
           this.onShowLoading();
+          this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
         },
         error: error => {
           this.onShowLoading();
