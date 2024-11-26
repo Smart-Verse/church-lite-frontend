@@ -36,6 +36,12 @@ export const language = [
   { key: "SPANISH", value: "Espanhol" }
 ]
 
+export const languages: any = {
+  PORTUGUESE: "pt-BR",
+  ENGLISH: "en-US",
+  SPANISH: "es-ES",
+}
+
 
 export function generateUUIDv4(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
