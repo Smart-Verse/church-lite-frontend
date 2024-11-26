@@ -1,0 +1,76 @@
+<app-loading [showLoading]="showLoading"></app-loading>
+<div class="bank-statament">
+  <h2>{{translateService.translate("bank_statament")}}</h2>
+  <hr>
+  <div class="formgrid grid">
+    <app-auto-complete
+      (onSelectChange)="onSelectedBankAccount()"
+      [(ngModel)]="_currentAccount"
+      name="cash"
+      defaultFilter="typeCash eq 1 "
+      class="field col-12 md:col-4 c-margin"
+      [label]="translateService.translate('bank_bankAccount')"
+      route="cash"
+      optionLabel="description"
+      type="text">
+    </app-auto-complete>
+  </div>
+  <div class="table">
+    <p-table [tableStyle]="{ 'min-width': '50rem'}" [value]="_datatable.values">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Nome</th>
+          <th>Operação</th>
+          <th>Valor</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td>{{ rowData.dateTransaction }}</td>
+          <td>{{ rowData.description }}</td>
+          <td>{{ rowData.person?.name }}</td>
+          <td>{{ rowData.transactionOperation }}</td>
+          <td>{{ rowData.value }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="summary">
+          <p-button type="button" (onClick)="onLoadAllData(_requestData)" icon="pi pi-refresh" styleClass="p-button-text" />
+          <p-paginator
+            [rows]="10"
+            appendTo="body"
+            dropdownAppendTo="body"
+            [totalRecords]="10"
+            [rowsPerPageOptions]="[5,10, 20, 30]" />
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="formgrid grid">
+    <app-input-number
+      [(ngModel)]="_revenues"
+      name="revenues"
+      [disabled]="true"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_revenues')"
+    >
+    </app-input-number>
+    <app-input-number
+      [(ngModel)]="_expenses"
+      name="expenses"
+      [disabled]="true"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_expenses')"
+    >
+    </app-input-number>
+    <app-input-number
+      [disabled]="true"
+      [(ngModel)]="_totalBalance"
+      name="endBalance"
+      class="field col-12 md:col-3 c-margin"
+      [label]="translateService.translate('transactions_end_balance')">
+    </app-input-number>
+  </div>
+</div>

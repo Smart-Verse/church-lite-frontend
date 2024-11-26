@@ -18,4 +18,8 @@ export class TransactionsService {
     return this.http.get<any>(`getSumValuesCash?cashTransaction=${cash}`);
   }
 
+  public getBalanceBankAccount(bank: any) : Observable<any> {
+    return this.http.get<any>(`getBalanceBankAccount?bankAccount=${bank}`);
+  }
+
 }

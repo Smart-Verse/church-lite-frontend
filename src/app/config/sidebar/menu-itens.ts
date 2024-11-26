@@ -101,7 +101,7 @@ export class MenuItens{
                     },
                     {
                       name: 'Extrato Bancário',
-                      route:'register/revenues'
+                      route:'bank-statament'
                     },
                     {
                       name: 'Histórico Fechamento',

@@ -31,7 +31,7 @@ import {DataTable} from "../../shared/components/datatable/datatable";
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.scss'
 })
-export class TransactionsComponent extends BaseComponent{
+export class TransactionsComponent extends BaseComponent {
 
   _currentCash: any;
   _startBalance: number = 0;
