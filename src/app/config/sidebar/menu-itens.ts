@@ -1,49 +1,54 @@
+import {inject} from "@angular/core";
+import {TranslateService} from "../../shared/services/translate/translate.service";
+
+
 export class MenuItens{
+    translate = inject(TranslateService);
     menuItems = [
         {
             route: "notification",
             iconClass: 'pi pi-bell',
-            tooltip: 'Notificações',
-            name: 'Notificações',
+            tooltip: this.translate.translate("notification"),
+            name: this.translate.translate("notification"),
             submenu: []
         },
         {
           route: "dashboard",
           iconClass: 'pi pi-chart-bar',
-          tooltip: 'Dashboard',
-          name: 'Dashboard',
+          tooltip: this.translate.translate("dashboard"),
+          name: this.translate.translate("dashboard"),
           submenu: []
         },
         {
           route: "scheduler",
           iconClass: 'pi pi-calendar',
-          tooltip: 'Agenda',
-          name: 'Agenda',
+          tooltip: this.translate.translate("scheduler"),
+          name: this.translate.translate("scheduler"),
           submenu: []
         },
         {
             iconClass: "pi pi-user-plus",
-            tooltip: "Cadastros",
-            name: 'Cadastros',
+            tooltip: this.translate.translate("registrations"),
+            name: this.translate.translate("registrations"),
             submenu: [
                 {
-                    name: 'Pessoas',
+                    name: this.translate.translate("registrations_persons"),
                     submenu: [
                       {
                           route: "register/personMembers",
-                          name: 'Membros',
+                          name: this.translate.translate("registrations_persons_members"),
                       },
                       {
                         route: "register/personNewConvert",
-                        name: 'Novos Convertidos',
+                        name: this.translate.translate("registrations_persons_new_convert"),
                       },
                       {
                           route: "register/personSupplier",
-                          name: 'Fornecedores',
+                          name: this.translate.translate("registrations_persons_suppliers"),
                       },
                       {
                         route: "register/personVisitor",
-                        name: 'Visitantes',
+                        name: this.translate.translate("registrations_persons_visitor"),
                       }
                     ]
                 },
