@@ -48,10 +48,13 @@
     "transactions_start_balance": "Saldo inicial",
     "transactions_revenues": "Receitas",
     "transactions_expenses": "Despesas",
-    "transactions_end_balance": "Total",
+    "transactions_final_balance": "Total",
     "transactions_previousBalance": "Saldo anterior",
-    "transactions_openingDate": "Data Abertura",
+    "transactions_balance": "Total das operações",
+    "transactions_openingDate": "Data abertura",
     "transactions_openingCash": "Abertura do caixa",
+    "transactions_endCash": "Fechamento do caixa",
+    "transactions_endDate": "Data fechamento",
 
 
     "bank_statament": "Extrato bancário",
