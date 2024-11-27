@@ -11,6 +11,9 @@ import {MenuModule} from "primeng/menu";
 import {UserConfigurationService} from "../../../services/user-configuration/user-configuration.service";
 import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
 import {ThemeService} from "../../services/theme/theme.service";
+import {TranslateService} from "../../services/translate/translate.service";
+
+
 
 
 @Component({
@@ -49,7 +52,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private readonly userConfigurationService: UserConfigurationService,
     private readonly imageService: ImageUploadService,
-    private readonly themeService: ThemeService
+    private readonly themeService: ThemeService,
+    private readonly translateService: TranslateService,
   ){
     this.menuItems = this.menu.menuItems;
     this.currentMenu = this.menuItems[0];
@@ -141,6 +145,7 @@ export class SidebarComponent implements OnInit {
           next: (req) => {
             this.image = req["url"];
             this.themeService.onConfigurationTheme(res.output.theme);
+            this.translateService.loadTranslationsUser(res.output.lang);
           }
         });
       }

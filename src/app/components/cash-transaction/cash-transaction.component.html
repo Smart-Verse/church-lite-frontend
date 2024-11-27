@@ -11,12 +11,25 @@
       [label]="translateService.translate('transactions_openingDate')"
       type="text">
     </app-input-date>
+    <app-input-date
+      formControlName="endDate"
+      name="endDate"
+      [field]="formGroup"
+      pAutoFocus
+      [hidden]="_close"
+      [disabled]="true"
+      [autofocus]="false"
+      class="field col-12 md:col-4 c-margin"
+      [label]="translateService.translate('transactions_endDate')"
+      type="text">
+    </app-input-date>
     <app-auto-complete
       formControlName="cash"
       [field]="formGroup"
       name="cash"
-      defaultFilter="typeCash eq 0"
-      class="field col-12 md:col-8 c-margin"
+      (onSelectChange)="onGetCashTransaction()"
+      [defaultFilter]="_filter"
+      [class]="_classDynamic"
       [label]="translateService.translate('transactions_cash')"
       route="cash"
       optionLabel="description"
@@ -26,18 +39,39 @@
       formControlName="previousBalance"
       name="previousBalance"
       [disabled]="true"
+      [hidden]="_open"
       [field]="formGroup"
-      class="field col-12 md:col-6 c-margin"
+      [class]="_classBalance"
       [label]="translateService.translate('transactions_previousBalance')"
       type="text">
     </app-input-number>
     <app-input-number
       formControlName="initialBalance"
       name="initialBalance"
-      [disabled]="false"
+      [disabled]="_disabledCloseCash"
       [field]="formGroup"
-      class="field col-12 md:col-6 c-margin"
+      [class]="_classBalance"
       [label]="translateService.translate('transactions_start_balance')"
+      type="text">
+    </app-input-number>
+    <app-input-number
+      formControlName="balance"
+      name="balance"
+      [hidden]="_close"
+      [disabled]="_disabledCloseCash"
+      [field]="formGroup"
+      [class]="_classBalance"
+      [label]="translateService.translate('transactions_balance')"
+      type="text">
+    </app-input-number>
+    <app-input-number
+      formControlName="finalBalance"
+      name="finalBalance"
+      [disabled]="_disabledCloseCash"
+      [hidden]="_close"
+      [field]="formGroup"
+      [class]="_classBalance"
+      [label]="translateService.translate('transactions_final_balance')"
       type="text">
     </app-input-number>
   </div>

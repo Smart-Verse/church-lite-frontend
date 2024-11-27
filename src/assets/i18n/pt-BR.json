@@ -39,6 +39,13 @@
 
     "scheduler": "Agenda",
 
+    "registrations": "Cadastros",
+    "registrations_persons": "Pessoas",
+    "registrations_persons_members": "Membros",
+    "registrations_persons_new_convert": "Novos Convertidos",
+    "registrations_persons_suppliers": "Fornecedores",
+    "registrations_persons_visitor": "Visitantes",
+
     "user_configuration": "Configurações do usuário",
 
     "transactions": "Movimentações",
@@ -50,8 +57,11 @@
     "transactions_expenses": "Despesas",
     "transactions_end_balance": "Total",
     "transactions_previousBalance": "Saldo anterior",
-    "transactions_openingDate": "Data Abertura",
+    "transactions_balance": "Total das operações",
+    "transactions_openingDate": "Data abertura",
     "transactions_openingCash": "Abertura do caixa",
+    "transactions_endCash": "Fechamento do caixa",
+    "transactions_endDate": "Data fechamento",
 
 
     "bank_statament": "Extrato bancário",

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {environment} from "../../../../environments/environment";
+import {languages} from "../../util/constants";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,19 @@ export class TranslateService {
         this.translations = data;
       })
     );
+  }
+
+  loadTranslationsUser(lang: string) {
+
+    let urlProduction = "";
+    if(environment.production){
+      urlProduction = "/church-lite"
+    }
+    this.http.get<{ [key: string]: string }>(`${urlProduction}/assets/i18n/${languages[lang]}.json`).subscribe({
+      next: (data) => {
+        this.translations = data;
+      }
+    })
   }
 
   translate(key: string): string {

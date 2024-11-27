@@ -72,7 +72,7 @@ export class TransactionsComponent extends BaseComponent {
   onOpenModal(action: number){
     this.ref = this.dialogService.open(CashTransactionComponent,
       {
-        header: this.translateService.translate("transactions_openingCash"),
+        header: action === 0 ? this.translateService.translate("transactions_openingCash") : this.translateService.translate("transactions_endCash") ,
         width: '70vw',
         modal:true,
         draggable: true,
@@ -85,11 +85,7 @@ export class TransactionsComponent extends BaseComponent {
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {
       if (result) {
-        if(result.action === 0){
-          this.onOpenCash(result);
-        } else {
-          this.onCloseCash(result);
-        }
+        this.onOpenCash(result);
       } else {
         this.originalClose(null);
       }
@@ -107,11 +103,6 @@ export class TransactionsComponent extends BaseComponent {
       }
     });
   }
-
-  onCloseCash(obj: any){
-
-  }
-
 
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();

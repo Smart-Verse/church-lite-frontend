@@ -22,4 +22,8 @@ export class TransactionsService {
     return this.http.get<any>(`getBalanceBankAccount?bankAccount=${bank}`);
   }
 
+  public getResumeTransaction(cash: any) : Observable<any> {
+    return this.http.get<any>(`getResumeTransaction?cash=${cash}`);
+  }
+
 }

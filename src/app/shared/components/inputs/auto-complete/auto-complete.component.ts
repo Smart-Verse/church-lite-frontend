@@ -67,7 +67,11 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
     let req = new RequestData();
     req.size = 5;
     req.offset = 0;
-    req.filter = (this.defaultFilter !== "" ? this.defaultFilter + " and " : "") + ` ${this.optionLabel} eq ${value.query}`;
+    var filter = "";
+    if(value.query !== ""){
+      filter = ` and ${this.optionLabel} eq ${value.query}`
+    }
+    req.filter = (this.defaultFilter !== "" ? this.defaultFilter : "") + filter;
     return req;
   }
 
