@@ -110,7 +110,7 @@ export class MenuItens{
                     },
                     {
                       name: 'Histórico Fechamento',
-                      route:'register/revenues'
+                      route:'cash-history'
                     },
                   ]
                 }

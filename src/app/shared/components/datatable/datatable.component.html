@@ -58,21 +58,22 @@
                         {{ onRowData(rowData,col.field, col) }}
                     </td>
                     <td style="width: 10%;">
-                        <button
-                            style="margin-right: 5px;"
-                            type="button"
-                            pButton
-                            pRipple
-                            icon="pi pi-pencil"
-                            (click)="onRegisterData(rowData, 1)">
-                        </button>
-                        <button
-                            type="button"
-                            pButton
-                            pRipple
-                            icon="pi pi-trash"
-                            (click)="onDeleteData(rowData, 0)">
-                        </button>
+                      <div class="actions">
+                        <p-button
+                          type="button"
+                          pRipple
+                          styleClass="p-button-text"
+                          icon="pi pi-pencil"
+                          (click)="onRegisterData(rowData, 1)">
+                        </p-button>
+                        <p-button
+                          type="button"
+                          pRipple
+                          styleClass="p-button-text"
+                          icon="pi pi-trash"
+                          (click)="onDeleteData(rowData, 0)">
+                        </p-button>
+                      </div>
                     </td>
                 </tr>
             </ng-template>

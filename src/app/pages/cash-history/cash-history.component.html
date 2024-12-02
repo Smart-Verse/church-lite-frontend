@@ -1,0 +1,43 @@
+<app-loading [showLoading]="showLoading"></app-loading>
+<div class="default-header">
+  <h2>{{translateService.translate("history")}}</h2>
+  <hr>
+  <div class="table">
+    <p-table [tableStyle]="{ 'min-width': '50rem'}" [value]="_datatable.values">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Data abertura</th>
+          <th>Data fechamento</th>
+          <th>Saldo inicial</th>
+          <th>Total de operações</th>
+          <th>Saldo final</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData>
+        <tr>
+          <td>{{ rowData.startDate }}</td>
+          <td>{{ rowData.endDate }}</td>
+          <td>{{ rowData.initialBalance }}</td>
+          <td>{{ rowData.balance }}</td>
+          <td>{{ rowData.finalBalance }}</td>
+          <td>
+            <p-button type="button" (onClick)="onPrint(rowData.id)" icon="pi pi-print" styleClass="p-button-text" />
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="summary">
+          <p-button type="button" (onClick)="onLoadAllData(_requestData)" icon="pi pi-refresh" styleClass="p-button-text" />
+          <p-paginator
+            [rows]="10"
+            appendTo="body"
+            dropdownAppendTo="body"
+            [totalRecords]="10"
+            [rowsPerPageOptions]="[5,10, 20, 30]" />
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+

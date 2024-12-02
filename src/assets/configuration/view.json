@@ -286,5 +286,46 @@
         "customValue": "MONEY"
       }
     ]
+  },
+  {
+    "route": "cashHistory",
+    "hash": "cashHistory",
+    "filters": [],
+    "fields": [
+      {
+        "field": "startDate",
+        "header": "Data abertura",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "endDate",
+        "header": "Data fechamento",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "initialBalance",
+        "header": "Saldo inicial",
+        "width": "10%",
+        "customValue": "MONEY"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "header": "Data P.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "balance",
+        "header": "Total das movimentações",
+        "width": "15%"
+      },
+      {
+        "field": "finalBalance",
+        "header": "Saldo final",
+        "width": "15%"
+      }
+    ]
   }
 ]

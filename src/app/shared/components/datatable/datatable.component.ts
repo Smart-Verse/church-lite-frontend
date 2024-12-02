@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TableModule  } from 'primeng/table';
 import { DataTable } from './datatable';
 import { SidebarModule } from 'primeng/sidebar';
 import {RequestData} from "../../interfaces/request-data";
@@ -13,7 +13,7 @@ import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { TranslateService } from '../../services/translate/translate.service';
-import {fields} from "../../../components/cost-center-modal/cost-center.config";
+
 
 export enum Action {
   DELETE,
