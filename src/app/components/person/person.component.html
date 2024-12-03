@@ -2,6 +2,14 @@
   <p-tabView>
     <p-tabPanel header="Dados Básicos">
       <div class="person-members formgrid grid">
+        <div class="image-container field col-12 md:col-12 c-margin">
+          <app-image-upload
+            [imageUrl]="urlImage"
+            (eventLoading)="loading()"
+            (eventImageToken)="onGetTokenImage($event)"
+            [tokenImageUrl]="imageToken">
+          </app-image-upload>
+        </div>
         <app-input-text
           formControlName="name"
           name="name"
@@ -26,7 +34,7 @@
           [label]="translatePersonMembers.translate('personal_field_gender')"
           [options]="_gender"
           optionLabel="value"
-          class="field col-12 md:col-4 c-margin">
+          class="field col-12 md:col-6 c-margin">
         </app-dropdown>
         <app-dropdown
           formControlName="maritalStatus"
@@ -35,13 +43,13 @@
           [label]="translatePersonMembers.translate('personal_field_maritalStatus')"
           [options]="_maritalStatus"
           optionLabel="value"
-          class="field col-12 md:col-4 c-margin">
+          class="field col-12 md:col-6 c-margin">
         </app-dropdown>
         <app-auto-complete
           formControlName="nationality"
           name="nationality"
           [field]="personFormGroup"
-          class="field col-12 md:col-12 c-margin"
+          class="field col-12 md:col-6 c-margin"
           [label]="translatePersonMembers.translate('personal_field_nationality')"
           route="country"
           optionLabel="name"
@@ -51,13 +59,11 @@
           formControlName="birthplace"
           name="birthplace"
           [field]="personFormGroup"
-          class="field col-12 md:col-8 c-margin"
+          class="field col-12 md:col-6 c-margin"
           [label]="translatePersonMembers.translate('personal_field_birthplace')"
           type="text">
         </app-input-text>
       </div>
-    </p-tabPanel>
-    <p-tabPanel header="Documentos">
       <div formGroupName="personalDocs" class="person-members formgrid grid">
         <app-input-mask
           formControlName="cpf"

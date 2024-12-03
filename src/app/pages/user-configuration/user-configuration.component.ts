@@ -100,7 +100,6 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
         this.onShowLoading();
         this.toastService.error({summary: "Mensagem", detail: "Falha ao fazer download da imagem"});
       }
-
     })
   }
 

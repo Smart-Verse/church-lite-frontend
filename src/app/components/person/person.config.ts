@@ -24,31 +24,31 @@ export class PersonConfig {
         },
         {
           fieldName: 'gender',
-          required: true,
+          required: false,
           hidden: false,
           type: 'string'
         },
         {
           fieldName: 'nationality',
-          required: true,
+          required: false,
           hidden: false,
           type: 'string'
         },
         {
           fieldName: 'maritalStatus',
-          required: true,
+          required: false,
           hidden: false,
           type: 'string'
         },
         {
           fieldName: 'birthplace',
-          required: true,
+          required: false,
           hidden: false,
           type: 'string'
         },
         {
           fieldName: 'image',
-          required: true,
+          required: false,
           hidden: false,
           type: 'string'
         },
@@ -183,7 +183,7 @@ export class PersonConfig {
         },
     ]
 
-    convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string): any {
+  convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string, imageToken: string): any {
       let dto = {
         id: formGroup.get('id')?.value,
         name: formGroup.get('name')?.value,
@@ -192,7 +192,7 @@ export class PersonConfig {
         maritalStatus: formGroup.get('maritalStatus')?.value["key"],
         nationality: formGroup.get('nationality')?.value,
         birthplace: formGroup.get('birthplace')?.value,
-        image: formGroup.get('image')?.value,
+        image: imageToken,
         type: type,
         personAddress: formGroup.get('personAddress')?.value,
         personalDocs: formGroup.get('personalDocs')?.value,
