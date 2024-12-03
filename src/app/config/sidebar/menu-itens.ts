@@ -87,7 +87,7 @@ export class MenuItens{
         {
             iconClass: "pi pi-dollar",
             tooltip: "Financeiro",
-            name: 'Fiannceiro',
+            name: 'Financeiro',
             submenu: [
                 {
                     name: 'Receitas',
