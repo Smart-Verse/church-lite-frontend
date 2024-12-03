@@ -3,7 +3,7 @@ import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {status} from "../../shared/util/constants";
+import {gender, maritalStatus, status} from "../../shared/util/constants";
 import { FormGroup } from '@angular/forms';
 import { FieldsService } from '../../shared/services/fields/fields.service';
 import { PersonConfig } from './person.config';
@@ -27,7 +27,9 @@ import {ActivatedRoute} from "@angular/router";
 export class PersonComponent extends BaseComponent implements OnInit{
 
   public personFormGroup: FormGroup;
-  protected readonly status = status;
+  protected readonly _status = status;
+  protected readonly _gender = gender;
+  protected readonly _maritalStatus = maritalStatus;
   configPerson: PersonConfig = new PersonConfig();
   _type: string = "MEMBER";
 

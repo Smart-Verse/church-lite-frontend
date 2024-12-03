@@ -23,6 +23,36 @@ export class PersonConfig {
             type: 'string'
         },
         {
+          fieldName: 'gender',
+          required: true,
+          hidden: false,
+          type: 'string'
+        },
+        {
+          fieldName: 'nationality',
+          required: true,
+          hidden: false,
+          type: 'string'
+        },
+        {
+          fieldName: 'maritalStatus',
+          required: true,
+          hidden: false,
+          type: 'string'
+        },
+        {
+          fieldName: 'birthplace',
+          required: true,
+          hidden: false,
+          type: 'string'
+        },
+        {
+          fieldName: 'image',
+          required: true,
+          hidden: false,
+          type: 'string'
+        },
+        {
           fieldName: 'personalDocs',
           required: true,
           hidden: false,
@@ -158,6 +188,11 @@ export class PersonConfig {
         id: formGroup.get('id')?.value,
         name: formGroup.get('name')?.value,
         status: formGroup.get('status')?.value["key"],
+        gender: formGroup.get('gender')?.value["key"],
+        maritalStatus: formGroup.get('maritalStatus')?.value["key"],
+        nationality: formGroup.get('nationality')?.value,
+        birthplace: formGroup.get('birthplace')?.value,
+        image: formGroup.get('image')?.value,
         type: type,
         personAddress: formGroup.get('personAddress')?.value,
         personalDocs: formGroup.get('personalDocs')?.value,

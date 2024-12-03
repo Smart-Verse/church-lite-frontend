@@ -39,6 +39,14 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
+    header: "Cadastro de igrejas",
+    view: "personChurch",
+    route: "person",
+    paramExtra: "CHURCH",
+    defaultFilter: "type eq 5",
+    component: PersonComponent
+  },
+  {
     header: "Cadastro de cargos",
     view: "positions",
     route: "positions",

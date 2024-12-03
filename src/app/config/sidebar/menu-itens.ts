@@ -27,7 +27,7 @@ export class MenuItens{
           submenu: []
         },
         {
-            iconClass: "pi pi-user-plus",
+            iconClass: "pi pi-home",
             tooltip: this.translate.translate("registrations"),
             name: this.translate.translate("registrations"),
             submenu: [
@@ -85,7 +85,7 @@ export class MenuItens{
             ]
         },
         {
-            iconClass: "pi pi-money-bill",
+            iconClass: "pi pi-dollar",
             tooltip: "Financeiro",
             name: 'Fiannceiro',
             submenu: [
@@ -122,6 +122,14 @@ export class MenuItens{
           name: 'Configurações',
           submenu: [
             {
+              name: 'Cadastro de usuários',
+              route:'register/revenues'
+            },
+            {
+              name: 'Cadastro de igrejas',
+              route:'register/personChurch'
+            },
+            {
               name: 'Configurações do usuário',
               route:'user-configuration'
             },
@@ -142,10 +150,7 @@ export class MenuItens{
                 },
               ]
             },
-            {
-              name: 'Cadastro de usuários',
-              route:'register/revenues'
-            },
+
             {
               name: 'Logout',
               route:'login'

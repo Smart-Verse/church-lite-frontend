@@ -10,6 +10,7 @@ import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoadingComponent } from '../components/loading/loading.component';
+import { TabViewModule } from 'primeng/tabview';
 import { DatatableComponent } from '../components/datatable/datatable.component';
 import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
 import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
@@ -18,6 +19,7 @@ import {InputDateComponent} from "../components/inputs/input-date/input-date.com
 import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.component";
 import {InputNumberComponent} from "../components/inputs/input-number/input-number.component";
 import {ImageUploadComponent} from "../components/inputs/image-upload/image-upload.component";
+
 
 
 @NgModule({
@@ -55,7 +57,8 @@ import {ImageUploadComponent} from "../components/inputs/image-upload/image-uplo
     InputDateComponent,
     InputMaskComponent,
     InputNumberComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    TabViewModule
   ]
 })
 export class SharedCommonModule { }
