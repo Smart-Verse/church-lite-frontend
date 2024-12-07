@@ -90,5 +90,8 @@
     "personal_field_gender": "Genero",
     "personal_field_maritalStatus": "Estado civil",
     "personal_field_nationality": "Nacionalidade",
-    "personal_field_birthplace": "Naturalidade"
+    "personal_field_birthplace": "Naturalidade",
+    "personal_field_ingressDate": "Data inicio da igreja",
+    "personal_field_baptismDate": "Data de batismo",
+    "personal_field_position": "Cargo"
 }

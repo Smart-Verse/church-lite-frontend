@@ -3,3 +3,12 @@
   align-items: center;
   justify-content: center;
 }
+.group-image{
+  display: flex;
+}
+
+@media (max-width: 600px) {
+  .group-image{
+    display: inline;
+  }
+}
