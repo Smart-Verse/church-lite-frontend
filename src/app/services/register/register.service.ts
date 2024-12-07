@@ -20,7 +20,7 @@ export class RegisterService {
       urlProduction = "/church-lite"
     }
 
-    return this.http.get<any[]>(`${urlProduction}/assets/configuration/view/view.json`).pipe(
+    return this.http.get<any[]>(`${urlProduction}/assets/configuration/view.json`).pipe(
       map((data) => {
         this.model = data;
       })

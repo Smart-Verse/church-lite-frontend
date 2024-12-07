@@ -42,6 +42,20 @@ export const languages: any = {
   SPANISH: "es-ES",
 }
 
+export const gender = [
+  { key: "MALE", value: "Masculino" },
+  { key: "FEMALE", value: "Feminino" }
+]
+
+export const maritalStatus = [
+  { key: "SINGLE", value: "Solteiro(a)" },
+  { key: "MARRIED", value: "Casado(a)" },
+  { key: "DIVORCED", value: "Divorciado(a)" },
+  { key: "WIDOWED", value: "Viúvo(a)" },
+  { key: "SEPARATED", value: "Separado" },
+  { key: "CIVIL_UNION", value: "União estavel" },
+]
+
 
 export function generateUUIDv4(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

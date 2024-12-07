@@ -156,6 +156,7 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         header: this.configuration.header,
         width: '80vw',
         modal:true,
+        draggable: true,
         maximizable: false,
         data: obj,
         baseZIndex: 999999,

@@ -36,12 +36,7 @@
   {
     "route": "person",
     "hash": "personVisitor",
-    "filters": [
-      {
-        "field": "name",
-        "type": "string"
-      }
-    ],
+    "filters": [],
     "fields": [
       {
         "field": "name",
@@ -53,12 +48,19 @@
   {
     "route": "person",
     "hash": "personNewConvert",
-    "filters": [
+    "filters": [],
+    "fields": [
       {
         "field": "name",
-        "type": "string"
+        "header": "Nome",
+        "width": "80%"
       }
-    ],
+    ]
+  },
+  {
+    "route": "person",
+    "hash": "personChurch",
+    "filters": [],
     "fields": [
       {
         "field": "name",
@@ -70,12 +72,7 @@
   {
     "route": "positions",
     "hash": "positions",
-    "filters": [
-      {
-        "field": "name",
-        "type": "string"
-      }
-    ],
+    "filters": [],
     "fields": [
       {
         "field": "name",
@@ -87,12 +84,7 @@
   {
     "route": "planAccount",
     "hash": "planAccount",
-    "filters": [
-      {
-        "field": "description",
-        "type": "string"
-      }
-    ],
+    "filters": [],
     "fields": [
       {
         "field": "description",
@@ -284,6 +276,47 @@
         "header": "Valor",
         "width": "10%",
         "customValue": "MONEY"
+      }
+    ]
+  },
+  {
+    "route": "cashHistory",
+    "hash": "cashHistory",
+    "filters": [],
+    "fields": [
+      {
+        "field": "startDate",
+        "header": "Data abertura",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "endDate",
+        "header": "Data fechamento",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "initialBalance",
+        "header": "Saldo inicial",
+        "width": "10%",
+        "customValue": "MONEY"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "header": "Data P.",
+        "width": "10%",
+        "customValue": "DATE"
+      },
+      {
+        "field": "balance",
+        "header": "Total das movimentações",
+        "width": "15%"
+      },
+      {
+        "field": "finalBalance",
+        "header": "Saldo final",
+        "width": "15%"
       }
     ]
   }

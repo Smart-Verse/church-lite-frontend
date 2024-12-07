@@ -14,6 +14,7 @@ import {SchedulerComponent} from "./pages/scheduler/scheduler.component";
 import {UserConfigurationComponent} from "./pages/user-configuration/user-configuration.component";
 import {TransactionsComponent} from "./pages/transactions/transactions.component";
 import {BankStatementComponent} from "./pages/bank-statement/bank-statement.component";
+import {CashHistoryComponent} from "./pages/cash-history/cash-history.component";
 
 export const routes: Routes = [
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
             { path: 'scheduler', component: SchedulerComponent },
             { path: 'user-configuration', component: UserConfigurationComponent },
             { path: 'transactions', component: TransactionsComponent },
+            { path: 'cash-history', component: CashHistoryComponent },
             { path: 'bank-statament', component: BankStatementComponent },
             { path: 'register/:hash', component: RegisterComponent },
             { path: 'planAccount', component: PagePlanAccountComponent },

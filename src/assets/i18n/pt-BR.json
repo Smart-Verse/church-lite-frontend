@@ -39,7 +39,7 @@
 
     "scheduler": "Agenda",
 
-    "registrations": "Cadastros",
+    "registrations": "Secretaria",
     "registrations_persons": "Pessoas",
     "registrations_persons_members": "Membros",
     "registrations_persons_new_convert": "Novos Convertidos",
@@ -67,6 +67,8 @@
     "bank_statament": "Extrato bancário",
     "bank_bankAccount": "Conta bancária",
 
+    "history": "Historico de fechamento",
+
 
     "personal_basic_data_title": "Dados Basicos",
     "personal_field_name": "Nome Completo",
@@ -84,5 +86,9 @@
     "personal_field_number": "Numero",
     "personal_field_neighborhood": "Bairro",
     "personal_field_complement": "Complemento",
-    "personal_field_city": "Cidade"
+    "personal_field_city": "Cidade",
+    "personal_field_gender": "Genero",
+    "personal_field_maritalStatus": "Estado civil",
+    "personal_field_nationality": "Nacionalidade",
+    "personal_field_birthplace": "Naturalidade"
 }

@@ -1,4 +1,4 @@
-@import "../../styles/button";
+
 .datatable{
   height: calc(90% - 20px);
     .btnsp{
@@ -21,4 +21,11 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.actions{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
