@@ -57,11 +57,19 @@ export class PersonComponent extends BaseComponent implements OnInit{
     this.setConfigContext(segments[segments.length - 1]?.path || '')
     if(this.config.data){
       this.config.data.status = status.find(e => e.key === this.config.data.status);
-      this.config.data.personalDocs.birthDate =  this.config.data.personalDocs.birthDate != null ? new Date(this.config.data.personalDocs.birthDate) : null;
+      this.config.data.maritalStatus = this._maritalStatus.find(e => e.key === this.config.data.maritalStatus);
+      this.config.data.gender = this._gender.find(e => e.key === this.config.data.gender);
+      this.config.data.personalDocs.birthDate =  this.onConvertDate(this.config.data.personalDocs.birthDate);
+      this.config.data.personMember.entryDate =  this.onConvertDate(this.config.data.personMember.entryDate);
+      this.config.data.personMember.dateBaptism =  this.onConvertDate(this.config.data.personMember.dateBaptism);
       this.imageToken = this.config.data.image;
       this.personFormGroup.patchValue(this.config.data);
       this.onGetUrlImage();
     }
+  }
+
+  onConvertDate(data: any): Date | null{
+    return data != null ? new Date(data) : null;
   }
 
   onSave() {

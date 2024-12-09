@@ -2,67 +2,71 @@
   <p-tabView>
     <p-tabPanel header="Dados Básicos">
       <div class="person-members formgrid grid">
-        <div class="image-container field col-12 md:col-12 c-margin">
-          <app-image-upload
-            [imageUrl]="urlImage"
-            (eventLoading)="loading()"
-            (eventImageToken)="onGetTokenImage($event)"
-            [tokenImageUrl]="imageToken">
-          </app-image-upload>
+        <div class="group-image col-12 md:col-12">
+          <div class="image-container field col-12 md:col-3 c-margin">
+            <app-image-upload
+              [imageUrl]="urlImage"
+              (eventLoading)="loading()"
+              (eventImageToken)="onGetTokenImage($event)"
+              [tokenImageUrl]="imageToken">
+            </app-image-upload>
+          </div>
+          <div class="formgrid grid">
+            <app-input-text
+              formControlName="name"
+              name="name"
+              [field]="personFormGroup"
+              class="field col-12 md:col-8 c-margin"
+              [label]="translatePersonMembers.translate('personal_field_name')"
+              type="text">
+            </app-input-text>
+            <app-dropdown
+              formControlName="status"
+              name="status"
+              [field]="personFormGroup"
+              [label]="translatePersonMembers.translate('personal_field_status')"
+              [options]="_status"
+              optionLabel="value"
+              class="field col-12 md:col-4 c-margin">
+            </app-dropdown>
+            <app-dropdown
+              formControlName="gender"
+              name="gender"
+              [field]="personFormGroup"
+              [label]="translatePersonMembers.translate('personal_field_gender')"
+              [options]="_gender"
+              optionLabel="value"
+              class="field col-12 md:col-6 c-margin">
+            </app-dropdown>
+            <app-dropdown
+              formControlName="maritalStatus"
+              name="maritalStatus"
+              [field]="personFormGroup"
+              [label]="translatePersonMembers.translate('personal_field_maritalStatus')"
+              [options]="_maritalStatus"
+              optionLabel="value"
+              class="field col-12 md:col-6 c-margin">
+            </app-dropdown>
+            <app-auto-complete
+              formControlName="nationality"
+              name="nationality"
+              [field]="personFormGroup"
+              class="field col-12 md:col-6 c-margin"
+              [label]="translatePersonMembers.translate('personal_field_nationality')"
+              route="country"
+              optionLabel="name"
+              type="text">
+            </app-auto-complete>
+            <app-input-text
+              formControlName="birthplace"
+              name="birthplace"
+              [field]="personFormGroup"
+              class="field col-12 md:col-6 c-margin"
+              [label]="translatePersonMembers.translate('personal_field_birthplace')"
+              type="text">
+            </app-input-text>
+          </div>
         </div>
-        <app-input-text
-          formControlName="name"
-          name="name"
-          [field]="personFormGroup"
-          class="field col-12 md:col-8 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_name')"
-          type="text">
-        </app-input-text>
-        <app-dropdown
-          formControlName="status"
-          name="status"
-          [field]="personFormGroup"
-          [label]="translatePersonMembers.translate('personal_field_status')"
-          [options]="_status"
-          optionLabel="value"
-          class="field col-12 md:col-4 c-margin">
-        </app-dropdown>
-        <app-dropdown
-          formControlName="gender"
-          name="gender"
-          [field]="personFormGroup"
-          [label]="translatePersonMembers.translate('personal_field_gender')"
-          [options]="_gender"
-          optionLabel="value"
-          class="field col-12 md:col-6 c-margin">
-        </app-dropdown>
-        <app-dropdown
-          formControlName="maritalStatus"
-          name="maritalStatus"
-          [field]="personFormGroup"
-          [label]="translatePersonMembers.translate('personal_field_maritalStatus')"
-          [options]="_maritalStatus"
-          optionLabel="value"
-          class="field col-12 md:col-6 c-margin">
-        </app-dropdown>
-        <app-auto-complete
-          formControlName="nationality"
-          name="nationality"
-          [field]="personFormGroup"
-          class="field col-12 md:col-6 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_nationality')"
-          route="country"
-          optionLabel="name"
-          type="text">
-        </app-auto-complete>
-        <app-input-text
-          formControlName="birthplace"
-          name="birthplace"
-          [field]="personFormGroup"
-          class="field col-12 md:col-6 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_birthplace')"
-          type="text">
-        </app-input-text>
       </div>
       <div formGroupName="personalDocs" class="person-members formgrid grid">
         <app-input-mask
@@ -175,7 +179,36 @@
         </app-auto-complete>
       </div>
     </p-tabPanel>
-    <p-tabPanel *ngIf="false" header="Ministerial">
+    <p-tabPanel *ngIf="true" header="Ministerial">
+      <div formGroupName="personMember" class="formgrid grid">
+        <app-input-date
+          formControlName="entryDate"
+          name="personMember.entryDate"
+          [field]="personFormGroup"
+          class="field col-12 md:col-6 c-margin"
+          [label]="translatePersonMembers.translate('personal_field_ingressDate')"
+          type="date">
+        </app-input-date>
+        <app-input-date
+          formControlName="dateBaptism"
+          name="personMember.dateBaptism"
+          [field]="personFormGroup"
+          class="field col-12 md:col-6 c-margin"
+          [label]="translatePersonMembers.translate('personal_field_baptismDate')"
+          type="date">
+        </app-input-date>
+        <app-auto-complete
+          formControlName="position"
+          name="personMember.position"
+          [field]="personFormGroup"
+          class="field col-12 md:col-12 c-margin"
+          [label]="translatePersonMembers.translate('personal_field_position')"
+          route="positions"
+          optionLabel="name"
+          type="text">
+        </app-auto-complete>
+      </div>
+
     </p-tabPanel>
   </p-tabView>
 </div>

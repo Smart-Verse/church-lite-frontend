@@ -181,6 +181,39 @@ export class PersonConfig {
             }
           ]
         },
+      {
+        fieldName: 'personMember',
+        required: false,
+        hidden: false,
+        type: 'object',
+        fields:  [
+          {
+            fieldName: 'id',
+            required: false,
+            hidden: false,
+            type: 'string'
+          },
+
+          {
+            fieldName: 'entryDate',
+            required: false,
+            hidden: false,
+            type: 'string'
+          },
+          {
+            fieldName: 'dateBaptism',
+            required: false,
+            hidden: false,
+            type: 'string'
+          },
+          {
+            fieldName: 'position',
+            required: false,
+            hidden: false,
+            type: 'string'
+          }
+        ]
+      },
     ]
 
   convertPersonToDTO(formGroup: FormGroup, datePipe: DatePipe, type: string, imageToken: string): any {
@@ -190,16 +223,19 @@ export class PersonConfig {
         status: formGroup.get('status')?.value["key"],
         gender: formGroup.get('gender')?.value?.key,
         maritalStatus: formGroup.get('maritalStatus')?.value?.key,
-        nationality: formGroup.get('nationality')?.value?.key,
-        birthplace: formGroup.get('birthplace')?.value?.key,
+        nationality: formGroup.get('nationality')?.value,
+        birthplace: formGroup.get('birthplace')?.value,
         image: imageToken,
         type: type,
         personAddress: formGroup.get('personAddress')?.value,
         personalDocs: formGroup.get('personalDocs')?.value,
         personalTelphone: formGroup.get('personalTelphone')?.value?.key,
         personalEmail: formGroup.get('personalEmail')?.value,
+        personMember: formGroup.get('personMember')?.value,
       };
       dto.personalDocs.birthDate = datePipe.transform(dto.personalDocs.birthDate, 'yyyy-MM-dd')!;
+      dto.personMember.entryDate = datePipe.transform(dto.personMember.entryDate, 'yyyy-MM-dd')!;
+      dto.personMember.dateBaptism = datePipe.transform(dto.personMember.dateBaptism, 'yyyy-MM-dd')!;
       return dto;
     }
 }
