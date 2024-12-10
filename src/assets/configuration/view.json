@@ -82,6 +82,18 @@
     ]
   },
   {
+    "route": "eventsType",
+    "hash": "eventsType",
+    "filters": [],
+    "fields": [
+      {
+        "field": "name",
+        "header": "Descrição",
+        "width": "80%"
+      }
+    ]
+  },
+  {
     "route": "planAccount",
     "hash": "planAccount",
     "filters": [],

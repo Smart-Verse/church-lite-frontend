@@ -4,6 +4,7 @@ import {PositionsComponent} from "../../components/positions/positions.component
 import {BankComponent} from "../../components/bank/bank.component";
 import {CashComponent} from "../../components/cash/cash.component";
 import {FinancialComponent} from "../../components/financial/financial.component";
+import {EventsTypeComponent} from "../../components/events-type/events-type.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -53,6 +54,14 @@ export const config: RegisterRoutes[] = [
     paramExtra: "",
     defaultFilter: "",
     component: PositionsComponent
+  },
+  {
+    header: "Cadastro de tipos de eventos",
+    view: "eventsType",
+    route: "eventsType",
+    paramExtra: "",
+    defaultFilter: "",
+    component: EventsTypeComponent
   },
   {
     header: "Cadastro de banco",
