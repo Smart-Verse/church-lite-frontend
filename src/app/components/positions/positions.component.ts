@@ -22,7 +22,7 @@ import { DTOConverter } from '../../../core/dto/dto-converter';
   templateUrl: './positions.component.html',
   styleUrl: './positions.component.scss'
 })
-export class PositionsComponent extends BaseComponent implements OnInit{
+export class PositionsComponent extends BaseComponent implements OnInit {
 
   public positionFormGroup: FormGroup;
 

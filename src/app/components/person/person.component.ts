@@ -60,8 +60,12 @@ export class PersonComponent extends BaseComponent implements OnInit{
       this.config.data.maritalStatus = this._maritalStatus.find(e => e.key === this.config.data.maritalStatus);
       this.config.data.gender = this._gender.find(e => e.key === this.config.data.gender);
       this.config.data.personalDocs.birthDate =  this.onConvertDate(this.config.data.personalDocs.birthDate);
-      this.config.data.personMember.entryDate =  this.onConvertDate(this.config.data.personMember.entryDate);
-      this.config.data.personMember.dateBaptism =  this.onConvertDate(this.config.data.personMember.dateBaptism);
+
+      if(this.config.data.personMember) {
+        this.config.data.personMember.entryDate =  this.onConvertDate(this.config.data.personMember?.entryDate);
+        this.config.data.personMember.dateBaptism =  this.onConvertDate(this.config.data.personMember?.dateBaptism);
+      }
+
       this.imageToken = this.config.data.image;
       this.personFormGroup.patchValue(this.config.data);
       this.onGetUrlImage();
@@ -69,7 +73,7 @@ export class PersonComponent extends BaseComponent implements OnInit{
   }
 
   onConvertDate(data: any): Date | null{
-    return data != null ? new Date(data) : null;
+    return data ? new Date(data) : null;
   }
 
   onSave() {
