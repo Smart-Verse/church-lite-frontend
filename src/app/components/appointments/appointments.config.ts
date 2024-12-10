@@ -37,6 +37,12 @@ export class AppointmentsConfig {
       required: false,
       hidden: false,
       type: 'string'
+    },
+    {
+      fieldName: 'description',
+      required: false,
+      hidden: false,
+      type: 'string'
     }
   ]
 
