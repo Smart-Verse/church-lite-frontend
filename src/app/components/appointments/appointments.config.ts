@@ -43,9 +43,12 @@ export class AppointmentsConfig {
   convertToDTO(formGroup: FormGroup): any {
     return {
       id: formGroup.get('id')?.value,
-      name: formGroup.get('name')?.value,
-      color: formGroup.get('color')?.value,
-      description: formGroup.get('description')?.value
+      eventsType: formGroup.get('eventsType')?.value,
+      user: formGroup.get('user')?.value,
+      initialDate: formGroup.get('initialDate')?.value,
+      finalDate: formGroup.get('finalDate')?.value,
+      local: formGroup.get('local')?.value,
+      description: formGroup.get('description')?.value,
     };
   }
 }
