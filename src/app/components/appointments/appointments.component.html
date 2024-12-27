@@ -1,0 +1,29 @@
+<div [formGroup]="formGroup">
+  <div class="formgrid grid">
+    <app-input-text
+      formControlName="name"
+      name="name"
+      [field]="formGroup"
+      class="field col-12 md:col-11 c-margin"
+      [label]="translateService.translate('common_name')"
+      type="text">
+    </app-input-text>
+    <p-colorPicker appendTo="body" class="field col-12 md:col-1 c-margin" formControlName="color" />
+    <app-input-text
+      formControlName="description"
+      name="description"
+      [field]="formGroup"
+      class="field col-12 md:col-12 c-margin"
+      [label]="translateService.translate('common_description')"
+      type="text">
+    </app-input-text>
+  </div>
+</div>
+<div class="buttons">
+  <div style="margin-right: 10px">
+    <p-button  [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()"/>
+  </div>
+  <div>
+    <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
+  </div>
+</div>

@@ -79,6 +79,10 @@ export class MenuItens{
                       {
                           route: "register/positions",
                           name: 'Cargos',
+                      },
+                      {
+                        route: "register/eventsType",
+                        name: 'Tipo de eventos',
                       }
                     ]
                 }
