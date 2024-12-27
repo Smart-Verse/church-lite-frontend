@@ -20,9 +20,7 @@ export function loadRegisterModelFactory(translationService: RegisterService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes,
-      withHashLocation()
-    ),
+    provideRouter(routes),
 
     provideClientHydration(),
     provideAnimations(),
