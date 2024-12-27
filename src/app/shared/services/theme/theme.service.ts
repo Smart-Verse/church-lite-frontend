@@ -17,7 +17,7 @@ export class ThemeService {
 
     let urlProduction = "";
     if(environment.production){
-      urlProduction = "church-lite/"
+      urlProduction = ""
     }
 
     const themePath = urlProduction + `assets/theme/${theme}/theme.css`;
