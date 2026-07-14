@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { DataTable } from '../../shared/components/datatable/datatable';
 import {RegisterService} from "../../services/register/register.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CrudService} from "../../shared/services/crud/crud.service";
 import {config, RegisterRoutes} from "./register";
 import {RequestData} from "../../shared/interfaces/request-data";
@@ -10,6 +10,7 @@ import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ToastService} from "../../shared/services/toast/toast.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-register',
@@ -24,7 +25,7 @@ import {ToastService} from "../../shared/services/toast/toast.service";
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })
-export class RegisterComponent extends BaseComponent implements OnInit  {
+export class RegisterComponent extends BaseComponent implements OnInit, OnDestroy {
 
   ref: DynamicDialogRef | null | undefined;
 
@@ -32,9 +33,11 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   routeComponent: string | null = "";
   configuration: RegisterRoutes = new RegisterRoutes();
   originalClose: any;
+  private loadSubscription?: Subscription;
 
   constructor(
       private readonly activatedRoute: ActivatedRoute,
+      private readonly router: Router,
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
       private readonly dialogService: DialogService,
@@ -53,24 +56,26 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   }
 
   onSetPropertiesDatatable(obj: any): void  {
-    this.configuration = config.filter(e => e.view === obj.hash)[0];
-    this.datatable.fields = obj.fields;
+    this.configuration = config.find(e => e.view === obj.hash) ?? new RegisterRoutes();
+    this.datatable = new DataTable();
+    this.datatable.fields = [...obj.fields];
     this.onLoadAllData(new RequestData());
   }
 
   onLoadAllData(requestData: RequestData): void {
-    this.onShowLoading();
+    this.loadSubscription?.unsubscribe();
+    this.showLoading = true;
     requestData = this.includeFilters(requestData);
-    this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
+    this.loadSubscription = this.crudService.onGetAll(this.configuration.route, requestData).subscribe({
       next: (res) => {
         this.datatable.values = res.contents;
         this.datatable.totalRecords = res.total;
         this.datatable.page = res.offset + 1;
         this.datatable.size = res.size;
-        this.onShowLoading();
+        this.showLoading = false;
       },
-      error: (err) => {
-        this.onShowLoading();
+      error: () => {
+        this.showLoading = false;
       }
     });
   }
@@ -138,6 +143,12 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
   }
 
   onSelectedData(obj: any): void {
+    if (this.configuration.route === "person" && obj.action !== 0) {
+      const target = obj.data?.id ?? "new";
+      this.router.navigate([target], { relativeTo: this.activatedRoute });
+      return;
+    }
+
     if(obj.data){
       if(obj.action === 0){// delete data
         this.onDelete(obj.data.id);
@@ -184,6 +195,10 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
     } else {
       this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
     }
+  }
+
+  ngOnDestroy(): void {
+    this.loadSubscription?.unsubscribe();
   }
 
   private includeFilters(requestData: RequestData) {

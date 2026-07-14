@@ -93,5 +93,12 @@
     "personal_field_birthplace": "Naturalidade",
     "personal_field_ingressDate": "Data inicio da igreja",
     "personal_field_baptismDate": "Data de batismo",
-    "personal_field_position": "Cargo"
+    "personal_field_position": "Cargo",
+    "personal_page_member_title": "Cadastro de membro",
+    "personal_page_supplier_title": "Cadastro de fornecedor",
+    "personal_page_visitor_title": "Cadastro de visitante",
+    "personal_page_new_convert_title": "Cadastro de novo convertido",
+    "personal_page_church_title": "Cadastro de igreja",
+    "personal_page_create_description": "Preencha os dados para realizar o cadastro",
+    "personal_page_edit_description": "Atualize os dados do cadastro"
 }

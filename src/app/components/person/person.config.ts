@@ -229,7 +229,7 @@ export class PersonConfig {
         type: type,
         personAddress: formGroup.get('personAddress')?.value,
         personalDocs: formGroup.get('personalDocs')?.value,
-        personalTelphone: formGroup.get('personalTelphone')?.value?.key,
+        personalTelphone: formGroup.get('personalTelphone')?.value,
         personalEmail: formGroup.get('personalEmail')?.value,
         personMember: formGroup.get('personMember')?.value,
       };

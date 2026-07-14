@@ -15,6 +15,7 @@ import {UserConfigurationComponent} from "./pages/user-configuration/user-config
 import {TransactionsComponent} from "./pages/transactions/transactions.component";
 import {BankStatementComponent} from "./pages/bank-statement/bank-statement.component";
 import {CashHistoryComponent} from "./pages/cash-history/cash-history.component";
+import {PersonComponent} from "./components/person/person.component";
 
 export const routes: Routes = [
 
@@ -32,6 +33,8 @@ export const routes: Routes = [
             { path: 'transactions', component: TransactionsComponent },
             { path: 'cash-history', component: CashHistoryComponent },
             { path: 'bank-statament', component: BankStatementComponent },
+            { path: 'register/:hash/new', component: PersonComponent },
+            { path: 'register/:hash/:id', component: PersonComponent },
             { path: 'register/:hash', component: RegisterComponent },
             { path: 'planAccount', component: PagePlanAccountComponent },
             { path: 'costCenter', component: CostCenterComponent },

@@ -80,5 +80,12 @@
   "personal_field_number": "Número",
   "personal_field_neighborhood": "Barrio",
   "personal_field_complement": "Complemento",
-  "personal_field_city": "Ciudad"
+  "personal_field_city": "Ciudad",
+  "personal_page_member_title": "Registro de miembro",
+  "personal_page_supplier_title": "Registro de proveedor",
+  "personal_page_visitor_title": "Registro de visitante",
+  "personal_page_new_convert_title": "Registro de nuevo convertido",
+  "personal_page_church_title": "Registro de iglesia",
+  "personal_page_create_description": "Complete los datos para realizar el registro",
+  "personal_page_edit_description": "Actualice los datos del registro"
 }

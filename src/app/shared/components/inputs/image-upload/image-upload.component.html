@@ -1,27 +1,51 @@
-<div>
-  <div class="container-image">
-    @if (!imageUrl) {
-      <div (click)="onFileInput()" class="image-container">Selecione uma imagen</div>
-    }
+<div class="image-upload">
+  <button
+    type="button"
+    class="image-upload__preview"
+    (click)="onFileInput(fileInput)"
+    aria-label="Selecionar foto">
     @if (imageUrl) {
-      <img class="image-container" [src]="imageUrl">
+      <img [src]="imageUrl" alt="Foto selecionada">
+      <span class="image-upload__overlay">
+        <i class="pi pi-camera"></i>
+        Alterar foto
+      </span>
+    } @else {
+      <span class="image-upload__placeholder">
+        <span class="image-upload__icon"><i class="pi pi-camera"></i></span>
+        <strong>Adicionar foto</strong>
+        <small>JPG ou PNG, até 5 MB</small>
+      </span>
     }
-  </div>
-  <input type="file" (change)="onImageSelect($event)" accept="image/*" id="fileInput" class="file-input" />
-  <div class="btn">
+  </button>
+
+  <input
+    #fileInput
+    type="file"
+    (change)="onImageSelect($event)"
+    accept="image/*"
+    class="file-input" />
+
+  <div class="image-upload__actions">
     <button
-      (click)="onFileInput()"
       type="button"
       pButton
       pRipple
-      icon="pi pi-upload">
+      class="p-button-outlined image-upload__select"
+      icon="pi pi-upload"
+      [label]="imageUrl ? 'Substituir' : 'Selecionar'"
+      (click)="onFileInput(fileInput)">
     </button>
-    <button
-      (click)="onDeleteImage()"
-      type="button"
-      pButton
-      pRipple
-      icon="pi pi-trash">
-    </button>
+    @if (imageUrl) {
+      <button
+        type="button"
+        pButton
+        pRipple
+        class="p-button-outlined p-button-danger image-upload__delete"
+        icon="pi pi-trash"
+        aria-label="Remover foto"
+        (click)="onDeleteImage()">
+      </button>
+    }
   </div>
 </div>

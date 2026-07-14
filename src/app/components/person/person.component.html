@@ -1,16 +1,36 @@
-<div [formGroup]="personFormGroup">
+<app-loading [showLoading]="showLoading"></app-loading>
+<section class="person-page">
+  <nav class="person-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  </nav>
+
+  <header class="person-page__header">
+    <div class="person-page__heading">
+      <h1>{{ translatePersonMembers.translate(pageTitle) }}</h1>
+      <p>{{ translatePersonMembers.translate(personId ? "personal_page_edit_description" : "personal_page_create_description") }}</p>
+    </div>
+    <div class="person-page__actions">
+      <p-button type="button" [outlined]="true" [label]="translatePersonMembers.translate('common_action_cancel')" (onClick)="onCancel()" />
+      <p-button type="button" icon="pi pi-check" [disabled]="isSaving" [label]="translatePersonMembers.translate('common_action_save')" (onClick)="onSave()" />
+    </div>
+  </header>
+
+  <main class="person-page__body">
+    <div [formGroup]="personFormGroup">
   <p-tabs value="0">
     <p-tablist>
       <p-tab value="0">Dados Básicos</p-tab>
       <p-tab value="1">Contato</p-tab>
       <p-tab value="2">Endereço</p-tab>
-      <p-tab value="3">Ministerial</p-tab>
+      @if (showMinisterial) {
+        <p-tab value="3">Ministerial</p-tab>
+      }
     </p-tablist>
     <p-tabpanels>
     <p-tabpanel value="0">
-      <div class="person-members formgrid grid">
+      <div class="person-members fields-grid">
         <div class="group-image col-12 md:col-12">
-          <div class="image-container field col-12 md:col-3 c-margin">
+          <div class="image-container">
             <app-image-upload
               [imageUrl]="urlImage"
               (eventLoading)="loading()"
@@ -18,7 +38,7 @@
               [tokenImageUrl]="imageToken">
             </app-image-upload>
           </div>
-          <div class="formgrid grid">
+          <div class="fields-grid">
             <app-input-text
               formControlName="name"
               name="name"
@@ -75,7 +95,7 @@
           </div>
         </div>
       </div>
-      <div formGroupName="personalDocs" class="person-members formgrid grid">
+      <div formGroupName="personalDocs" class="person-members person-documents fields-grid">
         <app-input-mask
           formControlName="cpf"
           name="personalDocs.cpf"
@@ -103,7 +123,7 @@
       </div>
     </p-tabpanel>
     <p-tabpanel value="1">
-      <div formGroupName="personalTelphone" class="person-members formgrid grid">
+      <div formGroupName="personalTelphone" class="person-members fields-grid">
         <app-input-mask
           formControlName="phone"
           name="personalTelphone.phone"
@@ -121,7 +141,7 @@
           mask="(99) 9 9999-9999">
         </app-input-mask>
       </div>
-      <div formGroupName="personalEmail"  class="person-members formgrid grid">
+      <div formGroupName="personalEmail" class="person-members contact-email fields-grid">
         <app-input-text
           formControlName="email"
           name="personalEmail.email"
@@ -133,7 +153,7 @@
       </div>
     </p-tabpanel>
     <p-tabpanel value="2">
-      <div formGroupName="personAddress" class="person-members formgrid grid">
+      <div formGroupName="personAddress" class="person-members fields-grid">
         <app-input-mask
           formControlName="postalCode"
           name="personAddress.postalCode"
@@ -186,9 +206,9 @@
         </app-auto-complete>
       </div>
     </p-tabpanel>
-    @if (true) {
+    @if (showMinisterial) {
       <p-tabpanel value="3">
-        <div formGroupName="personMember" class="formgrid grid">
+        <div formGroupName="personMember" class="fields-grid">
           <app-input-date
             formControlName="entryDate"
             name="personMember.entryDate"
@@ -220,12 +240,6 @@
     }
   </p-tabpanels>
   </p-tabs>
-</div>
-<div class="buttons">
-  <div style="margin-right: 10px">
-    <p-button  [label]="translatePersonMembers.translate('common_action_cancel')" (onClick)="onCancel()"/>
-  </div>
-  <div>
-    <p-button  [label]="translatePersonMembers.translate('common_action_save')" (onClick)="onSave()"/>
-  </div>
-</div>
+    </div>
+  </main>
+</section>

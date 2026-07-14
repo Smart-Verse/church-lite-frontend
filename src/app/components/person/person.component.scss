@@ -1,14 +1,193 @@
-.image-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.group-image{
-  display: flex;
+:host {
+  display: block;
+  min-height: 100%;
+  color: var(--p-text-color);
 }
 
-@media (max-width: 600px) {
-  .group-image{
-    display: inline;
+.person-page {
+  min-height: 100%;
+  padding: 1.5rem 2rem 2.5rem;
+  background: transparent;
+}
+
+.person-page__breadcrumb,
+.person-page__header,
+.person-page__body {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+:host ::ng-deep .person-page__breadcrumb .p-breadcrumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.person-page__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+}
+
+.person-page__heading h1 {
+  margin: 0;
+  color: var(--p-text-color);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.person-page__heading p {
+  margin: 0.5rem 0 0;
+  color: var(--p-text-muted-color);
+  line-height: 1.5;
+}
+
+.person-page__actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.75rem;
+}
+
+.person-page__body {
+  padding-top: 1rem;
+}
+
+:host ::ng-deep .person-page__body .p-tabs,
+:host ::ng-deep .person-page__body .p-tablist,
+:host ::ng-deep .person-page__body .p-tablist-content,
+:host ::ng-deep .person-page__body .p-tabpanels,
+:host ::ng-deep .person-page__body .p-tabpanel {
+  background: transparent;
+}
+
+:host ::ng-deep .person-page__body .p-tablist {
+  border-color: var(--p-content-border-color);
+}
+
+:host ::ng-deep .person-page__body .p-tabpanels {
+  padding: 2rem 0 0;
+}
+
+.person-members,
+.person-page__body [formGroupName].fields-grid {
+  width: 100%;
+  max-width: 1120px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem 1.25rem;
+  align-items: start;
+}
+
+.fields-grid > * {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  grid-column: span 12;
+}
+
+@media (min-width: 769px) {
+  .fields-grid > [class*="md:col-3"] { grid-column: span 3; }
+  .fields-grid > [class*="md:col-4"] { grid-column: span 4; }
+  .fields-grid > [class*="md:col-6"] { grid-column: span 6; }
+  .fields-grid > [class*="md:col-8"] { grid-column: span 8; }
+  .fields-grid > [class*="md:col-9"] { grid-column: span 9; }
+  .fields-grid > [class*="md:col-12"] { grid-column: span 12; }
+}
+
+:host ::ng-deep .person-page__body .c-margin {
+  margin-top: 0;
+}
+
+.group-image {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+  width: 100%;
+  padding: 0;
+}
+
+.group-image > .fields-grid {
+  width: 100%;
+  margin: 0;
+}
+
+.image-container {
+  width: 220px;
+  margin-top: 0;
+}
+
+.contact-email {
+  margin-top: 2.5rem !important;
+  padding-top: 0.25rem;
+}
+
+:host ::ng-deep .fields-grid .p-floatlabel,
+:host ::ng-deep .fields-grid .p-inputtext,
+:host ::ng-deep .fields-grid .p-select,
+:host ::ng-deep .fields-grid .p-datepicker,
+:host ::ng-deep .fields-grid .p-autocomplete,
+:host ::ng-deep .fields-grid .p-inputmask {
+  display: flex;
+  width: 100%;
+}
+
+.person-documents {
+  margin-top: 2rem !important;
+  padding-top: 2rem;
+  border-top: 1px solid var(--p-content-border-color);
+}
+
+@media (max-width: 768px) {
+  .person-page {
+    padding: 1rem;
+  }
+
+  .person-page__header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+  }
+
+  .person-page__actions {
+    width: 100%;
+  }
+
+  .person-page__actions p-button {
+    flex: 1;
+  }
+
+  :host ::ng-deep .person-page__actions .p-button {
+    width: 100%;
+  }
+
+  .group-image {
+    grid-template-columns: 1fr;
+  }
+
+  .image-container {
+    width: min(100%, 220px);
+    justify-self: center;
+    margin-top: 0.25rem;
+  }
+
+  .group-image {
+    gap: 0.5rem;
+  }
+
+  :host ::ng-deep .person-page__body .p-tabpanels {
+    padding-top: 1.25rem;
   }
 }

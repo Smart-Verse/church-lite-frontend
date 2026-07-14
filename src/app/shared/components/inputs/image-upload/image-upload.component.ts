@@ -39,8 +39,8 @@ export class ImageUploadComponent extends AppControlValueAccessor{
     super(fieldServiceInputText);
   }
 
-  onFileInput(): void {
-    document.getElementById('fileInput')?.click();
+  onFileInput(fileInput?: HTMLInputElement): void {
+    fileInput?.click();
   }
 
   onImageSelect(event: any): void {

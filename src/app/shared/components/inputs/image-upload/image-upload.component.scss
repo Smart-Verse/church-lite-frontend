@@ -1,23 +1,120 @@
-.image-container{
+:host {
+  display: block;
+  width: 100%;
+}
+
+.image-upload {
+  width: 100%;
+}
+
+.image-upload__preview {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  padding: 0;
+  border: 1px dashed var(--p-content-border-color);
+  border-radius: 12px;
+  background: var(--p-form-field-background);
+  color: var(--p-text-muted-color);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.image-upload__preview:hover,
+.image-upload__preview:focus-visible {
+  border-color: var(--p-primary-color);
+  background: color-mix(in srgb, var(--p-primary-color), transparent 96%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--p-primary-color), transparent 86%);
+  outline: 0;
+}
+
+.image-upload__preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-upload__placeholder {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 150px;
-  width: 150px;
-  border: 1px solid grey;
-  border-radius: 50%;
-  font-size: 12px;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  text-align: center;
 }
-.file-input{
-  display: none;
+
+.image-upload__placeholder strong {
+  color: var(--p-text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
 }
-.btn{
-  margin-top: 10px;
-  width: 150px;
+
+.image-upload__placeholder small {
+  color: var(--p-text-muted-color);
+  font-size: 0.75rem;
+}
+
+.image-upload__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  margin-bottom: 0.25rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--p-primary-color), transparent 88%);
+  color: var(--p-primary-color);
+  font-size: 1.25rem;
+}
+
+.image-upload__overlay {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--p-content-background), transparent 12%);
+  color: var(--p-text-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.2s, transform 0.2s;
 }
-.container-image{
-  width: 150px;
+
+.image-upload__preview:hover .image-upload__overlay,
+.image-upload__preview:focus-visible .image-upload__overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.file-input {
+  display: none;
+}
+
+.image-upload__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.image-upload__select {
+  flex: 1;
+}
+
+.image-upload__delete {
+  flex: 0 0 auto;
+}
+
+:host ::ng-deep .image-upload__select .p-button-label {
+  flex: initial;
 }
