@@ -14,12 +14,11 @@ import { EnumCookie } from '../../shared/services/cookies/cookie.enum';
 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [SharedCommonModule],
-  providers: [SecurityService,ToastService],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [SharedCommonModule],
+    providers: [SecurityService, ToastService],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 

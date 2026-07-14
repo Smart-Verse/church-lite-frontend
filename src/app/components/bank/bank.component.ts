@@ -11,16 +11,15 @@ import {BankConfig} from "./bank.config";
 import {DTOConverter} from "../../../core/dto/dto-converter";
 
 @Component({
-  selector: 'app-bank',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './bank.component.html',
-  styleUrl: './bank.component.scss'
+    selector: 'app-bank',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './bank.component.html',
+    styleUrl: './bank.component.scss'
 })
 export class BankComponent extends BaseComponent implements OnInit {
 

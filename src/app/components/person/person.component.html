@@ -1,6 +1,13 @@
 <div [formGroup]="personFormGroup">
-  <p-tabView>
-    <p-tabPanel header="Dados Básicos">
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0">Dados Básicos</p-tab>
+      <p-tab value="1">Contato</p-tab>
+      <p-tab value="2">Endereço</p-tab>
+      <p-tab value="3">Ministerial</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+    <p-tabpanel value="0">
       <div class="person-members formgrid grid">
         <div class="group-image col-12 md:col-12">
           <div class="image-container field col-12 md:col-3 c-margin">
@@ -94,8 +101,8 @@
           type="date">
         </app-input-date>
       </div>
-    </p-tabPanel>
-    <p-tabPanel header="Contato">
+    </p-tabpanel>
+    <p-tabpanel value="1">
       <div formGroupName="personalTelphone" class="person-members formgrid grid">
         <app-input-mask
           formControlName="phone"
@@ -124,8 +131,8 @@
           type="email">
         </app-input-text>
       </div>
-    </p-tabPanel>
-    <p-tabPanel header="Endereço">
+    </p-tabpanel>
+    <p-tabpanel value="2">
       <div formGroupName="personAddress" class="person-members formgrid grid">
         <app-input-mask
           formControlName="postalCode"
@@ -178,39 +185,41 @@
           type="text">
         </app-auto-complete>
       </div>
-    </p-tabPanel>
-    <p-tabPanel *ngIf="true" header="Ministerial">
-      <div formGroupName="personMember" class="formgrid grid">
-        <app-input-date
-          formControlName="entryDate"
-          name="personMember.entryDate"
-          [field]="personFormGroup"
-          class="field col-12 md:col-6 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_ingressDate')"
-          type="date">
-        </app-input-date>
-        <app-input-date
-          formControlName="dateBaptism"
-          name="personMember.dateBaptism"
-          [field]="personFormGroup"
-          class="field col-12 md:col-6 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_baptismDate')"
-          type="date">
-        </app-input-date>
-        <app-auto-complete
-          formControlName="position"
-          name="personMember.position"
-          [field]="personFormGroup"
-          class="field col-12 md:col-12 c-margin"
-          [label]="translatePersonMembers.translate('personal_field_position')"
-          route="positions"
-          optionLabel="name"
-          type="text">
-        </app-auto-complete>
-      </div>
-
-    </p-tabPanel>
-  </p-tabView>
+    </p-tabpanel>
+    @if (true) {
+      <p-tabpanel value="3">
+        <div formGroupName="personMember" class="formgrid grid">
+          <app-input-date
+            formControlName="entryDate"
+            name="personMember.entryDate"
+            [field]="personFormGroup"
+            class="field col-12 md:col-6 c-margin"
+            [label]="translatePersonMembers.translate('personal_field_ingressDate')"
+            type="date">
+          </app-input-date>
+          <app-input-date
+            formControlName="dateBaptism"
+            name="personMember.dateBaptism"
+            [field]="personFormGroup"
+            class="field col-12 md:col-6 c-margin"
+            [label]="translatePersonMembers.translate('personal_field_baptismDate')"
+            type="date">
+          </app-input-date>
+          <app-auto-complete
+            formControlName="position"
+            name="personMember.position"
+            [field]="personFormGroup"
+            class="field col-12 md:col-12 c-margin"
+            [label]="translatePersonMembers.translate('personal_field_position')"
+            route="positions"
+            optionLabel="name"
+            type="text">
+          </app-auto-complete>
+        </div>
+      </p-tabpanel>
+    }
+  </p-tabpanels>
+  </p-tabs>
 </div>
 <div class="buttons">
   <div style="margin-right: 10px">

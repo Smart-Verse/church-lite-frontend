@@ -20,27 +20,25 @@ import {PlanAccountComponent} from "../../components/plan-account/plan-account.c
 import {TableModule} from "primeng/table";
 
 @Component({
-  selector: 'app-page-plan-account',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    ConfirmDialogModule,
-    IconFieldModule,
-    InputIconModule,
-    Ripple,
-    TreeTableModule,
-    PaginatorModule,
-    TableModule,
-
-  ],
-  providers: [
-    CrudService,
-    DialogService,
-    ToastService,
-    ConfirmationService
-  ],
-  templateUrl: './page-plan-account.component.html',
-  styleUrl: './page-plan-account.component.scss'
+    selector: 'app-page-plan-account',
+    imports: [
+        SharedCommonModule,
+        ConfirmDialogModule,
+        IconFieldModule,
+        InputIconModule,
+        Ripple,
+        TreeTableModule,
+        PaginatorModule,
+        TableModule,
+    ],
+    providers: [
+        CrudService,
+        DialogService,
+        ToastService,
+        ConfirmationService
+    ],
+    templateUrl: './page-plan-account.component.html',
+    styleUrl: './page-plan-account.component.scss'
 })
 export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
 
@@ -52,7 +50,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
     component: PlanAccountComponent
   }
 
-  ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | null | undefined;
 
   datatable: DataTable = new DataTable();
   originalClose: any;
@@ -172,6 +170,8 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
         baseZIndex: 999999,
       });
 
+
+    if (!this.ref) return;
 
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {

@@ -4,13 +4,13 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { SidebarModule } from 'primeng/sidebar';
-import { DropdownModule } from 'primeng/dropdown';
+import { DrawerModule } from 'primeng/drawer';
+import { SelectModule } from 'primeng/select';
 import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { LoadingComponent } from '../components/loading/loading.component';
-import { TabViewModule } from 'primeng/tabview';
+import { TabsModule } from 'primeng/tabs';
 import { DatatableComponent } from '../components/datatable/datatable.component';
 import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
 import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
@@ -43,8 +43,8 @@ import {ImageUploadComponent} from "../components/inputs/image-upload/image-uplo
     ReactiveFormsModule,
     InputTextModule,
     PasswordModule,
-    SidebarModule,
-    DropdownModule,
+    DrawerModule,
+    SelectModule,
     FormsModule,
     HttpModule,
     TimelineModule,
@@ -58,7 +58,7 @@ import {ImageUploadComponent} from "../components/inputs/image-upload/image-uplo
     InputMaskComponent,
     InputNumberComponent,
     ImageUploadComponent,
-    TabViewModule
+    TabsModule
   ]
 })
 export class SharedCommonModule { }

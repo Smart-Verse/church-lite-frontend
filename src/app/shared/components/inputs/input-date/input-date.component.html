@@ -1,16 +1,14 @@
 <p-floatLabel>
-  <p-calendar
+  <p-datepicker
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
     [iconDisplay]="'input'"
     [showIcon]="true"
     [ngClass]="{'ng-invalid ng-dirty': !isValid}"
     appendTo="body"
-    pAutoFocus
-    [autofocus]="focus"
+      [pAutoFocus]="focus"
     [disabled]="disabled"
     [touchUI]="false"
-    [locale]="ptBr"
     dateFormat="dd/mm/yy"
     [readonlyInput]="false"
     class="w-full"/>

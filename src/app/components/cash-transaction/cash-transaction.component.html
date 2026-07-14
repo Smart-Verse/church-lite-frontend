@@ -4,9 +4,7 @@
       formControlName="startDate"
       name="startDate"
       [field]="formGroup"
-      pAutoFocus
       [disabled]="true"
-      [autofocus]="false"
       class="field col-12 md:col-4 c-margin"
       [label]="translateService.translate('transactions_openingDate')"
       type="text">
@@ -15,10 +13,8 @@
       formControlName="endDate"
       name="endDate"
       [field]="formGroup"
-      pAutoFocus
       [hidden]="_close"
       [disabled]="true"
-      [autofocus]="false"
       class="field col-12 md:col-4 c-margin"
       [label]="translateService.translate('transactions_endDate')"
       type="text">

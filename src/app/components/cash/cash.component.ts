@@ -10,16 +10,15 @@ import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {typeCash} from "../../shared/util/constants";
 
 @Component({
-  selector: 'app-cash',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './cash.component.html',
-  styleUrl: './cash.component.scss'
+    selector: 'app-cash',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './cash.component.html',
+    styleUrl: './cash.component.scss'
 })
 export class CashComponent extends BaseComponent implements OnInit {
 

@@ -13,19 +13,18 @@ import {ImageUploadService} from "../../shared/components/inputs/image-upload/im
 import {ThemeService} from "../../shared/services/theme/theme.service";
 
 @Component({
-  selector: 'app-user-configuration',
-  standalone: true,
-  imports: [
-    LoadingComponent,
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService,
-    UserConfigurationService,
-    ImageUploadService
-  ],
-  templateUrl: './user-configuration.component.html',
-  styleUrl: './user-configuration.component.scss'
+    selector: 'app-user-configuration',
+    imports: [
+        LoadingComponent,
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService,
+        UserConfigurationService,
+        ImageUploadService
+    ],
+    templateUrl: './user-configuration.component.html',
+    styleUrl: './user-configuration.component.scss'
 })
 export class UserConfigurationComponent extends BaseComponent implements OnInit {
 

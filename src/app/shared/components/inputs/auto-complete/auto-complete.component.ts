@@ -12,27 +12,26 @@ import {RequestData} from "../../../interfaces/request-data";
 import {AutoFocusModule} from "primeng/autofocus";
 
 @Component({
-  selector: 'app-auto-complete',
-  standalone: true,
-  imports: [
-    CommonModule,
-    AutoCompleteModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FloatLabelModule,
-    TooltipModule,
-    AutoFocusModule
-  ],
-  providers: [
-    CrudService,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: AutoCompleteComponent,
-      multi: true
-    }
-  ],
-  templateUrl: './auto-complete.component.html',
-  styleUrl: './auto-complete.component.scss'
+    selector: 'app-auto-complete',
+    imports: [
+        CommonModule,
+        AutoCompleteModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FloatLabelModule,
+        TooltipModule,
+        AutoFocusModule
+    ],
+    providers: [
+        CrudService,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: AutoCompleteComponent,
+            multi: true
+        }
+    ],
+    templateUrl: './auto-complete.component.html',
+    styleUrl: './auto-complete.component.scss'
 })
 export class AutoCompleteComponent extends AppControlValueAccessor{
 

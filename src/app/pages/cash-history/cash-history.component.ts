@@ -13,19 +13,18 @@ import {DataTable} from "../../shared/components/datatable/datatable";
 import {RequestData} from "../../shared/interfaces/request-data";
 
 @Component({
-  selector: 'app-cash-history',
-  standalone: true,
-  imports: [
-    LoadingComponent,
-    SharedCommonModule,
-    TableModule,
-    PaginatorModule
-  ],
-  providers: [
-    CrudService
-  ],
-  templateUrl: './cash-history.component.html',
-  styleUrl: './cash-history.component.scss'
+    selector: 'app-cash-history',
+    imports: [
+        LoadingComponent,
+        SharedCommonModule,
+        TableModule,
+        PaginatorModule
+    ],
+    providers: [
+        CrudService
+    ],
+    templateUrl: './cash-history.component.html',
+    styleUrl: './cash-history.component.scss'
 })
 export class CashHistoryComponent extends BaseComponent implements OnInit {
 

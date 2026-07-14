@@ -3,7 +3,7 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {RequestData} from "../../interfaces/request-data";
 
 export interface ModalService {
-  component: Type,
+  component: Type<any>,
   obj: any,
   header: string,
   width: string,
@@ -15,7 +15,7 @@ export interface ModalService {
 })
 export class ModalService {
 
-  ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | null | undefined;
   originalClose: any;
 
   constructor(
@@ -34,6 +34,8 @@ export class ModalService {
         baseZIndex: 999999,
       });
 
+
+    if (!this.ref) return;
 
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {

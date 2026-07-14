@@ -8,25 +8,22 @@ import {ToastService} from "../../shared/services/toast/toast.service";
 import {PersonConfig} from "../person/person.config";
 import {CashTransactionConfig} from "./cash-transaction.config";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {AutoFocus} from "primeng/autofocus";
 import {DatePipe} from "@angular/common";
 import {CrudService} from "../../shared/services/crud/crud.service";
 import {TransactionsService} from "../../services/transactions/transactions.service";
 
 
 @Component({
-  selector: 'app-cash-transaction',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    AutoFocus
-  ],
-  viewProviders: [
-    DatePipe,
-  ],
-  providers: [ToastService,TransactionsService],
-  templateUrl: './cash-transaction.component.html',
-  styleUrl: './cash-transaction.component.scss'
+    selector: 'app-cash-transaction',
+    imports: [
+        SharedCommonModule,
+    ],
+    viewProviders: [
+        DatePipe,
+    ],
+    providers: [ToastService, TransactionsService],
+    templateUrl: './cash-transaction.component.html',
+    styleUrl: './cash-transaction.component.scss'
 })
 export class CashTransactionComponent extends BaseComponent implements OnInit{
 

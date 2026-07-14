@@ -14,22 +14,21 @@ import {RequestData} from "../../shared/interfaces/request-data";
 import {DataTable} from "../../shared/components/datatable/datatable";
 
 @Component({
-  selector: 'app-transactions',
-  standalone: true,
-  imports: [
-    LoadingComponent,
-    SharedCommonModule,
-    TableModule,
-    PaginatorModule
-  ],
-  providers: [
-    DialogService,
-    TransactionsService,
-    ToastService,
-    CrudService
-  ],
-  templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.scss'
+    selector: 'app-transactions',
+    imports: [
+        LoadingComponent,
+        SharedCommonModule,
+        TableModule,
+        PaginatorModule
+    ],
+    providers: [
+        DialogService,
+        TransactionsService,
+        ToastService,
+        CrudService
+    ],
+    templateUrl: './transactions.component.html',
+    styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent extends BaseComponent {
 
@@ -40,7 +39,7 @@ export class TransactionsComponent extends BaseComponent {
   _expenses: number = 0;
   _transactionID: string = "";
   _datatable: DataTable = new DataTable();
-  ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | null | undefined;
   originalClose: any;
   _requestData: RequestData = new RequestData();
 
@@ -81,6 +80,8 @@ export class TransactionsComponent extends BaseComponent {
         baseZIndex: 999999,
       });
 
+
+    if (!this.ref) return;
 
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {

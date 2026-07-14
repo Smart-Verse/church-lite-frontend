@@ -11,16 +11,15 @@ import {PositionConfig} from "./position.config";
 import { DTOConverter } from '../../../core/dto/dto-converter';
 
 @Component({
-  selector: 'app-positions',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './positions.component.html',
-  styleUrl: './positions.component.scss'
+    selector: 'app-positions',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './positions.component.html',
+    styleUrl: './positions.component.scss'
 })
 export class PositionsComponent extends BaseComponent implements OnInit {
 

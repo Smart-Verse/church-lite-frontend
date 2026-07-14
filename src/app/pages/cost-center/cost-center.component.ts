@@ -21,26 +21,25 @@ import {RequestData} from "../../shared/interfaces/request-data";
 import {Action} from "../../shared/components/datatable/datatable.component";
 
 @Component({
-  selector: 'app-cost-center',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    ConfirmDialogModule,
-    IconFieldModule,
-    InputIconModule,
-    Ripple,
-    TreeTableModule,
-    PaginatorModule,
-    TableModule,
-  ],
-  providers: [
-    CrudService,
-    DialogService,
-    ToastService,
-    ConfirmationService
-  ],
-  templateUrl: './cost-center.component.html',
-  styleUrl: './cost-center.component.scss'
+    selector: 'app-cost-center',
+    imports: [
+        SharedCommonModule,
+        ConfirmDialogModule,
+        IconFieldModule,
+        InputIconModule,
+        Ripple,
+        TreeTableModule,
+        PaginatorModule,
+        TableModule,
+    ],
+    providers: [
+        CrudService,
+        DialogService,
+        ToastService,
+        ConfirmationService
+    ],
+    templateUrl: './cost-center.component.html',
+    styleUrl: './cost-center.component.scss'
 })
 export class CostCenterComponent  extends BaseComponent implements OnInit {
 
@@ -51,7 +50,7 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     component: CostCenterModalComponent
   }
 
-  ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | null | undefined;
 
   datatable: DataTable = new DataTable();
   originalClose: any;
@@ -172,6 +171,8 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
         baseZIndex: 999999,
       });
 
+
+    if (!this.ref) return;
 
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {

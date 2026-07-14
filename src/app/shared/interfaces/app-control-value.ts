@@ -8,7 +8,8 @@ import {FieldsService} from "../services/fields/fields.service";
 
 
 @Component({
-  template: '',
+    template: '',
+    standalone: false
 })
 export abstract class AppControlValueAccessor implements ControlValueAccessor, OnInit {
   public value: any = null;

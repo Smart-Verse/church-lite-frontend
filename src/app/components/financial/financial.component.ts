@@ -9,21 +9,18 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {ActivatedRoute} from "@angular/router";
-import {AutoFocus} from "primeng/autofocus";
 
 @Component({
-  selector: 'app-financial',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    AutoFocus
-  ],
-  providers: [
-    ToastService,
-    DatePipe
-  ],
-  templateUrl: './financial.component.html',
-  styleUrl: './financial.component.scss'
+    selector: 'app-financial',
+    imports: [
+        SharedCommonModule,
+    ],
+    providers: [
+        ToastService,
+        DatePipe
+    ],
+    templateUrl: './financial.component.html',
+    styleUrl: './financial.component.scss'
 })
 export class FinancialComponent extends BaseComponent implements OnInit{
 

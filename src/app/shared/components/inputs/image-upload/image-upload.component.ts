@@ -1,33 +1,27 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CommonModule} from "@angular/common";
+
 import {ButtonModule} from "primeng/button";
 import {Ripple} from "primeng/ripple";
-import {LoadingComponent} from "../../loading/loading.component";
 import {ImageUploadService} from "./image-upload.service";
 import {base64ToArrayBuffer, generateUUIDv4} from "../../../util/constants";
 import {ToastService} from "../../../services/toast/toast.service";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
-import {File} from "node:buffer";
-import {arrayBuffer} from "node:stream/consumers";
 
 
 
 @Component({
-  selector: 'app-image-upload',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-image-upload',
+    imports: [
     ButtonModule,
     Ripple,
-    LoadingComponent,
-  ],
-  providers: [
-    ImageUploadService,
-    ToastService
-  ],
-  templateUrl: './image-upload.component.html',
-  styleUrl: './image-upload.component.scss'
+],
+    providers: [
+        ImageUploadService,
+        ToastService
+    ],
+    templateUrl: './image-upload.component.html',
+    styleUrl: './image-upload.component.scss'
 })
 export class ImageUploadComponent extends AppControlValueAccessor{
 

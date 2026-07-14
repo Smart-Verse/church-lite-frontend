@@ -6,14 +6,13 @@ import {CookiesService} from "../../../services/cookies/cookies.service";
 
 
 @Component({
-  selector: 'app-sidebar-submenu',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    RouterLink
-  ],
-  templateUrl: './sidebar-submenu.component.html',
-  styleUrl: './sidebar-submenu.component.scss'
+    selector: 'app-sidebar-submenu',
+    imports: [
+        SharedCommonModule,
+        RouterLink
+    ],
+    templateUrl: './sidebar-submenu.component.html',
+    styleUrl: './sidebar-submenu.component.scss'
 })
 export class SidebarSubmenuComponent implements OnInit, OnChanges {
 

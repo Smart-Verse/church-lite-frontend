@@ -1,0 +1,97 @@
+
+{
+    "common_action_yes": "Sim",
+    "common_action_no": "Não",
+    "common_action_save": "Salvar",
+    "common_action_cancel": "Cancelar",
+    "common_message": "Mensagem",
+    "common_print": "Imprimir",
+    "common_message_success": "Salvo com sucesso",
+    "common_message_invalid_fields": "Existem campos inválidos",
+    "common_message_confirmation_delete": "Deseja excluir o(s) registro(s) selecionado(s)?",
+    "common_message_header_confirmation_delete": "Exclusão de registro",
+    "common_description": "Descrição",
+    "common_name": "Nome",
+    "common_type": "Tipo",
+    "common_code": "Código",
+
+    "planAccount_codeTree": "Código Arvore",
+    "cash_typeCash": "Tipo de conta",
+    "cash_numberAccount": "Numero da conta",
+    "cash_digit": "Digito",
+    "cash_bank": "Banco",
+
+    "financial_issueDate": "Data emissão",
+    "financial_dueDate": "Data vencimento",
+    "financial_paymentReceiptDate": "Data Pagamento/Recebimento",
+    "financial_value": "Valor",
+    "financial_person": "Pessoa",
+    "financial_cash": "Caixa ou conta bancária",
+    "financial_costCenter": "Centro de custo",
+    "financial_planAccount": "Plano de contas",
+    "financial_saveAndQuit": "Salvar e Quitar",
+    "financial_reverse": "Estornar",
+
+
+    "dashboard": "Dashboard",
+
+    "notification": "Notificações",
+
+    "scheduler": "Agenda",
+
+    "registrations": "Secretaria",
+    "registrations_persons": "Pessoas",
+    "registrations_persons_members": "Membros",
+    "registrations_persons_new_convert": "Novos Convertidos",
+    "registrations_persons_suppliers": "Fornecedores",
+    "registrations_persons_visitor": "Visitantes",
+
+    "user_configuration": "Configurações do usuário",
+
+    "transactions": "Movimentações",
+    "transactions_cash": "Caixa",
+    "transactions_open_cash": "Abrir caixa",
+    "transactions_close_cash": "Fechar caixa",
+    "transactions_start_balance": "Saldo inicial",
+    "transactions_revenues": "Receitas",
+    "transactions_expenses": "Despesas",
+    "transactions_end_balance": "Total",
+    "transactions_previousBalance": "Saldo anterior",
+    "transactions_balance": "Total das operações",
+    "transactions_openingDate": "Data abertura",
+    "transactions_openingCash": "Abertura do caixa",
+    "transactions_endCash": "Fechamento do caixa",
+    "transactions_endDate": "Data fechamento",
+
+
+    "bank_statament": "Extrato bancário",
+    "bank_bankAccount": "Conta bancária",
+
+    "history": "Historico de fechamento",
+
+
+    "personal_basic_data_title": "Dados Basicos",
+    "personal_field_name": "Nome Completo",
+    "personal_field_status": "Status",
+    "personal_field_cpf": "CPF",
+    "personal_field_rg": "Rg",
+    "personal_field_birthdate": "Data Nascimento",
+    "personal_contact_data": "Telefone e email",
+    "personal_field_phone": "Telefone fixo",
+    "personal_field_personalPhone": "Telefone celular",
+    "personal_field_email": "Email",
+    "personal_address_data": "Endereço",
+    "personal_field_postalCode": "CEP",
+    "personal_field_address": "Endereço",
+    "personal_field_number": "Numero",
+    "personal_field_neighborhood": "Bairro",
+    "personal_field_complement": "Complemento",
+    "personal_field_city": "Cidade",
+    "personal_field_gender": "Genero",
+    "personal_field_maritalStatus": "Estado civil",
+    "personal_field_nationality": "Nacionalidade",
+    "personal_field_birthplace": "Naturalidade",
+    "personal_field_ingressDate": "Data inicio da igreja",
+    "personal_field_baptismDate": "Data de batismo",
+    "personal_field_position": "Cargo"
+}

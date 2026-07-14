@@ -4,17 +4,15 @@ import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { TranslateService } from '../../shared/services/translate/translate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterChurchService } from '../../services/register-church/register-church.service';
-import { error } from 'console';
 import { ToastService } from '../../shared/services/toast/toast.service';
 
 
 @Component({
-  selector: 'app-register-church',
-  standalone: true,
-  providers: [RegisterChurchService, ToastService],
-  imports: [SharedCommonModule],
-  templateUrl: './register-church.component.html',
-  styleUrl: './register-church.component.scss'
+    selector: 'app-register-church',
+    providers: [RegisterChurchService, ToastService],
+    imports: [SharedCommonModule],
+    templateUrl: './register-church.component.html',
+    styleUrl: './register-church.component.scss'
 })
 export class RegisterChurchComponent extends BaseComponent implements OnInit {
 

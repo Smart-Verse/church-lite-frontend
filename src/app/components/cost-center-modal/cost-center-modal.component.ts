@@ -16,16 +16,15 @@ import {DTOConverter} from "../../../core/dto/dto-converter";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 
 @Component({
-  selector: 'app-cost-center-modal',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './cost-center-modal.component.html',
-  styleUrl: './cost-center-modal.component.scss'
+    selector: 'app-cost-center-modal',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './cost-center-modal.component.html',
+    styleUrl: './cost-center-modal.component.scss'
 })
 export class CostCenterModalComponent extends BaseComponent implements OnInit {
 

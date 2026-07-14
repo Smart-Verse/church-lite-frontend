@@ -9,12 +9,11 @@ import { SecurityService } from '../services/security.service';
 import { ToastService } from '../../shared/services/toast/toast.service';
 
 @Component({
-  selector: 'app-signup',
-  standalone: true,
-  imports: [SharedCommonModule, LoadingComponent],
-  providers: [SecurityService,ToastService],
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+    selector: 'app-signup',
+    imports: [SharedCommonModule, LoadingComponent],
+    providers: [SecurityService, ToastService],
+    templateUrl: './signup.component.html',
+    styleUrl: './signup.component.scss'
 })
 export class SignupComponent implements OnInit {
 

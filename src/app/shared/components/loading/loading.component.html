@@ -1,3 +1,5 @@
-<div *ngIf="showLoading" class="loading">
+@if (showLoading) {
+  <div class="loading">
     <div class="loader"></div>
-</div>
+  </div>
+}

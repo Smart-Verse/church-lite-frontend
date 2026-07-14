@@ -1,27 +1,31 @@
 <div class="sidebar-submenu">
-    <ul>
-        <div class="submenu-title" (click)="onColapsed(currentMenu)">
-            <div class="icon">
-                <i class="pi pi-angle-left"></i>
+  <ul>
+    <div class="submenu-title" (click)="onColapsed(currentMenu)">
+      <div class="icon">
+        <i class="pi pi-angle-left"></i>
+      </div>
+      <div class="text">
+        {{ currentMenu.name }}
+      </div>
+    </div>
+    @if (currentMenu.submenu.length > 0) {
+      @for (item of currentMenu.submenu; track item; let i = $index) {
+        <li class="transition"
+          [routerLink]="item.route"
+          (click)="onContextMenu(item)">
+          <div class="submenu-menu-text">
+            <div>
+              {{ item.name }}
             </div>
-            <div class="text">
-                {{ currentMenu.name }}
-            </div>
-        </div>
-        @if (currentMenu.submenu.length > 0) {
-            <li class="transition" *ngFor="let item of currentMenu.submenu; let i = index;"
-                [routerLink]="item.route"
-                (click)="onContextMenu(item)">
-                <div class="submenu-menu-text">
-                    <div>
-                        {{ item.name }}
-                    </div>
-                    <div *ngIf="item.submenu">
-                        <i class="pi pi-angle-right"></i>
-                    </div>
-                </div>
-            </li>
-        }
-        
-    </ul>
+            @if (item.submenu) {
+              <div>
+                <i class="pi pi-angle-right"></i>
+              </div>
+            }
+          </div>
+        </li>
+      }
+    }
+
+  </ul>
 </div>

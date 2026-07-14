@@ -13,17 +13,16 @@ import {TranslateService} from "../../shared/services/translate/translate.servic
 import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
-  selector: 'app-appointments',
-  standalone: true,
-  imports: [
-    Button,
-    ColorPickerModule,
-    InputTextComponent,
-    PaginatorModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './appointments.component.html',
-  styleUrl: './appointments.component.scss'
+    selector: 'app-appointments',
+    imports: [
+        Button,
+        ColorPickerModule,
+        InputTextComponent,
+        PaginatorModule,
+        ReactiveFormsModule
+    ],
+    templateUrl: './appointments.component.html',
+    styleUrl: './appointments.component.scss'
 })
 export class AppointmentsComponent extends BaseComponent implements OnInit {
 

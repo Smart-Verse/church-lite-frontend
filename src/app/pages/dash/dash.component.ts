@@ -5,13 +5,12 @@ import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 
 @Component({
-  selector: 'app-dash',
-  standalone: true,
-  imports: [
-      LoadingComponent
-  ],
-  templateUrl: './dash.component.html',
-  styleUrl: './dash.component.scss'
+    selector: 'app-dash',
+    imports: [
+        LoadingComponent
+    ],
+    templateUrl: './dash.component.html',
+    styleUrl: './dash.component.scss'
 })
 export class DashComponent extends BaseComponent{
 

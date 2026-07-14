@@ -1,28 +1,31 @@
 
 <p-floatLabel>
-  <input *ngIf="fieldType === 'input-text'"  [type]="type"
-         [pTooltip]="guidance"
-         pAutoFocus
-         [disabled]="disabled"
-         [autofocus]="focus"
-         pInputText
-         (ngModelChange)="onChange($event)"
-         [ngModel]="value"
-         [ngClass]="{'ng-invalid ng-dirty': !isValid}"
-         class="w-full outlined"/>
-  <textarea  *ngIf="fieldType === 'input-text-area'"
-        [pTooltip]="guidance"
-         rows="5"
-         cols="30"
-         pAutoFocus
-         [autofocus]="focus"
-         [autoResize]="true"
-         pInputTextarea
-         (ngModelChange)="onChange($event)"
-         [ngModel]="value"
-         [ngClass]="{'ng-invalid ng-dirty': !isValid}"
-         class="w-full outlined">
-  </textarea>
+  @if (fieldType === 'input-text') {
+    <input  [type]="type"
+      [pTooltip]="guidance"
+      [pAutoFocus]="focus"
+      [disabled]="disabled"
+      [autofocus]="focus"
+      pInputText
+      (ngModelChange)="onChange($event)"
+      [ngModel]="value"
+      [ngClass]="{'ng-invalid ng-dirty': !isValid}"
+      class="w-full outlined"/>
+  }
+  @if (fieldType === 'input-text-area') {
+    <textarea
+      [pTooltip]="guidance"
+      rows="5"
+      cols="30"
+      [pAutoFocus]="focus"
+      [autoResize]="true"
+      pTextarea
+      (ngModelChange)="onChange($event)"
+      [ngModel]="value"
+      [ngClass]="{'ng-invalid ng-dirty': !isValid}"
+      class="w-full outlined">
+    </textarea>
+  }
   <label id="">{{label}}</label>
 </p-floatLabel>
 

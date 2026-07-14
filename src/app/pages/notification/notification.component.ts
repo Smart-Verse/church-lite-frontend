@@ -5,14 +5,13 @@ import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  imports: [
-    LoadingComponent,
-    SharedCommonModule
-  ],
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.scss'
+    selector: 'app-notification',
+    imports: [
+        LoadingComponent,
+        SharedCommonModule
+    ],
+    templateUrl: './notification.component.html',
+    styleUrl: './notification.component.scss'
 })
 export class NotificationComponent extends BaseComponent{
 

@@ -4,11 +4,10 @@ import {UserConfigurationService} from "../../services/user-configuration/user-c
 import {ThemeService} from "../../shared/services/theme/theme.service";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [SidebarComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [SidebarComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {
 

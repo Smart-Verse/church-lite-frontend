@@ -13,22 +13,21 @@ import {TableModule} from "primeng/table";
 import {PaginatorModule} from "primeng/paginator";
 
 @Component({
-  selector: 'app-bank-statement',
-  standalone: true,
-  imports: [
-    LoadingComponent,
-    SharedCommonModule,
-    TableModule,
-    PaginatorModule
-  ],
-  providers: [
-    DialogService,
-    TransactionsService,
-    ToastService,
-    CrudService
-  ],
-  templateUrl: './bank-statement.component.html',
-  styleUrl: './bank-statement.component.scss'
+    selector: 'app-bank-statement',
+    imports: [
+        LoadingComponent,
+        SharedCommonModule,
+        TableModule,
+        PaginatorModule
+    ],
+    providers: [
+        DialogService,
+        TransactionsService,
+        ToastService,
+        CrudService
+    ],
+    templateUrl: './bank-statement.component.html',
+    styleUrl: './bank-statement.component.scss'
 })
 export class BankStatementComponent extends BaseComponent {
 

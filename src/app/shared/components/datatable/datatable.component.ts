@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {CommonModule, DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule  } from 'primeng/table';
 import { DataTable } from './datatable';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 import {RequestData} from "../../interfaces/request-data";
 import {Ripple} from "primeng/ripple";
 import {IconFieldModule} from "primeng/iconfield";
@@ -22,26 +22,24 @@ export enum Action {
 }
 
 @Component({
-  selector: 'app-datatable',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-datatable',
+    imports: [
     ButtonModule,
     TableModule,
-    SidebarModule,
+    DrawerModule,
     Ripple,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
     PaginatorModule,
     ConfirmDialogModule
-  ],
-  providers: [
-    ConfirmationService,
-    DatePipe
-  ],
-  templateUrl: './datatable.component.html',
-  styleUrl: './datatable.component.scss'
+],
+    providers: [
+        ConfirmationService,
+        DatePipe
+    ],
+    templateUrl: './datatable.component.html',
+    styleUrl: './datatable.component.scss'
 })
 export class DatatableComponent {
 

@@ -13,18 +13,17 @@ import {ActivatedRoute} from "@angular/router";
 import {ImageUploadService} from "../../shared/components/inputs/image-upload/image-upload.service";
 
 @Component({
-  selector: 'app-person-members',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService,
-    DatePipe,
-    ImageUploadService
-  ],
-  templateUrl: './person.component.html',
-  styleUrl: './person.component.scss'
+    selector: 'app-person-members',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService,
+        DatePipe,
+        ImageUploadService
+    ],
+    templateUrl: './person.component.html',
+    styleUrl: './person.component.scss'
 })
 export class PersonComponent extends BaseComponent implements OnInit{
 

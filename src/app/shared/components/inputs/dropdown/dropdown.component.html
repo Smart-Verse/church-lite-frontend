@@ -1,9 +1,8 @@
 <p-floatLabel>
-  <p-dropdown
+  <p-select
     (ngModelChange)="onChange($event)"
     [ngModel]="value"
-    pAutoFocus
-    [autofocus]="focus"
+      [pAutoFocus]="focus"
     [disabled]="disabled"
     [options]="options"
     [optionLabel]="optionLabel"

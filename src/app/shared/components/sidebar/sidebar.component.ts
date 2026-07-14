@@ -17,24 +17,23 @@ import {TranslateService} from "../../services/translate/translate.service";
 
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    RouterLink,
-    TooltipModule,
-    AvatarModule,
-    AvatarGroupModule,
-    RouterOutlet,
-    SidebarSubmenuComponent,
-    MenuModule
-  ],
-  providers: [
-    UserConfigurationService,
-    ImageUploadService
-  ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+    selector: 'app-sidebar',
+    imports: [
+        SharedCommonModule,
+        RouterLink,
+        TooltipModule,
+        AvatarModule,
+        AvatarGroupModule,
+        RouterOutlet,
+        SidebarSubmenuComponent,
+        MenuModule
+    ],
+    providers: [
+        UserConfigurationService,
+        ImageUploadService
+    ],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
 

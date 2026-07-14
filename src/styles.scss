@@ -1,6 +1,23 @@
-@import "primeng/resources/primeng.css";
+@font-face {
+  font-family: "Inter var";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("assets/theme/aura-light-purple/fonts/Inter-roman.var.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Inter var";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("assets/theme/aura-light-purple/fonts/Inter-italic.var.woff2") format("woff2");
+}
+
 
 body{
+    font-family: "Inter var", sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     width: 100vw;
     height: 100vh;
     margin: 0px;
@@ -34,7 +51,7 @@ html{
     .p-dialog-mask  {
       z-index: 99999;
     }
-    .p-dropdown{
+    .p-select{
       width: 100%;
     }
     p-inputnumber, .p-inputnumber {

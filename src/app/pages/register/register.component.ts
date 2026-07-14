@@ -12,22 +12,21 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    CrudService,
-    DialogService,
-    ToastService
-  ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        CrudService,
+        DialogService,
+        ToastService
+    ],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent extends BaseComponent implements OnInit  {
 
-  ref: DynamicDialogRef | undefined;
+  ref: DynamicDialogRef | null | undefined;
 
   datatable: DataTable = new DataTable();
   routeComponent: string | null = "";
@@ -162,6 +161,8 @@ export class RegisterComponent extends BaseComponent implements OnInit  {
         baseZIndex: 999999,
       });
 
+
+    if (!this.ref) return;
 
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {

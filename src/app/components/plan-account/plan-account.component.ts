@@ -12,16 +12,15 @@ import {typePlanAccount} from "../../shared/util/constants";
 
 
 @Component({
-  selector: 'app-plan-account',
-  standalone: true,
-  imports: [
-    SharedCommonModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './plan-account.component.html',
-  styleUrl: './plan-account.component.scss'
+    selector: 'app-plan-account',
+    imports: [
+        SharedCommonModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './plan-account.component.html',
+    styleUrl: './plan-account.component.scss'
 })
 export class PlanAccountComponent extends BaseComponent implements OnInit {
 

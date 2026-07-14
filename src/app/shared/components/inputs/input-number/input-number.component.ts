@@ -9,27 +9,26 @@ import {AutoFocusModule} from "primeng/autofocus";
 import {AutoCompleteModule} from "primeng/autocomplete";
 
 @Component({
-  selector: 'app-input-number',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FloatLabelModule,
-    TooltipModule,
-    InputNumberModule,
-    AutoFocusModule,
-    AutoCompleteModule
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: InputNumberComponent,
-      multi: true
-    }
-  ],
-  templateUrl: './input-number.component.html',
-  styleUrl: './input-number.component.scss'
+    selector: 'app-input-number',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        FloatLabelModule,
+        TooltipModule,
+        InputNumberModule,
+        AutoFocusModule,
+        AutoCompleteModule
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: InputNumberComponent,
+            multi: true
+        }
+    ],
+    templateUrl: './input-number.component.html',
+    styleUrl: './input-number.component.scss'
 })
 export class InputNumberComponent extends AppControlValueAccessor{
 

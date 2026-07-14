@@ -7,6 +7,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslateService } from './shared/services/translate/translate.service';
 import {RegisterService} from "./services/register/register.service";
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 
 export function loadTranslationsFactory(translationService: TranslateService) {
@@ -24,6 +26,15 @@ export const appConfig: ApplicationConfig = {
 
     provideClientHydration(),
     provideAnimations(),
+    providePrimeNG({
+      ripple: true,
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: '.app-dark'
+        }
+      }
+    }),
 
     provideHttpClient(),
     {

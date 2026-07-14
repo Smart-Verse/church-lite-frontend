@@ -10,17 +10,16 @@ import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import { ColorPickerModule } from 'primeng/colorpicker';
 
 @Component({
-  selector: 'app-events-type',
-  standalone: true,
-  imports: [
-    SharedCommonModule,
-    ColorPickerModule
-  ],
-  providers: [
-    ToastService
-  ],
-  templateUrl: './events-type.component.html',
-  styleUrl: './events-type.component.scss'
+    selector: 'app-events-type',
+    imports: [
+        SharedCommonModule,
+        ColorPickerModule
+    ],
+    providers: [
+        ToastService
+    ],
+    templateUrl: './events-type.component.html',
+    styleUrl: './events-type.component.scss'
 })
 export class EventsTypeComponent extends BaseComponent implements OnInit {
 
