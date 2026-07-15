@@ -381,3 +381,20 @@ As rotas `/home/cells/meetings` e `/home/cells/visitors` estão ativas no menu. 
 Reuniões são criadas como `DRAFT`; rascunhos e rejeitadas exibem a ação de submissão, e reuniões `SUBMITTED` exibem aprovação/rejeição com motivo obrigatório na rejeição. Presenças e pedidos de oração são carregados após selecionar a reunião. Os endpoints de workflow são consumidos pelo mesmo `CrudService`, preservando interceptadores e tratamento HTTP existentes.
 
 Todas as labels e todos os status novos possuem chaves equivalentes em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`; a auditoria de paridade retornou zero diferenças. Validação realizada com `npm run build`.
+
+
+## Revisão do módulo de células — ajustes de navegação e interface (15/07/2026)
+
+O item de dashboard do submenu de células foi removido temporariamente porque possuía rota vazia e acionava o redirecionamento do dashboard geral. Ele só deve retornar quando existir rota e componente próprios para o dashboard de células.
+
+A área de organização passou a permitir edição inline de níveis e unidades pelo CRUD gerado: o lápis carrega o registro no formulário, o salvamento usa `PUT` e existe cancelamento do modo de edição. A tela de equipe mantém o contexto da célula selecionada, separando liderança e membros. Encerrar um vínculo atualiza status/data e preserva o histórico; não realiza exclusão física.
+
+Os layouts do módulo foram padronizados para ocupar toda a largura disponível, com cards, grid de 12 colunas, gaps equivalentes aos cadastros e quebra responsiva. Isso inclui:
+
+- cadastro básico de células;
+- configurações do módulo;
+- organização, liderança e membros;
+- reuniões, relatórios, presença e pedidos de oração;
+- visitantes, incluindo os campos de próxima ação e observações.
+
+Formulários e tabelas de reuniões e visitantes ficam em linhas completas, evitando cards comprimidos lado a lado. Componentes PrimeNG internos são forçados a preencher a coluna do grid. Todas as novas labels continuam usando os quatro catálogos i18n. Os builds de produção executados após cada revisão foram concluídos com sucesso.
