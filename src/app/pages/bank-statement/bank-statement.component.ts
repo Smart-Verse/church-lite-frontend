@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {DataTable} from "../../shared/components/datatable/datatable";
 import {RequestData} from "../../shared/interfaces/request-data";
@@ -10,7 +10,9 @@ import {ToastService} from "../../shared/services/toast/toast.service";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {TableModule} from "primeng/table";
-import {PaginatorModule} from "primeng/paginator";
+import {PaginatorModule, PaginatorState} from "primeng/paginator";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
 
 @Component({
     selector: 'app-bank-statement',
@@ -18,7 +20,8 @@ import {PaginatorModule} from "primeng/paginator";
         LoadingComponent,
         SharedCommonModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        BreadcrumbModule
     ],
     providers: [
         DialogService,
@@ -29,7 +32,7 @@ import {PaginatorModule} from "primeng/paginator";
     templateUrl: './bank-statement.component.html',
     styleUrl: './bank-statement.component.scss'
 })
-export class BankStatementComponent extends BaseComponent {
+export class BankStatementComponent extends BaseComponent implements OnInit {
 
   _currentAccount: any;
   _totalBalance: number = 0;
@@ -37,6 +40,9 @@ export class BankStatementComponent extends BaseComponent {
   _expenses: number = 0;
   _datatable: DataTable = new DataTable();
   _requestData: RequestData = new RequestData();
+  readonly tableStyle = {width: "100%", "min-width": "52rem"};
+  readonly breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  breadcrumbItems: MenuItem[] = [];
 
   constructor(
     public readonly translateService: TranslateService,
@@ -47,8 +53,16 @@ export class BankStatementComponent extends BaseComponent {
   }
 
 
+  ngOnInit(): void {
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("financial_page_financial")},
+      {label: this.translateService.translate("bank_statament")}
+    ];
+  }
+
   onSelectedBankAccount(){
-    this.onLoadAllData(new RequestData());
+    this._requestData = new RequestData();
+    this.onLoadAllData(this._requestData);
   }
 
   onLoadAllData(requestData: RequestData): void {
@@ -83,6 +97,20 @@ export class BankStatementComponent extends BaseComponent {
     })
   }
 
+
+  pageChange(event: PaginatorState): void {
+    if (!this._currentAccount?.id) return;
+    const request = new RequestData();
+    request.size = event.rows ?? this._datatable.size;
+    request.offset = event.page ?? 0;
+    this._requestData = request;
+    this.onLoadAllData(request);
+  }
+
+  onRefresh(): void {
+    if (!this._currentAccount?.id) return;
+    this.onLoadAllData(this._requestData);
+  }
 
   private includeFilters(requestData: RequestData) {
     requestData.filter = `financial.cash.id eq ${this._currentAccount.id}`;

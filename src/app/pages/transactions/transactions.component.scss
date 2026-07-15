@@ -1,22 +1,43 @@
-.transactions{
-  padding: 10px;
-  height: 100%;
-}
-.cash-transactions {
-  display: flex;
-}
-.status-transaction{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.table{
-  max-height: 60%;
-  overflow: auto;
-  margin-top: 10px
-}
-.summary{
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+:host { display: block; min-height: 0; height: 100%; color: var(--p-text-color); }
+.transactions-page { display: flex; flex-direction: column; min-height: calc(100dvh - 1rem); padding: 1.25rem .75rem 1rem; }
+.transactions-page__breadcrumb, .transactions-page__header { width: 100%; }
+:host ::ng-deep .transactions-page__breadcrumb .p-breadcrumb { padding: 0; border: 0; background: transparent; font-size: .78rem; }
+.transactions-page__header { padding: 1rem 0 1.25rem; }
+.transactions-page__header h1 { margin: 0; font-size: clamp(1.35rem, 2vw, 1.75rem); font-weight: 650; }
+.transactions-page__header p { margin: .4rem 0 0; color: var(--p-text-muted-color); font-size: .82rem; }
+.transactions-filter { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem); align-items: center; gap: 1.5rem; margin-bottom: 1rem; padding: 1rem; border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); }
+.transactions-filter__heading { display: flex; align-items: center; gap: .85rem; }
+.transactions-filter__icon { display: grid; flex: 0 0 2.5rem; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 10px; background: color-mix(in srgb, var(--p-primary-color), transparent 88%); color: var(--p-primary-color); }
+.transactions-filter h2, .transactions-card__toolbar h2 { margin: 0; font-size: .92rem; font-weight: 650; }
+.transactions-filter p { margin: .25rem 0 0; color: var(--p-text-muted-color); font-size: .76rem; }
+:host ::ng-deep .transactions-filter app-auto-complete, :host ::ng-deep .transactions-filter .p-autocomplete { width: 100%; }
+.transactions-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.summary-card { display: flex; align-items: center; gap: .85rem; padding: 1rem; border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); }
+.summary-card > span { display: grid; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 10px; }
+.summary-card div { display: flex; min-width: 0; flex-direction: column; gap: .2rem; }
+.summary-card small { color: var(--p-text-muted-color); font-size: .7rem; font-weight: 600; text-transform: uppercase; }
+.summary-card strong { overflow: hidden; font-size: 1.05rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.summary-card--initial > span { background: color-mix(in srgb, #64748b, transparent 86%); color: #64748b; }
+.summary-card--revenue > span { background: color-mix(in srgb, #22c55e, transparent 86%); color: #16a34a; }
+.summary-card--expense > span { background: color-mix(in srgb, #ef4444, transparent 86%); color: #dc2626; }
+.summary-card--balance > span { background: color-mix(in srgb, var(--p-primary-color), transparent 86%); color: var(--p-primary-color); }
+.transactions-card { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 30rem; overflow: hidden; border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); }
+.transactions-card__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid var(--p-content-border-color); }
+.transactions-card__toolbar span { display: block; margin-top: .2rem; color: var(--p-text-muted-color); font-size: .72rem; }
+.transactions-card__content { flex: 1 1 auto; min-height: 0; overflow: auto; }
+:host ::ng-deep .transactions-table .p-datatable-thead > tr > th { position: sticky; z-index: 2; top: 0; padding: .55rem .65rem; border-color: var(--p-content-border-color); background: var(--p-content-background); color: var(--p-text-muted-color); font-size: .68rem; font-weight: 700; letter-spacing: .045em; text-transform: uppercase; white-space: nowrap; }
+:host ::ng-deep .transactions-table .p-datatable-tbody > tr > td { max-width: 22rem; padding: .48rem .65rem; border-color: var(--p-content-border-color); color: var(--p-text-color); font-size: .76rem; line-height: 1.25; }
+:host ::ng-deep .transactions-table .p-datatable-tbody > tr:hover > td { background: color-mix(in srgb, var(--p-primary-color), transparent 96%); }
+.transactions-table__value { text-align: right; white-space: nowrap; }
+.transactions-table__empty-cell { height: clamp(16rem, 38vh, 26rem); border: 0; }
+.transactions-table__empty { display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%; padding: 2rem; text-align: center; }
+.transactions-table__empty svg { width: min(12rem, 45vw); margin-bottom: .75rem; }
+.empty-surface { fill: var(--p-form-field-background); stroke: var(--p-content-border-color); stroke-width: 2; }
+.empty-line { fill: none; stroke: var(--p-text-muted-color); stroke-linecap: round; stroke-width: 5; opacity: .45; }
+.empty-accent { fill: color-mix(in srgb, var(--p-primary-color), transparent 82%); stroke: var(--p-primary-color); stroke-width: 3; }
+.empty-icon { fill: none; stroke: var(--p-primary-color); stroke-linecap: round; stroke-width: 5; }
+.transactions-table__empty strong { margin-bottom: .35rem; font-size: 1rem; font-weight: 650; }
+.transactions-table__empty span { max-width: 26rem; color: var(--p-text-muted-color); font-size: .8rem; }
+.transactions-card__footer { display: flex; align-items: center; justify-content: space-between; min-height: 3.25rem; padding: .25rem .75rem .25rem 1rem; border-top: 1px solid var(--p-content-border-color); color: var(--p-text-muted-color); font-size: .72rem; }
+:host ::ng-deep .transactions-card__footer .p-paginator { padding: 0; background: transparent; font-size: .75rem; }
+@media (max-width: 768px) { .transactions-page { min-height: calc(100dvh - 3.5rem); padding: 1rem 0; } .transactions-page__breadcrumb, .transactions-page__header { padding-inline: 1rem; } .transactions-filter, .transactions-summary { grid-template-columns: 1fr; margin-inline: 1rem; } .transactions-card { border-right: 0; border-left: 0; border-radius: 0; } .transactions-card__toolbar { align-items: stretch; flex-direction: column; } :host ::ng-deep .transactions-card__toolbar .p-button { width: 100%; } .transactions-card__footer { align-items: flex-start; flex-direction: column; gap: .25rem; padding: .5rem .75rem; } :host ::ng-deep .transactions-card__footer .p-paginator { width: 100%; justify-content: center; } }

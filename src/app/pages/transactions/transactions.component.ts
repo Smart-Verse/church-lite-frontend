@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import { TableModule } from 'primeng/table';
-import {PaginatorModule} from "primeng/paginator";
+import {PaginatorModule, PaginatorState} from "primeng/paginator";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
 import {TransactionsService} from "../../services/transactions/transactions.service";
 import {CrudService} from "../../shared/services/crud/crud.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
@@ -18,7 +20,8 @@ import {DataTable} from "../../shared/components/datatable/datatable";
         LoadingComponent,
         SharedCommonModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        BreadcrumbModule
     ],
     providers: [
         TransactionsService,
@@ -28,7 +31,7 @@ import {DataTable} from "../../shared/components/datatable/datatable";
     templateUrl: './transactions.component.html',
     styleUrl: './transactions.component.scss'
 })
-export class TransactionsComponent extends BaseComponent {
+export class TransactionsComponent extends BaseComponent implements OnInit {
 
   _currentCash: any;
   _startBalance: number = 0;
@@ -38,6 +41,9 @@ export class TransactionsComponent extends BaseComponent {
   _transactionID: string = "";
   _datatable: DataTable = new DataTable();
   _requestData: RequestData = new RequestData();
+  readonly tableStyle = {width: "100%", "min-width": "52rem"};
+  readonly breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  breadcrumbItems: MenuItem[] = [];
 
   constructor(
     public readonly translateService: TranslateService,
@@ -49,13 +55,21 @@ export class TransactionsComponent extends BaseComponent {
     super();
   }
 
+  ngOnInit(): void {
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("financial_page_financial")},
+      {label: this.translateService.translate("financial_page_transactions")}
+    ];
+  }
+
   onSelectedCash(){
     this.onShowLoading();
     this.transactionsService.getIDCashTransaction(this._currentCash.id).subscribe({
       next: (result) => {
         this._transactionID = result.cashTransaction;
         this.onShowLoading();
-        this.onLoadAllData(new RequestData());
+        this._requestData = new RequestData();
+        this.onLoadAllData(this._requestData);
       },
       error: err => {
         this.onShowLoading();
@@ -99,6 +113,20 @@ export class TransactionsComponent extends BaseComponent {
         this.onShowLoading();
       }
     })
+  }
+
+  pageChange(event: PaginatorState): void {
+    if (!this._transactionID) return;
+    const request = new RequestData();
+    request.size = event.rows ?? this._datatable.size;
+    request.offset = event.page ?? 0;
+    this._requestData = request;
+    this.onLoadAllData(request);
+  }
+
+  onRefresh(): void {
+    if (!this._transactionID) return;
+    this.onLoadAllData(this._requestData);
   }
 
   private includeFilters(requestData: RequestData) {

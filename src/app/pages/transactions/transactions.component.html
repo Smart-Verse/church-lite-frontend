@@ -1,103 +1,24 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="transactions">
-  <h2>{{translateService.translate("transactions")}}</h2>
-  <hr>
-  <div class="formgrid grid">
-    <app-auto-complete
-      (onSelectChange)="onSelectedCash()"
-      [(ngModel)]="_currentCash"
-      name="cash"
-      defaultFilter="typeCash eq 0 and status eq 0"
-      class="field col-12 md:col-4 c-margin"
-      [label]="translateService.translate('transactions_cash')"
-      route="cash"
-      optionLabel="description"
-      type="text">
-    </app-auto-complete>
-    <div class="field col-12 md:col-2 c-margin">
-      <p-button
-        (onClick)="onNavigateCashAction(0)"
-        styleClass="w-full"
-        [label]="translateService.translate('transactions_open_cash')" />
-    </div>
-    <div class="field col-12 md:col-2 c-margin">
-      <p-button
-        (onClick)="onNavigateCashAction(1)"
-        styleClass="w-full"
-        [label]="translateService.translate('transactions_close_cash')" />
-    </div>
-    <div class="field col-12 md:col-2 c-margin">
-      <p-button
-        styleClass="w-full"
-        [label]="translateService.translate('common_print')" />
-    </div>
-  </div>
-  <div class="table">
-    <p-table [tableStyle]="{ 'min-width': '50rem'}" [value]="_datatable.values">
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Data</th>
-          <th>Descrição</th>
-          <th>Nome</th>
-          <th>Operação</th>
-          <th>Valor</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-rowData>
-        <tr>
-          <td>{{ rowData.dateTransaction }}</td>
-          <td>{{ rowData.description }}</td>
-          <td>{{ rowData.person?.name }}</td>
-          <td>{{ rowData.transactionOperation }}</td>
-          <td>{{ rowData.value }}</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="summary">
-        <div class="summary">
-          <p-button type="button" (onClick)="onLoadAllData(_requestData)" icon="pi pi-refresh" styleClass="p-button-text" />
-          <p-paginator
-            [rows]="10"
-            appendTo="body"
-            dropdownAppendTo="body"
-            [totalRecords]="10"
-            [rowsPerPageOptions]="[5,10, 20, 30]" />
-        </div>
-      </ng-template>
-    </p-table>
-  </div>
-  <div class="formgrid grid">
-    <app-input-number
-      [(ngModel)]="_startBalance"
-      name="startBalance"
-      [disabled]="true"
-      class="field col-12 md:col-3 c-margin"
-      [label]="translateService.translate('transactions_start_balance')"
-      >
-    </app-input-number>
-    <app-input-number
-      [(ngModel)]="_revenues"
-      name="revenues"
-      [disabled]="true"
-      class="field col-12 md:col-3 c-margin"
-      [label]="translateService.translate('transactions_revenues')"
-      >
-    </app-input-number>
-    <app-input-number
-      [(ngModel)]="_expenses"
-      name="expenses"
-      [disabled]="true"
-      class="field col-12 md:col-3 c-margin"
-      [label]="translateService.translate('transactions_expenses')"
-      >
-    </app-input-number>
-    <app-input-number
-      [disabled]="true"
-      [(ngModel)]="_totalBalance"
-      name="endBalance"
-      class="field col-12 md:col-3 c-margin"
-      [label]="translateService.translate('transactions_end_balance')">
-    </app-input-number>
-  </div>
-</div>
+<app-loading [showLoading]="showLoading" />
+<section class="transactions-page">
+  <nav class="transactions-page__breadcrumb" aria-label="Breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
+  <header class="transactions-page__header"><div><h1>{{ translateService.translate('transactions') }}</h1><p>Acompanhe as movimentações e o saldo do caixa selecionado.</p></div><div class="transactions-page__actions"><p-button icon="pi pi-lock-open" [outlined]="true" (onClick)="onNavigateCashAction(0)" [label]="translateService.translate('transactions_open_cash')" /><p-button icon="pi pi-lock" (onClick)="onNavigateCashAction(1)" [label]="translateService.translate('transactions_close_cash')" /><p-button icon="pi pi-print" [text]="true" [label]="translateService.translate('common_print')" /></div></header>
 
+  <section class="transactions-filter"><div class="transactions-filter__heading"><span class="transactions-filter__icon"><i class="pi pi-wallet"></i></span><div><h2>Caixa</h2><p>Selecione um caixa aberto para visualizar suas movimentações.</p></div></div><app-auto-complete (onSelectChange)="onSelectedCash()" [(ngModel)]="_currentCash" name="cash" defaultFilter="typeCash eq 0 and status eq 0" [label]="translateService.translate('transactions_cash')" route="cash" optionLabel="description" type="text" /></section>
 
+  <section class="transactions-summary">
+    <article class="summary-card summary-card--initial"><span><i class="pi pi-flag"></i></span><div><small>{{ translateService.translate('transactions_start_balance') }}</small><strong>{{ _startBalance | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+    <article class="summary-card summary-card--revenue"><span><i class="pi pi-arrow-up-right"></i></span><div><small>{{ translateService.translate('transactions_revenues') }}</small><strong>{{ _revenues | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+    <article class="summary-card summary-card--expense"><span><i class="pi pi-arrow-down-right"></i></span><div><small>{{ translateService.translate('transactions_expenses') }}</small><strong>{{ _expenses | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+    <article class="summary-card summary-card--balance"><span><i class="pi pi-calculator"></i></span><div><small>{{ translateService.translate('transactions_end_balance') }}</small><strong>{{ _totalBalance | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+  </section>
+
+  <main class="transactions-card">
+    <div class="transactions-card__toolbar"><div><h2>Movimentações</h2><span>{{ _currentCash?.description || 'Selecione um caixa' }}</span></div><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_transactionID" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div>
+    <div class="transactions-card__content"><p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="transactions-table p-datatable-sm">
+      <ng-template pTemplate="header"><tr><th>Data</th><th>Descrição</th><th>Nome</th><th>Operação</th><th class="transactions-table__value">Valor</th></tr></ng-template>
+      <ng-template pTemplate="body" let-rowData><tr><td>{{ rowData.dateTransaction | date:'dd/MM/yyyy' }}</td><td>{{ rowData.description }}</td><td>{{ rowData.person?.name || '—' }}</td><td>{{ rowData.transactionOperation }}</td><td class="transactions-table__value">{{ rowData.value | currency:'BRL':'symbol':'1.2-2' }}</td></tr></ng-template>
+      <ng-template pTemplate="emptymessage"><tr><td colspan="5" class="transactions-table__empty-cell"><div class="transactions-table__empty"><svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg><strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ _currentCash ? 'Não há movimentações para este caixa.' : 'Selecione um caixa para consultar as movimentações.' }}</span></div></td></tr></ng-template>
+    </p-table></div>
+    <footer class="transactions-card__footer"><span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span><p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size" [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body" /></footer>
+  </main>
+</section>
