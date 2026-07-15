@@ -1,138 +1,22 @@
-:host {
-  display: block;
-  min-height: 100%;
-  color: var(--p-text-color);
-}
-
-.entity-page {
-  min-height: 100%;
-  padding: 1.25rem 0.75rem 1.5rem;
-  background: transparent;
-}
-
-.entity-page__breadcrumb,
-.entity-page__header,
-.entity-page__body {
-  width: 100%;
-  max-width: none;
-  margin-inline: auto;
-}
-
-:host ::ng-deep .entity-page__breadcrumb .p-breadcrumb {
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-
-.entity-page__header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--p-content-border-color);
-}
-
-.entity-page__header h1 {
-  margin: 0;
-  font-size: clamp(1.5rem, 2vw, 2rem);
-  font-weight: 650;
-  line-height: 1.2;
-}
-
-.entity-page__header p {
-  margin: 0.5rem 0 0;
-  color: var(--p-text-muted-color);
-  line-height: 1.5;
-}
-
-.entity-page__actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.entity-page__actions > p-button {
-  display: inline-flex;
-}
-
-.entity-page__body {
-  max-width: none;
-  margin-left: 0;
-  padding-top: 2.5rem;
-}
-
-.entity-section h2 {
-  margin: 0 0 2rem;
-  color: var(--p-text-muted-color);
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.entity-fields {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 2.25rem 1.5rem;
-  align-items: start;
-}
-
-.entity-fields > * {
-  min-width: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  grid-column: span 12;
-}
-
-:host ::ng-deep .entity-fields .p-floatlabel,
-:host ::ng-deep .entity-fields .p-inputtext,
-:host ::ng-deep .entity-fields .p-select,
-:host ::ng-deep .entity-fields .p-autocomplete,
-:host ::ng-deep .entity-fields .p-colorpicker,
-:host ::ng-deep .entity-fields textarea {
-  display: flex;
-  width: 100%;
-}
-
-@media (min-width: 769px) {
-  .span-2 { grid-column: span 2 !important; }
-  .span-4 { grid-column: span 4 !important; }
-  .span-5 { grid-column: span 5 !important; }
-  .span-6 { grid-column: span 6 !important; }
-  .span-7 { grid-column: span 7 !important; }
-  .span-8 { grid-column: span 8 !important; }
-  .span-10 { grid-column: span 10 !important; }
-}
-
-@media (max-width: 768px) {
-  .entity-page {
-    padding: 1rem;
-  }
-
-  .entity-page__header {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .entity-page__actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    gap: 0.75rem;
-  }
-
-  :host ::ng-deep .entity-page__actions .p-button {
-    width: 100%;
-  }
-
-  .entity-page__body {
-    margin-left: 0;
-    padding-top: 2rem;
-  }
-
-  .entity-fields {
-    gap: 2rem;
-  }
-}
+:host { display: block; min-height: 100%; color: var(--p-text-color); }
+.entity-page { min-height: 100%; padding: 1.25rem .75rem 1.5rem; background: transparent; }
+.entity-page__breadcrumb, .entity-page__header, .entity-page__body { width: 100%; margin-inline: auto; }
+:host ::ng-deep .entity-page__breadcrumb .p-breadcrumb { padding: 0; border: 0; background: transparent; font-size: .78rem; }
+.entity-page__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--p-content-border-color); }
+.entity-page__header h1 { margin: 0; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 650; line-height: 1.2; }
+.entity-page__header p { margin: .5rem 0 0; color: var(--p-text-muted-color); line-height: 1.5; }
+.entity-page__actions { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.entity-page__body { padding-top: 1.5rem; }
+.cash-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: start; }
+.cash-card { min-width: 0; padding: 1.35rem 1.5rem 1.55rem; border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%); }
+.cash-card__heading { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
+.cash-card__heading h2 { margin: 0; color: var(--p-text-color); font-size: .95rem; font-weight: 650; }
+.cash-card__heading p { margin: .22rem 0 0; color: var(--p-text-muted-color); font-size: .73rem; line-height: 1.4; }
+.cash-card__icon { display: grid; flex: 0 0 auto; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--p-primary-color), transparent 88%); color: var(--p-primary-color); }
+.entity-fields { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem 1.25rem; align-items: start; padding-top: .3rem; }
+.entity-fields > * { min-width: 0; width: 100%; margin: 0; padding: 0; grid-column: span 12; }
+.cash-card__hint { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1.5rem; padding: .7rem .75rem; border-radius: 8px; background: var(--p-form-field-background); color: var(--p-text-muted-color); font-size: .68rem; line-height: 1.45; }
+.cash-card__hint i { margin-top: .08rem; color: var(--p-primary-color); }
+:host ::ng-deep .entity-fields .p-floatlabel, :host ::ng-deep .entity-fields .p-inputtext, :host ::ng-deep .entity-fields .p-select, :host ::ng-deep .entity-fields .p-autocomplete { display: flex; width: 100%; }
+@media (min-width: 769px) { .entity-fields .span-2 { grid-column: span 2; } .entity-fields .span-4 { grid-column: span 4; } .entity-fields .span-5 { grid-column: span 5; } .entity-fields .span-8 { grid-column: span 8; } }
+@media (max-width: 768px) { .entity-page { padding: 1rem .5rem; } .entity-page__header { align-items: stretch; flex-direction: column; gap: 1.25rem; } .entity-page__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; } :host ::ng-deep .entity-page__actions .p-button { width: 100%; } .cash-card { padding: 1.15rem 1rem 1.4rem; } }

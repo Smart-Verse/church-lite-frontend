@@ -43,3 +43,14 @@
   .entity-page__header { align-items: stretch; flex-direction: column; }
   .entity-page__actions { display: grid; grid-template-columns: 1fr 1fr; }
 }
+
+
+/* Shared registration card identity */
+.entity-page__body { padding-top: 1.5rem; }
+.entity-section { width: 100%; box-sizing: border-box; padding: 1.35rem 1.5rem 1.6rem; border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%); }
+.entity-section__heading { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
+.entity-section__heading h2 { margin: 0; color: var(--p-text-color); font-size: .95rem; font-weight: 650; }
+.entity-section__heading p { margin: .22rem 0 0; color: var(--p-text-muted-color); font-size: .73rem; line-height: 1.4; }
+.entity-section__icon { display: grid; flex: 0 0 auto; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--p-primary-color), transparent 88%); color: var(--p-primary-color); }
+:host ::ng-deep .entity-fields .p-floatlabel, :host ::ng-deep .entity-fields .p-inputtext, :host ::ng-deep .entity-fields .p-select, :host ::ng-deep .entity-fields .p-autocomplete, :host ::ng-deep .entity-fields textarea { display: flex; width: 100%; }
+@media (max-width: 768px) { .entity-page { padding-right: .5rem; padding-left: .5rem; } .entity-section { padding: 1.15rem 1rem 1.4rem; } }

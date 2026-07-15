@@ -1,66 +1,58 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="user-configuration">
-  <h2>{{translateService.translate("user_configuration")}}</h2>
-  <hr>
-  <div class="user-configuration-fields ">
-    <div class="image-view">
-      <app-image-upload
-        [imageUrl]="urlImage"
-        (eventLoading)="loading()"
-        (eventImageToken)="onGetTokenImage($event)"
-        [tokenImageUrl]="imageToken">
-      </app-image-upload>
-    </div>
-    <div class="user-fields formgrid grid" [formGroup]="formGroup">
-      <app-input-text
-        formControlName="name"
-        name="name"
-        [field]="formGroup"
-        class="field col-12 md:col-6 c-margin"
-        [label]="translateService.translate('personal_field_name')"
-        type="text">
-      </app-input-text>
-      <app-input-text
-        formControlName="email"
-        name="email"
-        [disabled]="true"
-        [field]="formGroup"
-        class="field col-12 md:col-6 c-margin"
-        [label]="translateService.translate('personal_field_email')"
-        type="text">
-      </app-input-text>
-      <app-input-text
-        formControlName="phone"
-        name="phone"
-        [field]="formGroup"
-        class="field col-12 md:col-6 c-margin"
-        label="Telefone"
-        type="tel">
-      </app-input-text>
-      <app-dropdown
-        formControlName="theme"
-        name="theme"
-        [field]="formGroup"
-        [label]="translateService.translate('personal_field_status')"
-        [options]="_theme"
-        optionLabel="value"
-        class="field col-12 md:col-6 c-margin">
-      </app-dropdown>
-      <app-dropdown
-        formControlName="lang"
-        name="lang"
-        [field]="formGroup"
-        [label]="translateService.translate('personal_field_status')"
-        [options]="_language"
-        optionLabel="value"
-        class="field col-12 md:col-6 c-margin">
-      </app-dropdown>
-    </div>
-    <div class="buttons">
-      <div>
-        <p-button  [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
-      </div>
-    </div>
+<app-loading [showLoading]="showLoading" />
+<section class="settings-page">
+  <nav class="settings-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  </nav>
 
-  </div>
-</div>
+  <header class="settings-page__header">
+    <div>
+      <span class="settings-page__eyebrow"><i class="pi pi-cog"></i> Preferências da conta</span>
+      <h1>{{ translateService.translate('user_configuration') }}</h1>
+      <p>Atualize seus dados pessoais, foto e preferências de exibição do sistema.</p>
+    </div>
+    <p-button icon="pi pi-check" [loading]="isSaving" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
+  </header>
+
+  <main class="settings-page__content" [formGroup]="formGroup">
+    <aside class="settings-profile">
+      <div class="settings-section__heading">
+        <span class="settings-section__icon"><i class="pi pi-user"></i></span>
+        <div><h2>Foto do perfil</h2><p>Utilizada no menu e na identificação da conta.</p></div>
+      </div>
+      <div class="settings-profile__upload">
+        <app-image-upload [imageUrl]="urlImage" (eventLoading)="loading()" (eventImageToken)="onGetTokenImage($event)" [tokenImageUrl]="imageToken" />
+      </div>
+      <div class="settings-profile__hint"><i class="pi pi-info-circle"></i><span>Prefira uma imagem quadrada, nítida e com até 5 MB.</span></div>
+    </aside>
+
+    <div class="settings-sections">
+      <section class="settings-section">
+        <div class="settings-section__heading">
+          <span class="settings-section__icon"><i class="pi pi-id-card"></i></span>
+          <div><h2>Informações pessoais</h2><p>Dados básicos vinculados ao seu acesso.</p></div>
+        </div>
+        <div class="settings-fields">
+          <app-input-text formControlName="name" name="name" [field]="formGroup" class="span-7" [label]="translateService.translate('personal_field_name')" type="text" />
+          <app-input-text formControlName="phone" name="phone" [field]="formGroup" class="span-5" label="Telefone" type="tel" />
+          <app-input-text formControlName="email" name="email" [disabled]="true" [field]="formGroup" class="span-12" [label]="translateService.translate('personal_field_email')" type="email" />
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <div class="settings-section__heading">
+          <span class="settings-section__icon"><i class="pi pi-palette"></i></span>
+          <div><h2>Aparência e idioma</h2><p>Personalize como o Church Lite aparece para você.</p></div>
+        </div>
+        <div class="settings-fields">
+          <app-dropdown formControlName="theme" name="theme" [field]="formGroup" label="Tema" [options]="_theme" optionLabel="value" class="span-6" />
+          <app-dropdown formControlName="lang" name="lang" [field]="formGroup" label="Idioma" [options]="_language" optionLabel="value" class="span-6" />
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="settings-page__footer">
+    <span>As alterações de tema e idioma serão aplicadas após salvar.</span>
+    <p-button icon="pi pi-check" [loading]="isSaving" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
+  </footer>
+</section>

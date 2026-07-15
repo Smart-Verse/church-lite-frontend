@@ -1,31 +1,26 @@
-<div class="sidebar-submenu">
-  <ul>
-    <div class="submenu-title" (click)="onColapsed(currentMenu)">
-      <div class="icon">
-        <i class="pi pi-angle-left"></i>
-      </div>
-      <div class="text">
-        {{ currentMenu.name }}
-      </div>
-    </div>
-    @if (currentMenu.submenu.length > 0) {
-      @for (item of currentMenu.submenu; track item; let i = $index) {
-        <li class="transition"
-          [routerLink]="item.route === 'login' ? null : item.route"
-          (click)="item.route === 'login' ? onLogout($event) : onContextMenu(item)">
-          <div class="submenu-menu-text">
-            <div>
-              {{ item.name }}
-            </div>
-            @if (item.submenu) {
-              <div>
-                <i class="pi pi-angle-right"></i>
-              </div>
-            }
-          </div>
-        </li>
-      }
-    }
+<section class="submenu">
+  <header class="submenu__header">
+    <button type="button" class="submenu__back" aria-label="Voltar" (click)="onColapsed(currentMenu)"><i class="pi pi-angle-left"></i></button>
+    <div><span>Navegação</span><h2>{{ currentMenu.name }}</h2></div>
+  </header>
 
-  </ul>
-</div>
+  <div class="submenu__body">
+    @if (currentMenu.submenu.length > 0) {
+      <ul>
+        @for (item of currentMenu.submenu; track item.name) {
+          <li [class.submenu__logout]="item.route === 'login'">
+            <button type="button" [routerLink]="item.route === 'login' ? null : item.route" (click)="item.route === 'login' ? onLogout($event) : onContextMenu(item)">
+              <span class="submenu__item-icon"><i [class]="item.route === 'login' ? 'pi pi-sign-out' : (item.submenu ? 'pi pi-folder' : 'pi pi-circle-fill')"></i></span>
+              <span class="submenu__item-label">{{ item.name }}</span>
+              @if (item.submenu) { <i class="pi pi-angle-right submenu__chevron"></i> }
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="submenu__empty"><i class="pi pi-compass"></i><strong>Acesso direto</strong><span>Este item abre diretamente no conteúdo principal.</span></div>
+    }
+  </div>
+
+  <footer class="submenu__footer"><span></span><small>SmartChurch</small></footer>
+</section>

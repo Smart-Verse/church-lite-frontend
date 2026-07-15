@@ -102,6 +102,9 @@ export class SidebarComponent implements OnInit {
   }
 
   onMobileOpenMenu(){
+    if (!this.currentMenu?.submenu?.length) {
+      this.currentMenu = this.menuItems.find((item: any) => item.submenu?.length) ?? this.menuItems[0];
+    }
     this.onDisableAndSetActiveLink();
     this.isExpanded = true;
     if(this.isMobile){
@@ -140,12 +143,15 @@ export class SidebarComponent implements OnInit {
   onLoadImage(){
     this.userConfigurationService.getUser().subscribe({
       next: (res) => {
+        this.themeService.onConfigurationTheme(res.output.theme);
+        this.translateService.loadTranslationsUser(res.output.lang);
+        if (!res.output.userPhoto) {
+          this.image = null;
+          return;
+        }
         this.imageService.onRequestDonwload(res.output.userPhoto).subscribe({
-          next: (req) => {
-            this.image = req["url"];
-            this.themeService.onConfigurationTheme(res.output.theme);
-            this.translateService.loadTranslationsUser(res.output.lang);
-          }
+          next: (req) => this.image = req["url"],
+          error: () => this.image = null
         });
       }
     });

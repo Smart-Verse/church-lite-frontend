@@ -17,25 +17,39 @@
   </header>
 
   <main class="finance-page__body" [formGroup]="formGroup">
-    <section class="finance-section">
-      <h2>{{ translateService.translate('financial_page_launch_data') }}</h2>
-      <div class="fields-grid">
-        <app-input-date formControlName="issueDate" name="issueDate" [field]="formGroup" [disabled]="_paidInvoice" class="span-4" [label]="translateService.translate('financial_issueDate')" type="text" />
-        <app-input-date formControlName="dueDate" name="dueDate" [field]="formGroup" [disabled]="_paidInvoice" class="span-4" [label]="translateService.translate('financial_dueDate')" type="text" />
-        <app-input-date formControlName="paymentReceiptDate" name="paymentReceiptDate" [field]="formGroup" [disabled]="true" class="span-4" [label]="translateService.translate('financial_paymentReceiptDate')" type="text" />
-        <app-input-text [focus]="true" formControlName="description" name="description" [field]="formGroup" class="span-8" [label]="translateService.translate('common_description')" type="text" />
-        <app-input-number formControlName="value" name="value" [disabled]="_paidInvoice" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_value')" type="text" />
-      </div>
-    </section>
+    <div class="finance-status" [class.finance-status--settled]="_paidInvoice">
+      <span class="finance-status__icon"><i [class]="_paidInvoice ? 'pi pi-check-circle' : 'pi pi-clock'"></i></span>
+      <div><strong>{{ _paidInvoice ? 'Lançamento liquidado' : 'Lançamento em aberto' }}</strong><span>{{ _paidInvoice ? 'A data de pagamento ou recebimento já foi registrada.' : 'Salve e liquide quando a movimentação financeira for concluída.' }}</span></div>
+    </div>
 
-    <section class="finance-section">
-      <h2>{{ translateService.translate('financial_page_classification') }}</h2>
-      <div class="fields-grid">
-        <app-auto-complete formControlName="person" name="person" [disabled]="_paidInvoice" [field]="formGroup" class="span-8" [label]="translateService.translate('financial_person')" route="person" optionLabel="name" type="text" />
-        <app-auto-complete formControlName="cash" name="cash" [disabled]="_paidInvoice" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_cash')" route="cash" defaultFilter="(status eq 0 or typeCash eq 1) " optionLabel="description" type="text" />
-        <app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_planAccount')" route="planAccount" optionLabel="description" type="text" />
-        <app-auto-complete formControlName="costCenter" name="costCenter" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_costCenter')" route="costCenter" optionLabel="description" type="text" />
-      </div>
-    </section>
+    <div class="finance-cards">
+      <section class="finance-card">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-file-edit"></i></span><div><h2>Identificação do lançamento</h2><p>Descreva a movimentação e relacione a pessoa envolvida, quando aplicável.</p></div></div>
+        <div class="fields-grid">
+          <app-input-text [focus]="true" formControlName="description" name="description" [field]="formGroup" class="span-12" [label]="translateService.translate('common_description')" type="text" />
+          <app-auto-complete formControlName="person" name="person" [disabled]="_paidInvoice" [field]="formGroup" class="span-12" [label]="translateService.translate('financial_person')" route="person" optionLabel="name" type="text" />
+        </div>
+      </section>
+
+      <section class="finance-card">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-wallet"></i></span><div><h2>Valores e vencimento</h2><p>Informe o valor e as datas que controlam a situação deste lançamento.</p></div></div>
+        <div class="fields-grid">
+          <app-input-number formControlName="value" name="value" [disabled]="_paidInvoice" [field]="formGroup" class="span-12" [label]="translateService.translate('financial_value')" type="text" />
+          <app-input-date formControlName="issueDate" name="issueDate" [field]="formGroup" [disabled]="_paidInvoice" class="span-6" [label]="translateService.translate('financial_issueDate')" type="text" />
+          <app-input-date formControlName="dueDate" name="dueDate" [field]="formGroup" [disabled]="_paidInvoice" class="span-6" [label]="translateService.translate('financial_dueDate')" type="text" />
+          <app-input-date formControlName="paymentReceiptDate" name="paymentReceiptDate" [field]="formGroup" [disabled]="true" class="span-12" [label]="translateService.translate('financial_paymentReceiptDate')" type="text" />
+        </div>
+        <div class="finance-card__hint"><i class="pi pi-info-circle"></i><span>A data de pagamento ou recebimento é preenchida automaticamente ao utilizar “{{ _buttonText }}”.</span></div>
+      </section>
+
+      <section class="finance-card finance-card--wide">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-sitemap"></i></span><div><h2>{{ translateService.translate('financial_page_classification') }}</h2><p>Defina onde a movimentação será registrada e como aparecerá nos relatórios financeiros.</p></div></div>
+        <div class="fields-grid">
+          <app-auto-complete formControlName="cash" name="cash" [disabled]="_paidInvoice" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_cash')" route="cash" defaultFilter="(status eq 0 or typeCash eq 1) " optionLabel="description" type="text" />
+          <app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_planAccount')" route="planAccount" optionLabel="description" type="text" />
+          <app-auto-complete formControlName="costCenter" name="costCenter" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_costCenter')" route="costCenter" optionLabel="description" type="text" />
+        </div>
+      </section>
+    </div>
   </main>
 </section>

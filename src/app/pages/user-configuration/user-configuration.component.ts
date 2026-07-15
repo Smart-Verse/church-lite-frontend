@@ -11,12 +11,15 @@ import { language, theme } from "../../shared/util/constants";
 import {UserConfigurationService} from "../../services/user-configuration/user-configuration.service";
 import {ImageUploadService} from "../../shared/components/inputs/image-upload/image-upload.service";
 import {ThemeService} from "../../shared/services/theme/theme.service";
+import {MenuItem} from "primeng/api";
+import {BreadcrumbModule} from "primeng/breadcrumb";
 
 @Component({
     selector: 'app-user-configuration',
     imports: [
         LoadingComponent,
-        SharedCommonModule
+        SharedCommonModule,
+        BreadcrumbModule
     ],
     providers: [
         ToastService,
@@ -34,6 +37,9 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
   configuration: UserConfigurationConfig = new UserConfigurationConfig();
   protected readonly _theme = theme;
   protected readonly _language = language;
+  public readonly breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  public breadcrumbItems: MenuItem[] = [];
+  public isSaving = false;
 
   constructor(
     public readonly translateService: TranslateService,
@@ -49,24 +55,32 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
 
 
   ngOnInit(): void {
+    this.breadcrumbItems = [{label: this.translateService.translate("user_configuration")}];
     this.onGetUserConfiguration();
   }
 
   public onSave(): void {
     if(this.formGroup.valid){
+      this.isSaving = true;
       this.onShowLoading();
-      let dto = this.configuration.convertToDTO(this.formGroup, this.imageToken);
+      const dto = this.configuration.convertToDTO(this.formGroup, this.imageToken);
       this.userConfigurationService.onUpdate(dto.id, dto).subscribe({
         next: data => {
+          this.isSaving = false;
           this.themeService.onConfigurationTheme(dto.theme);
           this.onShowLoading();
           this.translateService.loadTranslationsUser(dto.lang);
           this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
         },
         error: error => {
+          this.isSaving = false;
           this.onShowLoading();
+          this.toastService.error({summary: this.translateService.translate("common_message"), detail: error?.error?.message ?? "Não foi possível salvar as configurações"});
         }
       })
+    } else {
+      this.fieldsService.verifyIsValid();
+      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
     }
   }
 

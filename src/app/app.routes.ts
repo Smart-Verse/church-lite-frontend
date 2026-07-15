@@ -25,10 +25,12 @@ import {CostCenterModalComponent} from "./components/cost-center-modal/cost-cent
 import {PositionsComponent} from "./components/positions/positions.component";
 import {EventsTypeComponent} from "./components/events-type/events-type.component";
 import {UserAdminComponent} from "./components/user-admin/user-admin.component";
+import {TenantSelectionComponent} from "./security/tenant-selection/tenant-selection.component";
 
 export const routes: Routes = [
 
     { path: "login", component: LoginComponent, pathMatch: "full", canActivate: [publicGuard] },
+    { path: "select-tenant", component: TenantSelectionComponent, pathMatch: "full", canActivate: [publicGuard] },
     { path: "singup", component: SignupComponent, pathMatch: "full", canActivate: [publicGuard] },
     { path: "register-church/:hash", component: RegisterChurchComponent, pathMatch: "full", canActivate: [publicGuard] },
     {

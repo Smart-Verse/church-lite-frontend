@@ -10,6 +10,7 @@ import { ToastService } from '../../shared/services/toast/toast.service';
 import { Login } from './login';
 import { CookiesService } from '../../shared/services/cookies/cookies.service';
 import { EnumCookie } from '../../shared/services/cookies/cookie.enum';
+import { AuthenticatedChurch } from '../tenant-selection/tenant-selection.component';
 
 
 
@@ -57,10 +58,18 @@ export class LoginComponent extends BaseComponent implements OnInit {
     this.onShowLoading();
     this.securityService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        if(res.accessToken){
-          this.coockieService.set(EnumCookie.AUTHORIZATION,res.accessToken);
-          this.coockieService.set(EnumCookie.HASH,res.token);
-          this.router.navigate(["home"]);
+        const churches = (res.churches ?? []) as AuthenticatedChurch[];
+        if (churches.length > 1) {
+          sessionStorage.setItem('authenticatedChurches', JSON.stringify(churches));
+          this.router.navigate(['/select-tenant']);
+        } else if (churches.length === 1) {
+          this.coockieService.set(EnumCookie.AUTHORIZATION, churches[0].accessToken);
+          this.coockieService.set(EnumCookie.HASH, churches[0].userId);
+          this.router.navigate(['/home']);
+        } else if (res.accessToken) {
+          this.coockieService.set(EnumCookie.AUTHORIZATION, res.accessToken);
+          this.coockieService.set(EnumCookie.HASH, res.token);
+          this.router.navigate(['/home']);
         }
         this.onShowLoading();
       },

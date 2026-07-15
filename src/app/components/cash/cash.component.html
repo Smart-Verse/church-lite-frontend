@@ -1,1 +1,21 @@
-<app-loading [showLoading]="showLoading" /><section class="entity-page"><nav class="entity-page__breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav><header class="entity-page__header"><div><h1>{{ translateService.translate('entity_cash_title') }}</h1><p>{{ translateService.translate(id && id !== "new" ? "entity_edit_description" : "entity_create_description") }}</p></div><div class="entity-page__actions"><p-button [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()" /><p-button icon="pi pi-check" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" /></div></header><main class="entity-page__body" [formGroup]="formGroup"><section class="entity-section"><h2>{{ translateService.translate('entity_general_data') }}</h2><div class="entity-fields"><app-input-text formControlName="description" name="description" [field]="formGroup" class="span-8" [label]="translateService.translate('common_description')" type="text" /><app-dropdown formControlName="typeCash" name="typeCash" [field]="formGroup" [label]="translateService.translate('cash_typeCash')" [options]="_typeCash" optionLabel="value" class="span-4" /><app-input-text formControlName="numberAccount" name="numberAccount" [field]="formGroup" class="span-5" [label]="translateService.translate('cash_numberAccount')" type="text" /><app-input-text formControlName="digit" name="digit" [field]="formGroup" class="span-2" [label]="translateService.translate('cash_digit')" type="text" /><app-auto-complete formControlName="bank" name="bank" [field]="formGroup" class="span-5" [label]="translateService.translate('cash_bank')" route="bank" optionLabel="name" type="text" /></div></section></main></section>
+<app-loading [showLoading]="showLoading" /><section class="entity-page"><nav class="entity-page__breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav><header class="entity-page__header"><div><h1>{{ translateService.translate('entity_cash_title') }}</h1><p>{{ translateService.translate(id && id !== "new" ? "entity_edit_description" : "entity_create_description") }}</p></div><div class="entity-page__actions"><p-button [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()" /><p-button icon="pi pi-check" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" /></div></header><main class="entity-page__body" [formGroup]="formGroup">
+  <div class="cash-cards">
+    <section class="cash-card">
+      <div class="cash-card__heading"><span class="cash-card__icon"><i class="pi pi-wallet"></i></span><div><h2>Identificação do caixa</h2><p>Defina como este caixa ou conta será identificado nas movimentações financeiras.</p></div></div>
+      <div class="entity-fields">
+        <app-input-text formControlName="description" name="description" [field]="formGroup" class="span-8" [label]="translateService.translate('common_description')" type="text" />
+        <app-dropdown formControlName="typeCash" name="typeCash" [field]="formGroup" [label]="translateService.translate('cash_typeCash')" [options]="_typeCash" optionLabel="value" class="span-4" />
+      </div>
+    </section>
+
+    <section class="cash-card">
+      <div class="cash-card__heading"><span class="cash-card__icon"><i class="pi pi-building-columns"></i></span><div><h2>Dados bancários</h2><p>Vincule a instituição e os dados da conta quando o tipo selecionado for bancário.</p></div></div>
+      <div class="entity-fields">
+        <app-auto-complete formControlName="bank" name="bank" [field]="formGroup" class="span-5" [label]="translateService.translate('cash_bank')" route="bank" optionLabel="name" type="text" />
+        <app-input-text formControlName="numberAccount" name="numberAccount" [field]="formGroup" class="span-5" [label]="translateService.translate('cash_numberAccount')" type="text" />
+        <app-input-text formControlName="digit" name="digit" [field]="formGroup" class="span-2" [label]="translateService.translate('cash_digit')" type="text" />
+      </div>
+      <div class="cash-card__hint"><i class="pi pi-info-circle"></i><span>Para caixas físicos, estes campos podem permanecer vazios. Eles não interferem na abertura ou no fechamento do caixa.</span></div>
+    </section>
+  </div>
+</main></section>

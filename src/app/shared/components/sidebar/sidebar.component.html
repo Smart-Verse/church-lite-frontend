@@ -1,46 +1,43 @@
 @if (showSidebarMobile) {
-  <div class="toolbar" (click)="onMobileOpenMenu()">
-    <h3>SmartChurch</h3>
-  </div>
+  <header class="mobile-toolbar">
+    <button type="button" class="mobile-toolbar__menu" aria-label="Abrir menu" (click)="onMobileOpenMenu()"><i class="pi pi-bars"></i></button>
+    <div class="mobile-toolbar__brand"><span>S</span><div><strong>SmartChurch</strong><small>Gestão integrada</small></div></div>
+  </header>
 }
+
 @if (showSidebar) {
-  <div class="sidebar" [class.expanded]="isExpanded">
-    <ul class="menu-list">
-      <div class="logo">
-        <h3>S</h3>
-      </div>
-      <div class="menu-expanded">
-        <div class="menu-expanded-icon">
-          @for (item of menuItems; track item) {
-            <li (click)="toggleMenu(item)"
-              [routerLink]="item.route"
-              [id]="item.name">
-              <span class="indicator"></span>
-              <i [ngClass]="item.iconClass" pTooltip="{{ item.tooltip }}"></i>
+  <aside class="sidebar" [class.expanded]="isExpanded">
+    <div class="sidebar__rail">
+      <div class="sidebar__brand" pTooltip="SmartChurch" tooltipPosition="right"><span>S</span></div>
+
+      <nav class="sidebar__navigation" aria-label="Menu principal">
+        <ul>
+          @for (item of menuItems; track item.name) {
+            <li [id]="item.name" [class.active]="currentMenu === item">
+              <button type="button" (click)="toggleMenu(item)" [routerLink]="item.route" [attr.aria-label]="item.tooltip" pTooltip="{{ item.tooltip }}" tooltipPosition="right">
+                <span class="indicator"></span><i [ngClass]="item.iconClass"></i>
+              </button>
             </li>
           }
-        </div>
-        @if (isExpanded) {
-          <div class="menu-expanded-submenu">
-            <app-sidebar-submenu (colapsed)="closeMenu()" [menu]="currentMenu"></app-sidebar-submenu>
-          </div>
-        }
+        </ul>
+      </nav>
+
+      <div class="sidebar__account">
+        <button type="button" routerLink="user-configuration" (click)="closeMenu()" aria-label="Configurações do usuário" pTooltip="Minha conta" tooltipPosition="right">
+          @if (image) { <img [src]="image" alt="Foto do usuário" /> } @else { <span class="sidebar__account-placeholder"><i class="pi pi-user"></i></span> }
+          <span class="sidebar__account-status"></span>
+        </button>
       </div>
-      <div class="logout">
-        <li class="logout-item">
-          <div class="footer" >
-            @if (!image) {
-              <div class="user">User</div>
-            }
-            @if (image) {
-              <img class="user" [src]="image">
-            }
-          </div>
-        </li>
+    </div>
+
+    @if (isExpanded) {
+      <div class="sidebar__panel">
+        <app-sidebar-submenu (colapsed)="closeMenu()" [menu]="currentMenu" />
       </div>
-    </ul>
-  </div>
+    }
+  </aside>
 }
+
 <div class="content" [class.menu-expanded]="isExpanded" (click)="closeMenu()">
-  <router-outlet></router-outlet>
+  <router-outlet />
 </div>
