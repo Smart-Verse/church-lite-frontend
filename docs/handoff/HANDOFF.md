@@ -336,3 +336,25 @@ npm run build
 ## Atualização — traduções customizadas (15/07/2026)
 
 A rota `/home/translations` lista as chaves do JSON padrão do idioma selecionado e mescla as sobrescritas do tenant obtidas pelo CRUD `translation`. A tela permite busca, edição inline, salvamento em lote no cliente e restauração do padrão. Após autenticação ou troca de idioma, `TranslateService` carrega primeiro o JSON local e aplica as customizações do banco; o menu é reconstruído para refletir os novos textos.
+
+
+## Atualização consolidada — traduções e usuários (15/07/2026)
+
+### Traduções
+
+A área administrativa está disponível em `/home/translations`. `TranslateService` carrega o JSON do idioma, consulta o CRUD `translation` após autenticação e aplica as sobrescritas do tenant. Inclusões não enviam `id`; o UUID é gerado pelo backend. Restaurar o padrão exclui a customização persistida.
+
+A cobertura foi ampliada para o menu, títulos e breadcrumbs de listagens, tabelas de movimentações e extrato, árvores de plano de contas/centro de custo e o datatable compartilhado. `src/assets/configuration/view.json` agora armazena chaves em `header`, `label` e opções; os componentes traduzem essas chaves ao renderizar. A auditoria atual encontrou zero chaves ausentes em `pt-BR`, `en-US` e `es-ES`.
+
+Ao adicionar telas, não gravar textos finais em configurações dinâmicas. Cabeçalhos, filtros, placeholders, ações e estados vazios devem usar chaves presentes em todos os idiomas suportados. Ainda existem textos diretos fora desse pacote, especialmente no dashboard, agenda e alguns formulários.
+
+### Cadastro administrativo de usuários
+
+A listagem usa a configuração `users` e o formulário `UserAdminComponent`. A criação chama `POST /createChurchUser`; edição e exclusão mantêm integração com os contratos do backend. Nome, e-mail e telefone são os dados administrativos principais, e senha é enviada apenas no fluxo que a exige.
+
+No login multi-igreja, opções validadas ficam temporariamente em `sessionStorage`; somente o token escolhido é persistido em cookie. O frontend nunca define o tenant no payload de criação de usuário. Labels, mensagens e cabeçalhos novos dessa feature devem seguir o sistema de traduções customizáveis.
+
+Especificações reutilizáveis na raiz do workspace:
+
+- `spec/FEATURE_TRANSLATIONS_SPEC.md`;
+- `spec/FEATURE_USER_REGISTRATION_SPEC.md`.

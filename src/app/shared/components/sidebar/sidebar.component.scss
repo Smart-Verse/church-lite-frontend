@@ -21,7 +21,7 @@
 .sidebar__account img, .sidebar__account-placeholder { display: grid; width: 34px; height: 34px; overflow: hidden; place-items: center; border: 2px solid color-mix(in srgb, var(--p-primary-color), transparent 45%); border-radius: 10px; background: var(--p-form-field-background); object-fit: cover; }
 .sidebar__account-status { position: absolute; right: 10px; bottom: 7px; width: 9px; height: 9px; border: 2px solid var(--p-content-background); border-radius: 50%; background: #22c55e; }
 .sidebar__panel { flex: 0 0 var(--sidebar-panel); width: var(--sidebar-panel); min-width: 0; overflow: hidden; border-left: 1px solid var(--p-content-border-color); background: var(--p-content-background); animation: panel-in .2s ease both; }
-.content { min-height: 100dvh; margin-left: var(--sidebar-rail); padding: 10px; transition: margin-left .24s ease; }
+.content { box-sizing: border-box; height: 100dvh; min-height: 0; margin-left: var(--sidebar-rail); padding: 10px; overflow: auto; transition: margin-left .24s ease; }
 .content.menu-expanded { margin-left: calc(var(--sidebar-rail) + var(--sidebar-panel)); }
 .mobile-toolbar { position: sticky; z-index: 999; top: 0; display: flex; align-items: center; gap: .8rem; height: 58px; padding: 0 .85rem; border-bottom: 1px solid var(--p-content-border-color); background: color-mix(in srgb, var(--p-content-background), transparent 4%); backdrop-filter: blur(14px); }
 .mobile-toolbar__menu { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--p-content-border-color); border-radius: 10px; background: var(--p-form-field-background); color: var(--p-text-color); cursor: pointer; }
@@ -31,4 +31,4 @@
 .mobile-toolbar__brand strong { color: var(--p-text-color); font-size: .82rem; }
 .mobile-toolbar__brand small { color: var(--p-text-muted-color); font-size: .62rem; }
 @keyframes panel-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-@media (max-width: 600px) { :host { --sidebar-panel: min(276px, calc(100vw - var(--sidebar-rail))); } .sidebar { top: 58px; height: calc(100dvh - 58px); box-shadow: 12px 0 32px rgb(0 0 0 / .22); } .sidebar.expanded { width: min(100vw, calc(var(--sidebar-rail) + var(--sidebar-panel))); } .content, .content.menu-expanded { min-height: calc(100dvh - 58px); margin-left: 0; padding: .5rem; } }
+@media (max-width: 600px) { :host { --sidebar-panel: min(276px, calc(100vw - var(--sidebar-rail))); } .sidebar { top: 58px; height: calc(100dvh - 58px); box-shadow: 12px 0 32px rgb(0 0 0 / .22); } .sidebar.expanded { width: min(100vw, calc(var(--sidebar-rail) + var(--sidebar-panel))); } .content, .content.menu-expanded { height: calc(100dvh - 58px); min-height: 0; margin-left: 0; padding: .5rem; } }
