@@ -452,6 +452,77 @@
     ]
   },
   {
+    "route": "cell",
+    "hash": "cells",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string",
+        "label": "common_name"
+      },
+      {
+        "field": "code",
+        "type": "string",
+        "label": "common_code"
+      },
+      {
+        "field": "status",
+        "type": "select",
+        "label": "personal_field_status",
+        "options": [
+          {
+            "label": "cells_status_planned",
+            "value": "PLANNED"
+          },
+          {
+            "label": "cells_status_active",
+            "value": "ACTIVE"
+          },
+          {
+            "label": "cells_status_inactive",
+            "value": "INACTIVE"
+          },
+          {
+            "label": "cells_status_suspended",
+            "value": "SUSPENDED"
+          }
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "field": "code",
+        "header": "common_code",
+        "width": "12%"
+      },
+      {
+        "field": "name",
+        "header": "common_name",
+        "width": "25%"
+      },
+      {
+        "field": "organizationUnit.name",
+        "header": "cells_organization_unit",
+        "width": "20%"
+      },
+      {
+        "field": "meetingDay",
+        "header": "cells_meeting_day",
+        "width": "12%"
+      },
+      {
+        "field": "meetingTime",
+        "header": "cells_meeting_time",
+        "width": "12%"
+      },
+      {
+        "field": "status",
+        "header": "personal_field_status",
+        "width": "12%"
+      }
+    ]
+  },
+  {
     "route": "cashHistory",
     "hash": "cashHistory",
     "filters": [],

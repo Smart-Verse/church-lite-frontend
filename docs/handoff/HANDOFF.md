@@ -358,3 +358,26 @@ Especificações reutilizáveis na raiz do workspace:
 
 - `spec/FEATURE_TRANSLATIONS_SPEC.md`;
 - `spec/FEATURE_USER_REGISTRATION_SPEC.md`.
+
+
+## Atualização — módulo de células, Fase 1 inicial (15/07/2026)
+
+O menu `Células`, a listagem configurável e o cadastro/edição básico foram iniciados. A rota `/home/register/cells` usa o datatable compartilhado; `CellComponent` cobre dados básicos, estrutura, agenda, localização, capacidade e metas. Todos os textos novos possuem chaves em português, inglês e espanhol. Itens futuros do menu permanecem sem rota ativa até suas telas existirem.
+
+Os contratos de estrutura organizacional, liderança, membros e configurações já existem no backend. As próximas telas da Fase 1 são organograma/unidades, liderança, membros e configurações; dashboard, reuniões e multiplicações pertencem às fases posteriores.
+
+
+### Continuação da Fase 1 — fundação administrativa (15/07/2026)
+
+Foram adicionadas as rotas `/home/cells/organization`, `/home/cells/team` e `/home/cells/settings`. A área de estrutura cadastra tipos de nível e unidades hierárquicas; equipe vincula e encerra lideranças e membros por célula; configurações mantém as regras operacionais iniciais do módulo. Encerramentos usam atualização de status/data, preservando histórico.
+
+O menu ativa somente as áreas implementadas; dashboard, reuniões, visitantes e multiplicações continuam sem rota até as fases correspondentes.
+
+
+## Atualização — módulo de células, Fase 2 (15/07/2026)
+
+As rotas `/home/cells/meetings` e `/home/cells/visitors` estão ativas no menu. `CellsOperationsComponent` centraliza a operação contextual por célula: cadastro e acompanhamento de visitantes, lançamento de reunião, contagens, presença individual, pedidos de oração, submissão e revisão do relatório.
+
+Reuniões são criadas como `DRAFT`; rascunhos e rejeitadas exibem a ação de submissão, e reuniões `SUBMITTED` exibem aprovação/rejeição com motivo obrigatório na rejeição. Presenças e pedidos de oração são carregados após selecionar a reunião. Os endpoints de workflow são consumidos pelo mesmo `CrudService`, preservando interceptadores e tratamento HTTP existentes.
+
+Todas as labels e todos os status novos possuem chaves equivalentes em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`; a auditoria de paridade retornou zero diferenças. Validação realizada com `npm run build`.

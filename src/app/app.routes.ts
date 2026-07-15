@@ -27,6 +27,9 @@ import {EventsTypeComponent} from "./components/events-type/events-type.componen
 import {UserAdminComponent} from "./components/user-admin/user-admin.component";
 import {TenantSelectionComponent} from "./security/tenant-selection/tenant-selection.component";
 import {TranslationsComponent} from "./pages/translations/translations.component";
+import {CellComponent} from "./components/cell/cell.component";
+import {CellsFoundationComponent} from "./pages/cells-foundation/cells-foundation.component";
+import {CellsOperationsComponent} from "./pages/cells-operations/cells-operations.component";
 
 export const routes: Routes = [
 
@@ -43,6 +46,11 @@ export const routes: Routes = [
             { path: 'scheduler', component: SchedulerComponent },
             { path: 'user-configuration', component: UserConfigurationComponent },
             { path: 'translations', component: TranslationsComponent },
+            { path: 'cells/organization', component: CellsFoundationComponent, data: {mode: 'organization'} },
+            { path: 'cells/team', component: CellsFoundationComponent, data: {mode: 'team'} },
+            { path: 'cells/settings', component: CellsFoundationComponent, data: {mode: 'settings'} },
+            { path: 'cells/meetings', component: CellsOperationsComponent, data: {mode: 'meetings'} },
+            { path: 'cells/visitors', component: CellsOperationsComponent, data: {mode: 'visitors'} },
             { path: 'transactions/open', component: CashTransactionComponent, data: {action: 0} },
             { path: 'transactions/close', component: CashTransactionComponent, data: {action: 1} },
             { path: 'transactions', component: TransactionsComponent },
@@ -62,6 +70,8 @@ export const routes: Routes = [
             { path: 'register/users/:id', component: UserAdminComponent },
             { path: 'register/eventsType/new', component: EventsTypeComponent },
             { path: 'register/eventsType/:id', component: EventsTypeComponent },
+            { path: 'register/cells/new', component: CellComponent },
+            { path: 'register/cells/:id', component: CellComponent },
             { path: 'register/:hash/new', component: PersonComponent },
             { path: 'register/:hash/:id', component: PersonComponent },
             { path: 'register/:hash', component: RegisterComponent },

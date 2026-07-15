@@ -1,0 +1,130 @@
+:host{display:block;height:100%}.foundation-page{display:flex;flex-direction:column;gap:1rem;padding:1rem;background:var(--app-page-background);min-height:100%}header h1{margin:0;color:var(--p-text-color)}header p{margin:.3rem 0;color:var(--p-text-muted-color)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.card{padding:1rem;border:1px solid var(--p-content-border-color);border-radius:12px;background:var(--p-content-background)}.card h2{margin:0 0 1rem}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-bottom:1rem}.card p-table{display:block;margin-top:1rem}.selector{max-width:40rem}.settings{max-width:60rem}.check{display:flex;align-items:center;gap:.5rem;color:var(--p-text-color);font-size:.85rem}@media(max-width:850px){.grid,.fields{grid-template-columns:1fr}}
+
+
+/* Cell settings follows the registration-form rhythm. */
+.settings {
+  width: 100%;
+  max-width: 72rem;
+  padding: 1.5rem;
+}
+
+.settings h2 {
+  margin-bottom: 1.75rem;
+}
+
+.settings .fields {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch;
+}
+
+.settings .fields > app-input-text {
+  grid-column: span 12;
+}
+
+.settings .fields > app-input-number {
+  grid-column: span 3;
+  min-width: 0;
+}
+
+.settings .check {
+  grid-column: span 6;
+  min-height: 3.25rem;
+  box-sizing: border-box;
+  padding: .8rem 1rem;
+  gap: .75rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--p-content-background), var(--p-text-color) 2%);
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.settings .check input {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--p-primary-color);
+}
+
+@media (max-width: 1000px) {
+  .settings .fields > app-input-number { grid-column: span 6; }
+}
+
+@media (max-width: 650px) {
+  .settings { padding: 1.15rem 1rem 1.4rem; }
+  .settings .fields { gap: 2rem; }
+  .settings .fields > app-input-text,
+  .settings .fields > app-input-number,
+  .settings .check { grid-column: span 12; }
+}
+
+.form-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.75rem;margin-top:.25rem}
+
+
+/* Team management uses full-width sections to keep forms and history readable. */
+.team-grid {
+  width: 100%;
+  max-width: none;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.team-grid .card,
+.foundation-page > .selector {
+  padding: 1.5rem;
+}
+
+.foundation-page > .selector {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.team-grid .card h2 {
+  margin-bottom: 1.75rem;
+}
+
+.team-grid .fields {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2.25rem 1.5rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.team-grid .fields > app-auto-complete { grid-column: span 6; min-width: 0; }
+.team-grid .fields > app-dropdown,
+.team-grid .fields > app-input-date { grid-column: span 3; min-width: 0; }
+.team-grid p-table { margin-top: 1.5rem; }
+.team-grid td:last-child,
+.team-grid th:last-child { width: 5rem; text-align: center; }
+
+@media (max-width: 850px) {
+  .team-grid .card,
+  .foundation-page > .selector { padding: 1.15rem 1rem 1.4rem; }
+  .team-grid .fields > app-auto-complete,
+  .team-grid .fields > app-dropdown,
+  .team-grid .fields > app-input-date { grid-column: span 12; }
+}
+
+
+.foundation-page,
+.team-grid,
+.team-grid > .card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+}
+
+:host ::ng-deep .team-grid .p-floatlabel,
+:host ::ng-deep .team-grid .p-autocomplete,
+:host ::ng-deep .team-grid .p-select,
+:host ::ng-deep .team-grid .p-datepicker,
+:host ::ng-deep .foundation-page > .selector .p-floatlabel,
+:host ::ng-deep .foundation-page > .selector .p-autocomplete {
+  width: 100%;
+  max-width: none;
+}

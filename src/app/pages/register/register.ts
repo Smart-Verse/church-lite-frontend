@@ -6,6 +6,7 @@ import {CashComponent} from "../../components/cash/cash.component";
 import {FinancialComponent} from "../../components/financial/financial.component";
 import {EventsTypeComponent} from "../../components/events-type/events-type.component";
 import {UserAdminComponent} from "../../components/user-admin/user-admin.component";
+import {CellComponent} from "../../components/cell/cell.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -103,7 +104,8 @@ export const config: RegisterRoutes[] = [
     paramExtra: "",
     defaultFilter: "typeFinancial eq 1",
     component: FinancialComponent
-  }
+  },
+  { header: "cells_list", view: "cells", route: "cell", paramExtra: "", defaultFilter: "", component: CellComponent }
 ]
 
 export class RegisterRoutes {

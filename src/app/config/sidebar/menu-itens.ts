@@ -29,7 +29,7 @@ export class MenuItens{
           submenu: []
         },
         {
-            iconClass: "pi pi-home",
+            iconClass: "pi pi-address-book",
             tooltip: this.translate.translate("registrations"),
             name: this.translate.translate("registrations"),
             submenu: [
@@ -89,6 +89,19 @@ export class MenuItens{
                     ]
                 }
             ]
+        },
+        {
+          iconClass: "pi pi-users",
+          tooltip: this.translate.translate("cells_menu"),
+          name: this.translate.translate("cells_menu"),
+          submenu: [
+            {name: this.translate.translate("cells_organization"), route: "cells/organization"},
+            {name: this.translate.translate("cells_list"), route: "register/cells"},
+            {name: this.translate.translate("cells_leadership_members"), route: "cells/team"},
+            {name: this.translate.translate("cells_meetings"), route: "cells/meetings"},
+            {name: this.translate.translate("cells_visitors"), route: "cells/visitors"},
+            {name: this.translate.translate("cells_settings"), route: "cells/settings"}
+          ]
         },
         {
             iconClass: "pi pi-dollar",
