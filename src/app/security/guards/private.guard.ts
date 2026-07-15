@@ -11,9 +11,5 @@ export const privateGuard: CanActivateFn = (route, state) => {
 
   const token = cookiesService.get(EnumCookie.AUTHORIZATION);
 
-  if(!token) {
-    router.navigate(['login'])
-  }
-  
-  return true;
+  return token ? true : router.createUrlTree(["/login"]);
 };
