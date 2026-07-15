@@ -59,6 +59,7 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
     this.setBreadcrumb();
     this.datatable = new DataTable();
     this.datatable.fields = [...obj.fields];
+    this.datatable.filters = [...(obj.filters ?? [])];
     this.onLoadAllData(new RequestData());
   }
 
@@ -129,8 +130,10 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
   }
 
   private includeFilters(requestData: RequestData) {
-    var filter = this.configuration.defaultFilter;
-    requestData.filter = filter + requestData.filter;
+    const filters = [this.configuration.defaultFilter, requestData.filter]
+      .map(filter => filter?.trim())
+      .filter(Boolean);
+    requestData.filter = filters.join(" and ");
     return requestData;
   }
 }

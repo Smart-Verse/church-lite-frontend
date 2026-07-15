@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {Observable} from "rxjs";
 import {RequestData} from "../../interfaces/request-data";
 
@@ -26,8 +26,14 @@ export class CrudService {
     return this.http.get<any>(`${route}/${id}`);
   }
 
-  public onGetAll(route: string, params: RequestData) : Observable<any> {
-    return this.http.get<any>(`${route}?size=${params.size}&offset=${params.offset}&filter=${params.filter}&order=${params.order}&displayFields=${params.displayFields}`);
+  public onGetAll(route: string, params: RequestData): Observable<any> {
+    const httpParams = new HttpParams()
+      .set("size", String(params.size ?? 10))
+      .set("offset", String(params.offset ?? 0))
+      .set("filter", params.filter ?? "")
+      .set("order", params.order ?? "")
+      .set("displayFields", params.displayFields ?? "*");
+    return this.http.get<any>(route, {params: httpParams});
   }
 
 }

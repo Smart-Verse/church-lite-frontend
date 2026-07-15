@@ -6,7 +6,7 @@ export class DataTable {
     size: number = 10;
     route: string = "";
     classBase?: Function;
-    filters?: Filters;
+    filters: Filters[] = [];
     treeValues: any[] = [];
 }
 
@@ -18,5 +18,8 @@ export class Column {
 
 export class Filters {
   field: string = "";
-  type: string = "";
+  type: string = "string";
+  label: string = "";
+  options?: {label: string; value: string}[];
+  operator?: "eq" | "nullability";
 }

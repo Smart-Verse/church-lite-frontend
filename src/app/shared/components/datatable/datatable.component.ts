@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule  } from 'primeng/table';
@@ -11,6 +11,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule, PaginatorState} from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { FormsModule } from "@angular/forms";
+import { SelectModule } from "primeng/select";
 import { TranslateService } from '../../services/translate/translate.service';
 
 
@@ -30,7 +32,9 @@ export enum Action {
     InputIconModule,
     InputTextModule,
     PaginatorModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FormsModule,
+    SelectModule
 ],
     providers: [
         ConfirmationService,
@@ -39,10 +43,13 @@ export enum Action {
     templateUrl: './datatable.component.html',
     styleUrl: './datatable.component.scss'
 })
-export class DatatableComponent {
+export class DatatableComponent implements OnChanges {
 
 
   sidebarVisible: boolean = false;
+  quickSearch: string = "";
+  filterValues: Record<string, string> = {};
+  appliedFilter: string = "";
   readonly tableStyle = {width: "100%", "min-width": "42rem"};
   @Input() config: DataTable = new DataTable();
 
@@ -54,6 +61,15 @@ export class DatatableComponent {
     public readonly translateService: TranslateService,
     private datePipe: DatePipe,
   ){
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["config"] && !changes["config"].firstChange) {
+      this.quickSearch = "";
+      this.filterValues = {};
+      this.appliedFilter = "";
+      this.sidebarVisible = false;
+    }
   }
 
   onRowData(row: any, header: string, col: any){
@@ -82,6 +98,7 @@ export class DatatableComponent {
     var data = new RequestData();
     data.size = $event.rows;
     data.offset = $event.page ? $event.page + 1 : 0;
+    data.filter = this.appliedFilter;
     this.onRefresh.emit(data);
   }
 
@@ -98,8 +115,46 @@ export class DatatableComponent {
   }
 
   onRefreshData(){
+    this.quickSearch = "";
+    this.filterValues = {};
+    this.appliedFilter = "";
     this.sidebarVisible = false;
     this.onRefresh.emit(new RequestData());
+  }
+
+  onApplyFilters(): void {
+    this.appliedFilter = this.buildFilter();
+    this.sidebarVisible = false;
+    const request = new RequestData();
+    request.filter = this.appliedFilter;
+    this.onRefresh.emit(request);
+  }
+
+  onQuickSearch(): void {
+    const value = this.sanitizeFilterValue(this.quickSearch);
+    this.filterValues = {};
+    const field = this.config.filters[0]?.field;
+    this.appliedFilter = value && field ? field + " eq " + value : "";
+    const request = new RequestData();
+    request.filter = this.appliedFilter;
+    this.onRefresh.emit(request);
+  }
+
+  private buildFilter(): string {
+    return this.config.filters
+      .map(filter => {
+        const value = this.sanitizeFilterValue(this.filterValues[filter.field] ?? "");
+        if (!value) return "";
+        return filter.operator === "nullability"
+          ? filter.field + " " + value
+          : filter.field + " eq " + value;
+      })
+      .filter(Boolean)
+      .join(" and ");
+  }
+
+  private sanitizeFilterValue(value: string): string {
+    return value.trim().replace(/\s+(and|or)\s+/gi, " ");
   }
 
   onDeleteData(item: any, action: Action){

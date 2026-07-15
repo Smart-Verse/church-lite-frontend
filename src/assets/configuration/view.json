@@ -5,7 +5,28 @@
     "filters": [
       {
         "field": "name",
-        "type": "string"
+        "type": "string",
+        "label": "Nome"
+      },
+      {
+        "field": "personalDocs.cpf",
+        "type": "string",
+        "label": "CPF"
+      },
+      {
+        "field": "status",
+        "type": "select",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Ativo",
+            "value": "ACTIVE"
+          },
+          {
+            "label": "Inativo",
+            "value": "INACTIVE"
+          }
+        ]
       }
     ],
     "fields": [
@@ -22,7 +43,28 @@
     "filters": [
       {
         "field": "name",
-        "type": "string"
+        "type": "string",
+        "label": "Nome"
+      },
+      {
+        "field": "personalDocs.cpf",
+        "type": "string",
+        "label": "CPF"
+      },
+      {
+        "field": "status",
+        "type": "select",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Ativo",
+            "value": "ACTIVE"
+          },
+          {
+            "label": "Inativo",
+            "value": "INACTIVE"
+          }
+        ]
       }
     ],
     "fields": [
@@ -36,7 +78,33 @@
   {
     "route": "person",
     "hash": "personVisitor",
-    "filters": [],
+    "filters": [
+      {
+        "field": "name",
+        "type": "string",
+        "label": "Nome"
+      },
+      {
+        "field": "personalDocs.cpf",
+        "type": "string",
+        "label": "CPF"
+      },
+      {
+        "field": "status",
+        "type": "select",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Ativo",
+            "value": "ACTIVE"
+          },
+          {
+            "label": "Inativo",
+            "value": "INACTIVE"
+          }
+        ]
+      }
+    ],
     "fields": [
       {
         "field": "name",
@@ -48,7 +116,33 @@
   {
     "route": "person",
     "hash": "personNewConvert",
-    "filters": [],
+    "filters": [
+      {
+        "field": "name",
+        "type": "string",
+        "label": "Nome"
+      },
+      {
+        "field": "personalDocs.cpf",
+        "type": "string",
+        "label": "CPF"
+      },
+      {
+        "field": "status",
+        "type": "select",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Ativo",
+            "value": "ACTIVE"
+          },
+          {
+            "label": "Inativo",
+            "value": "INACTIVE"
+          }
+        ]
+      }
+    ],
     "fields": [
       {
         "field": "name",
@@ -177,11 +271,44 @@
     "filters": [
       {
         "field": "description",
-        "type": "string"
+        "type": "string",
+        "label": "Descrição"
       },
       {
-        "field": "value",
-        "type": "string"
+        "field": "person.name",
+        "type": "string",
+        "label": "Pessoa"
+      },
+      {
+        "field": "cash.description",
+        "type": "string",
+        "label": "Caixa ou conta bancária"
+      },
+      {
+        "field": "planAccount.description",
+        "type": "string",
+        "label": "Plano de contas"
+      },
+      {
+        "field": "costCenter.description",
+        "type": "string",
+        "label": "Centro de custo"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "type": "select",
+        "operator": "nullability",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Em aberto",
+            "value": "isNull"
+          },
+          {
+            "label": "Liquidada",
+            "value": "notNull"
+          }
+        ]
       }
     ],
     "fields": [
@@ -237,11 +364,44 @@
     "filters": [
       {
         "field": "description",
-        "type": "string"
+        "type": "string",
+        "label": "Descrição"
       },
       {
-        "field": "value",
-        "type": "string"
+        "field": "person.name",
+        "type": "string",
+        "label": "Pessoa"
+      },
+      {
+        "field": "cash.description",
+        "type": "string",
+        "label": "Caixa ou conta bancária"
+      },
+      {
+        "field": "planAccount.description",
+        "type": "string",
+        "label": "Plano de contas"
+      },
+      {
+        "field": "costCenter.description",
+        "type": "string",
+        "label": "Centro de custo"
+      },
+      {
+        "field": "paymentReceiptDate",
+        "type": "select",
+        "operator": "nullability",
+        "label": "Situação",
+        "options": [
+          {
+            "label": "Em aberto",
+            "value": "isNull"
+          },
+          {
+            "label": "Liquidada",
+            "value": "notNull"
+          }
+        ]
       }
     ],
     "fields": [

@@ -211,6 +211,15 @@
   font-weight: 600;
 }
 
+.datatable__filter-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.datatable__filter-description { margin: 0; color: var(--p-text-muted-color); font-size: .8rem; line-height: 1.5; }
+.datatable__filter-field { display: flex; flex-direction: column; gap: .5rem; }
+.datatable__filter-field > span { font-size: .78rem; font-weight: 600; }
+.datatable__filter-field > input { width: 100%; }
+:host ::ng-deep .datatable__filter-field .p-select { width: 100%; }
+.datatable__filter-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+:host ::ng-deep .datatable__filter-actions .p-button { width: 100%; }
+
 .datatable__filter-empty {
   display: flex;
   align-items: center;

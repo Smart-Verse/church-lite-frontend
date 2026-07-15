@@ -4,7 +4,7 @@
   <div class="datatable__toolbar">
     <p-iconField iconPosition="left" class="datatable__search">
       <p-inputIcon><i class="pi pi-search"></i></p-inputIcon>
-      <input pInputText type="search" [placeholder]="translateService.translate('datatable_search')" />
+      <input pInputText type="search" [(ngModel)]="quickSearch" (keyup.enter)="onQuickSearch()" [placeholder]="translateService.translate('datatable_search')" />
     </p-iconField>
 
     <div class="datatable__toolbar-actions">
@@ -125,16 +125,22 @@
     </div>
   </ng-template>
   <ng-template pTemplate="content">
-    <div class="datatable__filter-empty">
-      <i class="pi pi-sliders-h"></i>
-      <span>{{ translateService.translate('datatable_filters_description') }}</span>
+    <div class="datatable__filter-form">
+      <p class="datatable__filter-description">{{ translateService.translate('datatable_filters_description') }}</p>
+      @for (filter of config.filters; track filter.field) {
+        <label class="datatable__filter-field">
+          <span>{{ filter.label || filter.field }}</span>
+          @if (filter.type === 'select') {
+            <p-select [(ngModel)]="filterValues[filter.field]" [options]="filter.options || []" optionLabel="label" optionValue="value" [showClear]="true" placeholder="Todos" appendTo="body" />
+          } @else {
+            <input pInputText [(ngModel)]="filterValues[filter.field]" type="text" [placeholder]="'Filtrar por ' + (filter.label || filter.field).toLowerCase()" />
+          }
+        </label>
+      }
+      @if (!config.filters.length) { <div class="datatable__filter-empty"><i class="pi pi-sliders-h"></i><span>{{ translateService.translate('datatable_filters_description') }}</span></div> }
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <p-button
-      icon="pi pi-check"
-      [label]="translateService.translate('datatable_apply_filters')"
-      styleClass="w-full"
-      (onClick)="onRefreshData()" />
+    <div class="datatable__filter-actions"><p-button icon="pi pi-times" [outlined]="true" label="Limpar" (onClick)="onRefreshData()" /><p-button icon="pi pi-check" [label]="translateService.translate('datatable_apply_filters')" (onClick)="onApplyFilters()" /></div>
   </ng-template>
 </p-drawer>
