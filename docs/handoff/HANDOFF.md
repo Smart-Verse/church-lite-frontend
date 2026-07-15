@@ -1,0 +1,296 @@
+# Handoff — Church Lite Frontend
+
+> Atualizado em 15/07/2026.
+
+## Visão do produto
+
+O Church Lite é um sistema de gestão para igrejas. O frontend reúne autenticação multi-igreja, cadastros de pessoas e entidades auxiliares, agenda, rotinas financeiras, dashboard e preferências do usuário.
+
+Este documento descreve a aplicação Angular. O `entity-generator` possui documentação própria em `docs/handoff/entity-generator-project/`.
+
+## Stack e execução
+
+- Angular 21.2 com componentes standalone;
+- TypeScript 5.9, RxJS 7.8 e SSR com Express;
+- PrimeNG 21, PrimeFlex, PrimeIcons e tema Aura customizado;
+- DayPilot Lite 5.9 para agenda;
+- ngx-translate para internacionalização;
+- autenticação por JWT armazenado em cookie;
+- fonte Inter carregada localmente.
+
+```bash
+npm install
+npm start
+npm run build
+npm test
+```
+
+API configurada nos environments:
+
+- desenvolvimento: `http://localhost:5050/church-lite`;
+- produção: `https://develop.smartverse.com.br/api/church-lite`.
+
+O build de produção foi validado em 15/07/2026.
+
+## Organização
+
+```text
+src/app/
+├── components/       formulários e componentes de domínio
+├── pages/            páginas e composição das funcionalidades
+├── security/         login, cadastro, tenant e guards
+├── services/         serviços específicos
+├── shared/           CRUD, tabela, inputs, estilos e utilitários
+└── config/           HTTP, interceptor, tema e menu lateral
+```
+
+Fluxo predominante:
+
+```text
+Página/listagem → componente de formulário → configuração/DTO → serviço → API
+```
+
+O `CrudService` cobre os CRUDs convencionais:
+
+- `POST /{entidade}`;
+- `PUT /{entidade}/{id}`;
+- `DELETE /{entidade}/{id}`;
+- `GET /{entidade}/{id}`;
+- `GET /{entidade}?size=&offset=&filter=&order=&displayFields=`.
+
+Use serviços específicos quando houver regra de negócio, como autenticação, usuários, agenda, movimentações, dashboard e configuração do usuário.
+
+## Identidade visual atual
+
+A interface foi revitalizada após a migração para Angular 21:
+
+- cor primária violeta/lilás;
+- Inter como fonte global;
+- tema claro com fundo off-white levemente frio;
+- tema escuro explicitamente restaurado para tons neutros zinc (`#09090b` e `#18181b`);
+- páginas com breadcrumb, cabeçalho, descrição, cards temáticos e ações responsivas;
+- cards de formulário empilhados em largura total para facilitar o uso mobile;
+- sidebar em rail compacta, painel de submenu integrado ao tema, estados ativo/hover e cabeçalho mobile;
+- avatar no rodapé da sidebar abre as configurações do usuário.
+
+Tokens globais de claro/escuro ficam em `src/styles.scss`. A classe `.app-dark` é aplicada no elemento `html` pelo `ThemeService`. Evite cores de fundo fixas nos componentes; use tokens `--p-*`.
+
+## Cadastros como páginas
+
+Os formulários deixaram a arquitetura de modal e usam rotas próprias de criação/edição. O padrão visual atual é card em coluna única, com ícone, título e instrução curta.
+
+### Pessoas
+
+O mesmo componente atende membros, novos convertidos, fornecedores, visitantes e igrejas. As antigas abas foram removidas. A página contínua contém cards de:
+
+- foto;
+- dados pessoais;
+- documentos;
+- contato;
+- endereço;
+- informações ministeriais, quando aplicável.
+
+Os grupos reativos e o DTO original foram preservados.
+
+### Financeiro e auxiliares
+
+O padrão de cards foi aplicado em:
+
+- receitas e despesas;
+- caixas/contas bancárias;
+- abertura e fechamento de caixa;
+- bancos;
+- cargos;
+- tipos de evento;
+- plano de contas;
+- centro de custo;
+- usuários.
+
+Receitas/despesas exibem situação aberta/liquidada e mantêm ações de salvar, baixar e estornar. Abertura/fechamento mantém filtros e bloqueios próprios de cada operação.
+
+## Listagens e tabelas
+
+O datatable compartilhado foi compactado para exibir mais dados e contém:
+
+- toolbar profissional e ações reorganizadas;
+- breadcrumb na página consumidora;
+- paginação no rodapé;
+- adaptação à altura disponível;
+- empty state com imagem;
+- margens laterais reduzidas;
+- limpeza dos dados ao trocar de rota/listagem.
+
+As tabelas em árvore de Plano de contas e Centro de custo e a tabela de Histórico de fechamento receberam a mesma identidade.
+
+O drawer de filtros foi corrigido para remover corretamente o bloqueio/overlay ao fechar. Ao mexer nele, validar fechamento por botão, clique externo, Escape e troca de rota.
+
+## Plano de contas e centro de custo
+
+O campo de código da árvore é bloqueado para edição manual. `src/app/shared/util/tree-code.ts` calcula automaticamente o próximo código:
+
+- primeiro registro raiz: `1`;
+- próximos registros raiz: `2`, `3` etc.;
+- filhos de `1`: `1.1`, `1.2` etc.;
+- a inclusão pelo botão `+` carrega o pai por `parentId`.
+
+## Agenda
+
+A agenda usa `@daypilot/daypilot-lite-angular`. O FullCalendar e seus pacotes foram removidos.
+
+Recursos atuais:
+
+- visualizações de mês, semana e dia;
+- navegação anterior, próxima e hoje;
+- scroll interno;
+- criação por seleção de dia/horário;
+- edição ao clicar;
+- drag-and-drop e redimensionamento;
+- compromissos únicos ou recorrentes por dias da semana;
+- cancelamento e exclusão;
+- cores vindas de `eventsType`;
+- eventos cancelados em cinza;
+- integração com `appointments` e configuração do usuário.
+
+A criação exige um tipo de evento cadastrado e usuário carregado.
+
+## Configurações do usuário
+
+A página `/home/user-configuration` possui breadcrumb e cards para foto, informações pessoais, aparência e idioma. O avatar é limitado e responsivo. Tema e idioma são aplicados após salvar e o carregamento dessas preferências não depende da existência de foto.
+
+## Autenticação, cookies e logout
+
+- `authInterceptor` prefixa URLs relativas com `environment.apiUrl` e envia `Authorization: Bearer`;
+- URLs absolutas, assets e URLs assinadas externas não são reescritas;
+- em `401`, o token é removido e o usuário volta ao login;
+- guards retornam `UrlTree`, evitando navegação concorrente;
+- cookies novos são gravados com path `/`;
+- o logout é ação direta, limpa cookies em paths conhecidos, `localStorage` e `sessionStorage`;
+- `/login?logout=1` força o `publicGuard` a permitir o login mesmo diante de cookie residual.
+
+A rota pública `/select-tenant` e o componente `security/tenant-selection` implementam o fluxo multi-igreja. O login recebe do backend apenas os vínculos cuja senha foi validada. Com um vínculo, grava o JWT e entra diretamente; com vários, mantém as opções temporariamente no `sessionStorage`, solicita a escolha e somente então grava o token selecionado no cookie. As opções temporárias são removidas ao selecionar ou cancelar.
+
+## Rotas principais
+
+Rotas públicas:
+
+- `/login`;
+- `/select-tenant`;
+- `/singup`;
+- `/register-church/:hash`.
+
+Rotas privadas sob `/home`:
+
+- `dashboard`;
+- `scheduler`;
+- `user-configuration`;
+- `transactions`, `transactions/open`, `transactions/close`;
+- `cash-history`;
+- `bank-statament`;
+- `register/:hash`, `register/:hash/new`, `register/:hash/:id`;
+- rotas explícitas de receitas, despesas, bancos, caixas, cargos, tipos de evento e usuários;
+- `planAccount` e `costCenter`, incluindo criação/edição.
+
+As grafias `singup` e `bank-statament` são legadas e ainda estão em uso. Não renomear sem revisar todos os links.
+
+## Funcionalidades implementadas
+
+- login, cadastro inicial, guards e seleção de tenant multi-igreja;
+- cadastros de pessoas e igrejas;
+- usuários administrativos;
+- cargos, bancos, caixas e tipos de evento;
+- plano de contas e centro de custo em árvore;
+- receitas, despesas, abertura/fechamento e movimentações;
+- extrato bancário e histórico de fechamento;
+- agenda integrada à API;
+- preferências de usuário, tema, idioma e foto;
+- datatable e tree tables compartilhados;
+- dashboard executivo financeiro e de agenda.
+
+Presentes no menu, mas sem fluxo consolidado:
+
+- traduções administrativas;
+- permissionamento;
+- cabeçalho de relatórios;
+- notificações definitivas.
+
+## Convenções de desenvolvimento
+
+- Usar `CrudService` para CRUD padrão e serviço próprio para regras de negócio.
+- Manter metadados/conversão de formulário em `*.config.ts` quando o domínio já usa esse padrão.
+- Preferir interfaces a `any`.
+- Preservar nomes do backend: `person`, `financial`, `cash`, `bank`, `planAccount`, `costCenter` etc.
+- Novos formulários devem ser páginas, não modais, salvo interação curta explicitamente modal.
+- Usar breadcrumb, cabeçalho, cards empilhados, instruções e ações responsivas.
+- Usar tokens PrimeNG para respeitar claro/escuro.
+- Traduzir textos novos; ainda existem textos fixos no menu e em orientações recentes.
+- Não tratar uma entrada no menu como funcionalidade concluída.
+- Preservar alterações locais não relacionadas: o worktree pode conter trabalho de dashboard e tenant em andamento.
+
+## Pontos de atenção
+
+- O menu ainda mistura traduções e textos fixos.
+- Algumas classes/rotas mantêm nomes legados, como `cost-center-modal`, embora a tela já seja uma página.
+- Testes são principalmente scaffolds; o build é hoje a principal validação automatizada.
+- Avaliar codificação de `filter`, `order` e `displayFields` ao montar URLs.
+- Verificar se erro de rede `status 0` não deve encerrar sessão.
+- Validar contratos de recorrência da agenda e datas em timezone local.
+- Não executar `npm audit fix` automaticamente; há vulnerabilidades que exigem revisão de impacto.
+
+## Checklist para novas funcionalidades
+
+1. Confirmar contrato no backend.
+2. Criar interfaces de entrada e saída.
+3. Implementar serviço e tratamento de erros.
+4. Criar página/formulário no padrão visual atual.
+5. Adicionar rota, menu, breadcrumb e traduções.
+6. Validar autenticação, tenant, loading e estados vazios.
+7. Testar temas claro/escuro e responsividade.
+8. Executar `npm run build`.
+
+## Atualização — dashboard executivo (15/07/2026)
+
+A rota `/home/dashboard` possui implementação completa em `src/app/pages/dash/`:
+
+```text
+dash.component.ts                 estado, filtros e navegação
+dash.component.html               composição executiva
+dash.component.scss               layout responsivo e temas
+models/dashboard.models.ts        contratos tipados
+services/dashboard.service.ts     chamadas específicas da API
+```
+
+O frontend consome dois snapshots:
+
+- `GET /getDashboardFinancial`: filtros disponíveis, cards, evolução, despesas por centro de custo/plano de contas, saldos, movimentações e alertas;
+- `GET /getDashboardAgenda`: agenda do dia, próximos eventos e indicadores.
+
+Comportamento importante:
+
+- filtros financeiros usam `Subject`, `debounceTime`, `distinctUntilChanged` e `switchMap`, cancelando respostas antigas;
+- a agenda é carregada separadamente e não é refeita ao mudar filtros financeiros;
+- o stream financeiro trata erros dentro do `switchMap`, permitindo tentar novamente sem recriar o componente;
+- valores monetários são formatados no navegador em `pt-BR`;
+- gráficos são renderizados com CSS, sem dependência adicional, e possuem legenda/tooltip via título;
+- existem estados de carregamento, erro e ausência de dados;
+- atalhos levam às telas completas de movimentações e agenda.
+
+### Temas do dashboard
+
+O tema é controlado pela classe `html.app-dark`. O dashboard deve usar os tokens ativos definidos em `src/styles.scss`:
+
+- `--app-page-background`;
+- `--app-surface-background`;
+- `--p-content-background`;
+- `--p-content-border-color`;
+- `--p-content-hover-background`;
+- `--p-text-color`;
+- `--p-text-muted-color`;
+- `--p-primary-color`.
+
+Não usar no dashboard os tokens legados `--surface-card`, `--surface-ground`, `--surface-border` ou cores claras fixas. Fundos semânticos de receita, despesa e alerta usam `color-mix` para funcionar nos dois temas. Revalidar claro, escuro, desktop e mobile ao alterar o SCSS.
+
+Validação executada:
+
+```bash
+npm run build
+```

@@ -1,0 +1,38 @@
+.tenant-selection {
+  align-items: center;
+  background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.tenant-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 2rem rgb(0 0 0 / 10%);
+  max-width: 30rem;
+  padding: 2rem;
+  width: 100%;
+}
+
+.tenant-card h1 { margin: 0 0 0.5rem; }
+.tenant-card > p { color: #667085; margin: 0 0 1.5rem; }
+
+.church-option {
+  background: #fff;
+  border: 1px solid #d0d5dd;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+  padding: 1rem;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+
+.church-option:hover { background: #f8fafc; border-color: var(--primary-color); }
+.church-name { font-size: 1rem; font-weight: 600; }
+.tenant-name { color: #667085; font-size: 0.85rem; margin-top: 0.25rem; }

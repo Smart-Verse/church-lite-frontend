@@ -1,8 +1,82 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="dashboard">
-  <h2>{{translateService.translate("dashboard")}}</h2>
-  <hr>
+<div class="dashboard-shell">
+  <header class="dashboard-header">
+    <div><span class="eyebrow">Visão executiva</span><h1>Dashboard</h1><p>Acompanhe as finanças e os próximos compromissos da igreja.</p></div>
+    <span class="updated"><i class="pi pi-calendar"></i> {{ filters.dataInicial | date:'dd/MM/yyyy' }} — {{ filters.dataFinal | date:'dd/MM/yyyy' }}</span>
+  </header>
 
+  <section class="panel filters-panel">
+    <div class="period-presets">
+      <button (click)="applyPeriod('today')">Hoje</button><button class="active" (click)="applyPeriod('month')">Mês atual</button>
+      <button (click)="applyPeriod('30days')">Últimos 30 dias</button><button (click)="applyPeriod('year')">Ano atual</button>
+    </div>
+    <div class="filter-grid">
+      <label>Data inicial<input type="date" [(ngModel)]="filters.dataInicial" (change)="applyFilters()"></label>
+      <label>Data final<input type="date" [(ngModel)]="filters.dataFinal" (change)="applyFilters()"></label>
+      <label>Banco<select [(ngModel)]="filters.bancoId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.bancos" [value]="item.id">{{item.descricao}}</option></select></label>
+      <label>Conta bancária<select [(ngModel)]="filters.contaBancariaId" (change)="applyFilters()"><option value="">Todas</option><option *ngFor="let item of financial?.filtros?.contasBancarias" [value]="item.id">{{item.descricao}}</option></select></label>
+      <label>Caixa<select [(ngModel)]="filters.caixaId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.caixas" [value]="item.id">{{item.descricao}}</option></select></label>
+      <label>Centro de custo<select [(ngModel)]="filters.centroCustoId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.centrosCusto" [value]="item.id">{{item.descricao}}</option></select></label>
+      <label>Plano de contas<select [(ngModel)]="filters.planoContaId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.planosConta" [value]="item.id">{{item.descricao}}</option></select></label>
+      <label class="check-filter"><input type="checkbox" [(ngModel)]="filters.somenteCaixasAbertos" (change)="applyFilters()"><span>Somente caixas abertos</span></label>
+      <button class="clear-button" (click)="clearFilters()"><i class="pi pi-filter-slash"></i> Limpar filtros</button>
+    </div>
+  </section>
 
+  <div class="error-banner" *ngIf="financialError"><i class="pi pi-exclamation-circle"></i>{{financialError}}<button (click)="applyFilters()">Tentar novamente</button></div>
+  <div class="skeleton-grid" *ngIf="loadingFinancial && !financial"><span *ngFor="let item of [1,2,3,4]"></span></div>
+
+  <ng-container *ngIf="financial as data">
+    <section class="summary-grid" [class.is-loading]="loadingFinancial">
+      <article class="summary-card revenue"><div class="card-icon"><i class="pi pi-arrow-down-left"></i></div><span>Receitas do período</span><strong>{{money(data.resumo.receitasPeriodo.valorTotal)}}</strong><small [class]="variationClass(data.resumo.receitasPeriodo.percentualVariacao)"><i class="pi pi-chart-line"></i> {{variation(data.resumo.receitasPeriodo.percentualVariacao)}} <em>vs. período anterior</em></small></article>
+      <article class="summary-card expense"><div class="card-icon"><i class="pi pi-arrow-up-right"></i></div><span>Despesas do período</span><strong>{{money(data.resumo.despesasPeriodo.valorTotal)}}</strong><small [class]="variationClass(data.resumo.despesasPeriodo.percentualVariacao)"><i class="pi pi-chart-line"></i> {{variation(data.resumo.despesasPeriodo.percentualVariacao)}} <em>vs. período anterior</em></small></article>
+      <article class="summary-card result"><div class="card-icon"><i class="pi pi-calculator"></i></div><span>Resultado do período</span><strong>{{money(data.resumo.resultadoPeriodo.valorResultado)}}</strong><small [class]="data.resumo.resultadoPeriodo.situacao.toLowerCase()">{{data.resumo.resultadoPeriodo.situacao}}</small></article>
+      <article class="summary-card balance"><div class="card-icon"><i class="pi pi-wallet"></i></div><span>Saldo disponível</span><strong>{{money(data.resumo.saldoDisponivel.saldoTotal)}}</strong><small>{{money(data.resumo.saldoDisponivel.saldoContasBancarias)}} em bancos · {{money(data.resumo.saldoDisponivel.saldoCaixas)}} em caixas</small></article>
+    </section>
+
+    <section class="analytics-grid wide-left">
+      <article class="panel chart-card"><div class="panel-title"><div><span class="eyebrow">Evolução financeira</span><h2>Receitas x despesas</h2></div><div class="legend"><span class="revenue-dot">Receitas</span><span class="expense-dot">Despesas</span></div></div>
+        <div class="empty" *ngIf="!data.evolucao.length"><i class="pi pi-chart-bar"></i><p>Nenhuma movimentação no período.</p></div>
+        <div class="evolution-chart" *ngIf="data.evolucao.length"><div class="evolution-column" *ngFor="let item of data.evolucao" [title]="item.periodo + ': receitas ' + money(item.receitas) + ', despesas ' + money(item.despesas)"><div class="bars"><span class="revenue-bar" [style.height.%]="barWidth(item.receitas)"></span><span class="expense-bar" [style.height.%]="barWidth(item.despesas)"></span></div><small>{{item.periodo}}</small></div></div>
+      </article>
+      <article class="panel chart-card"><div class="panel-title"><div><span class="eyebrow">Distribuição</span><h2>Gastos por centro de custo</h2></div></div>
+        <div class="empty compact" *ngIf="!data.despesasPorCentroCusto.length"><p>Sem despesas classificadas.</p></div>
+        <div class="horizontal-chart"><div class="horizontal-item" *ngFor="let item of data.despesasPorCentroCusto"><div><span>{{item.descricao}}</span><b>{{money(item.valorTotal)}} · {{percent.format(item.percentual)}}%</b></div><div class="track" [title]="item.descricao + ': ' + money(item.valorTotal)"><span [style.width.%]="groupWidth(item)"></span></div></div></div>
+      </article>
+    </section>
+
+    <section class="analytics-grid half">
+      <article class="panel chart-card"><div class="panel-title"><div><span class="eyebrow">Classificação contábil</span><h2>Gastos por plano de contas</h2></div></div>
+        <div class="empty compact" *ngIf="!data.despesasPorPlanoConta.length"><p>Sem despesas classificadas.</p></div>
+        <div class="horizontal-chart"><div class="horizontal-item" *ngFor="let item of data.despesasPorPlanoConta"><div><span><small>{{item.codigo}}</small> {{item.descricao}}</span><b>{{money(item.valorTotal)}} · {{percent.format(item.percentual)}}%</b></div><div class="track purple"><span [style.width.%]="groupWidth(item)"></span></div></div></div>
+      </article>
+      <article class="panel balances-card"><div class="panel-title"><div><span class="eyebrow">Disponibilidade</span><h2>Contas e caixas</h2></div><strong>{{money(data.saldos.saldoTotal)}}</strong></div>
+        <h3><i class="pi pi-building-columns"></i> Contas bancárias</h3><div class="empty compact" *ngIf="!data.saldos.contasBancarias.length"><p>Nenhuma conta considerada.</p></div>
+        <div class="balance-row" *ngFor="let item of data.saldos.contasBancarias"><div><b>{{item.descricao}}</b><small>{{item.banco}} · {{item.numeroConta || 'Conta não informada'}}</small></div><strong>{{money(item.saldoAtual)}}</strong></div>
+        <h3><i class="pi pi-inbox"></i> Caixas</h3><div class="empty compact" *ngIf="!data.saldos.caixas.length"><p>Nenhum caixa considerado.</p></div>
+        <div class="balance-row" *ngFor="let item of data.saldos.caixas"><div><b>{{item.descricao}} <span class="status" [class.open]="item.situacao === 'ABERTO'">{{item.situacao}}</span></b><small *ngIf="item.dataAbertura">Aberto em {{item.dataAbertura | date:'dd/MM/yyyy'}}</small></div><strong>{{money(item.saldoAtual)}}</strong></div>
+      </article>
+    </section>
+
+    <section class="analytics-grid wide-left">
+      <article class="panel transactions-card"><div class="panel-title"><div><span class="eyebrow">Atividade recente</span><h2>Últimas movimentações</h2></div><button class="link-button" (click)="goTransactions()">Ver todas <i class="pi pi-arrow-right"></i></button></div>
+        <div class="table-wrap"><table><thead><tr><th>Data</th><th>Descrição</th><th>Classificação</th><th>Origem</th><th>Valor</th></tr></thead><tbody><tr *ngFor="let item of data.movimentacoesRecentes"><td>{{item.data | date:'dd/MM/yyyy'}}</td><td><b>{{item.descricao}}</b><small>{{item.tipo}}</small></td><td>{{item.planoConta}}<small>{{item.centroCusto}}</small></td><td>{{item.origem}}<small>{{item.origemTipo}}</small></td><td [class.money-in]="item.tipo === 'RECEITA'" [class.money-out]="item.tipo === 'DESPESA'">{{item.tipo === 'DESPESA' ? '−' : '+'}}{{money(item.valor)}}</td></tr></tbody></table></div>
+        <div class="empty compact" *ngIf="!data.movimentacoesRecentes.length"><p>Nenhuma movimentação encontrada.</p></div>
+      </article>
+      <article class="panel alerts-card"><div class="panel-title"><div><span class="eyebrow">Atenção necessária</span><h2>Alertas financeiros</h2></div><span class="alert-count">{{data.alertas.length}}</span></div>
+        <div class="empty compact" *ngIf="!data.alertas.length"><i class="pi pi-check-circle"></i><p>Tudo certo por aqui.</p></div>
+        <div class="alert-row" *ngFor="let item of data.alertas"><i [class]="item.tipo === 'CAIXA_ABERTO' ? 'pi pi-clock' : 'pi pi-info-circle'"></i><div><b>{{item.descricao}}</b><small>{{item.quantidade}} ocorrência(s)</small></div></div>
+      </article>
+    </section>
+  </ng-container>
+
+  <section class="agenda-section">
+    <div class="section-heading"><div><span class="eyebrow">Agenda</span><h2>Compromissos e eventos</h2></div><div><button class="secondary-button" (click)="goAgenda()">Ver agenda</button><button class="primary-button" (click)="createAppointment()"><i class="pi pi-plus"></i> Novo compromisso</button></div></div>
+    <div class="error-banner" *ngIf="agendaError">{{agendaError}}<button (click)="ngOnInit()">Tentar novamente</button></div>
+    <div class="agenda-loading" *ngIf="loadingAgenda">Carregando agenda…</div>
+    <ng-container *ngIf="agenda as schedule">
+      <div class="agenda-stats"><article><i class="pi pi-sun"></i><strong>{{schedule.resumo.quantidadeHoje}}</strong><span>Hoje</span></article><article><i class="pi pi-calendar"></i><strong>{{schedule.resumo.quantidadeSemana}}</strong><span>Esta semana</span></article><article><i class="pi pi-calendar-plus"></i><strong>{{schedule.resumo.quantidadeMes}}</strong><span>Este mês</span></article></div>
+      <div class="analytics-grid half"><article class="panel agenda-card"><div class="panel-title"><h2>Agenda de hoje</h2></div><div class="empty compact" *ngIf="!schedule.agendaHoje.length"><i class="pi pi-calendar-times"></i><p>Nenhum compromisso para hoje.</p></div><div class="event-row" *ngFor="let item of schedule.agendaHoje"><time>{{item.dataInicio | date:'HH:mm'}}</time><span></span><div><b>{{item.titulo}}</b><small><i class="pi pi-map-marker"></i> {{item.local || 'Local não informado'}}</small></div></div></article>
+      <article class="panel agenda-card"><div class="panel-title"><h2>Próximos eventos</h2><button class="link-button" (click)="goAgenda()">Ver todos</button></div><div class="empty compact" *ngIf="!schedule.proximosEventos.length"><p>Nenhum próximo evento.</p></div><div class="event-row next" *ngFor="let item of schedule.proximosEventos"><time><b>{{item.dataInicio | date:'dd'}}</b>{{item.dataInicio | date:'MMM'}}</time><span></span><div><b>{{item.titulo}}</b><small>{{item.dataInicio | date:'HH:mm'}} · {{item.local || 'Local não informado'}}</small></div></div></article></div>
+    </ng-container>
+  </section>
 </div>
-

@@ -1,0 +1,13 @@
+<div class="tenant-selection">
+  <div class="tenant-card">
+    <h1>Selecione a igreja</h1>
+    <p>Escolha qual igreja deseja acessar.</p>
+
+    <button type="button" class="church-option" *ngFor="let church of churches" (click)="selectChurch(church)">
+      <span class="church-name">{{ church.name }}</span>
+      <span class="tenant-name">{{ church.tenant }}</span>
+    </button>
+
+    <p-button label="Voltar" [outlined]="true" styleClass="w-full" (onClick)="cancel()"></p-button>
+  </div>
+</div>
