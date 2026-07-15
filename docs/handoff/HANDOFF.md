@@ -108,6 +108,8 @@ O padrão de cards foi aplicado em:
 
 Receitas/despesas exibem situação aberta/liquidada e mantêm ações de salvar, baixar e estornar. Abertura/fechamento mantém filtros e bloqueios próprios de cada operação.
 
+As rotas `/home/transactions` e `/home/bank-statament` também seguem a identidade atual: breadcrumb, cabeçalho descritivo, seletor contextual em card, indicadores de saldo, tabela compacta, empty state, paginação real e responsividade. `transactions` preserva as ações de abrir/fechar caixa; a ação de impressão continua sem implementação funcional.
+
 ## Listagens e tabelas
 
 O datatable compartilhado foi compactado para exibir mais dados e contém:
@@ -123,6 +125,29 @@ O datatable compartilhado foi compactado para exibir mais dados e contém:
 As tabelas em árvore de Plano de contas e Centro de custo e a tabela de Histórico de fechamento receberam a mesma identidade.
 
 O drawer de filtros foi corrigido para remover corretamente o bloqueio/overlay ao fechar. Ao mexer nele, validar fechamento por botão, clique externo, Escape e troca de rota.
+
+### Filtros compartilhados
+
+O `DatatableComponent` renderiza os filtros declarados em `src/assets/configuration/view.json`. O estado aplicado é preservado ao paginar e limpo ao atualizar ou trocar de listagem. A busca rápida usa o primeiro campo configurado: `name` nos cadastros de pessoas e `description` nas listagens financeiras.
+
+Filtros disponíveis em membros, novos convertidos, visitantes e fornecedores:
+
+- nome;
+- CPF por `personalDocs.cpf`;
+- situação `ACTIVE`/`INACTIVE`.
+
+Filtros disponíveis em receitas e despesas:
+
+- descrição;
+- pessoa por `person.name`;
+- caixa ou conta bancária por `cash.description`;
+- plano de contas por `planAccount.description`;
+- centro de custo por `costCenter.description`;
+- situação derivada de `paymentReceiptDate isNull` (em aberto) e `paymentReceiptDate notNull` (liquidada).
+
+O filtro específico é combinado com o filtro fixo da rota usando `and`, por exemplo `type eq 0 and name eq João`. Valores contendo os conectores textuais ` and ` ou ` or ` são normalizados porque o parser não oferece escape. Não misturar `and` e `or`, não usar parênteses e não adicionar filtros numéricos, booleanos, de data ou intervalo sem confirmar suporte no backend.
+
+O `CrudService.onGetAll` usa `HttpParams` para codificar `size`, `offset`, `filter`, `order` e `displayFields`; não voltar a concatenar esses valores manualmente na URL.
 
 ## Plano de contas e centro de custo
 
@@ -231,7 +256,7 @@ Presentes no menu, mas sem fluxo consolidado:
 - O menu ainda mistura traduções e textos fixos.
 - Algumas classes/rotas mantêm nomes legados, como `cost-center-modal`, embora a tela já seja uma página.
 - Testes são principalmente scaffolds; o build é hoje a principal validação automatizada.
-- Avaliar codificação de `filter`, `order` e `displayFields` ao montar URLs.
+- Validar qualquer novo operador de filtro contra o parser do backend; número, booleano, datas, comparações e intervalos ainda não têm suporte confiável.
 - Verificar se erro de rede `status 0` não deve encerrar sessão.
 - Validar contratos de recorrência da agenda e datas em timezone local.
 - Não executar `npm audit fix` automaticamente; há vulnerabilidades que exigem revisão de impacto.
@@ -246,6 +271,18 @@ Presentes no menu, mas sem fluxo consolidado:
 6. Validar autenticação, tenant, loading e estados vazios.
 7. Testar temas claro/escuro e responsividade.
 8. Executar `npm run build`.
+
+## Atualização — identidade de movimentações e filtros (15/07/2026)
+
+Alterações validadas com `npm run build`:
+
+- revitalização visual de `bank-statement` e `transactions`, compatível com claro, escuro e mobile;
+- paginação real, formatação de datas/valores e estados vazios nas duas telas;
+- drawer de filtros funcional e configurável pelo `view.json`;
+- filtros iniciais para os quatro cadastros de pessoas e para receitas/despesas;
+- busca rápida integrada ao dialeto `eq`;
+- composição entre filtro fixo da rota e filtros do usuário;
+- envio seguro dos parâmetros do CRUD com `HttpParams`.
 
 ## Atualização — dashboard executivo (15/07/2026)
 
@@ -294,3 +331,8 @@ Validação executada:
 ```bash
 npm run build
 ```
+
+
+## Atualização — traduções customizadas (15/07/2026)
+
+A rota `/home/translations` lista as chaves do JSON padrão do idioma selecionado e mescla as sobrescritas do tenant obtidas pelo CRUD `translation`. A tela permite busca, edição inline, salvamento em lote no cliente e restauração do padrão. Após autenticação ou troca de idioma, `TranslateService` carrega primeiro o JSON local e aplica as customizações do banco; o menu é reconstruído para refletir os novos textos.

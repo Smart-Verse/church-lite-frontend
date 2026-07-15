@@ -1,10 +1,10 @@
 <app-loading [showLoading]="showLoading" />
 <section class="statement-page">
   <nav class="statement-page__breadcrumb" aria-label="Breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
-  <header class="statement-page__header"><h1>{{ translateService.translate('bank_statament') }}</h1><p>Consulte as movimentações e acompanhe o saldo consolidado da conta bancária.</p></header>
+  <header class="statement-page__header"><h1>{{ translateService.translate('bank_statament') }}</h1><p>{{ translateService.translate('bank_statement_page_description') }}</p></header>
 
   <section class="statement-filter">
-    <div class="statement-filter__heading"><span class="statement-filter__icon"><i class="pi pi-building-columns"></i></span><div><h2>Conta bancária</h2><p>Selecione uma conta para carregar o extrato e os indicadores financeiros.</p></div></div>
+    <div class="statement-filter__heading"><span class="statement-filter__icon"><i class="pi pi-building-columns"></i></span><div><h2>{{ translateService.translate('bank_bankAccount') }}</h2><p>{{ translateService.translate('bank_statement_account_description') }}</p></div></div>
     <app-auto-complete (onSelectChange)="onSelectedBankAccount()" [(ngModel)]="_currentAccount" name="cash" defaultFilter="typeCash eq 1 " [label]="translateService.translate('bank_bankAccount')" route="cash" optionLabel="description" type="text" />
   </section>
 
@@ -15,12 +15,12 @@
   </section>
 
   <main class="statement-card">
-    <div class="statement-card__toolbar"><div><h2>Movimentações</h2><span>{{ _currentAccount?.description || 'Selecione uma conta bancária' }}</span></div><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_currentAccount?.id" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div>
+    <div class="statement-card__toolbar"><div><h2>{{ translateService.translate('financial_page_transactions') }}</h2><span>{{ _currentAccount?.description || translateService.translate('bank_statement_select_account') }}</span></div><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_currentAccount?.id" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div>
     <div class="statement-card__content">
       <p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="statement-table p-datatable-sm">
-        <ng-template pTemplate="header"><tr><th>Data</th><th>Descrição</th><th>Nome</th><th>Operação</th><th class="statement-table__value">Valor</th></tr></ng-template>
+        <ng-template pTemplate="header"><tr><th>{{ translateService.translate('common_date') }}</th><th>{{ translateService.translate('common_description') }}</th><th>{{ translateService.translate('common_name') }}</th><th>{{ translateService.translate('transactions_operation') }}</th><th class="statement-table__value">{{ translateService.translate('financial_value') }}</th></tr></ng-template>
         <ng-template pTemplate="body" let-rowData><tr><td>{{ rowData.dateTransaction | date:'dd/MM/yyyy' }}</td><td>{{ rowData.description }}</td><td>{{ rowData.person?.name || '—' }}</td><td>{{ rowData.transactionOperation }}</td><td class="statement-table__value">{{ rowData.value | currency:'BRL':'symbol':'1.2-2' }}</td></tr></ng-template>
-        <ng-template pTemplate="emptymessage"><tr><td colspan="5" class="statement-table__empty-cell"><div class="statement-table__empty"><svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg><strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ _currentAccount ? 'Não há movimentações para esta conta.' : 'Selecione uma conta bancária para consultar o extrato.' }}</span></div></td></tr></ng-template>
+        <ng-template pTemplate="emptymessage"><tr><td colspan="5" class="statement-table__empty-cell"><div class="statement-table__empty"><svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg><strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate(_currentAccount ? 'bank_statement_empty' : 'bank_statement_select_account_empty') }}</span></div></td></tr></ng-template>
       </p-table>
     </div>
     <footer class="statement-card__footer"><span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span><p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size" [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body" /></footer>

@@ -26,6 +26,7 @@ import {PositionsComponent} from "./components/positions/positions.component";
 import {EventsTypeComponent} from "./components/events-type/events-type.component";
 import {UserAdminComponent} from "./components/user-admin/user-admin.component";
 import {TenantSelectionComponent} from "./security/tenant-selection/tenant-selection.component";
+import {TranslationsComponent} from "./pages/translations/translations.component";
 
 export const routes: Routes = [
 
@@ -41,6 +42,7 @@ export const routes: Routes = [
             { path: 'dashboard', component: DashComponent },
             { path: 'scheduler', component: SchedulerComponent },
             { path: 'user-configuration', component: UserConfigurationComponent },
+            { path: 'translations', component: TranslationsComponent },
             { path: 'transactions/open', component: CashTransactionComponent, data: {action: 0} },
             { path: 'transactions/close', component: CashTransactionComponent, data: {action: 1} },
             { path: 'transactions', component: TransactionsComponent },

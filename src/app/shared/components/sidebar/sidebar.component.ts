@@ -38,7 +38,7 @@ import {TranslateService} from "../../services/translate/translate.service";
 export class SidebarComponent implements OnInit {
 
   theme: string = 'aura-dark-purple';
-  menu = new MenuItens();
+  menu: MenuItens;
   isExpanded = false;
   menuItems: any;
   currentMenu: any;
@@ -54,6 +54,7 @@ export class SidebarComponent implements OnInit {
     private readonly themeService: ThemeService,
     private readonly translateService: TranslateService,
   ){
+    this.menu = new MenuItens(this.translateService);
     this.menuItems = this.menu.menuItems;
     this.currentMenu = this.menuItems[0];
   }
@@ -144,7 +145,11 @@ export class SidebarComponent implements OnInit {
     this.userConfigurationService.getUser().subscribe({
       next: (res) => {
         this.themeService.onConfigurationTheme(res.output.theme);
-        this.translateService.loadTranslationsUser(res.output.lang);
+        this.translateService.loadTranslationsUser(res.output.lang).subscribe(() => {
+          this.menu = new MenuItens(this.translateService);
+          this.menuItems = this.menu.menuItems;
+          this.currentMenu = this.menuItems.find((item: any) => item.route === this.currentMenu?.route) ?? this.menuItems[0];
+        });
         if (!res.output.userPhoto) {
           this.image = null;
           return;

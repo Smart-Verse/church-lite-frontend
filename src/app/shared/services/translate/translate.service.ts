@@ -1,57 +1,78 @@
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import {environment} from "../../../../environments/environment";
-import {languages} from "../../util/constants";
+import { map, Observable, of, switchMap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { languages } from '../../util/constants';
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface TranslationOverride {
+  id?: string;
+  language: string;
+  translationKey: string;
+  value: string;
+}
+
+@Injectable({ providedIn: 'root' })
 export class TranslateService {
-
-  private translations: { [key: string]: string } = {};
+  private translations: Record<string, string> = {};
+  private defaults: Record<string, string> = {};
   private language = 'pt-BR';
 
   constructor(
     private readonly http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private readonly platformId: Object
   ) {}
 
   loadTranslations(): Observable<void> {
-    if(isPlatformBrowser(this.platformId)){
-      this.language = navigator.language || navigator.languages[0];
-      if(this.language.indexOf("en") > -1){
-        this.language = 'en-US';
-      } else if(this.language.indexOf("es") > -1){
-        this.language = 'es-ES';
-      }
+    if (isPlatformBrowser(this.platformId)) {
+      const browserLanguage = navigator.language || navigator.languages[0];
+      this.language = browserLanguage.includes('en') ? 'en-US' : browserLanguage.includes('es') ? 'es-ES' : 'pt-BR';
     }
-    let urlProduction = "";
-    if(environment.production){
-      urlProduction = "/church-lite"
-    }
-    return this.http.get<{ [key: string]: string }>(`${urlProduction}/assets/i18n/${this.language}.json`).pipe(
-      map((data) => {
-        this.translations = data;
+    return this.loadLanguage(this.language, false);
+  }
+
+  loadTranslationsUser(lang: string): Observable<void> {
+    return this.loadLanguage(languages[lang] ?? lang ?? 'pt-BR', true);
+  }
+
+  loadLanguage(language: string, includeOverrides = true): Observable<void> {
+    this.language = language;
+    return this.getDefaultTranslations(language).pipe(
+      switchMap(defaults => {
+        this.defaults = defaults;
+        if (!includeOverrides) {
+          this.translations = {...defaults};
+          return of(void 0);
+        }
+        return this.getOverrides(language).pipe(
+          map(overrides => {
+            this.translations = {...defaults};
+            for (const override of overrides) this.translations[override.translationKey] = override.value;
+          })
+        );
       })
     );
   }
 
-  loadTranslationsUser(lang: string) {
-
-    let urlProduction = "";
-    if(environment.production){
-      urlProduction = "/church-lite"
-    }
-    this.http.get<{ [key: string]: string }>(`${urlProduction}/assets/i18n/${languages[lang]}.json`).subscribe({
-      next: (data) => {
-        this.translations = data;
-      }
-    })
+  getDefaultTranslations(language = this.language): Observable<Record<string, string>> {
+    const base = environment.production ? '/church-lite' : '';
+    language = language === 'pt' ? 'pt-BR' : language;
+    return this.http.get<Record<string, string>>(`${base}/assets/i18n/${language}.json`);
   }
 
-  translate(key: string): string {
-    return this.translations[key] || key;
+  getOverrides(language = this.language): Observable<TranslationOverride[]> {
+    const params = new HttpParams()
+      .set('size', '1000')
+      .set('offset', '1')
+      .set('filter', `language eq ${language}`)
+      .set('order', '')
+      .set('displayFields', '*');
+    return this.http.get<{contents: TranslationOverride[]}>('translation', {params}).pipe(
+      map(response => response.contents ?? [])
+    );
   }
+
+  currentLanguage(): string { return this.language; }
+  defaultTranslations(): Record<string, string> { return {...this.defaults}; }
+  translate(key: string): string { return this.translations[key] || key; }
 }

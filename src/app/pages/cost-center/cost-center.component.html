@@ -4,7 +4,7 @@
     <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
   </nav>
   <header class="tree-page__header">
-    <h1>{{ configuration.header }}</h1>
+    <h1>{{ translateService.translate(configuration.header) }}</h1>
     <p>{{ translateService.translate('datatable_page_description') }}</p>
   </header>
 
@@ -32,7 +32,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             @for (col of columns; track col.field) {
-              <th [style.width]="col.width || null">{{ col.header }}</th>
+              <th [style.width]="col.width || null">{{ translateService.translate(col.header) }}</th>
             }
             <th class="tree-table__actions-column">{{ translateService.translate('datatable_actions') }}</th>
           </tr>

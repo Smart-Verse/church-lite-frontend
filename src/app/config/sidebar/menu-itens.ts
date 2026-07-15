@@ -3,8 +3,10 @@ import {TranslateService} from "../../shared/services/translate/translate.servic
 
 
 export class MenuItens{
-    translate = inject(TranslateService);
-    menuItems = [
+    menuItems: any[];
+
+    constructor(private readonly translate: TranslateService) {
+      this.menuItems = [
         {
             route: "notification",
             iconClass: 'pi pi-bell',
@@ -53,36 +55,36 @@ export class MenuItens{
                     ]
                 },
                 {
-                  name: 'Financeiro',
+                  name: this.translate.translate('financial_page_financial'),
                   submenu: [
                     {
                       route: "planAccount",
-                      name: 'Plano de contas',
+                      name: this.translate.translate('financial_planAccount'),
                     },
                     {
                       route: "costCenter",
-                      name: 'Centro de custo',
+                      name: this.translate.translate('financial_costCenter'),
                     },
                     {
                       route: "register/cash",
-                      name: 'Caixas',
+                      name: this.translate.translate('entity_cash_title'),
                     },
                     {
                       route: "register/bank",
-                      name: 'Bancos',
+                      name: this.translate.translate('entity_bank_title'),
                     }
                   ]
                 },
                 {
-                    name: 'Outros',
+                    name: this.translate.translate('entity_others'),
                     submenu: [
                       {
                           route: "register/positions",
-                          name: 'Cargos',
+                          name: this.translate.translate('entity_positions_title'),
                       },
                       {
                         route: "register/eventsType",
-                        name: 'Tipo de eventos',
+                        name: this.translate.translate('entity_event_type_title'),
                       }
                     ]
                 }
@@ -90,30 +92,30 @@ export class MenuItens{
         },
         {
             iconClass: "pi pi-dollar",
-            tooltip: "Financeiro",
-            name: 'Financeiro',
+            tooltip: this.translate.translate('financial_page_financial'),
+            name: this.translate.translate('financial_page_financial'),
             submenu: [
                 {
-                    name: 'Receitas',
+                    name: this.translate.translate('financial_page_revenues'),
                     route:'register/revenues'
                 },
                 {
-                    name: 'Despesas',
+                    name: this.translate.translate('financial_page_expenses'),
                     route: 'register/expenses'
                 },
                 {
-                  name: 'Movimentações',
+                  name: this.translate.translate('financial_page_transactions'),
                   submenu: [
                     {
-                      name: 'Caixas',
+                      name: this.translate.translate('entity_cash_title'),
                       route:'transactions'
                     },
                     {
-                      name: 'Extrato Bancário',
+                      name: this.translate.translate('bank_statament'),
                       route:'bank-statament'
                     },
                     {
-                      name: 'Histórico Fechamento',
+                      name: this.translate.translate('history'),
                       route:'cash-history'
                     },
                   ]
@@ -122,44 +124,45 @@ export class MenuItens{
         },
         {
           iconClass: 'pi pi-cog',
-          tooltip: 'Configurações',
-          name: 'Configurações',
+          tooltip: this.translate.translate('menu_settings'),
+          name: this.translate.translate('menu_settings'),
           submenu: [
             {
-              name: 'Cadastro de usuários',
+              name: this.translate.translate('entity_users_title'),
               route:'register/users'
             },
             {
-              name: 'Cadastro de igrejas',
+              name: this.translate.translate('entity_churches_title'),
               route:'register/personChurch'
             },
             {
-              name: 'Configurações do usuário',
+              name: this.translate.translate('user_configuration'),
               route:'user-configuration'
             },
             {
-              name: 'Configurações do globais',
+              name: this.translate.translate('menu_global_settings'),
               submenu: [
                 {
-                  name: 'Traduções',
+                  name: this.translate.translate("translations"),
+                  route:'translations'
+                },
+                {
+                  name: this.translate.translate('menu_permissions'),
                   route:''
                 },
                 {
-                  name: 'Permissionamento',
-                  route:''
-                },
-                {
-                  name: 'Cabeçalho Relatórios',
+                  name: this.translate.translate('menu_report_header'),
                   route:''
                 },
               ]
             },
 
             {
-              name: 'Logout',
+              name: this.translate.translate('menu_logout'),
               route:'login'
             },
           ]
         },
-    ];
+      ];
+    }
 }

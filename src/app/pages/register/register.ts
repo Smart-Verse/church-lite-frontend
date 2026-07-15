@@ -9,7 +9,7 @@ import {UserAdminComponent} from "../../components/user-admin/user-admin.compone
 
 export const config: RegisterRoutes[] = [
   {
-    header: "Cadastro de membros",
+    header: "registrations_persons_members",
     view: "personMembers",
     route: "person",
     paramExtra: "MEMBERS",
@@ -17,7 +17,7 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
-    header: "Cadastro de fornecedores",
+    header: "registrations_persons_suppliers",
     view: "personSupplier",
     route: "person",
     paramExtra: "SUPPLIER",
@@ -25,7 +25,7 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
-    header: "Cadastro de novos convertidos",
+    header: "registrations_persons_new_convert",
     view: "personNewConvert",
     route: "person",
     paramExtra: "NEW_CONVERT",
@@ -33,7 +33,7 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
-    header: "Cadastro de visitantes",
+    header: "registrations_persons_visitor",
     view: "personVisitor",
     route: "person",
     paramExtra: "SUPPLIER",
@@ -41,7 +41,7 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
-    header: "Cadastro de igrejas",
+    header: "entity_churches_title",
     view: "personChurch",
     route: "person",
     paramExtra: "CHURCH",
@@ -49,7 +49,7 @@ export const config: RegisterRoutes[] = [
     component: PersonComponent
   },
   {
-    header: "Cadastro de usuários",
+    header: "entity_users_title",
     view: "users",
     route: "userConfiguration",
     paramExtra: "",
@@ -57,7 +57,7 @@ export const config: RegisterRoutes[] = [
     component: UserAdminComponent
   },
   {
-    header: "Cadastro de cargos",
+    header: "entity_positions_title",
     view: "positions",
     route: "positions",
     paramExtra: "",
@@ -65,7 +65,7 @@ export const config: RegisterRoutes[] = [
     component: PositionsComponent
   },
   {
-    header: "Cadastro de tipos de eventos",
+    header: "entity_event_type_title",
     view: "eventsType",
     route: "eventsType",
     paramExtra: "",
@@ -73,7 +73,7 @@ export const config: RegisterRoutes[] = [
     component: EventsTypeComponent
   },
   {
-    header: "Cadastro de banco",
+    header: "entity_bank_title",
     view: "bank",
     route: "bank",
     paramExtra: "",
@@ -81,7 +81,7 @@ export const config: RegisterRoutes[] = [
     component: BankComponent
   },
   {
-    header: "Cadastro de caixas",
+    header: "entity_cash_title",
     view: "cash",
     route: "cash",
     paramExtra: "",
@@ -89,7 +89,7 @@ export const config: RegisterRoutes[] = [
     component: CashComponent
   },
   {
-    header: "Cadastro de receitas",
+    header: "financial_page_revenues",
     view: "revenues",
     route: "financial",
     paramExtra: "",
@@ -97,7 +97,7 @@ export const config: RegisterRoutes[] = [
     component: FinancialComponent
   },
   {
-    header: "Cadastro de despesas",
+    header: "financial_page_expenses",
     view: "expenses",
     route: "financial",
     paramExtra: "",

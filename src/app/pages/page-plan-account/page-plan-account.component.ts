@@ -43,7 +43,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
 
 
   configuration: any = {
-    header: "Cadastro de plano de contas",
+    header: "financial_planAccount",
     view: "planAccount",
     route: "planAccount"
   }
@@ -69,7 +69,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
     this.breadcrumbItems = [
       {label: this.translateService.translate("entity_secretariat")},
       {label: this.translateService.translate("financial_page_financial")},
-      {label: this.configuration.header}
+      {label: this.translateService.translate(this.configuration.header)}
     ];
     var obj = this.registerService.getModel("planAccount");
     this.onSetPropertiesDatatable(obj);

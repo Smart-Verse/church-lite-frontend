@@ -6,24 +6,24 @@
       {
         "field": "name",
         "type": "string",
-        "label": "Nome"
+        "label": "common_name"
       },
       {
         "field": "personalDocs.cpf",
         "type": "string",
-        "label": "CPF"
+        "label": "personal_field_cpf"
       },
       {
         "field": "status",
         "type": "select",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Ativo",
+            "label": "status_active",
             "value": "ACTIVE"
           },
           {
-            "label": "Inativo",
+            "label": "status_inactive",
             "value": "INACTIVE"
           }
         ]
@@ -32,7 +32,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "80%"
       }
     ]
@@ -44,24 +44,24 @@
       {
         "field": "name",
         "type": "string",
-        "label": "Nome"
+        "label": "common_name"
       },
       {
         "field": "personalDocs.cpf",
         "type": "string",
-        "label": "CPF"
+        "label": "personal_field_cpf"
       },
       {
         "field": "status",
         "type": "select",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Ativo",
+            "label": "status_active",
             "value": "ACTIVE"
           },
           {
-            "label": "Inativo",
+            "label": "status_inactive",
             "value": "INACTIVE"
           }
         ]
@@ -70,7 +70,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "80%"
       }
     ]
@@ -82,24 +82,24 @@
       {
         "field": "name",
         "type": "string",
-        "label": "Nome"
+        "label": "common_name"
       },
       {
         "field": "personalDocs.cpf",
         "type": "string",
-        "label": "CPF"
+        "label": "personal_field_cpf"
       },
       {
         "field": "status",
         "type": "select",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Ativo",
+            "label": "status_active",
             "value": "ACTIVE"
           },
           {
-            "label": "Inativo",
+            "label": "status_inactive",
             "value": "INACTIVE"
           }
         ]
@@ -108,7 +108,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "80%"
       }
     ]
@@ -120,24 +120,24 @@
       {
         "field": "name",
         "type": "string",
-        "label": "Nome"
+        "label": "common_name"
       },
       {
         "field": "personalDocs.cpf",
         "type": "string",
-        "label": "CPF"
+        "label": "personal_field_cpf"
       },
       {
         "field": "status",
         "type": "select",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Ativo",
+            "label": "status_active",
             "value": "ACTIVE"
           },
           {
-            "label": "Inativo",
+            "label": "status_inactive",
             "value": "INACTIVE"
           }
         ]
@@ -146,7 +146,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "80%"
       }
     ]
@@ -158,7 +158,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "80%"
       }
     ]
@@ -170,7 +170,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "80%"
       }
     ]
@@ -182,7 +182,7 @@
     "fields": [
       {
         "field": "name",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "80%"
       }
     ]
@@ -194,12 +194,12 @@
     "fields": [
       {
         "field": "description",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "60%"
       },
       {
         "field": "codeTree",
-        "header": "Codigo Arvore",
+        "header": "planAccount_codeTree",
         "width": "20%"
       }
     ]
@@ -216,12 +216,12 @@
     "fields": [
       {
         "field": "description",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "60%"
       },
       {
         "field": "codeTree",
-        "header": "Codigo Arvore",
+        "header": "planAccount_codeTree",
         "width": "20%"
       }
     ]
@@ -238,12 +238,12 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "60%"
       },
       {
         "field": "code",
-        "header": "Codigo",
+        "header": "common_code",
         "width": "20%"
       }
     ]
@@ -260,7 +260,7 @@
     "fields": [
       {
         "field": "description",
-        "header": "Nome",
+        "header": "common_name",
         "width": "60%"
       }
     ]
@@ -272,40 +272,40 @@
       {
         "field": "description",
         "type": "string",
-        "label": "Descrição"
+        "label": "common_description"
       },
       {
         "field": "person.name",
         "type": "string",
-        "label": "Pessoa"
+        "label": "financial_person"
       },
       {
         "field": "cash.description",
         "type": "string",
-        "label": "Caixa ou conta bancária"
+        "label": "financial_cash"
       },
       {
         "field": "planAccount.description",
         "type": "string",
-        "label": "Plano de contas"
+        "label": "financial_planAccount"
       },
       {
         "field": "costCenter.description",
         "type": "string",
-        "label": "Centro de custo"
+        "label": "financial_costCenter"
       },
       {
         "field": "paymentReceiptDate",
         "type": "select",
         "operator": "nullability",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Em aberto",
+            "label": "financial_status_open",
             "value": "isNull"
           },
           {
-            "label": "Liquidada",
+            "label": "financial_status_paid",
             "value": "notNull"
           }
         ]
@@ -314,45 +314,45 @@
     "fields": [
       {
         "field": "issueDate",
-        "header": "Data E.",
+        "header": "financial_issueDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "dueDate",
-        "header": "Data V.",
+        "header": "financial_dueDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "paymentReceiptDate",
-        "header": "Data P.",
+        "header": "financial_paymentReceiptDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "description",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "15%"
       },
       {
         "field": "person.name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "15%"
       },
       {
         "field": "planAccount.description",
-        "header": "Plano Conta",
+        "header": "financial_planAccount",
         "width": "10%"
       },
       {
         "field": "costCenter.description",
-        "header": "Centro custo",
+        "header": "financial_costCenter",
         "width": "10%"
       },
       {
         "field": "value",
-        "header": "Valor",
+        "header": "financial_value",
         "width": "10%",
         "customValue": "MONEY"
       }
@@ -365,40 +365,40 @@
       {
         "field": "description",
         "type": "string",
-        "label": "Descrição"
+        "label": "common_description"
       },
       {
         "field": "person.name",
         "type": "string",
-        "label": "Pessoa"
+        "label": "financial_person"
       },
       {
         "field": "cash.description",
         "type": "string",
-        "label": "Caixa ou conta bancária"
+        "label": "financial_cash"
       },
       {
         "field": "planAccount.description",
         "type": "string",
-        "label": "Plano de contas"
+        "label": "financial_planAccount"
       },
       {
         "field": "costCenter.description",
         "type": "string",
-        "label": "Centro de custo"
+        "label": "financial_costCenter"
       },
       {
         "field": "paymentReceiptDate",
         "type": "select",
         "operator": "nullability",
-        "label": "Situação",
+        "label": "personal_field_status",
         "options": [
           {
-            "label": "Em aberto",
+            "label": "financial_status_open",
             "value": "isNull"
           },
           {
-            "label": "Liquidada",
+            "label": "financial_status_paid",
             "value": "notNull"
           }
         ]
@@ -407,45 +407,45 @@
     "fields": [
       {
         "field": "issueDate",
-        "header": "Data E.",
+        "header": "financial_issueDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "dueDate",
-        "header": "Data V.",
+        "header": "financial_dueDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "paymentReceiptDate",
-        "header": "Data P.",
+        "header": "financial_paymentReceiptDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "description",
-        "header": "Descrição",
+        "header": "common_description",
         "width": "15%"
       },
       {
         "field": "person.name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "15%"
       },
       {
         "field": "planAccount.description",
-        "header": "Plano Conta",
+        "header": "financial_planAccount",
         "width": "10%"
       },
       {
         "field": "costCenter.description",
-        "header": "Centro custo",
+        "header": "financial_costCenter",
         "width": "10%"
       },
       {
         "field": "value",
-        "header": "Valor",
+        "header": "financial_value",
         "width": "10%",
         "customValue": "MONEY"
       }
@@ -458,36 +458,36 @@
     "fields": [
       {
         "field": "startDate",
-        "header": "Data abertura",
+        "header": "history_open_date",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "endDate",
-        "header": "Data fechamento",
+        "header": "history_close_date",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "initialBalance",
-        "header": "Saldo inicial",
+        "header": "history_initial_balance",
         "width": "10%",
         "customValue": "MONEY"
       },
       {
         "field": "paymentReceiptDate",
-        "header": "Data P.",
+        "header": "financial_paymentReceiptDate",
         "width": "10%",
         "customValue": "DATE"
       },
       {
         "field": "balance",
-        "header": "Total das movimentações",
+        "header": "history_operations_total",
         "width": "15%"
       },
       {
         "field": "finalBalance",
-        "header": "Saldo final",
+        "header": "history_final_balance",
         "width": "15%"
       }
     ]
@@ -499,17 +499,17 @@
     "fields": [
       {
         "field": "name",
-        "header": "Nome",
+        "header": "common_name",
         "width": "35%"
       },
       {
         "field": "email",
-        "header": "E-mail",
+        "header": "personal_field_email",
         "width": "35%"
       },
       {
         "field": "phone",
-        "header": "Telefone",
+        "header": "personal_field_phone",
         "width": "20%"
       }
     ]

@@ -157,6 +157,10 @@ export class DatatableComponent implements OnChanges {
     return value.trim().replace(/\s+(and|or)\s+/gi, " ");
   }
 
+  translatedOptions(options?: {label: string; value: string}[]): {label: string; value: string}[] {
+    return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
+  }
+
   onDeleteData(item: any, action: Action){
     this.confirmationService.confirm({
       message: this.translateService.translate("common_message_confirmation_delete"),

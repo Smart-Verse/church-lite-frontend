@@ -125,7 +125,7 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
     this.breadcrumbItems = [
       {label: this.translateService.translate("entity_secretariat")},
       {label: this.translateService.translate(category)},
-      {label: this.configuration.header}
+      {label: this.translateService.translate(this.configuration.header)}
     ];
   }
 

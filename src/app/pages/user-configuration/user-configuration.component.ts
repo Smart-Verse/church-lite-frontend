@@ -69,7 +69,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
           this.isSaving = false;
           this.themeService.onConfigurationTheme(dto.theme);
           this.onShowLoading();
-          this.translateService.loadTranslationsUser(dto.lang);
+          this.translateService.loadTranslationsUser(dto.lang).subscribe();
           this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
         },
         error: error => {

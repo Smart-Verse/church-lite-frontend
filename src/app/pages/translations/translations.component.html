@@ -1,0 +1,27 @@
+<app-loading [showLoading]="loading || saving" />
+<section class="translations-page">
+  <nav class="translations-page__breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
+  <header class="translations-page__header">
+    <div><h1>{{ translateService.translate('translations') }}</h1><p>{{ translateService.translate('translations_page_description') }}</p></div>
+    <p-button icon="pi pi-check" [disabled]="!changedCount || saving" [label]="translateService.translate('translations_save') + (changedCount ? ' (' + changedCount + ')' : '')" (onClick)="save()" />
+  </header>
+
+  <main class="translations-card">
+    <div class="translations-card__toolbar">
+      <p-select class="translations-card__language" [options]="languages" optionLabel="label" optionValue="value" [(ngModel)]="language" (onChange)="load()" />
+      <p-iconField iconPosition="left" class="translations-card__search">
+        <p-inputIcon><i class="pi pi-search"></i></p-inputIcon>
+        <input pInputText type="search" [(ngModel)]="search" [placeholder]="translateService.translate('translations_search')" />
+      </p-iconField>
+      <span class="translations-card__count">{{ filteredRows.length }} {{ translateService.translate('translations_labels') }}</span>
+    </div>
+
+    <div class="translations-card__content">
+      <p-table [value]="filteredRows" styleClass="translations-table p-datatable-sm" [tableStyle]="{'min-width': '56rem'}">
+        <ng-template pTemplate="header"><tr><th>{{ translateService.translate('translations_key') }}</th><th>{{ translateService.translate('translations_default') }}</th><th>{{ translateService.translate('translations_custom') }}</th><th class="translations-table__actions">{{ translateService.translate('datatable_actions') }}</th></tr></ng-template>
+        <ng-template pTemplate="body" let-row><tr [class.translations-table__custom]="row.value !== row.defaultValue"><td><code>{{ row.key }}</code></td><td class="translations-table__default">{{ row.defaultValue }}</td><td><input pInputText class="translations-table__input" [(ngModel)]="row.value" /></td><td class="translations-table__actions"><p-button icon="pi pi-undo" [text]="true" [rounded]="true" [disabled]="row.value === row.defaultValue" [pTooltip]="translateService.translate('translations_restore')" (onClick)="restore(row)" /></td></tr></ng-template>
+        <ng-template pTemplate="emptymessage"><tr><td colspan="4" class="translations-table__empty">{{ translateService.translate('datatable_empty_title') }}</td></tr></ng-template>
+      </p-table>
+    </div>
+  </main>
+</section>

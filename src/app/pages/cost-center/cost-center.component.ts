@@ -43,7 +43,7 @@ import {Action} from "../../shared/components/datatable/datatable.component";
 export class CostCenterComponent  extends BaseComponent implements OnInit {
 
   configuration: any = {
-    header: "Cadastro de centro de custo",
+    header: "financial_costCenter",
     view: "costCenter",
     route: "costCenter"
   }
@@ -69,7 +69,7 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     this.breadcrumbItems = [
       {label: this.translateService.translate("entity_secretariat")},
       {label: this.translateService.translate("financial_page_financial")},
-      {label: this.configuration.header}
+      {label: this.translateService.translate(this.configuration.header)}
     ];
     var obj = this.registerService.getModel("costCenter");
     this.onSetPropertiesDatatable(obj);
