@@ -16,6 +16,15 @@ import {TransactionsComponent} from "./pages/transactions/transactions.component
 import {BankStatementComponent} from "./pages/bank-statement/bank-statement.component";
 import {CashHistoryComponent} from "./pages/cash-history/cash-history.component";
 import {PersonComponent} from "./components/person/person.component";
+import {FinancialComponent} from "./components/financial/financial.component";
+import {CashTransactionComponent} from "./components/cash-transaction/cash-transaction.component";
+import {BankComponent} from "./components/bank/bank.component";
+import {CashComponent} from "./components/cash/cash.component";
+import {PlanAccountComponent} from "./components/plan-account/plan-account.component";
+import {CostCenterModalComponent} from "./components/cost-center-modal/cost-center-modal.component";
+import {PositionsComponent} from "./components/positions/positions.component";
+import {EventsTypeComponent} from "./components/events-type/events-type.component";
+import {UserAdminComponent} from "./components/user-admin/user-admin.component";
 
 export const routes: Routes = [
 
@@ -30,13 +39,33 @@ export const routes: Routes = [
             { path: 'dashboard', component: DashComponent },
             { path: 'scheduler', component: SchedulerComponent },
             { path: 'user-configuration', component: UserConfigurationComponent },
+            { path: 'transactions/open', component: CashTransactionComponent, data: {action: 0} },
+            { path: 'transactions/close', component: CashTransactionComponent, data: {action: 1} },
             { path: 'transactions', component: TransactionsComponent },
             { path: 'cash-history', component: CashHistoryComponent },
             { path: 'bank-statament', component: BankStatementComponent },
+            { path: 'register/revenues/new', component: FinancialComponent, data: {context: 'revenues'} },
+            { path: 'register/revenues/:id', component: FinancialComponent, data: {context: 'revenues'} },
+            { path: 'register/expenses/new', component: FinancialComponent, data: {context: 'expenses'} },
+            { path: 'register/expenses/:id', component: FinancialComponent, data: {context: 'expenses'} },
+            { path: 'register/bank/new', component: BankComponent },
+            { path: 'register/bank/:id', component: BankComponent },
+            { path: 'register/cash/new', component: CashComponent },
+            { path: 'register/cash/:id', component: CashComponent },
+            { path: 'register/positions/new', component: PositionsComponent },
+            { path: 'register/positions/:id', component: PositionsComponent },
+            { path: 'register/users/new', component: UserAdminComponent },
+            { path: 'register/users/:id', component: UserAdminComponent },
+            { path: 'register/eventsType/new', component: EventsTypeComponent },
+            { path: 'register/eventsType/:id', component: EventsTypeComponent },
             { path: 'register/:hash/new', component: PersonComponent },
             { path: 'register/:hash/:id', component: PersonComponent },
             { path: 'register/:hash', component: RegisterComponent },
+            { path: 'planAccount/new', component: PlanAccountComponent },
+            { path: 'planAccount/:id', component: PlanAccountComponent },
             { path: 'planAccount', component: PagePlanAccountComponent },
+            { path: 'costCenter/new', component: CostCenterModalComponent },
+            { path: 'costCenter/:id', component: CostCenterModalComponent },
             { path: 'costCenter', component: CostCenterComponent },
             { path: 'notification', component: NotificationComponent },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

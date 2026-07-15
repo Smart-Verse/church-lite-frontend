@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import { TableModule } from 'primeng/table';
 import {PaginatorModule} from "primeng/paginator";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {CashTransactionComponent} from "../../components/cash-transaction/cash-transaction.component";
 import {TransactionsService} from "../../services/transactions/transactions.service";
 import {CrudService} from "../../shared/services/crud/crud.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
@@ -22,7 +21,6 @@ import {DataTable} from "../../shared/components/datatable/datatable";
         PaginatorModule
     ],
     providers: [
-        DialogService,
         TransactionsService,
         ToastService,
         CrudService
@@ -39,13 +37,11 @@ export class TransactionsComponent extends BaseComponent {
   _expenses: number = 0;
   _transactionID: string = "";
   _datatable: DataTable = new DataTable();
-  ref: DynamicDialogRef | null | undefined;
-  originalClose: any;
   _requestData: RequestData = new RequestData();
 
   constructor(
     public readonly translateService: TranslateService,
-    private readonly dialogService: DialogService,
+    private readonly router: Router,
     private readonly transactionsService: TransactionsService,
     private readonly crudService : CrudService,
     private readonly toastService: ToastService,
@@ -68,41 +64,8 @@ export class TransactionsComponent extends BaseComponent {
   }
 
 
-  onOpenModal(action: number){
-    this.ref = this.dialogService.open(CashTransactionComponent,
-      {
-        header: action === 0 ? this.translateService.translate("transactions_openingCash") : this.translateService.translate("transactions_endCash") ,
-        width: '70vw',
-        modal:true,
-        draggable: true,
-        maximizable: false,
-        data: action,
-        baseZIndex: 999999,
-      });
-
-
-    if (!this.ref) return;
-
-    this.originalClose = this.ref.close.bind(this.ref);
-    this.ref.close = (result: any) => {
-      if (result) {
-        this.onOpenCash(result);
-      } else {
-        this.originalClose(null);
-      }
-    };
-  }
-
-  onOpenCash(obj: any){
-    this.crudService.onSave("cashTransactions", obj).subscribe({
-      next: (result) => {
-        this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
-        this.originalClose(null);
-      },
-      error: (err) => {
-        this.toastService.success({summary: "Mensagem", detail: err.error.message});
-      }
-    });
+  onNavigateCashAction(action: number): void {
+    this.router.navigate(["/home/transactions", action === 0 ? "open" : "close"]);
   }
 
   onLoadAllData(requestData: RequestData): void {

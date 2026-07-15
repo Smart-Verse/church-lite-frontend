@@ -11,8 +11,8 @@
     @if (currentMenu.submenu.length > 0) {
       @for (item of currentMenu.submenu; track item; let i = $index) {
         <li class="transition"
-          [routerLink]="item.route"
-          (click)="onContextMenu(item)">
+          [routerLink]="item.route === 'login' ? null : item.route"
+          (click)="item.route === 'login' ? onLogout($event) : onContextMenu(item)">
           <div class="submenu-menu-text">
             <div>
               {{ item.name }}

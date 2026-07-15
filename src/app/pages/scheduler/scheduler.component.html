@@ -1,8 +1,53 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="scheduler">
-  <h2>{{translateService.translate("scheduler")}}</h2>
-  <hr>
-  <full-calendar
-    [options]="calendarOptions">
-  </full-calendar>
-</div>
+<app-loading [showLoading]="showLoading" />
+<section class="scheduler">
+  <nav class="scheduler__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  </nav>
+
+  <header class="scheduler__header">
+    <div>
+      <h1>{{ translateService.translate('scheduler') }}</h1>
+      <p>{{ translateService.translate('scheduler_page_description') }}</p>
+    </div>
+    <p-button icon="pi pi-plus" [label]="translateService.translate('scheduler_new_appointment')" (onClick)="newAppointment()" />
+  </header>
+
+  <div class="scheduler__overview">
+    <div class="scheduler__metric"><span class="scheduler__metric-icon"><i class="pi pi-calendar"></i></span><div><strong>{{ totalAppointments }}</strong><span>{{ translateService.translate('scheduler_active_events') }}</span></div></div>
+    <div class="scheduler__metric"><span class="scheduler__metric-icon scheduler__metric-icon--accent"><i class="pi pi-clock"></i></span><div><strong>{{ upcomingAppointments }}</strong><span>{{ translateService.translate('scheduler_next_days') }}</span></div></div>
+    <div class="scheduler__legend">
+      <span class="scheduler__legend-label">{{ translateService.translate('scheduler_event_types') }}</span>
+      <div class="scheduler__legend-items">
+        @for (type of availableEventTypes; track type.id) {
+          <span class="scheduler__legend-item"><i [style.backgroundColor]="type.color || '#8b5cf6'"></i>{{ type.name }}</span>
+        } @empty {
+          <span class="scheduler__legend-empty">{{ translateService.translate('scheduler_no_event_types') }}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <main class="scheduler__calendar scheduler__calendar--daypilot">
+    <div class="scheduler__calendar-toolbar">
+      <div class="scheduler__navigation">
+        <button type="button" class="scheduler__icon-button" aria-label="Anterior" (click)="moveCalendar(-1)"><i class="pi pi-chevron-left"></i></button>
+        <button type="button" class="scheduler__icon-button" aria-label="Próximo" (click)="moveCalendar(1)"><i class="pi pi-chevron-right"></i></button>
+        <button type="button" class="scheduler__today-button" (click)="goToToday()">Hoje</button>
+      </div>
+      <h2>{{ calendarTitle }}</h2>
+      <div class="scheduler__views" role="group" aria-label="Visualização da agenda">
+        <button type="button" [class.is-active]="calendarView === 'Month'" (click)="setCalendarView('Month')">Mês</button>
+        <button type="button" [class.is-active]="calendarView === 'Week'" (click)="setCalendarView('Week')">Semana</button>
+        <button type="button" [class.is-active]="calendarView === 'Day'" (click)="setCalendarView('Day')">Dia</button>
+      </div>
+    </div>
+
+    <div class="scheduler__daypilot-viewport">
+      @if (calendarView === 'Month') {
+        <daypilot-month [config]="monthConfig" [events]="dayPilotEvents" />
+      } @else {
+        <daypilot-calendar [config]="dayConfig" [events]="dayPilotEvents" />
+      }
+    </div>
+  </main>
+</section>

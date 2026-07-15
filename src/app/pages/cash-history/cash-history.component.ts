@@ -3,14 +3,16 @@ import {LoadingComponent} from "../../shared/components/loading/loading.componen
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {TableModule} from "primeng/table";
 import {PaginatorModule} from "primeng/paginator";
-import {TransactionsService} from "../../services/transactions/transactions.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {DialogService} from "primeng/dynamicdialog";
 import {CrudService} from "../../shared/services/crud/crud.service";
-import {ToastService} from "../../shared/services/toast/toast.service";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {DataTable} from "../../shared/components/datatable/datatable";
 import {RequestData} from "../../shared/interfaces/request-data";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
+import {PaginatorState} from "primeng/paginator";
+import {IconFieldModule} from "primeng/iconfield";
+import {InputIconModule} from "primeng/inputicon";
 
 @Component({
     selector: 'app-cash-history',
@@ -18,7 +20,10 @@ import {RequestData} from "../../shared/interfaces/request-data";
         LoadingComponent,
         SharedCommonModule,
         TableModule,
-        PaginatorModule
+        PaginatorModule,
+        BreadcrumbModule,
+        IconFieldModule,
+        InputIconModule
     ],
     providers: [
         CrudService
@@ -30,6 +35,9 @@ export class CashHistoryComponent extends BaseComponent implements OnInit {
 
   _datatable: DataTable = new DataTable();
   _requestData: RequestData = new RequestData();
+  readonly tableStyle = {width: "100%", "min-width": "48rem"};
+  breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  breadcrumbItems: MenuItem[] = [];
 
   constructor(
     public readonly translateService: TranslateService,
@@ -39,6 +47,11 @@ export class CashHistoryComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("financial_page_financial")},
+      {label: this.translateService.translate("financial_page_transactions")},
+      {label: this.translateService.translate("history")}
+    ];
     this.onLoadAllData(new RequestData())
   }
 
@@ -57,6 +70,19 @@ export class CashHistoryComponent extends BaseComponent implements OnInit {
         this.onShowLoading();
       }
     });
+  }
+
+  pageChange(event: PaginatorState): void {
+    const request = new RequestData();
+    request.size = event.rows ?? this._datatable.size;
+    request.offset = event.page ?? 0;
+    this._requestData = request;
+    this.onLoadAllData(request);
+  }
+
+  onRefresh(): void {
+    this._requestData = new RequestData();
+    this.onLoadAllData(this._requestData);
   }
 
   private includeFilters(requestData: RequestData) {

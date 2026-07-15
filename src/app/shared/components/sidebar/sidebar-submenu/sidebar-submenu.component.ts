@@ -52,7 +52,6 @@ export class SidebarSubmenuComponent implements OnInit, OnChanges {
 
   onContextMenu(contextMenu: any) {
     if(contextMenu.route){
-      this.onLogout(contextMenu.route);
       this.onColapsed(null);
     } else {
       this.stackMenu.push(contextMenu);
@@ -60,10 +59,14 @@ export class SidebarSubmenuComponent implements OnInit, OnChanges {
     }
   }
 
-  onLogout(route: any){
-    if(route === 'login'){
-      this.cookieService.delete(EnumCookie.AUTHORIZATION);
-      this.router.navigate(['login']);
+  onLogout(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.cookieService.clear();
+    if (typeof window !== "undefined") {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
     }
+    void this.router.navigate(["/login"], {queryParams: {logout: "1"}, replaceUrl: true});
   }
 }

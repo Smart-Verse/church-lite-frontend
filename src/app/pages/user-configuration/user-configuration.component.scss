@@ -6,6 +6,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 1rem 0;
+
+      app-image-upload {
+        display: block;
+        width: min(100%, 200px);
+        flex: 0 0 auto;
+      }
     }
     .user-fields{
       margin-top: 20px;

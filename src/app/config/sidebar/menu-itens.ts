@@ -127,7 +127,7 @@ export class MenuItens{
           submenu: [
             {
               name: 'Cadastro de usuários',
-              route:'register/revenues'
+              route:'register/users'
             },
             {
               name: 'Cadastro de igrejas',

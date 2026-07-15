@@ -29,6 +29,14 @@
         [label]="translateService.translate('personal_field_email')"
         type="text">
       </app-input-text>
+      <app-input-text
+        formControlName="phone"
+        name="phone"
+        [field]="formGroup"
+        class="field col-12 md:col-6 c-margin"
+        label="Telefone"
+        type="tel">
+      </app-input-text>
       <app-dropdown
         formControlName="theme"
         name="theme"

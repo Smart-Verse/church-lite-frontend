@@ -8,18 +8,19 @@ import {config, RegisterRoutes} from "./register";
 import {RequestData} from "../../shared/interfaces/request-data";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {Subscription} from "rxjs";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
 
 @Component({
     selector: 'app-register',
     imports: [
-        SharedCommonModule
+        SharedCommonModule,
+        BreadcrumbModule
     ],
     providers: [
         CrudService,
-        DialogService,
         ToastService
     ],
     templateUrl: './register.component.html',
@@ -27,12 +28,11 @@ import {Subscription} from "rxjs";
 })
 export class RegisterComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  ref: DynamicDialogRef | null | undefined;
-
   datatable: DataTable = new DataTable();
   routeComponent: string | null = "";
   configuration: RegisterRoutes = new RegisterRoutes();
-  originalClose: any;
+  public breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  public breadcrumbItems: MenuItem[] = [];
   private loadSubscription?: Subscription;
 
   constructor(
@@ -40,9 +40,8 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
       private readonly router: Router,
       private readonly crudService: CrudService,
       private readonly registerService: RegisterService,
-      private readonly dialogService: DialogService,
       private readonly toastService: ToastService,
-      private readonly translateService: TranslateService
+      public readonly translateService: TranslateService
   ){
     super();
   }
@@ -57,6 +56,7 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
 
   onSetPropertiesDatatable(obj: any): void  {
     this.configuration = config.find(e => e.view === obj.hash) ?? new RegisterRoutes();
+    this.setBreadcrumb();
     this.datatable = new DataTable();
     this.datatable.fields = [...obj.fields];
     this.onLoadAllData(new RequestData());
@@ -80,20 +80,6 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
     });
   }
 
-  onLoadData(id: any): void {
-    this.onShowLoading();
-    this.crudService.onGet(this.configuration.route,id).subscribe({
-      next: (res) => {
-        this.onShowLoading();
-        this.onOpenModal(res);
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
-      }
-    });
-  }
-
   onDelete(id: any): void {
     this.onShowLoading();
     this.crudService.onDelete(this.configuration.route,id).subscribe({
@@ -109,84 +95,14 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
     });
   }
 
-  onSave(param: any): void {
-    this.onShowLoading();
-    this.crudService.onSave(this.configuration.route,param).subscribe({
-      next: (res) => {
-        this.datatable.values = res.contents;
-        this.onLoadAllData(new RequestData());
-        this.onShowLoading();
-        this.originalClose(null);
-        this.onToast(1,"");
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
-      }
-    });
-  }
-
-  onUpdate(param: any): void {
-    this.onShowLoading();
-    this.crudService.onUpdate(this.configuration.route,param.id,param).subscribe({
-      next: (res) => {
-        this.onLoadAllData(new RequestData());
-        this.onShowLoading();
-        this.originalClose(null);
-        this.onToast(1,"");
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
-      }
-    });
-  }
-
   onSelectedData(obj: any): void {
-    if (this.configuration.route === "person" && obj.action !== 0) {
-      const target = obj.data?.id ?? "new";
-      this.router.navigate([target], { relativeTo: this.activatedRoute });
+    if (obj.data && obj.action === 0) {
+      this.onDelete(obj.data.id);
       return;
     }
 
-    if(obj.data){
-      if(obj.action === 0){// delete data
-        this.onDelete(obj.data.id);
-      } else {
-        this.onLoadData(obj.data.id);
-      }
-    } else{
-      this.onOpenModal(obj);
-    }
-  }
-
-  onOpenModal(obj: any){
-    this.ref = this.dialogService.open(this.configuration.component,
-      {
-        header: this.configuration.header,
-        width: '80vw',
-        modal:true,
-        draggable: true,
-        maximizable: false,
-        data: obj,
-        baseZIndex: 999999,
-      });
-
-
-    if (!this.ref) return;
-
-    this.originalClose = this.ref.close.bind(this.ref);
-    this.ref.close = (result: any) => {
-      if (result) {
-        if(!result.id){
-          this.onSave(result);
-        } else {
-          this.onUpdate(result);
-        }
-      } else {
-        this.originalClose(null);
-      }
-    };
+    const target = obj.data?.id ?? "new";
+    this.router.navigate([target], {relativeTo: this.activatedRoute});
   }
 
   onToast(type: number, message: string): void {
@@ -199,6 +115,17 @@ export class RegisterComponent extends BaseComponent implements OnInit, OnDestro
 
   ngOnDestroy(): void {
     this.loadSubscription?.unsubscribe();
+  }
+
+  private setBreadcrumb(): void {
+    const financial = ["bank", "cash", "revenues", "expenses"].includes(this.configuration.view);
+    const others = ["positions", "eventsType"].includes(this.configuration.view);
+    const category = financial ? "financial_page_financial" : others ? "entity_others" : "registrations_persons";
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("entity_secretariat")},
+      {label: this.translateService.translate(category)},
+      {label: this.configuration.header}
+    ];
   }
 
   private includeFilters(requestData: RequestData) {

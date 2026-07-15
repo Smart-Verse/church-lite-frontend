@@ -4,12 +4,14 @@ import {provideRouter, withHashLocation, withRouterConfig} from '@angular/router
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { TranslateService } from './shared/services/translate/translate.service';
 import {RegisterService} from "./services/register/register.service";
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
+import { authInterceptor } from './config/interceptor/auth-interceptor';
+import { MessageService } from 'primeng/api';
 
 const ChurchLitePreset = definePreset(Aura, {
   semantic: {
@@ -41,6 +43,7 @@ export function loadRegisterModelFactory(translationService: RegisterService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
     provideRouter(routes),
 
     provideClientHydration(),
@@ -55,7 +58,10 @@ export const appConfig: ApplicationConfig = {
       }
     }),
 
-    provideHttpClient(),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor])
+    ),
     {
       provide: APP_INITIALIZER,
       useFactory: loadRegisterModelFactory,

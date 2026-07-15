@@ -1,123 +1,83 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="cost-center">
-  <h2>{{configuration.header}}</h2>
-  <hr>
-    <div class="tree-datatable">
-      <p-confirmDialog />
-      <div class="btnsp">
-        <button
-          pButton
-          pRipple
-          (click)="onRegisterData(null,2,null)"
-          label="Adicionar">
-        </button>
-        <button
-          pButton
-          pRipple
-          (click)="onShowFilters()"
-          icon="pi pi-filter">
-        </button>
-      </div>
-      <div class="table">
-        <p-treeTable
-          [value]="datatable.treeValues"
-          [columns]="datatable.fields"
-          [rows]="10"
-          styleClass="p-datatable-sm"
-          [dataKey]="'id'"
-          [autoLayout]="true"
-          (onPage)="pageChange($event)"
-          [rowsPerPageOptions]="[10, 20, 50]"
-          [tableStyle]="{'min-width':'50rem'}">
-          <ng-template pTemplate="caption">
-            <div class="flex">
-              <p-iconField iconPosition="left" class="ml-auto">
-                <p-inputIcon>
-                  <i class="pi pi-search"></i>
-                </p-inputIcon>
-                <input
-                  pInputText
-                  type="text"
-                  placeholder="Buscar" />
-              </p-iconField>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              @for (col of columns; track col) {
-                <th  [style]="'width:' + col.width ">
-                  {{ col.header }}
-                </th>
-              }
-              <th style="width: 18%;">
-                Ações
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr [ttRow]="rowNode">
-              @for (col of columns; track col; let i = $index) {
-                <td>
-                  @if (i === 0) {
-                    <p-treeTableToggler [rowNode]="rowNode" />
-                  }
-                  {{ rowData[col.field] }}
-                </td>
-              }
-              <td style="width: 18%;">
-                <button
-                  style="margin-right: 5px;"
-                  type="button"
-                  pButton
-                  pRipple
-                  icon="pi pi-plus"
-                  (click)="onRegisterData(rowData,2,rowNode)">
-                </button>
-                <button
-                  style="margin-right: 5px;"
-                  type="button"
-                  pButton
-                  pRipple
-                  icon="pi pi-pencil"
-                  (click)="onRegisterData(rowData, 1,rowNode)">
-                </button>
-                <button
-                  type="button"
-                  pButton
-                  pRipple
-                  icon="pi pi-trash"
-                  (click)="onDeleteData(rowData, 0)">
-                </button>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="summary">
-            <div class="summary">
-              <p-button type="button" (onClick)="onRefreshData()" icon="pi pi-refresh" styleClass="p-button-text" />
-              <p-paginator
-                (onPageChange)="pageChange($event)"
-                [rows]="datatable.size"
-                appendTo="body"
-                dropdownAppendTo="body"
-                [totalRecords]="datatable.totalRecords"
-                [rowsPerPageOptions]="[5,10, 20, 30]" />
-            </div>
-          </ng-template>
-        </p-treeTable>
+<app-loading [showLoading]="showLoading" />
+<section class="tree-page">
+  <nav class="tree-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  </nav>
+  <header class="tree-page__header">
+    <h1>{{ configuration.header }}</h1>
+    <p>{{ translateService.translate('datatable_page_description') }}</p>
+  </header>
+
+  <main class="tree-card">
+    <p-confirmDialog />
+    <div class="tree-card__toolbar">
+      <p-iconField iconPosition="left" class="tree-card__search">
+        <p-inputIcon><i class="pi pi-search"></i></p-inputIcon>
+        <input pInputText type="search" [placeholder]="translateService.translate('datatable_search')" />
+      </p-iconField>
+      <div class="tree-card__toolbar-actions">
+        <p-button icon="pi pi-refresh" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_refresh')" (onClick)="onRefreshData()" />
+        <p-button icon="pi pi-filter" [outlined]="true" [label]="translateService.translate('datatable_filters')" (onClick)="onShowFilters()" />
+        <p-button icon="pi pi-plus" [label]="translateService.translate('datatable_add')" (onClick)="onRegisterData(null, 2, null)" />
       </div>
     </div>
-  </div>
-  <div class="filter">
-    <p-drawer [(visible)]="sidebarVisible" position="right">
-      <ng-template pTemplate="header">
-        <span class="font-semibold text-xl">Filtros</span>
-      </ng-template>
-      <ng-template pTemplate="content">
-        <p-button pRipple (onClick)="onRefreshData()"  [outlined]="false"  styleClass="p-button-rounded w-full">
-          <div class="btn-tx">
-            Filtrar
-          </div>
-        </p-button>
-      </ng-template>
-    </p-drawer>
-  </div>
+
+    <div class="tree-card__content">
+      <p-treeTable
+        [value]="datatable.treeValues"
+        [columns]="datatable.fields"
+        styleClass="tree-table p-datatable-sm"
+        dataKey="id"
+        [tableStyle]="tableStyle">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            @for (col of columns; track col.field) {
+              <th [style.width]="col.width || null">{{ col.header }}</th>
+            }
+            <th class="tree-table__actions-column">{{ translateService.translate('datatable_actions') }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+          <tr [ttRow]="rowNode">
+            @for (col of columns; track col.field; let first = $first) {
+              <td [style.width]="col.width || null" [title]="rowData[col.field]">
+                <div class="tree-table__cell" [class.tree-table__cell--node]="first">
+                  @if (first) { <p-treeTableToggler [rowNode]="rowNode" /> }
+                  <span>{{ rowData[col.field] }}</span>
+                </div>
+              </td>
+            }
+            <td class="tree-table__actions-column">
+              <div class="tree-table__row-actions">
+                <p-button icon="pi pi-plus" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_add')" (onClick)="onRegisterData(rowData, 2, rowNode)" />
+                <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_edit')" (onClick)="onRegisterData(rowData, 1, rowNode)" />
+                <p-button icon="pi pi-trash" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_delete')" (onClick)="onDeleteData(rowData, 0)" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr><td [attr.colspan]="datatable.fields.length + 1" class="tree-table__empty-cell">
+            <div class="tree-table__empty">
+              <svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg>
+              <strong>{{ translateService.translate('datatable_empty_title') }}</strong>
+              <span>{{ translateService.translate('datatable_empty_description') }}</span>
+              <p-button icon="pi pi-plus" [outlined]="true" [label]="translateService.translate('datatable_add_first')" (onClick)="onRegisterData(null, 2, null)" />
+            </div>
+          </td></tr>
+        </ng-template>
+      </p-treeTable>
+    </div>
+
+    <footer class="tree-card__footer">
+      <span>{{ datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span>
+      <p-paginator (onPageChange)="pageChange($event)" [first]="(datatable.page - 1) * datatable.size" [rows]="datatable.size" [totalRecords]="datatable.totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body" />
+    </footer>
+  </main>
+</section>
+
+<p-drawer [(visible)]="sidebarVisible" position="right" [modal]="false" [blockScroll]="false" [dismissible]="true" appendTo="body">
+  <ng-template pTemplate="header"><div class="tree-drawer__title"><i class="pi pi-filter"></i><span>{{ translateService.translate('datatable_filters') }}</span></div></ng-template>
+  <ng-template pTemplate="content"><div class="tree-drawer__empty"><i class="pi pi-sliders-h"></i><span>{{ translateService.translate('datatable_filters_description') }}</span></div></ng-template>
+  <ng-template pTemplate="footer"><p-button icon="pi pi-check" [label]="translateService.translate('datatable_apply_filters')" styleClass="w-full" (onClick)="onRefreshData()" /></ng-template>
+</p-drawer>

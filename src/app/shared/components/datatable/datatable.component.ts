@@ -5,7 +5,6 @@ import { TableModule  } from 'primeng/table';
 import { DataTable } from './datatable';
 import { DrawerModule } from 'primeng/drawer';
 import {RequestData} from "../../interfaces/request-data";
-import {Ripple} from "primeng/ripple";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {InputTextModule} from "primeng/inputtext";
@@ -27,7 +26,6 @@ export enum Action {
     ButtonModule,
     TableModule,
     DrawerModule,
-    Ripple,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
@@ -45,6 +43,7 @@ export class DatatableComponent {
 
 
   sidebarVisible: boolean = false;
+  readonly tableStyle = {width: "100%", "min-width": "42rem"};
   @Input() config: DataTable = new DataTable();
 
   @Output() onRegister: EventEmitter<any> = new EventEmitter();
@@ -52,7 +51,7 @@ export class DatatableComponent {
 
   constructor(
     private confirmationService: ConfirmationService,
-    private readonly translateService: TranslateService,
+    public readonly translateService: TranslateService,
     private datePipe: DatePipe,
   ){
   }
@@ -99,6 +98,7 @@ export class DatatableComponent {
   }
 
   onRefreshData(){
+    this.sidebarVisible = false;
     this.onRefresh.emit(new RequestData());
   }
 

@@ -1,10 +1,70 @@
-
-.register{
-    padding: 10px;
-    height: 100%;
-    .btnsp{
-        display: flex;
-        justify-content: space-between;
-    }
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  color: var(--p-text-color);
 }
 
+.register-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 1rem);
+  height: 100%;
+  padding: 1.25rem 0.75rem 1rem;
+  background: transparent;
+}
+
+.register-page__breadcrumb,
+.register-page__header,
+.register-page__content {
+  width: 100%;
+  max-width: none;
+  margin-inline: auto;
+}
+
+:host ::ng-deep .register-page__breadcrumb .p-breadcrumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.78rem;
+}
+
+.register-page__header {
+  flex: 0 0 auto;
+  padding: 1rem 0 1.25rem;
+}
+
+.register-page__header h1 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.register-page__header p {
+  margin: 0.4rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: 0.82rem;
+}
+
+.register-page__content {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .register-page {
+    min-height: calc(100dvh - 3.5rem);
+    padding: 1rem 0;
+  }
+
+  .register-page__breadcrumb,
+  .register-page__header {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .register-page__header {
+    padding-top: 0.85rem;
+  }
+}

@@ -1,1 +1,16 @@
-
+:host { display: block; min-height: 100%; color: var(--p-text-color); }
+.finance-page { min-height: 100%; padding: 1.25rem 0.75rem 1.5rem; background: transparent; }
+.finance-page__breadcrumb, .finance-page__header, .finance-page__body { width: 100%; max-width: none; margin-inline: auto; }
+:host ::ng-deep .finance-page__breadcrumb .p-breadcrumb { padding: 0; border: 0; background: transparent; }
+.finance-page__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--p-content-border-color); }
+.finance-page__header h1 { margin: 0; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 650; line-height: 1.2; }
+.finance-page__header p { margin: .5rem 0 0; color: var(--p-text-muted-color); }
+.finance-page__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .75rem; }
+.finance-page__body { max-width: none; margin-left: 0; padding-top: 2rem; }
+.finance-section + .finance-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--p-content-border-color); }
+.finance-section h2 { margin: 0 0 1.75rem; font-size: 1rem; font-weight: 600; color: var(--p-text-muted-color); }
+.fields-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem 1.25rem; align-items: start; }
+.fields-grid > * { min-width: 0; width: 100%; grid-column: span 12; }
+:host ::ng-deep .fields-grid .p-floatlabel, :host ::ng-deep .fields-grid .p-inputtext, :host ::ng-deep .fields-grid .p-inputnumber, :host ::ng-deep .fields-grid .p-datepicker, :host ::ng-deep .fields-grid .p-autocomplete { display: flex; width: 100%; }
+@media (min-width: 769px) { .span-4 { grid-column: span 4 !important; } .span-6 { grid-column: span 6 !important; } .span-8 { grid-column: span 8 !important; } }
+@media (max-width: 768px) { .finance-page { padding: 1rem; } .finance-page__header { align-items: stretch; flex-direction: column; gap: 1.25rem; } .finance-page__actions { display: grid; grid-template-columns: 1fr 1fr; } .finance-page__actions p-button:last-child { grid-column: 1 / -1; } :host ::ng-deep .finance-page__actions .p-button { width: 100%; } .finance-page__body { margin-left: 0; } }

@@ -133,3 +133,15 @@ Há registro de `HttpClient` em `app.config.ts` e em `HttpModule`. A evolução 
 6. Validar autenticação, tenant, loading e erros.
 7. Testar o fluxo principal.
 8. Executar `npm run build`.
+
+## Atualização — agenda recorrente (14/07/2026)
+
+A página de agenda deixou de usar eventos fixos e passou a carregar `appointments` e `eventsType` da API. O usuário pode criar compromissos únicos ou semanais, selecionar um ou vários dias (por exemplo, quinta e domingo), editar, arrastar para reagendar, cancelar e excluir.
+
+O tipo de evento cadastrado fornece o título e a cor exibidos no FullCalendar. Eventos cancelados permanecem visíveis em cinza. A criação exige pelo menos um tipo de evento cadastrado e uma configuração de usuário válida.
+
+## Atualização — cadastro de usuários (14/07/2026)
+
+O menu Configurações possui a rota `/home/register/users`, com listagem baseada em `userConfiguration`. A criação usa `POST /createChurchUser` e solicita nome, e-mail, telefone e senha. Edição e exclusão usam o CRUD de `userConfiguration`, cujos handlers sincronizam o registro administrativo.
+
+O telefone também foi incluído na tela de configuração do usuário atual.

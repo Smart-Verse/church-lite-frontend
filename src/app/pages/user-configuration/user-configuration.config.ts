@@ -41,6 +41,12 @@ export class UserConfigurationConfig {
       type: 'string'
     },
     {
+      fieldName: 'phone',
+      required: false,
+      hidden: false,
+      type: 'string'
+    },
+    {
       fieldName: 'email',
       required: true,
       hidden: false,
@@ -53,6 +59,7 @@ export class UserConfigurationConfig {
       id: formGroup.get('id')?.value,
       name: formGroup.get('name')?.value,
       email: formGroup.get('email')?.value,
+      phone: formGroup.get('phone')?.value,
       userPhoto: foto,
       theme: formGroup.get('theme')?.value["key"],
       lang: formGroup.get('lang')?.value["key"],

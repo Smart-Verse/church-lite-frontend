@@ -6,7 +6,7 @@
 
 .person-page {
   min-height: 100%;
-  padding: 1.5rem 2rem 2.5rem;
+  padding: 1.25rem 0.75rem 1.5rem;
   background: transparent;
 }
 
@@ -14,7 +14,7 @@
 .person-page__header,
 .person-page__body {
   width: 100%;
-  max-width: 1440px;
+  max-width: none;
   margin-inline: auto;
 }
 
@@ -76,7 +76,7 @@
 .person-members,
 .person-page__body [formGroupName].fields-grid {
   width: 100%;
-  max-width: 1120px;
+  max-width: none;
   margin-right: 0;
   margin-left: 0;
 }

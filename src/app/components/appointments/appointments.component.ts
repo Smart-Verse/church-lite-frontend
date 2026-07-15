@@ -1,33 +1,41 @@
-import {Component, OnInit} from '@angular/core';
-import {Button} from "primeng/button";
-import {ColorPickerModule} from "primeng/colorpicker";
-import {InputTextComponent} from "../../shared/components/inputs/input-text/input-text.component";
-import {PaginatorModule} from "primeng/paginator";
-import {FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {BaseComponent} from "../../shared/common/base-component/base-component";
-import {EventTypesConfig} from "../events-type/events-type.config";
-import {AppointmentsConfig} from "./appointments.config";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {FieldsService} from "../../shared/services/fields/fields.service";
-import {TranslateService} from "../../shared/services/translate/translate.service";
-import {ToastService} from "../../shared/services/toast/toast.service";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SharedCommonModule } from '../../shared/common/shared-common.module';
+import { BaseComponent } from '../../shared/common/base-component/base-component';
+import { FieldsService } from '../../shared/services/fields/fields.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
+import { TranslateService } from '../../shared/services/translate/translate.service';
+import { Appointment, EventType } from '../../services/appointments/appointments.service';
+import { AppointmentsConfig } from './appointments.config';
+
+export type AppointmentDialogAction =
+  | { action: 'SAVE'; appointment: Appointment }
+  | { action: 'CANCEL_EVENT'; appointment: Appointment }
+  | { action: 'DELETE'; appointment: Appointment };
 
 @Component({
-    selector: 'app-appointments',
-    imports: [
-        Button,
-        ColorPickerModule,
-        InputTextComponent,
-        PaginatorModule,
-        ReactiveFormsModule
-    ],
-    templateUrl: './appointments.component.html',
-    styleUrl: './appointments.component.scss'
+  selector: 'app-appointments',
+  imports: [SharedCommonModule],
+  templateUrl: './appointments.component.html',
+  styleUrl: './appointments.component.scss'
 })
 export class AppointmentsComponent extends BaseComponent implements OnInit {
+  formGroup: FormGroup;
+  eventTypes: EventType[] = [];
+  weekDays = [
+    { value: 'SUNDAY', label: 'Domingo' },
+    { value: 'MONDAY', label: 'Segunda' },
+    { value: 'TUESDAY', label: 'Terça' },
+    { value: 'WEDNESDAY', label: 'Quarta' },
+    { value: 'THURSDAY', label: 'Quinta' },
+    { value: 'FRIDAY', label: 'Sexta' },
+    { value: 'SATURDAY', label: 'Sábado' }
+  ];
+  selectedWeekDays = new Set<string>();
+  isExisting = false;
 
-  public formGroup: FormGroup;
-  private configuration: AppointmentsConfig = new AppointmentsConfig();
+  private readonly configuration = new AppointmentsConfig();
 
   constructor(
     public readonly ref: DynamicDialogRef,
@@ -40,24 +48,83 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
   }
 
-
   ngOnInit(): void {
-    if(this.config.data){
-      this.formGroup.patchValue(this.config.data);
+    this.eventTypes = this.config.data?.eventTypes ?? [];
+    const appointment = this.config.data?.appointment;
+    this.isExisting = Boolean(appointment?.id);
+
+    if (appointment) {
+      const selectedEventType = this.eventTypes.find(item => item.id === appointment.eventsType?.id);
+      this.formGroup.patchValue({
+        ...appointment,
+        eventsType: selectedEventType ?? appointment.eventsType,
+        initialDate: this.toDateTimeLocal(appointment.initialDate),
+        finalDate: this.toDateTimeLocal(appointment.finalDate)
+      });
+      (appointment.recurrenceDays ?? '')
+        .split(',')
+        .filter(Boolean)
+        .forEach((day: string) => this.selectedWeekDays.add(day));
+    } else {
+      this.formGroup.patchValue({
+        userConfiguration: this.config.data?.user,
+        initialDate: this.toDateTimeLocal(this.config.data?.initialDate),
+        finalDate: this.toDateTimeLocal(this.config.data?.finalDate),
+        status: 'SCHEDULED',
+        recurrenceType: 'NONE'
+      });
     }
   }
 
-  onSave() {
-    if(this.formGroup.valid) {
-      this.ref.close(this.configuration.convertToDTO(this.formGroup));
-    }else {
-      this.toastService.warn({summary: "Mensagem", detail: "Existem campos inválidos"});
-      this.fieldsService.verifyIsValid();
-    }
+  get weekly(): boolean {
+    return this.formGroup.get('recurrenceType')?.value === 'WEEKLY';
   }
 
-  onCancel() {
+  toggleWeekDay(day: string, checked: boolean): void {
+    checked ? this.selectedWeekDays.add(day) : this.selectedWeekDays.delete(day);
+  }
+
+  onSave(): void {
+    if (!this.formGroup.valid) {
+      this.invalid('Preencha os campos obrigatórios');
+      return;
+    }
+    if (this.weekly && (!this.formGroup.get('recurrenceEndDate')?.value || this.selectedWeekDays.size === 0)) {
+      this.invalid('Informe a data final e pelo menos um dia da recorrência');
+      return;
+    }
+
+    const appointment = this.configuration.convertToDTO(
+      this.formGroup,
+      Array.from(this.selectedWeekDays)
+    );
+    this.ref.close({ action: 'SAVE', appointment } satisfies AppointmentDialogAction);
+  }
+
+  cancelEvent(): void {
+    const appointment = this.configuration.convertToDTO(this.formGroup, Array.from(this.selectedWeekDays));
+    appointment.status = 'CANCELLED';
+    this.ref.close({ action: 'CANCEL_EVENT', appointment } satisfies AppointmentDialogAction);
+  }
+
+  deleteEvent(): void {
+    const appointment = this.configuration.convertToDTO(this.formGroup, Array.from(this.selectedWeekDays));
+    this.ref.close({ action: 'DELETE', appointment } satisfies AppointmentDialogAction);
+  }
+
+  onCancel(): void {
     this.ref.close(null);
   }
 
+  private invalid(message: string): void {
+    this.toastService.warn({ summary: 'Agenda', detail: message });
+    this.fieldsService.verifyIsValid();
+  }
+
+  private toDateTimeLocal(value?: string | Date): string | null {
+    if (!value) return null;
+    const date = value instanceof Date ? value : new Date(value);
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  }
 }

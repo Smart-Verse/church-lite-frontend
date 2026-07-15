@@ -1,0 +1,45 @@
+:host { display: block; min-height: 100%; }
+
+.entity-page { padding: 1.25rem 0.75rem 1.5rem; }
+
+.entity-page__breadcrumb,
+.entity-page__header,
+.entity-page__body { width: 100%; }
+
+:host ::ng-deep .entity-page__breadcrumb .p-breadcrumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.entity-page__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+}
+
+.entity-page__header h1 { margin: 0; font-size: 1.75rem; }
+.entity-page__header p { margin: 0.5rem 0 0; color: var(--p-text-muted-color); }
+.entity-page__actions { display: flex; gap: 1rem; }
+.entity-page__body { padding-top: 2.5rem; }
+.entity-section h2 { margin: 0 0 2rem; color: var(--p-text-muted-color); font-size: 1rem; }
+
+.entity-fields {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.entity-fields > * { grid-column: span 12; min-width: 0; }
+
+@media (min-width: 769px) {
+  .span-6 { grid-column: span 6 !important; }
+}
+
+@media (max-width: 768px) {
+  .entity-page__header { align-items: stretch; flex-direction: column; }
+  .entity-page__actions { display: grid; grid-template-columns: 1fr 1fr; }
+}

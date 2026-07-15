@@ -1,0 +1,75 @@
+:host { display: block; }
+
+.appointment-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field label,
+.week-days legend {
+  color: var(--p-text-muted-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--p-form-field-border-color);
+  border-radius: var(--p-form-field-border-radius);
+  color: var(--p-text-color);
+  background: var(--p-form-field-background);
+}
+
+.date-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.week-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  padding: 1rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 0.5rem;
+}
+
+.week-days label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cancelled-message {
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--p-red-700);
+  background: var(--p-red-50);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.actions__spacer { flex: 1; }
+
+@media (max-width: 640px) {
+  .date-grid { grid-template-columns: 1fr; }
+  .actions__spacer { display: none; }
+  .actions p-button { flex: 1; }
+}

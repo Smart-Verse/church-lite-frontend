@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {CrudService} from "../../shared/services/crud/crud.service";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {DataTable} from "../../shared/components/datatable/datatable";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
@@ -11,13 +11,13 @@ import {RequestData} from "../../shared/interfaces/request-data";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
-import {Ripple} from "primeng/ripple";
 import {TreeTableModule} from "primeng/treetable";
 import {PaginatorModule, PaginatorState} from "primeng/paginator";
 import {Action} from "../../shared/components/datatable/datatable.component";
 import {ConfirmationService} from "primeng/api";
-import {PlanAccountComponent} from "../../components/plan-account/plan-account.component";
 import {TableModule} from "primeng/table";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
 
 @Component({
     selector: 'app-page-plan-account',
@@ -26,14 +26,13 @@ import {TableModule} from "primeng/table";
         ConfirmDialogModule,
         IconFieldModule,
         InputIconModule,
-        Ripple,
         TreeTableModule,
         PaginatorModule,
         TableModule,
+        BreadcrumbModule,
     ],
     providers: [
         CrudService,
-        DialogService,
         ToastService,
         ConfirmationService
     ],
@@ -46,29 +45,32 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
   configuration: any = {
     header: "Cadastro de plano de contas",
     view: "planAccount",
-    route: "planAccount",
-    component: PlanAccountComponent
+    route: "planAccount"
   }
 
-  ref: DynamicDialogRef | null | undefined;
-
   datatable: DataTable = new DataTable();
-  originalClose: any;
   sidebarVisible: boolean = false;
+  readonly tableStyle = {width: "100%", "min-width": "42rem"};
+  breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  breadcrumbItems: MenuItem[] = [];
 
   constructor(
     private readonly crudService: CrudService,
     private readonly registerService: RegisterService,
-    private readonly dialogService: DialogService,
+    private readonly router: Router,
     private readonly toastService: ToastService,
-    private readonly translateService: TranslateService,
+    public readonly translateService: TranslateService,
     private confirmationService: ConfirmationService,
   ){
     super();
   }
 
   ngOnInit(): void {
-
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("entity_secretariat")},
+      {label: this.translateService.translate("financial_page_financial")},
+      {label: this.configuration.header}
+    ];
     var obj = this.registerService.getModel("planAccount");
     this.onSetPropertiesDatatable(obj);
   }
@@ -86,27 +88,11 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
         this.datatable.totalRecords = res.total;
         this.datatable.page = res.offset + 1;
         this.datatable.size = res.size;
-        this.datatable.treeValues = this.onLoadChildren(res.contents).filter(e => e.data.codeTree.length == 1);
+        this.datatable.treeValues = this.onLoadChildren(res.contents).filter(e => !String(e.data.codeTree).includes("."));
         this.onShowLoading();
       },
       error: (err) => {
         this.onShowLoading();
-      }
-    });
-  }
-
-  onLoadData(data: any): void {
-    this.onShowLoading();
-    this.crudService.onGet(this.configuration.route,data.id).subscribe({
-      next: (res) => {
-        this.onShowLoading();
-        res.action = data.action;
-        res.parentCode = data.parentCode;
-        this.onOpenModal(res);
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
       }
     });
   }
@@ -126,67 +112,6 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
     });
   }
 
-  onSave(param: any): void {
-    this.onShowLoading();
-    this.crudService.onSave(this.configuration.route,param).subscribe({
-      next: (res) => {
-        this.datatable.values = res.contents;
-        this.onLoadAllData(new RequestData());
-        this.onShowLoading();
-        this.originalClose(null);
-        this.onToast(1,"");
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
-      }
-    });
-  }
-
-  onUpdate(param: any): void {
-    this.onShowLoading();
-    this.crudService.onUpdate(this.configuration.route,param.id,param).subscribe({
-      next: (res) => {
-        this.onLoadAllData(new RequestData());
-        this.onShowLoading();
-        this.originalClose(null);
-        this.onToast(1,"");
-      },
-      error: (err) => {
-        this.onShowLoading();
-        this.onToast(0,err.error.message);
-      }
-    });
-  }
-
-  onOpenModal(obj: any){
-    this.ref = this.dialogService.open(this.configuration.component,
-      {
-        header: this.configuration.header,
-        width: '80vw',
-        modal:true,
-        maximizable: false,
-        data: obj,
-        baseZIndex: 999999,
-      });
-
-
-    if (!this.ref) return;
-
-    this.originalClose = this.ref.close.bind(this.ref);
-    this.ref.close = (result: any) => {
-      if (result) {
-        if(!result.id){
-          this.onSave(result);
-        } else {
-          this.onUpdate(result);
-        }
-      } else {
-        this.originalClose(null);
-      }
-    };
-  }
-
   pageChange($event: PaginatorState) {
     var data = new RequestData();
     data.size = $event.rows;
@@ -194,28 +119,15 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
     this.onLoadAllData(data);
   }
 
-  onRegisterData(item: any, action: Action, rowNode: any){
-    let obj = {
-      data: item,
-      action: action,
-      parent: null
-    }
-
-    if(item){
-      if(obj.action === 0){// delete data
-        this.onDelete(obj.data.id);
-      } else {
-        obj.data.parentCode = (rowNode.parent === null ? null : rowNode.parent.data);
-        obj.data.action = action;
-        this.onLoadData(obj.data);
-      }
-    } else{
-      this.onOpenModal(obj);
-    }
-
+  onRegisterData(item: any, action: Action, rowNode: any): void {
+    if (item && action === 0) { this.onDelete(item.id); return; }
+    const target = action === 1 && item ? item.id : "new";
+    const parentId = action === 2 && item ? item.id : rowNode?.parent?.data?.id;
+    this.router.navigate(["/home/planAccount", target], {queryParams: parentId ? {parentId} : {}});
   }
 
   onRefreshData(){
+    this.sidebarVisible = false;
     this.onLoadAllData(new RequestData());
   }
 

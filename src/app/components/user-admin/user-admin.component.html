@@ -1,0 +1,59 @@
+<app-loading [showLoading]="showLoading" />
+<section class="entity-page">
+  <nav class="entity-page__breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  </nav>
+
+  <header class="entity-page__header">
+    <div>
+      <h1>{{ id && id !== 'new' ? 'Editar usuário' : 'Novo usuário' }}</h1>
+      <p>Dados de acesso e contato do usuário da igreja.</p>
+    </div>
+    <div class="entity-page__actions">
+      <p-button [outlined]="true" label="Cancelar" (onClick)="onCancel()" />
+      <p-button
+        icon="pi pi-check"
+        [disabled]="isSaving"
+        label="Salvar"
+        (onClick)="onSave()" />
+    </div>
+  </header>
+
+  <main class="entity-page__body" [formGroup]="formGroup">
+    <section class="entity-section">
+      <h2>Dados do usuário</h2>
+      <div class="entity-fields">
+        <app-input-text
+          formControlName="name"
+          name="name"
+          [field]="formGroup"
+          class="span-6"
+          label="Nome"
+          type="text" />
+        <app-input-text
+          formControlName="email"
+          name="email"
+          [field]="formGroup"
+          class="span-6"
+          label="E-mail"
+          type="email" />
+        <app-input-text
+          formControlName="phone"
+          name="phone"
+          [field]="formGroup"
+          class="span-6"
+          label="Telefone"
+          type="tel" />
+        @if (!id || id === 'new') {
+          <app-input-text
+            formControlName="password"
+            name="password"
+            [field]="formGroup"
+            class="span-6"
+            label="Senha"
+            type="password" />
+        }
+      </div>
+    </section>
+  </main>
+</section>

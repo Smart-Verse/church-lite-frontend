@@ -1,95 +1,131 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BaseComponent} from "../../shared/common/base-component/base-component";
-import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import {ToastService} from "../../shared/services/toast/toast.service";
+import {Component, OnInit} from "@angular/core";
 import {DatePipe} from "@angular/common";
 import {FormGroup} from "@angular/forms";
-import {FinancialConfig} from "./financial.config";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {ActivatedRoute, Router} from "@angular/router";
+import {MenuItem} from "primeng/api";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {BaseComponent} from "../../shared/common/base-component/base-component";
+import {SharedCommonModule} from "../../shared/common/shared-common.module";
+import {CrudService} from "../../shared/services/crud/crud.service";
 import {FieldsService} from "../../shared/services/fields/fields.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
-import {ActivatedRoute} from "@angular/router";
+import {FinancialConfig} from "./financial.config";
 
 @Component({
-    selector: 'app-financial',
-    imports: [
-        SharedCommonModule,
-    ],
-    providers: [
-        ToastService,
-        DatePipe
-    ],
-    templateUrl: './financial.component.html',
-    styleUrl: './financial.component.scss'
+  selector: "app-financial",
+  imports: [SharedCommonModule, BreadcrumbModule],
+  providers: [ToastService, DatePipe, CrudService],
+  templateUrl: "./financial.component.html",
+  styleUrl: "./financial.component.scss"
 })
-export class FinancialComponent extends BaseComponent implements OnInit{
-
+export class FinancialComponent extends BaseComponent implements OnInit {
   public formGroup: FormGroup;
-  _type: string = "REVENUES";
-  configuration: FinancialConfig = new FinancialConfig();
-  _paidInvoice: boolean = false;
-  _buttonText: string = this.translateService.translate('financial_saveAndQuit');
+  public context = "revenues";
+  public financialId: string | null = null;
+  public isSaving = false;
+  public pageTitle = "financial_page_revenue_title";
+  public breadcrumbItems: MenuItem[] = [];
+  public breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
+  _type = "REVENUE";
+  configuration = new FinancialConfig();
+  _paidInvoice = false;
+  _buttonText = this.translateService.translate("financial_saveAndQuit");
 
   constructor(
-    public readonly ref: DynamicDialogRef,
-    public readonly config: DynamicDialogConfig,
     private readonly fieldsService: FieldsService,
     public readonly translateService: TranslateService,
     private readonly toastService: ToastService,
-    private datePipe: DatePipe,
-    private route: ActivatedRoute
+    private readonly datePipe: DatePipe,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly crudService: CrudService
   ) {
     super();
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
   }
 
   ngOnInit(): void {
-    const segments = this.route.snapshot.url;
-    this.setConfigContext(segments[segments.length - 1]?.path || '')
-    if(this.config.data.data !== null){
-      this.config.data.issueDate =  this.config.data.issueDate != null ? new Date(this.config.data.issueDate) : null;
-      this.config.data.dueDate =  this.config.data.dueDate != null ? new Date(this.config.data.dueDate) : null;
-      this.config.data.paymentReceiptDate =  this.config.data.paymentReceiptDate != null ? new Date(this.config.data.paymentReceiptDate) : null;
-      this.formGroup.patchValue(this.config.data);
-    } else{
-      this.formGroup.get('issueDate')?.setValue(new Date());
-      this.formGroup.get('dueDate')?.setValue(new Date());
-    }
+    this.context = this.route.snapshot.data["context"] ?? this.route.snapshot.paramMap.get("hash") ?? "revenues";
+    this.financialId = this.route.snapshot.paramMap.get("id");
+    this.setConfigContext(this.context);
 
-    // verifica se esta quitada ou tem que estornar
-    if(this.config.data.paymentReceiptDate){
-      this._paidInvoice = true
-      this._buttonText = this.translateService.translate('financial_reverse');
+    if (this.financialId && this.financialId !== "new") {
+      this.loadFinancial(this.financialId);
+    } else {
+      this.formGroup.patchValue({issueDate: new Date(), dueDate: new Date()});
     }
   }
 
-  onSave(action: number) {
-    if(this.formGroup.valid) {
-      if(action == 1){
-        var date = (this.config.data.paymentReceiptDate === null || this.config.data.paymentReceiptDate === undefined) ? new Date() : null;
-        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, date));
+  private loadFinancial(id: string): void {
+    this.showLoading = true;
+    this.crudService.onGet("financial", id).subscribe({
+      next: data => {
+        data.issueDate = data.issueDate ? new Date(data.issueDate) : null;
+        data.dueDate = data.dueDate ? new Date(data.dueDate) : null;
+        data.paymentReceiptDate = data.paymentReceiptDate ? new Date(data.paymentReceiptDate) : null;
+        this.formGroup.patchValue(data);
+        this._paidInvoice = !!data.paymentReceiptDate;
+        this._buttonText = this.translateService.translate(this._paidInvoice ? "financial_reverse" : "financial_saveAndQuit");
+        this.showLoading = false;
+      },
+      error: error => {
+        this.showLoading = false;
+        this.toastService.error({summary: this.translateService.translate("common_message"), detail: error.error?.message ?? "Falha ao carregar o lançamento"});
+        this.navigateToList();
       }
-      else {
-        this.ref.close(this.configuration.convertToDTO(this.formGroup,this.datePipe,this._type, null));
-      }
+    });
+  }
 
-    }else {
-      this.toastService.warn({summary: "Mensagem", detail: this.translateService.translate("common_message_invalid_fields")});
+  onSave(action = 0): void {
+    if (!this.formGroup.valid) {
+      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
+      return;
     }
+
+    const paymentDate = action === 1
+      ? (this._paidInvoice ? null : new Date())
+      : this.formGroup.get("paymentReceiptDate")?.value;
+    const dto = this.configuration.convertToDTO(this.formGroup, this.datePipe, this._type, paymentDate);
+    const request = this.financialId && this.financialId !== "new"
+      ? this.crudService.onUpdate("financial", this.financialId, dto)
+      : this.crudService.onSave("financial", dto);
+
+    this.isSaving = true;
+    this.showLoading = true;
+    request.subscribe({
+      next: () => {
+        this.isSaving = false;
+        this.showLoading = false;
+        this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
+        this.navigateToList();
+      },
+      error: error => {
+        this.isSaving = false;
+        this.showLoading = false;
+        this.toastService.error({summary: this.translateService.translate("common_message"), detail: error.error?.message ?? "Falha ao salvar o lançamento"});
+      }
+    });
   }
 
-  onCancel() {
-    this.ref.close(null);
+  onCancel(): void {
+    this.navigateToList();
   }
 
-  private setConfigContext(context: string) {
+  private navigateToList(): void {
+    this.router.navigate(["/home/register", this.context]);
+  }
 
-    if(context === 'revenues'){
-      this._type = 'REVENUE'
-    }
-    else if(context === 'expenses'){
-      this._type = 'EXPENSE'
-    }
+  private setConfigContext(context: string): void {
+    const isExpense = context === "expenses";
+    this._type = isExpense ? "EXPENSE" : "REVENUE";
+    this.pageTitle = isExpense ? "financial_page_expense_title" : "financial_page_revenue_title";
+    const listLabel = isExpense ? "financial_page_expenses" : "financial_page_revenues";
+    this.breadcrumbItems = [
+      {label: this.translateService.translate("financial_page_financial")},
+      {label: this.translateService.translate(listLabel), routerLink: ["/home/register", this.context]},
+      {label: this.translateService.translate(this.pageTitle)}
+    ];
   }
 }

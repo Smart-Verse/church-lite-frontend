@@ -5,6 +5,7 @@ import {BankComponent} from "../../components/bank/bank.component";
 import {CashComponent} from "../../components/cash/cash.component";
 import {FinancialComponent} from "../../components/financial/financial.component";
 import {EventsTypeComponent} from "../../components/events-type/events-type.component";
+import {UserAdminComponent} from "../../components/user-admin/user-admin.component";
 
 export const config: RegisterRoutes[] = [
   {
@@ -46,6 +47,14 @@ export const config: RegisterRoutes[] = [
     paramExtra: "CHURCH",
     defaultFilter: "type eq 5",
     component: PersonComponent
+  },
+  {
+    header: "Cadastro de usuários",
+    view: "users",
+    route: "userConfiguration",
+    paramExtra: "",
+    defaultFilter: "",
+    component: UserAdminComponent
   },
   {
     header: "Cadastro de cargos",
