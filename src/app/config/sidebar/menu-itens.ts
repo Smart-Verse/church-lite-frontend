@@ -165,7 +165,7 @@ export class MenuItens{
                 },
                 {
                   name: this.translate.translate('menu_report_header'),
-                  route:''
+                  route:'report-template'
                 },
               ]
             },

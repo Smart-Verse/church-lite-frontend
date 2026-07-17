@@ -356,5 +356,18 @@
   "permission_action_create": "Create",
   "permission_action_view": "View",
   "permission_action_update": "Update",
-  "permission_action_delete": "Delete"
+  "permission_action_delete": "Delete",
+  "report_template_description": "Configure the visual identity used in report headers and footers.",
+  "report_template_image": "Header image",
+  "report_template_image_help": "Use the logo or institutional image displayed in reports.",
+  "report_template_header": "Header",
+  "report_template_header_help": "Define the main text and its size.",
+  "report_template_footer": "Footer",
+  "report_template_footer_help": "Freely enter the content displayed at the end of the report.",
+  "report_template_text": "Text",
+  "report_template_font_size": "Font size",
+  "report_template_preview": "Preview",
+  "report_template_preview_help": "Approximate example of the applied template.",
+  "report_template_saved": "Report template saved successfully.",
+  "report_template_error": "Could not save the report template."
 }

@@ -31,6 +31,7 @@ import {CellComponent} from "./components/cell/cell.component";
 import {CellsFoundationComponent} from "./pages/cells-foundation/cells-foundation.component";
 import {CellsOperationsComponent} from "./pages/cells-operations/cells-operations.component";
 import {PermissionGroupsComponent} from "./pages/permission-groups/permission-groups.component";
+import {ReportTemplateComponent} from "./pages/report-template/report-template.component";
 
 export const routes: Routes = [
 
@@ -48,6 +49,7 @@ export const routes: Routes = [
             { path: 'user-configuration', component: UserConfigurationComponent },
             { path: 'translations', component: TranslationsComponent },
             { path: 'permission-groups', component: PermissionGroupsComponent },
+            { path: 'report-template', component: ReportTemplateComponent },
             { path: 'cells/organization', component: CellsFoundationComponent, data: {mode: 'organization'} },
             { path: 'cells/team', component: CellsFoundationComponent, data: {mode: 'team'} },
             { path: 'cells/settings', component: CellsFoundationComponent, data: {mode: 'settings'} },

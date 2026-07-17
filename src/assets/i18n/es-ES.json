@@ -356,5 +356,18 @@
   "permission_action_create": "Crear",
   "permission_action_view": "Visualizar",
   "permission_action_update": "Editar",
-  "permission_action_delete": "Eliminar"
+  "permission_action_delete": "Eliminar",
+  "report_template_description": "Configure la identidad visual utilizada en los encabezados y pies de los informes.",
+  "report_template_image": "Imagen del encabezado",
+  "report_template_image_help": "Utilice el logotipo o la imagen institucional mostrada en los informes.",
+  "report_template_header": "Encabezado",
+  "report_template_header_help": "Defina el texto principal y su tamaño.",
+  "report_template_footer": "Pie de página",
+  "report_template_footer_help": "Ingrese libremente el contenido mostrado al final del informe.",
+  "report_template_text": "Texto",
+  "report_template_font_size": "Tamaño de fuente",
+  "report_template_preview": "Vista previa",
+  "report_template_preview_help": "Ejemplo aproximado de la aplicación del template.",
+  "report_template_saved": "Template de informe guardado correctamente.",
+  "report_template_error": "No se pudo guardar el template de informe."
 }

@@ -356,5 +356,18 @@
   "permission_action_create": "Criar",
   "permission_action_view": "Visualizar",
   "permission_action_update": "Editar",
-  "permission_action_delete": "Excluir"
+  "permission_action_delete": "Excluir",
+  "report_template_description": "Configure a identidade visual usada nos cabeçalhos e rodapés dos relatórios.",
+  "report_template_image": "Imagem do cabeçalho",
+  "report_template_image_help": "Use o logotipo ou a imagem institucional exibida nos relatórios.",
+  "report_template_header": "Cabeçalho",
+  "report_template_header_help": "Defina o texto principal e seu tamanho.",
+  "report_template_footer": "Rodapé",
+  "report_template_footer_help": "Informe livremente o conteúdo exibido ao final do relatório.",
+  "report_template_text": "Texto",
+  "report_template_font_size": "Tamanho da fonte",
+  "report_template_preview": "Pré-visualização",
+  "report_template_preview_help": "Exemplo aproximado da aplicação do template.",
+  "report_template_saved": "Template de relatório salvo com sucesso.",
+  "report_template_error": "Não foi possível salvar o template de relatório."
 }

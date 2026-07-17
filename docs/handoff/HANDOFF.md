@@ -409,3 +409,18 @@ O carregamento do catálogo não deve ser mascarado por falhas paralelas de grup
 O feedback de autorização é global: respostas `403` exibem a tradução `permission_access_denied`. Existe apenas um `MessageService`, fornecido em `app.config.ts`; não adicionar provider local no `AppComponent`, pois o interceptor e o `<p-toast>` precisam compartilhar a mesma instância.
 
 Chaves novas devem existir em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`. Enquanto não existir `VIEW_ALL`, a coluna Visualizar representa toda operação GET. Especificação canônica: `spec/FEATURE_PERMISSION_GROUPS_SPEC.md`. Build validado com `npm run build`.
+
+
+## Atualização — template de cabeçalho e rodapé de relatórios (16/07/2026)
+
+A rota `/home/report-template`, acessível por Configurações globais → Cabeçalho de relatório, mantém a configuração visual usada pelos relatórios. A tela não possui listagem: consulta `reportTemplate` com `size=1` e decide entre POST e PUT conforme a existência do registro.
+
+A imagem reutiliza `app-image-upload` e o fluxo existente de URLs assinadas do S3. Cabeçalho e rodapé usam `p-editor` do PrimeNG com Quill; toda formatação fica no HTML armazenado em `headerText` e `footerText`. Não adicionar novamente campos separados de tamanho de fonte. A página apresenta pré-visualização aproximada em formato de papel.
+
+Arquivos principais:
+
+- `src/app/pages/report-template/report-template.component.ts`;
+- `src/app/pages/report-template/report-template.component.html`;
+- `src/app/pages/report-template/report-template.component.scss`.
+
+O pacote `quill` é dependência direta. O build pode emitir aviso não bloqueante de CommonJS para `quill-delta`. Textos da funcionalidade existem em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`. Validação concluída com `npm run build`.
