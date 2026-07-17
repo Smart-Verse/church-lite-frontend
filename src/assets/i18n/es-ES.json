@@ -369,5 +369,6 @@
   "report_template_preview": "Vista previa",
   "report_template_preview_help": "Ejemplo aproximado de la aplicación del template.",
   "report_template_saved": "Template de informe guardado correctamente.",
-  "report_template_error": "No se pudo guardar el template de informe."
+  "report_template_error": "No se pudo guardar el template de informe.",
+  "person_filter_has_image": "Tiene imagen"
 }

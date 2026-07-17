@@ -27,6 +27,22 @@
             "value": "INACTIVE"
           }
         ]
+      },
+      {
+        "field": "image",
+        "type": "select",
+        "operator": "nullability",
+        "label": "person_filter_has_image",
+        "options": [
+          {
+            "label": "common_action_yes",
+            "value": "notNull"
+          },
+          {
+            "label": "common_action_no",
+            "value": "isNull"
+          }
+        ]
       }
     ],
     "fields": [
@@ -63,6 +79,22 @@
           {
             "label": "status_inactive",
             "value": "INACTIVE"
+          }
+        ]
+      },
+      {
+        "field": "image",
+        "type": "select",
+        "operator": "nullability",
+        "label": "person_filter_has_image",
+        "options": [
+          {
+            "label": "common_action_yes",
+            "value": "notNull"
+          },
+          {
+            "label": "common_action_no",
+            "value": "isNull"
           }
         ]
       }
@@ -103,6 +135,22 @@
             "value": "INACTIVE"
           }
         ]
+      },
+      {
+        "field": "image",
+        "type": "select",
+        "operator": "nullability",
+        "label": "person_filter_has_image",
+        "options": [
+          {
+            "label": "common_action_yes",
+            "value": "notNull"
+          },
+          {
+            "label": "common_action_no",
+            "value": "isNull"
+          }
+        ]
       }
     ],
     "fields": [
@@ -141,6 +189,22 @@
             "value": "INACTIVE"
           }
         ]
+      },
+      {
+        "field": "image",
+        "type": "select",
+        "operator": "nullability",
+        "label": "person_filter_has_image",
+        "options": [
+          {
+            "label": "common_action_yes",
+            "value": "notNull"
+          },
+          {
+            "label": "common_action_no",
+            "value": "isNull"
+          }
+        ]
       }
     ],
     "fields": [
@@ -154,7 +218,24 @@
   {
     "route": "person",
     "hash": "personChurch",
-    "filters": [],
+    "filters": [
+      {
+        "field": "image",
+        "type": "select",
+        "operator": "nullability",
+        "label": "person_filter_has_image",
+        "options": [
+          {
+            "label": "common_action_yes",
+            "value": "notNull"
+          },
+          {
+            "label": "common_action_no",
+            "value": "isNull"
+          }
+        ]
+      }
+    ],
     "fields": [
       {
         "field": "name",

@@ -1,0 +1,13 @@
+<app-loading [showLoading]="loading || saving" />
+<section class="report-page">
+  <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+  <header><div><h1>{{translate.translate('menu_report_header')}}</h1><p>{{translate.translate('report_template_description')}}</p></div><p-button icon="pi pi-save" [label]="translate.translate('common_save')" (onClick)="save()" /></header>
+  <main>
+    <section class="card image-card"><div class="heading"><i class="pi pi-image"></i><div><h2>{{translate.translate('report_template_image')}}</h2><p>{{translate.translate('report_template_image_help')}}</p></div></div><app-image-upload [imageUrl]="imageUrl" [tokenImageUrl]="model.headerImage" (eventLoading)="imageLoading()" (eventImageToken)="imageChanged($event)" /></section>
+    <div class="content">
+      <section class="card"><div class="heading"><i class="pi pi-align-center"></i><div><h2>{{translate.translate('report_template_header')}}</h2><p>{{translate.translate('report_template_header_help')}}</p></div></div><p-editor [(ngModel)]="model.headerText" [style]="{height:'220px'}" /></section>
+      <section class="card"><div class="heading"><i class="pi pi-align-left"></i><div><h2>{{translate.translate('report_template_footer')}}</h2><p>{{translate.translate('report_template_footer_help')}}</p></div></div><p-editor [(ngModel)]="model.footerText" [style]="{height:'220px'}" /></section>
+      <section class="card preview"><div class="heading"><i class="pi pi-eye"></i><div><h2>{{translate.translate('report_template_preview')}}</h2><p>{{translate.translate('report_template_preview_help')}}</p></div></div><div class="paper"><div class="paper-header">@if(imageUrl){<img [src]="imageUrl" alt=""/>}<div [innerHTML]="model.headerText"></div></div><div class="paper-body"></div><div class="paper-footer" [innerHTML]="model.footerText"></div></div></section>
+    </div>
+  </main>
+</section>

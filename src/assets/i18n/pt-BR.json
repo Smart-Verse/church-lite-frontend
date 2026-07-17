@@ -369,5 +369,6 @@
   "report_template_preview": "Pré-visualização",
   "report_template_preview_help": "Exemplo aproximado da aplicação do template.",
   "report_template_saved": "Template de relatório salvo com sucesso.",
-  "report_template_error": "Não foi possível salvar o template de relatório."
+  "report_template_error": "Não foi possível salvar o template de relatório.",
+  "person_filter_has_image": "Possui imagem"
 }

@@ -55,7 +55,9 @@ export class ImageUploadComponent extends AppControlValueAccessor{
         reader.onload = () => {
           this.onShowLoading();
           if(this._image){
-            this.tokenImageUrl = generateUUIDv4().toUpperCase() + "/" +this._image.name;
+            const imageId = generateUUIDv4().toUpperCase();
+            const extension = this.imageExtension(this._image.name);
+            this.tokenImageUrl = `${imageId}/${imageId}${extension}`;
             this.imageUploadService.onRequestUpload(this.tokenImageUrl).subscribe({
               next: (res) => {
                 var arr = base64ToArrayBuffer(reader.result);
@@ -72,6 +74,12 @@ export class ImageUploadComponent extends AppControlValueAccessor{
     }
   }
 
+
+  private imageExtension(fileName: string): string {
+    const lastDot = fileName.lastIndexOf(".");
+    if (lastDot <= 0 || lastDot === fileName.length - 1) return "";
+    return fileName.substring(lastDot).toLowerCase().replace(/[^.a-z0-9]/g, "");
+  }
 
   private onSendAws(url: string, arrayBuffer: ArrayBuffer) {
     this.imageUploadService.onUpload(url, arrayBuffer).subscribe({
