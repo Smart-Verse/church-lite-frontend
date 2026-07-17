@@ -1,0 +1,9 @@
+:host,
+p-floatLabel {
+  display: block;
+  width: 100%;
+}
+
+:host ::ng-deep .p-multiselect {
+  width: 100%;
+}

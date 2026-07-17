@@ -282,3 +282,10 @@ Ao alterar a tela de grupos e permissões:
 - Não deixar um erro paralelo de grupos/usuários mascarar a resposta do catálogo.
 - Enquanto o backend não tiver `VIEW_ALL`, tratar `VIEW` como permissão de qualquer GET. Quando o contrato evoluir, adicionar coluna Listar e traduções em conjunto.
 - Executar `npm run build` após mudanças.
+
+## Church Lite Multiple Selection
+
+- Usar `app-multi-select`, em `shared/components/inputs/multi-select`, para campos com múltiplas opções; não usar `p-multiSelect` diretamente nas páginas.
+- Informar `route` para o próprio componente carregar opções de um CRUD ou fornecer `options` quando a lista já estiver disponível.
+- Configurar `optionLabel`, `defaultFilter`, `pageSize`, `filter` e `display` conforme a tela, mantendo chips como apresentação padrão.
+- Não repetir carregamento de opções no componente da página quando `app-multi-select` puder fazê-lo.

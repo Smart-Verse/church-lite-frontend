@@ -1,0 +1,4 @@
+<p-floatLabel>
+  <p-multiSelect (ngModelChange)="onChange($event)" [ngModel]="value" [options]="options" [optionLabel]="optionLabel" [dataKey]="dataKey" [display]="display" [filter]="filter" [disabled]="disabled" appendTo="body" class="w-full" styleClass="w-full" [ngClass]="{'ng-invalid ng-dirty': !isValid}" />
+  <label>{{ label }}</label>
+</p-floatLabel>

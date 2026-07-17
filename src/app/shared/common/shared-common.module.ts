@@ -19,6 +19,7 @@ import {InputDateComponent} from "../components/inputs/input-date/input-date.com
 import {InputMaskComponent} from "../components/inputs/input-mask/input-mask.component";
 import {InputNumberComponent} from "../components/inputs/input-number/input-number.component";
 import {ImageUploadComponent} from "../components/inputs/image-upload/image-upload.component";
+import {MultiSelectComponent} from "../components/inputs/multi-select/multi-select.component";
 
 
 
@@ -34,7 +35,8 @@ import {ImageUploadComponent} from "../components/inputs/image-upload/image-uplo
     InputDateComponent,
     InputMaskComponent,
     InputNumberComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    MultiSelectComponent
   ],
   exports: [
     NgIf,
@@ -58,6 +60,7 @@ import {ImageUploadComponent} from "../components/inputs/image-upload/image-uplo
     InputMaskComponent,
     InputNumberComponent,
     ImageUploadComponent,
+    MultiSelectComponent,
     TabsModule
   ]
 })

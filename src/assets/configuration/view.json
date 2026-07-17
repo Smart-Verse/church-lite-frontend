@@ -665,5 +665,28 @@
         "width": "20%"
       }
     ]
+  },
+  {
+    "route": "memberFunction",
+    "hash": "memberFunctions",
+    "filters": [
+      {
+        "field": "name",
+        "type": "string",
+        "label": "common_name"
+      }
+    ],
+    "fields": [
+      {
+        "field": "name",
+        "header": "common_name",
+        "width": "40%"
+      },
+      {
+        "field": "description",
+        "header": "common_description",
+        "width": "40%"
+      }
+    ]
   }
 ]

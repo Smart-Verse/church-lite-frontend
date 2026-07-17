@@ -1,6 +1,8 @@
 # Handoff — Church Lite Frontend
 
-> Atualizado em 16/07/2026.
+> Atualizado em 17/07/2026.
+
+> Configuração da igreja e aprovação de fechamento documentadas em `spec/SESSION_2026-07-17_CASH_CLOSING.md` na raiz do workspace.
 
 ## Visão do produto
 
@@ -415,7 +417,7 @@ Chaves novas devem existir em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.jso
 
 A rota `/home/report-template`, acessível por Configurações globais → Cabeçalho de relatório, mantém a configuração visual usada pelos relatórios. A tela não possui listagem: consulta `reportTemplate` com `size=1` e decide entre POST e PUT conforme a existência do registro.
 
-A imagem reutiliza `app-image-upload` e o fluxo existente de URLs assinadas do S3. Cabeçalho e rodapé usam `p-editor` do PrimeNG com Quill; toda formatação fica no HTML armazenado em `headerText` e `footerText`. Não adicionar novamente campos separados de tamanho de fonte. A página apresenta pré-visualização aproximada em formato de papel.
+A imagem reutiliza o componente compartilhado `app-image-upload`. Cabeçalho e rodapé usam `p-editor` do PrimeNG com Quill; toda formatação fica no HTML armazenado em `headerText` e `footerText`. Não adicionar novamente campos separados de tamanho de fonte. A página apresenta pré-visualização aproximada em formato de papel.
 
 Arquivos principais:
 

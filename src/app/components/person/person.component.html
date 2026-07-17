@@ -7,73 +7,346 @@
   <header class="person-page__header">
     <div class="person-page__heading">
       <h1>{{ translatePersonMembers.translate(pageTitle) }}</h1>
-      <p>{{ translatePersonMembers.translate(personId ? "personal_page_edit_description" : "personal_page_create_description") }}</p>
+      <p>
+        {{
+          translatePersonMembers.translate(
+            personId
+              ? "personal_page_edit_description"
+              : "personal_page_create_description"
+          )
+        }}
+      </p>
     </div>
     <div class="person-page__actions">
-      <p-button type="button" [outlined]="true" [label]="translatePersonMembers.translate('common_action_cancel')" (onClick)="onCancel()" />
-      <p-button type="button" icon="pi pi-check" [disabled]="isSaving" [label]="translatePersonMembers.translate('common_action_save')" (onClick)="onSave()" />
+      <p-button
+        type="button"
+        [outlined]="true"
+        [label]="translatePersonMembers.translate('common_action_cancel')"
+        (onClick)="onCancel()"
+      />
+      <p-button
+        type="button"
+        icon="pi pi-check"
+        [disabled]="isSaving"
+        [label]="translatePersonMembers.translate('common_action_save')"
+        (onClick)="onSave()"
+      />
     </div>
   </header>
 
   <main class="person-page__body person-layout" [formGroup]="personFormGroup">
     <aside class="person-profile-card">
-      <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-camera"></i></span><div><h2>Foto do cadastro</h2><p>Ajuda a identificar a pessoa nas listagens e registros.</p></div></div>
-      <div class="person-profile-card__upload"><app-image-upload [imageUrl]="urlImage" (eventLoading)="loading()" (eventImageToken)="onGetTokenImage($event)" [tokenImageUrl]="imageToken" /></div>
-      <div class="person-card__hint"><i class="pi pi-info-circle"></i><span>Use uma foto quadrada, bem iluminada e com o rosto centralizado.</span></div>
+      <div class="person-card__heading">
+        <span class="person-card__icon"><i class="pi pi-camera"></i></span>
+        <div>
+          <h2>Foto do cadastro</h2>
+          <p>Ajuda a identificar a pessoa nas listagens e registros.</p>
+        </div>
+      </div>
+      <div class="person-profile-card__upload">
+        <app-image-upload
+          [imageUrl]="urlImage"
+          (eventLoading)="loading()"
+          (eventImageToken)="onGetTokenImage($event)"
+          [tokenImageUrl]="imageToken"
+        />
+      </div>
+      <div class="person-card__hint">
+        <i class="pi pi-info-circle"></i
+        ><span
+          >Use uma foto quadrada, bem iluminada e com o rosto
+          centralizado.</span
+        >
+      </div>
     </aside>
 
     <div class="person-sections">
       <section class="person-card">
-        <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-user"></i></span><div><h2>Dados pessoais</h2><p>Informe os dados principais utilizados para identificação no sistema.</p></div></div>
+        <div class="person-card__heading">
+          <span class="person-card__icon"><i class="pi pi-user"></i></span>
+          <div>
+            <h2>Dados pessoais</h2>
+            <p>
+              Informe os dados principais utilizados para identificação no
+              sistema.
+            </p>
+          </div>
+        </div>
         <div class="fields-grid">
-          <app-input-text formControlName="name" name="name" [field]="personFormGroup" class="span-8" [label]="translatePersonMembers.translate('personal_field_name')" type="text" />
-          <app-dropdown formControlName="status" name="status" [field]="personFormGroup" [label]="translatePersonMembers.translate('personal_field_status')" [options]="_status" optionLabel="value" class="span-4" />
-          <app-dropdown formControlName="gender" name="gender" [field]="personFormGroup" [label]="translatePersonMembers.translate('personal_field_gender')" [options]="_gender" optionLabel="value" class="span-4" />
-          <app-dropdown formControlName="maritalStatus" name="maritalStatus" [field]="personFormGroup" [label]="translatePersonMembers.translate('personal_field_maritalStatus')" [options]="_maritalStatus" optionLabel="value" class="span-4" />
-          <app-auto-complete formControlName="nationality" name="nationality" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_nationality')" route="country" optionLabel="name" type="text" />
-          <app-input-text formControlName="birthplace" name="birthplace" [field]="personFormGroup" class="span-12" [label]="translatePersonMembers.translate('personal_field_birthplace')" type="text" />
+          <app-input-text
+            formControlName="name"
+            name="name"
+            [field]="personFormGroup"
+            class="span-8"
+            [label]="translatePersonMembers.translate('personal_field_name')"
+            type="text"
+          />
+          <app-dropdown
+            formControlName="status"
+            name="status"
+            [field]="personFormGroup"
+            [label]="translatePersonMembers.translate('personal_field_status')"
+            [options]="_status"
+            optionLabel="value"
+            class="span-4"
+          />
+          <app-dropdown
+            formControlName="gender"
+            name="gender"
+            [field]="personFormGroup"
+            [label]="translatePersonMembers.translate('personal_field_gender')"
+            [options]="_gender"
+            optionLabel="value"
+            class="span-4"
+          />
+          <app-dropdown
+            formControlName="maritalStatus"
+            name="maritalStatus"
+            [field]="personFormGroup"
+            [label]="
+              translatePersonMembers.translate('personal_field_maritalStatus')
+            "
+            [options]="_maritalStatus"
+            optionLabel="value"
+            class="span-4"
+          />
+          <app-auto-complete
+            formControlName="nationality"
+            name="nationality"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="
+              translatePersonMembers.translate('personal_field_nationality')
+            "
+            route="country"
+            optionLabel="name"
+            type="text"
+          />
+          <app-input-text
+            formControlName="birthplace"
+            name="birthplace"
+            [field]="personFormGroup"
+            class="span-12"
+            [label]="
+              translatePersonMembers.translate('personal_field_birthplace')
+            "
+            type="text"
+          />
         </div>
       </section>
 
       <section class="person-card" formGroupName="personalDocs">
-        <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-id-card"></i></span><div><h2>Documentos</h2><p>Dados oficiais para evitar duplicidade e facilitar consultas futuras.</p></div></div>
+        <div class="person-card__heading">
+          <span class="person-card__icon"><i class="pi pi-id-card"></i></span>
+          <div>
+            <h2>Documentos</h2>
+            <p>
+              Dados oficiais para evitar duplicidade e facilitar consultas
+              futuras.
+            </p>
+          </div>
+        </div>
         <div class="fields-grid">
-          <app-input-mask formControlName="cpf" name="personalDocs.cpf" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_cpf')" mask="999.999.999-99" />
-          <app-input-text formControlName="rg" name="personalDocs.rg" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_rg')" type="text" />
-          <app-input-date formControlName="birthDate" name="personalDocs.birthDate" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_birthdate')" type="date" />
+          <app-input-mask
+            formControlName="cpf"
+            name="personalDocs.cpf"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="translatePersonMembers.translate('personal_field_cpf')"
+            mask="999.999.999-99"
+          />
+          <app-input-text
+            formControlName="rg"
+            name="personalDocs.rg"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="translatePersonMembers.translate('personal_field_rg')"
+            type="text"
+          />
+          <app-input-date
+            formControlName="birthDate"
+            name="personalDocs.birthDate"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="
+              translatePersonMembers.translate('personal_field_birthdate')
+            "
+            type="date"
+          />
         </div>
       </section>
 
       <section class="person-card">
-        <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-phone"></i></span><div><h2>Contato</h2><p>Adicione os canais utilizados para comunicação e avisos.</p></div></div>
-        <div formGroupName="personalTelphone" class="fields-grid">
-          <app-input-mask formControlName="phone" name="personalTelphone.phone" [field]="personFormGroup" class="span-6" [label]="translatePersonMembers.translate('personal_field_phone')" mask="(99) 9999-9999" />
-          <app-input-mask formControlName="cellPhone" name="personalTelphone.cellPhone" [field]="personFormGroup" class="span-6" [label]="translatePersonMembers.translate('personal_field_personalPhone')" mask="(99) 9 9999-9999" />
+        <div class="person-card__heading">
+          <span class="person-card__icon"><i class="pi pi-phone"></i></span>
+          <div>
+            <h2>Contato</h2>
+            <p>Adicione os canais utilizados para comunicação e avisos.</p>
+          </div>
         </div>
-        <div formGroupName="personalEmail" class="fields-grid person-card__subrow">
-          <app-input-text formControlName="email" name="personalEmail.email" [field]="personFormGroup" class="span-12" [label]="translatePersonMembers.translate('personal_field_email')" type="email" />
+        <div formGroupName="personalTelphone" class="fields-grid">
+          <app-input-mask
+            formControlName="phone"
+            name="personalTelphone.phone"
+            [field]="personFormGroup"
+            class="span-6"
+            [label]="translatePersonMembers.translate('personal_field_phone')"
+            mask="(99) 9999-9999"
+          />
+          <app-input-mask
+            formControlName="cellPhone"
+            name="personalTelphone.cellPhone"
+            [field]="personFormGroup"
+            class="span-6"
+            [label]="
+              translatePersonMembers.translate('personal_field_personalPhone')
+            "
+            mask="(99) 9 9999-9999"
+          />
+        </div>
+        <div
+          formGroupName="personalEmail"
+          class="fields-grid person-card__subrow"
+        >
+          <app-input-text
+            formControlName="email"
+            name="personalEmail.email"
+            [field]="personFormGroup"
+            class="span-12"
+            [label]="translatePersonMembers.translate('personal_field_email')"
+            type="email"
+          />
         </div>
       </section>
 
       <section class="person-card" formGroupName="personAddress">
-        <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-map-marker"></i></span><div><h2>Endereço</h2><p>Preencha o local de residência para organização territorial e visitas.</p></div></div>
+        <div class="person-card__heading">
+          <span class="person-card__icon"
+            ><i class="pi pi-map-marker"></i
+          ></span>
+          <div>
+            <h2>Endereço</h2>
+            <p>
+              Preencha o local de residência para organização territorial e
+              visitas.
+            </p>
+          </div>
+        </div>
         <div class="fields-grid">
-          <app-input-mask formControlName="postalCode" name="personAddress.postalCode" [field]="personFormGroup" class="span-3" [label]="translatePersonMembers.translate('personal_field_postalCode')" mask="99999-999" />
-          <app-input-text formControlName="address" name="personAddress.address" [field]="personFormGroup" class="span-7" [label]="translatePersonMembers.translate('personal_field_address')" type="text" />
-          <app-input-text formControlName="number" name="personAddress.number" [field]="personFormGroup" class="span-2" [label]="translatePersonMembers.translate('personal_field_number')" type="text" />
-          <app-input-text formControlName="neighborhood" name="personAddress.neighborhood" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_neighborhood')" type="text" />
-          <app-input-text formControlName="complement" name="personAddress.complement" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_complement')" type="text" />
-          <app-auto-complete formControlName="city" name="personAddress.city" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_city')" route="city" optionLabel="name" type="text" />
+          <app-input-mask
+            formControlName="postalCode"
+            name="personAddress.postalCode"
+            [field]="personFormGroup"
+            class="span-3"
+            [label]="
+              translatePersonMembers.translate('personal_field_postalCode')
+            "
+            mask="99999-999"
+          />
+          <app-input-text
+            formControlName="address"
+            name="personAddress.address"
+            [field]="personFormGroup"
+            class="span-7"
+            [label]="translatePersonMembers.translate('personal_field_address')"
+            type="text"
+          />
+          <app-input-text
+            formControlName="number"
+            name="personAddress.number"
+            [field]="personFormGroup"
+            class="span-2"
+            [label]="translatePersonMembers.translate('personal_field_number')"
+            type="text"
+          />
+          <app-input-text
+            formControlName="neighborhood"
+            name="personAddress.neighborhood"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="
+              translatePersonMembers.translate('personal_field_neighborhood')
+            "
+            type="text"
+          />
+          <app-input-text
+            formControlName="complement"
+            name="personAddress.complement"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="
+              translatePersonMembers.translate('personal_field_complement')
+            "
+            type="text"
+          />
+          <app-auto-complete
+            formControlName="city"
+            name="personAddress.city"
+            [field]="personFormGroup"
+            class="span-4"
+            [label]="translatePersonMembers.translate('personal_field_city')"
+            route="city"
+            optionLabel="name"
+            type="text"
+          />
         </div>
       </section>
 
       @if (showMinisterial) {
         <section class="person-card" formGroupName="personMember">
-          <div class="person-card__heading"><span class="person-card__icon"><i class="pi pi-book"></i></span><div><h2>Informações ministeriais</h2><p>Registre a trajetória da pessoa e sua atuação dentro da igreja.</p></div></div>
+          <div class="person-card__heading">
+            <span class="person-card__icon"><i class="pi pi-book"></i></span>
+            <div>
+              <h2>Informações ministeriais</h2>
+              <p>
+                Registre a trajetória da pessoa e sua atuação dentro da igreja.
+              </p>
+            </div>
+          </div>
           <div class="fields-grid">
-            <app-input-date formControlName="entryDate" name="personMember.entryDate" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_ingressDate')" type="date" />
-            <app-input-date formControlName="dateBaptism" name="personMember.dateBaptism" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_baptismDate')" type="date" />
-            <app-auto-complete formControlName="position" name="personMember.position" [field]="personFormGroup" class="span-4" [label]="translatePersonMembers.translate('personal_field_position')" route="positions" optionLabel="name" type="text" />
+            <app-input-date
+              formControlName="entryDate"
+              name="personMember.entryDate"
+              [field]="personFormGroup"
+              class="span-4"
+              [label]="
+                translatePersonMembers.translate('personal_field_ingressDate')
+              "
+              type="date"
+            />
+            <app-input-date
+              formControlName="dateBaptism"
+              name="personMember.dateBaptism"
+              [field]="personFormGroup"
+              class="span-4"
+              [label]="
+                translatePersonMembers.translate('personal_field_baptismDate')
+              "
+              type="date"
+            />
+            <app-auto-complete
+              formControlName="position"
+              [field]="personFormGroup"
+              class="span-4"
+              [label]="
+                translatePersonMembers.translate('personal_field_position')
+              "
+              route="positions"
+              optionLabel="name"
+              type="text"
+            />
+            @if (_type === "MEMBER") {
+              <div class="span-12">
+                <app-multi-select
+                  formControlName="functions"
+                  name="personMember.functions"
+                  [field]="personFormGroup"
+                  [label]="translatePersonMembers.translate('personal_field_functions')"
+                  route="memberFunction"
+                  optionLabel="name"
+                />
+              </div>
+            }
           </div>
         </section>
       }

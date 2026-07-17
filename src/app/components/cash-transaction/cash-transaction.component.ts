@@ -71,10 +71,11 @@ export class CashTransactionComponent extends BaseComponent implements OnInit {
     this.isSaving = true;
     this.showLoading = true;
     this.crudService.onSave("cashTransactions", dto).subscribe({
-      next: () => {
+      next: response => {
         this.isSaving = false;
         this.showLoading = false;
-        this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
+        const detail = this.action !== 0 && !response.endDate ? 'cash_closing_pending' : 'common_message_success';
+        this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate(detail)});
         this.router.navigate(["/home/transactions"]);
       },
       error: error => {

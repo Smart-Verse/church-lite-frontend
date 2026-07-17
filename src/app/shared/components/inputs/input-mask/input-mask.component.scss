@@ -1,5 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+p-floatLabel {
+  display: block;
+  width: 100%;
+}
+
 :host::ng-deep {
-  .p-inputmask{
+  .p-inputmask,
+  .p-inputtext {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
