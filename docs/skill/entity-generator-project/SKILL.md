@@ -265,3 +265,20 @@ When validating generation, create a temporary project under `/tmp`, copy or cre
 - Do not revert unrelated dirty files.
 - Do not edit generated `_gen` output as source of truth.
 - Keep Node relationship limitations honest in docs until implementation is complete.
+
+
+## Church Lite Permission UI
+
+Ao alterar a tela de grupos e permissões:
+
+- Reusar `app-auto-complete` para selecionar usuários; seguir o padrão de Pessoa/Cidade e não criar seletor próprio.
+- Consumir `getPermissionResources` como fonte da matriz; não inferir recursos de grupos salvos nem manter catálogo estático no frontend.
+- Considerar operações permitidas por padrão e enviar ao backend somente as desmarcadas como `denials`.
+- Renderizar a matriz em `p-table`, com descrição, identificador técnico e colunas de operações traduzidas; usar `p-toggleswitch` e mostrar traço para operação inexistente.
+- Manter nome/descrição/status no padrão dos cadastros; status usa dropdown.
+- Adicionar chaves a todos os catálogos `pt`, `pt-BR`, `en-US` e `es-ES`.
+- Manter o toast global em `AppComponent`, mas fornecer `MessageService` uma única vez em `app.config.ts`; provider local impede mensagens disparadas pelo interceptor de aparecerem.
+- Para `403`, exibir `permission_access_denied`; não esconder o feedback em `catchError` local nem duplicar toast.
+- Não deixar um erro paralelo de grupos/usuários mascarar a resposta do catálogo.
+- Enquanto o backend não tiver `VIEW_ALL`, tratar `VIEW` como permissão de qualquer GET. Quando o contrato evoluir, adicionar coluna Listar e traduções em conjunto.
+- Executar `npm run build` após mudanças.

@@ -10,6 +10,8 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { EnumCookie } from '../../shared/services/cookies/cookie.enum';
 import { CookiesService } from '../../shared/services/cookies/cookies.service';
+import { ToastService } from '../../shared/services/toast/toast.service';
+import { TranslateService } from '../../shared/services/translate/translate.service';
 
 export function authInterceptor(
   originalRequest: HttpRequest<unknown>,
@@ -17,6 +19,8 @@ export function authInterceptor(
 ): Observable<HttpEvent<unknown>> {
   const cookiesService = inject(CookiesService);
   const router = inject(Router);
+  const toast = inject(ToastService);
+  const translate = inject(TranslateService);
 
   let request = originalRequest;
 
@@ -37,9 +41,22 @@ export function authInterceptor(
         cookiesService.delete(EnumCookie.AUTHORIZATION);
         router.navigate(['/login']);
       }
+      if (error.status === 403) {
+        const errorKey = permissionErrorKey(error);
+        toast.error({
+          summary: translate.translate('common_message'),
+          detail: translate.translate(errorKey === 'permission_access_denied' ? errorKey : 'permission_access_denied')
+        });
+      }
       return throwError(() => error);
     })
   );
+}
+
+function permissionErrorKey(error: HttpErrorResponse): string | undefined {
+  const body = error.error;
+  if (typeof body === 'string') return body;
+  return body?.message ?? body?.detail ?? (typeof body?.error === 'string' ? body.error : undefined);
 }
 
 function isPublicAssetOrExternalUrl(url: string): boolean {

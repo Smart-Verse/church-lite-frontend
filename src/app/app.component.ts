@@ -2,7 +2,6 @@ import {} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {Router, RouterOutlet} from '@angular/router';
-import {MessageService} from 'primeng/api';
 import {PrimeNG} from 'primeng/config';
 import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
@@ -20,10 +19,7 @@ import {ThemeService} from "./shared/services/theme/theme.service";
         HttpModule
     ],
     templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    providers: [
-        MessageService,
-    ]
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
   title = 'church-lite-frontend';

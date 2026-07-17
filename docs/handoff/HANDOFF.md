@@ -1,6 +1,6 @@
 # Handoff — Church Lite Frontend
 
-> Atualizado em 15/07/2026.
+> Atualizado em 16/07/2026.
 
 ## Visão do produto
 
@@ -233,8 +233,6 @@ As grafias `singup` e `bank-statament` são legadas e ainda estão em uso. Não 
 
 Presentes no menu, mas sem fluxo consolidado:
 
-- traduções administrativas;
-- permissionamento;
 - cabeçalho de relatórios;
 - notificações definitivas.
 
@@ -398,3 +396,16 @@ Os layouts do módulo foram padronizados para ocupar toda a largura disponível,
 - visitantes, incluindo os campos de próxima ação e observações.
 
 Formulários e tabelas de reuniões e visitantes ficam em linhas completas, evitando cards comprimidos lado a lado. Componentes PrimeNG internos são forçados a preencher a coluna do grid. Todas as novas labels continuam usando os quatro catálogos i18n. Os builds de produção executados após cada revisão foram concluídos com sucesso.
+
+
+## Atualização — grupos e permissionamento (16/07/2026)
+
+A administração de grupos está em `src/app/pages/permission-groups/`. A listagem segue o padrão compacto das demais tabelas. O cadastro possui nome, descrição, status por dropdown, usuários e matriz de permissões. Usuários são pesquisados pelo `app-auto-complete` padrão na rota `userConfiguration`, adicionados à lista e removidos individualmente; não criar seletor paralelo.
+
+A matriz consome `GET /getPermissionResources` e renderiza tabela com descrição e colunas traduzidas Criar, Visualizar, Editar e Excluir. Cada operação existente usa `p-toggleswitch`; operação ausente mostra traço. Switch ligado significa permitido e desligado vira denial no payload. Recursos novos do JSON aparecem ligados automaticamente. O identificador técnico fica abaixo da descrição.
+
+O carregamento do catálogo não deve ser mascarado por falhas paralelas de grupos/usuários. Todas as chamadas relativas passam pelo `authInterceptor`, que prefixa `environment.apiUrl` e envia JWT. O backend deve aceitar o preflight CORS.
+
+O feedback de autorização é global: respostas `403` exibem a tradução `permission_access_denied`. Existe apenas um `MessageService`, fornecido em `app.config.ts`; não adicionar provider local no `AppComponent`, pois o interceptor e o `<p-toast>` precisam compartilhar a mesma instância.
+
+Chaves novas devem existir em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`. Enquanto não existir `VIEW_ALL`, a coluna Visualizar representa toda operação GET. Especificação canônica: `spec/FEATURE_PERMISSION_GROUPS_SPEC.md`. Build validado com `npm run build`.
