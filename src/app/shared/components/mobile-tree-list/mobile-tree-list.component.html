@@ -1,0 +1,10 @@
+<div class="mobile-tree">
+ @for(row of visibleRows;track row.node.data.id??$index){
+ <article class="mobile-tree__card" [style.--tree-level]="row.level">
+  <button class="mobile-tree__toggle" [class.mobile-tree__toggle--hidden]="!hasChildren(row.node)" type="button" (click)="toggle(row.node)" [attr.aria-expanded]="isExpanded(row.node)"><i class="pi" [class.pi-chevron-down]="isExpanded(row.node)" [class.pi-chevron-right]="!isExpanded(row.node)"></i></button>
+  <div class="mobile-tree__fields">@for(field of fields;track field.field){<div class="mobile-tree__field"><span>{{translateService.translate(field.header)}}</span><strong>{{value(row.node.data,field.field)}}</strong></div>}</div>
+  <div class="mobile-tree__actions"><p-button icon="pi pi-plus" [text]="true" [rounded]="true" (onClick)="emit(row.node.data,'add')"/><p-button icon="pi pi-pencil" [text]="true" [rounded]="true" (onClick)="emit(row.node.data,'edit')"/><p-button icon="pi pi-trash" severity="danger" [text]="true" [rounded]="true" (onClick)="emit(row.node.data,'delete')"/></div>
+ </article>
+ }@empty{<div class="mobile-tree__empty"><i class="pi pi-sitemap"></i><strong>{{translateService.translate('datatable_empty_title')}}</strong><span>{{translateService.translate('datatable_empty_description')}}</span></div>}
+ <div #sentinel class="mobile-tree__sentinel">@if(loading){<i class="pi pi-spin pi-spinner"></i>}</div>
+</div>

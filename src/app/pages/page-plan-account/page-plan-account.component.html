@@ -67,6 +67,7 @@
           </td></tr>
         </ng-template>
       </p-treeTable>
+      <app-mobile-tree-list [nodes]="datatable.treeValues" [fields]="datatable.fields" [loading]="incrementalLoading" [hasMore]="datatable.values.length < datatable.totalRecords" (loadMore)="loadMoreMobile()" (treeAction)="onMobileAction($event)" />
     </div>
 
     <footer class="tree-card__footer">

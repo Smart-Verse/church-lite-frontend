@@ -48,6 +48,8 @@
   overflow: auto;
 }
 
+.datatable__mobile-list { display: none; }
+
 :host ::ng-deep .datatable__prime .p-datatable-table {
   table-layout: auto;
 }
@@ -264,6 +266,17 @@
     width: 100%;
   }
 
+  :host ::ng-deep .datatable__prime { display: none; }
+  .datatable__mobile-list { display: flex; flex-direction: column; gap: .65rem; padding: .75rem; }
+  .datatable__mobile-card { display: flex; align-items: center; gap: .75rem; padding: .85rem .6rem .85rem .9rem; border: 1px solid var(--p-content-border-color); border-radius: 10px; background: var(--p-content-background); }
+  .datatable__mobile-fields { display: grid; flex: 1; min-width: 0; gap: .55rem; }
+  .datatable__mobile-field { display: flex; min-width: 0; flex-direction: column; gap: .15rem; }
+  .datatable__mobile-field span { color: var(--p-text-muted-color); font-size: .65rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+  .datatable__mobile-field strong { overflow: hidden; color: var(--p-text-color); font-size: .85rem; font-weight: 550; text-overflow: ellipsis; white-space: nowrap; }
+  .datatable__mobile-actions { display: flex; flex: 0 0 auto; }
+  .datatable__mobile-empty { min-height: 22rem; }
+  .datatable__mobile-sentinel { display: flex; align-items: center; justify-content: center; min-height: 2.5rem; color: var(--p-primary-color); }
+
   .datatable__footer {
     align-items: flex-start;
     flex-direction: column;
@@ -272,7 +285,6 @@
   }
 
   :host ::ng-deep .datatable__footer .p-paginator {
-    width: 100%;
-    justify-content: center;
+    display: none;
   }
 }

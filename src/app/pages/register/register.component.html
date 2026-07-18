@@ -15,6 +15,7 @@
     <app-datatable
       (onRefresh)="onLoadAllData($event)"
       (onRegister)="onSelectedData($event)"
+      [loading]="incrementalLoading"
       [config]="datatable" />
   </main>
 </section>

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule  } from 'primeng/table';
 import { DataTable } from './datatable';
@@ -43,7 +43,7 @@ export enum Action {
     templateUrl: './datatable.component.html',
     styleUrl: './datatable.component.scss'
 })
-export class DatatableComponent implements OnChanges {
+export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
 
   sidebarVisible: boolean = false;
@@ -52,14 +52,19 @@ export class DatatableComponent implements OnChanges {
   appliedFilter: string = "";
   readonly tableStyle = {width: "100%", "min-width": "42rem"};
   @Input() config: DataTable = new DataTable();
+  @Input() loading: boolean = false;
+  @ViewChild('mobileSentinel') mobileSentinel?: ElementRef<HTMLElement>;
 
   @Output() onRegister: EventEmitter<any> = new EventEmitter();
   @Output() onRefresh: EventEmitter<RequestData> = new EventEmitter();
+  private mobileObserver?: IntersectionObserver;
+  private requestingNextPage = false;
 
   constructor(
     private confirmationService: ConfirmationService,
     public readonly translateService: TranslateService,
     private datePipe: DatePipe,
+    @Inject(PLATFORM_ID) private readonly platformId: object,
   ){
   }
 
@@ -70,7 +75,23 @@ export class DatatableComponent implements OnChanges {
       this.appliedFilter = "";
       this.sidebarVisible = false;
     }
+    if (changes["loading"] && !this.loading) {
+      this.requestingNextPage = false;
+      if (isPlatformBrowser(this.platformId)) {
+        setTimeout(() => this.loadNextMobilePage());
+      }
+    }
   }
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId) || !this.mobileSentinel) return;
+    this.mobileObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) this.loadNextMobilePage();
+    }, {rootMargin: '240px 0px'});
+    this.mobileObserver.observe(this.mobileSentinel.nativeElement);
+  }
+
+  ngOnDestroy(): void { this.mobileObserver?.disconnect(); }
 
   onRowData(row: any, header: string, col: any){
     const keys = header.split(".");
@@ -99,6 +120,20 @@ export class DatatableComponent implements OnChanges {
     data.size = $event.rows;
     data.offset = $event.page ? $event.page + 1 : 0;
     data.filter = this.appliedFilter;
+    this.onRefresh.emit(data);
+  }
+
+  private loadNextMobilePage(): void {
+    if (!isPlatformBrowser(this.platformId)
+      || !window.matchMedia('(max-width: 768px)').matches
+      || this.loading || this.requestingNextPage
+      || this.config.values.length >= this.config.totalRecords) return;
+    const data = new RequestData();
+    data.size = this.config.size;
+    data.offset = this.config.page + 1;
+    data.filter = this.appliedFilter;
+    data.append = true;
+    this.requestingNextPage = true;
     this.onRefresh.emit(data);
   }
 

@@ -33,6 +33,7 @@ export class RegisterComponent
   };
   public breadcrumbItems: MenuItem[] = [];
   private loadSubscription?: Subscription;
+  incrementalLoading = false;
 
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -65,22 +66,36 @@ export class RegisterComponent
 
   onLoadAllData(requestData: RequestData): void {
     this.loadSubscription?.unsubscribe();
-    this.showLoading = true;
+    const append = requestData.append === true;
+    this.incrementalLoading = append;
+    this.showLoading = !append;
     requestData = this.includeFilters(requestData);
     this.loadSubscription = this.crudService
       .onGetAll(this.configuration.route, requestData)
       .subscribe({
         next: (res) => {
-          this.datatable.values = res.contents;
+          const contents = res.contents ?? [];
+          this.datatable.values = append ? this.uniqueById([...this.datatable.values, ...contents]) : contents;
           this.datatable.totalRecords = res.total;
           this.datatable.page = res.offset + 1;
           this.datatable.size = res.size;
           this.showLoading = false;
+          this.incrementalLoading = false;
         },
         error: () => {
           this.showLoading = false;
+          this.incrementalLoading = false;
         },
       });
+  }
+
+  private uniqueById(values: any[]): any[] {
+    const seen = new Set<unknown>();
+    return values.filter(value => {
+      const key = value?.id;
+      if (key == null || !seen.has(key)) { if (key != null) seen.add(key); return true; }
+      return false;
+    });
   }
 
   onDelete(id: any): void {

@@ -18,6 +18,7 @@ import {ConfirmationService} from "primeng/api";
 import {TableModule} from "primeng/table";
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {MenuItem} from "primeng/api";
+import {MobileTreeAction, MobileTreeListComponent} from "../../shared/components/mobile-tree-list/mobile-tree-list.component";
 
 @Component({
     selector: 'app-page-plan-account',
@@ -30,6 +31,7 @@ import {MenuItem} from "primeng/api";
         PaginatorModule,
         TableModule,
         BreadcrumbModule,
+        MobileTreeListComponent,
     ],
     providers: [
         CrudService,
@@ -53,6 +55,7 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
   readonly tableStyle = {width: "100%", "min-width": "42rem"};
   breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
   breadcrumbItems: MenuItem[] = [];
+  incrementalLoading = false;
 
   constructor(
     private readonly crudService: CrudService,
@@ -81,20 +84,44 @@ export class PagePlanAccountComponent extends BaseComponent implements OnInit  {
   }
 
   onLoadAllData(requestData: RequestData): void {
-    this.onShowLoading();
+    requestData.filter = [requestData.filter, "parentCode isNull"].filter(Boolean).join(" and ");
+    const append = requestData.append === true;
+    this.incrementalLoading = append;
+    if (!append) this.showLoading = true;
     this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
       next: (res) => {
-        this.datatable.values = res.contents;
+        const contents = res.contents ?? [];
+        this.datatable.values = append ? this.uniqueById([...this.datatable.values, ...contents]) : contents;
         this.datatable.totalRecords = res.total;
         this.datatable.page = res.offset + 1;
         this.datatable.size = res.size;
-        this.datatable.treeValues = this.onLoadChildren(res.contents).filter(e => !String(e.data.codeTree).includes("."));
-        this.onShowLoading();
+        this.datatable.treeValues = this.onLoadChildren(this.datatable.values).filter(e => !String(e.data.codeTree).includes("."));
+        this.showLoading = false;
+        this.incrementalLoading = false;
       },
       error: (err) => {
-        this.onShowLoading();
+        this.showLoading = false;
+        this.incrementalLoading = false;
       }
     });
+  }
+
+  loadMoreMobile(): void {
+    const request = new RequestData();
+    request.size = this.datatable.size;
+    request.offset = this.datatable.page + 1;
+    request.append = true;
+    this.onLoadAllData(request);
+  }
+
+  onMobileAction(event: MobileTreeAction): void {
+    const action = event.action === 'delete' ? Action.DELETE : event.action === 'edit' ? Action.EDIT : Action.ADD;
+    action === Action.DELETE ? this.onDeleteData(event.data, action) : this.onRegisterData(event.data, action, null);
+  }
+
+  private uniqueById(values: any[]): any[] {
+    const seen = new Set<unknown>();
+    return values.filter(value => !seen.has(value?.id) && !!seen.add(value?.id));
   }
 
   onDelete(id: any): void {

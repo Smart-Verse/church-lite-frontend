@@ -4,4 +4,5 @@ export class RequestData {
   filter: string = "";
   order: string = "";
   displayFields: string = "*";
+  append?: boolean = false;
 }
