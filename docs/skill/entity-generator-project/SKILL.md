@@ -283,6 +283,18 @@ Ao alterar a tela de grupos e permissões:
 - Enquanto o backend não tiver `VIEW_ALL`, tratar `VIEW` como permissão de qualquer GET. Quando o contrato evoluir, adicionar coluna Listar e traduções em conjunto.
 - Executar `npm run build` após mudanças.
 
+## Church Lite Plans and Permission UI
+
+- Tratar permissionamento e assinatura como camadas independentes e cumulativas: um grupo pode permitir a operação, mas nunca liberar uma feature ou capacidade ausente no plano.
+- No interceptor, preservar `permission_access_denied` para bloqueios do usuário e traduzir a chave específica `subscription_*` recebida em respostas `403/422`.
+- Ocultar menu ou desabilitar botão é orientação visual, não segurança; manter todas as regras no backend.
+- Carregar `GET /getCurrentSubscription` antes de montar páginas que chamam APIs condicionadas a feature, evitando requisições sabidamente bloqueadas.
+- Em falha da consulta de assinatura, não inutilizar toda a aplicação; o backend ainda protege as operações.
+- Recarregar o snapshot após mutações que alterem consumo.
+- Ao atingir limite, preservar leitura, edição e exclusão quando a regra do recurso assim permitir; bloquear somente criação, ativação ou mudança de tipo relevante.
+- Não tratar o catálogo `bank` como conta bancária: os recursos financeiros limitados são registros `cash` dos tipos `CASH_ACCOUNT` e `BANK_ACCOUNT`.
+- Manter uma única instância global de `MessageService` para que erros disparados pelo interceptor apareçam no mesmo `p-toast`.
+
 ## Church Lite Multiple Selection
 
 - Usar `app-multi-select`, em `shared/components/inputs/multi-select`, para campos com múltiplas opções; não usar `p-multiSelect` diretamente nas páginas.

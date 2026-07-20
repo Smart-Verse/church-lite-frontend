@@ -468,3 +468,14 @@ Overrides de idioma não são consultados quando `CUSTOM_TRANSLATIONS` está des
 ### Complemento — limites financeiros (20/07/2026)
 
 O formulário de caixas limita separadamente registros físicos (`CASH_ACCOUNT`) e contas bancárias (`BANK_ACCOUNT`) conforme o tipo selecionado. Criação e mudança de tipo são bloqueadas sem capacidade; editar um registro mantendo seu tipo continua permitido. O catálogo de instituições bancárias não é limitado. Após salvar, o estado da assinatura é recarregado.
+
+
+## Encerramento — assinatura, autorização e site público (20/07/2026)
+
+O `authInterceptor` diferencia as duas camadas de bloqueio: `permission_access_denied` representa autorização do usuário; respostas `403/422` com chave `subscription_*` representam plano, feature ou limite e devem manter a mensagem específica do backend. A interface pode ocultar e desabilitar ações para orientar o usuário, mas o backend continua sendo a autoridade.
+
+O site público de lançamento vive em `../site/`, separado em `index.html`, `styles.css` e `app.js`, com Vue 3 via CDN. `APP_URL`, no topo de `app.js`, é a única origem dos links para `/login` e `/singup`. A landing apresenta somente funcionalidades confirmadas pelos handoffs e pelo produto atual. Não anunciar notificações, conciliação, impressão, exportações, checkout ou qualquer fluxo ainda não consolidado.
+
+A seção de planos contém os valores e limites persistidos: pessoas 30/150/500, usuários 2/5/15, células ativas 2/15/60, caixas 1/5/20, contas bancárias 1/5/20, grupos ativos 1/5/ilimitado e armazenamento 100 MB/1 GB/5 GB. Dashboard financeiro/agenda, traduções personalizadas e template de relatório aparecem como recursos pagos implementados. Os CTAs dos planos pagos levam ao cadastro gratuito porque ainda não existe checkout online.
+
+Validações finais: build de produção Angular aprovado; site validado com `node --check`, balanceamento CSS e DOM Vue renderizado em Chrome headless.
