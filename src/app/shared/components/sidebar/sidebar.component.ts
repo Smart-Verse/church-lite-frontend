@@ -12,6 +12,8 @@ import {UserConfigurationService} from "../../../services/user-configuration/use
 import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
 import {ThemeService} from "../../services/theme/theme.service";
 import {TranslateService} from "../../services/translate/translate.service";
+import {SubscriptionBannerComponent} from '../subscription-banner/subscription-banner.component';
+import {SubscriptionService} from '../../services/subscription/subscription.service';
 
 
 
@@ -26,7 +28,8 @@ import {TranslateService} from "../../services/translate/translate.service";
         AvatarGroupModule,
         RouterOutlet,
         SidebarSubmenuComponent,
-        MenuModule
+        MenuModule,
+        SubscriptionBannerComponent
     ],
     providers: [
         UserConfigurationService,
@@ -53,6 +56,7 @@ export class SidebarComponent implements OnInit {
     private readonly imageService: ImageUploadService,
     private readonly themeService: ThemeService,
     private readonly translateService: TranslateService,
+    private readonly subscriptionService: SubscriptionService,
   ){
     this.menu = new MenuItens(this.translateService);
     this.menuItems = this.menu.menuItems;
@@ -147,7 +151,7 @@ export class SidebarComponent implements OnInit {
         this.themeService.onConfigurationTheme(res.output.theme);
         this.translateService.loadTranslationsUser(res.output.lang).subscribe(() => {
           this.menu = new MenuItens(this.translateService);
-          this.menuItems = this.menu.menuItems;
+          this.menuItems = this.filterPaidItems(this.menu.menuItems);
           this.currentMenu = this.menuItems.find((item: any) => item.route === this.currentMenu?.route) ?? this.menuItems[0];
         });
         if (!res.output.userPhoto) {
@@ -160,6 +164,15 @@ export class SidebarComponent implements OnInit {
         });
       }
     });
+  }
+
+  private filterPaidItems(items: any[]): any[] {
+    if (!this.subscriptionService.isFree()) return items;
+    const blockedRoutes = new Set(['translations', 'report-template']);
+    return items.map(item => ({
+      ...item,
+      submenu: this.filterPaidItems(item.submenu ?? [])
+    })).filter(item => !blockedRoutes.has(item.route));
   }
 
 

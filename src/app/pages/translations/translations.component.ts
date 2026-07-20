@@ -11,6 +11,8 @@ import { LoadingComponent } from '../../shared/components/loading/loading.compon
 import { CrudService } from '../../shared/services/crud/crud.service';
 import { ToastService } from '../../shared/services/toast/toast.service';
 import { TranslateService, TranslationOverride } from '../../shared/services/translate/translate.service';
+import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
+import {Router} from '@angular/router';
 
 interface TranslationRow {
   key: string;
@@ -43,10 +45,13 @@ export class TranslationsComponent implements OnInit {
   constructor(
     public readonly translateService: TranslateService,
     private readonly crud: CrudService,
-    private readonly toast: ToastService
+    private readonly toast: ToastService,
+    private readonly subscription: SubscriptionService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
+    if (!this.subscription.hasFeature('CUSTOM_TRANSLATIONS')) { this.subscription.requestUpgrade(); this.router.navigate(['/home/dashboard']); return; }
     this.language = this.translateService.currentLanguage();
     this.breadcrumbItems = [{label: this.translateService.translate('translations')}];
     this.load();

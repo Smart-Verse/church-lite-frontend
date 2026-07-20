@@ -1,0 +1,46 @@
+@if (subscription.isFree()) {
+  <aside class="subscription-banner">
+    <div class="subscription-banner__message">
+      <i class="pi pi-sparkles"></i>
+      <span>{{ translate.translate('subscription_free_banner') }}</span>
+    </div>
+    <p-button
+      size="small"
+      icon="pi pi-arrow-up-right"
+      [label]="translate.translate('subscription_upgrade')"
+      (onClick)="subscription.requestUpgrade()" />
+  </aside>
+}
+
+<p-dialog
+  [header]="translate.translate('subscription_upgrade_title')"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [visible]="subscription.upgradeVisible()"
+  (visibleChange)="subscription.upgradeVisible.set($event)"
+  styleClass="subscription-dialog"
+  [style]="{width: 'min(760px, 94vw)'}">
+  <p class="subscription-dialog__intro">{{ translate.translate('subscription_upgrade_description') }}</p>
+  <div class="subscription-plans">
+    <article>
+      <span>{{ translate.translate('subscription_essential') }}</span>
+      <strong>R$ 19,99<small>/mês</small></strong>
+      <ul>
+        <li>{{ translate.translate('subscription_essential_people') }}</li>
+        <li>{{ translate.translate('subscription_essential_users') }}</li>
+        <li>{{ translate.translate('subscription_paid_features') }}</li>
+      </ul>
+    </article>
+    <article class="featured">
+      <span>{{ translate.translate('subscription_premium') }}</span>
+      <strong>R$ 39,99<small>/mês</small></strong>
+      <ul>
+        <li>{{ translate.translate('subscription_premium_people') }}</li>
+        <li>{{ translate.translate('subscription_premium_users') }}</li>
+        <li>{{ translate.translate('subscription_premium_support') }}</li>
+      </ul>
+    </article>
+  </div>
+  <p class="subscription-dialog__contact">{{ translate.translate('subscription_contact_message') }}</p>
+</p-dialog>

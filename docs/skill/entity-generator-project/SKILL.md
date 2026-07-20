@@ -289,3 +289,13 @@ Ao alterar a tela de grupos e permissões:
 - Informar `route` para o próprio componente carregar opções de um CRUD ou fornecer `options` quando a lista já estiver disponível.
 - Configurar `optionLabel`, `defaultFilter`, `pageSize`, `filter` e `display` conforme a tela, mantendo chips como apresentação padrão.
 - Não repetir carregamento de opções no componente da página quando `app-multi-select` puder fazê-lo.
+
+## Church Lite Mobile Lists
+
+- Manter `p-table`/`p-treeTable` e paginação no desktop; abaixo de 768 px usar as apresentações mobile compartilhadas.
+- No `app-datatable`, carregar páginas incrementais com `IntersectionObserver`, anexar e deduplicar por `id`.
+- Tratar `RequestData.append` somente como estado de interface; não enviá-lo à API.
+- Reiniciar a lista ao pesquisar, filtrar, atualizar ou trocar de rota.
+- Para árvores, reutilizar `app-mobile-tree-list`, preservar expansão por nó e paginar somente raízes com `parentCode isNull`.
+- Não paginar pais e filhos como uma lista achatada.
+- Impedir carregamentos simultâneos, parar ao atingir o total e executar `npm run build`.

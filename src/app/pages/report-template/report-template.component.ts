@@ -7,6 +7,8 @@ import {SharedCommonModule} from '../../shared/common/shared-common.module';
 import {ImageUploadService} from '../../shared/components/inputs/image-upload/image-upload.service';
 import {ToastService} from '../../shared/services/toast/toast.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
+import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
+import {Router} from '@angular/router';
 
 interface ReportTemplate{id?:string;headerImage:string;headerText:string;footerText:string}
 
@@ -21,8 +23,8 @@ export class ReportTemplateComponent implements OnInit{
  breadcrumbItems:MenuItem[]=[];
  model:ReportTemplate={headerImage:'',headerText:'',footerText:''};
  imageUrl='';loading=false;saving=false;
- constructor(private http:HttpClient,private images:ImageUploadService,private toast:ToastService,public translate:TranslateService){}
- ngOnInit(){this.breadcrumbItems=[{label:this.translate.translate('menu_report_header')}];this.load();}
+ constructor(private http:HttpClient,private images:ImageUploadService,private toast:ToastService,public translate:TranslateService,private subscription:SubscriptionService,private router:Router){}
+ ngOnInit(){if(!this.subscription.hasFeature('REPORT_TEMPLATE')){this.subscription.requestUpgrade();this.router.navigate(['/home/dashboard']);return;}this.breadcrumbItems=[{label:this.translate.translate('menu_report_header')}];this.load();}
  load(){this.loading=true;this.http.get<any>('reportTemplate',{params:{size:1,offset:1,filter:'',order:'',displayFields:'*'}}).subscribe({next:r=>{this.model=r.contents?.[0]??this.model;this.loadImage();},error:e=>this.error(e)});}
  loadImage(){if(!this.model.headerImage){this.imageUrl='';this.loading=false;return;}this.images.onRequestDonwload(this.model.headerImage).subscribe({next:r=>{this.imageUrl=r.url;this.loading=false;},error:()=>{this.imageUrl='';this.loading=false;}});}
  imageLoading(){this.loading=!this.loading;}

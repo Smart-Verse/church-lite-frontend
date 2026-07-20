@@ -1,3 +1,11 @@
+@if (featureBlocked) {
+  <section class="feature-gate">
+    <i class="pi pi-chart-line"></i>
+    <h1>{{ translate.translate('subscription_feature_title') }}</h1>
+    <p>{{ translate.translate('subscription_feature_description') }}</p>
+    <p-button icon="pi pi-arrow-up-right" [label]="translate.translate('subscription_upgrade')" (onClick)="subscription.requestUpgrade()" />
+  </section>
+} @else {
 <div class="dashboard-shell">
   <header class="dashboard-header">
     <div><span class="eyebrow">Visão executiva</span><h1>Dashboard</h1><p>Acompanhe as finanças e os próximos compromissos da igreja.</p></div>
@@ -80,3 +88,4 @@
     </ng-container>
   </section>
 </div>
+}

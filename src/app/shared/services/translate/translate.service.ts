@@ -4,6 +4,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { map, Observable, of, switchMap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { languages } from '../../util/constants';
+import {SubscriptionService} from '../subscription/subscription.service';
 
 export interface TranslationOverride {
   id?: string;
@@ -20,7 +21,8 @@ export class TranslateService {
 
   constructor(
     private readonly http: HttpClient,
-    @Inject(PLATFORM_ID) private readonly platformId: Object
+    @Inject(PLATFORM_ID) private readonly platformId: Object,
+    private readonly subscription: SubscriptionService
   ) {}
 
   loadTranslations(): Observable<void> {
@@ -40,7 +42,7 @@ export class TranslateService {
     return this.getDefaultTranslations(language).pipe(
       switchMap(defaults => {
         this.defaults = defaults;
-        if (!includeOverrides) {
+        if (!includeOverrides || !this.subscription.hasFeature('CUSTOM_TRANSLATIONS')) {
           this.translations = {...defaults};
           return of(void 0);
         }

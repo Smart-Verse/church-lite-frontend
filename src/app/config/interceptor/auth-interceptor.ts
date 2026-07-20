@@ -41,11 +41,12 @@ export function authInterceptor(
         cookiesService.delete(EnumCookie.AUTHORIZATION);
         router.navigate(['/login']);
       }
-      if (error.status === 403) {
+      if (error.status === 403 || error.status === 422) {
         const errorKey = permissionErrorKey(error);
+        const subscriptionError = errorKey?.startsWith('subscription_');
         toast.error({
           summary: translate.translate('common_message'),
-          detail: translate.translate(errorKey === 'permission_access_denied' ? errorKey : 'permission_access_denied')
+          detail: translate.translate(subscriptionError ? errorKey! : 'permission_access_denied')
         });
       }
       return throwError(() => error);

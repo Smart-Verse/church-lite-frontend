@@ -426,3 +426,45 @@ Arquivos principais:
 - `src/app/pages/report-template/report-template.component.scss`.
 
 O pacote `quill` é dependência direta. O build pode emitir aviso não bloqueante de CommonJS para `quill-delta`. Textos da funcionalidade existem em `pt.json`, `pt-BR.json`, `en-US.json` e `es-ES.json`. Validação concluída com `npm run build`.
+
+
+## Atualização — listagens mobile incrementais (17/07/2026)
+
+O `DatatableComponent` possui duas apresentações sobre o mesmo estado e o mesmo `CrudService`: `p-table` paginada no desktop e cards com carregamento incremental abaixo de 768 px. O mobile usa `IntersectionObserver` com antecipação de 240 px, anexa novas páginas, deduplica por `id` e mostra o loading no final da lista sem bloquear a página.
+
+`RequestData.append` é um sinal local para a página consumidora decidir entre substituir ou anexar resultados. O `CrudService.onGetAll` continua enviando somente os parâmetros HTTP conhecidos; não encaminhar `append` ao backend. Pesquisa, filtros, atualização e troca de listagem devem sempre reiniciar os dados.
+
+Plano de Contas e Centro de Custo reutilizam `shared/components/mobile-tree-list`. No mobile, a árvore é apresentada como cards recuados por nível, com expansão/recolhimento e ações de adicionar filho, editar e excluir. O lazy incremental pagina somente raízes com `parentCode isNull`; cada DTO raiz fornece seus filhos aninhados. No desktop, o `p-treeTable` e o paginador permanecem.
+
+Ao evoluir essas listagens:
+
+- manter uma única fonte de dados para desktop e mobile;
+- usar sentinel com `IntersectionObserver`, não evento bruto de scroll;
+- impedir requisições concorrentes e interromper ao atingir `totalRecords`;
+- preservar o filtro aplicado nas páginas incrementais;
+- em árvores, nunca paginar uma sequência achatada de pais e filhos;
+- validar claro, escuro, expansão profunda, lista vazia e viewport curta.
+
+Build de produção validado com `npm run build`; permaneceu somente o aviso conhecido do `quill-delta`.
+
+
+## Atualização — planos e limites SaaS no frontend (19/07/2026)
+
+O estado da assinatura é centralizado em `shared/services/subscription/SubscriptionService`. O shell consulta `GET /getCurrentSubscription` antes de montar menu e páginas; falha nessa consulta não bloqueia o restante da aplicação. O serviço mantém a resposta em memória e expõe estado para plano, recursos, funcionalidades e modal de upgrade.
+
+Contas FREE exibem um banner fixo com botão “Ver planos”. Ele abre somente uma apresentação dos planos Essencial (R$ 19,99) e Premium (R$ 39,99), sem checkout fictício. Contas pagas não exibem o banner.
+
+As limitações visuais complementam, mas nunca substituem, o backend:
+
+- pessoas e usuários administrativos desabilitam a criação ao atingir o limite;
+- células podem ser criadas como planejadas e bloqueiam apenas a ativação sem capacidade;
+- criação de grupo de permissão ativo respeita o limite;
+- dashboard executivo mostra paywall sem chamar suas APIs;
+- traduções personalizadas e template de relatório somem do menu FREE e recusam URL direta;
+- erros de assinatura 403/422 exibem a mensagem específica devolvida pelo backend.
+
+Overrides de idioma não são consultados quando `CUSTOM_TRANSLATIONS` está desabilitado. Build validado com `ng build --configuration production --no-progress`; permaneceu apenas o aviso conhecido do `quill-delta`.
+
+### Complemento — limites financeiros (20/07/2026)
+
+O formulário de caixas limita separadamente registros físicos (`CASH_ACCOUNT`) e contas bancárias (`BANK_ACCOUNT`) conforme o tipo selecionado. Criação e mudança de tipo são bloqueadas sem capacidade; editar um registro mantendo seu tipo continua permitido. O catálogo de instituições bancárias não é limitado. Após salvar, o estado da assinatura é recarregado.

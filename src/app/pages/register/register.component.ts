@@ -12,6 +12,8 @@ import { ToastService } from '../../shared/services/toast/toast.service';
 import { Subscription } from 'rxjs';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
+import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
+import {SubscriptionResource} from '../../shared/services/subscription/subscription.models';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +44,7 @@ export class RegisterComponent
     private readonly registerService: RegisterService,
     private readonly toastService: ToastService,
     public readonly translateService: TranslateService,
+    public readonly subscriptionService: SubscriptionService,
   ) {
     super();
   }
@@ -102,6 +105,7 @@ export class RegisterComponent
     this.onShowLoading();
     this.crudService.onDelete(this.configuration.route, id).subscribe({
       next: (res) => {
+        this.subscriptionService.load(true);
         this.onLoadAllData(new RequestData());
         this.onShowLoading();
         this.onToast(1, '');
@@ -136,6 +140,22 @@ export class RegisterComponent
 
   ngOnDestroy(): void {
     this.loadSubscription?.unsubscribe();
+  }
+
+  get createResource(): SubscriptionResource | null {
+    if (this.configuration.route === 'person') return 'PERSON';
+    if (this.configuration.route === 'userConfiguration') return 'ADMIN_USER';
+    return null;
+  }
+
+  get createDisabled(): boolean {
+    return !!this.createResource && !this.subscriptionService.canCreate(this.createResource);
+  }
+
+  get createDisabledReason(): string {
+    return this.createDisabled
+      ? this.translateService.translate('subscription_resource_limit_reached')
+      : '';
   }
 
   private setBreadcrumb(): void {

@@ -1,0 +1,92 @@
+:host {
+  display: block;
+}
+
+.subscription-banner {
+  align-items: center;
+  background: color-mix(in srgb, var(--p-primary-color) 12%, var(--p-content-background));
+  border: 1px solid color-mix(in srgb, var(--p-primary-color) 30%, var(--p-content-border-color));
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 1rem 1.25rem 0;
+  padding: .75rem 1rem;
+}
+
+.subscription-banner__message {
+  align-items: center;
+  color: var(--p-text-color);
+  display: flex;
+  font-size: .9rem;
+  gap: .65rem;
+}
+
+.subscription-banner__message i {
+  color: var(--p-primary-color);
+  font-size: 1.1rem;
+}
+
+:host ::ng-deep .subscription-dialog .p-dialog-content {
+  padding-top: .25rem;
+}
+
+.subscription-dialog__intro,
+.subscription-dialog__contact {
+  color: var(--p-text-muted-color);
+  line-height: 1.5;
+}
+
+.subscription-plans {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1.25rem 0;
+}
+
+.subscription-plans article {
+  background: var(--p-content-background);
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.subscription-plans article.featured {
+  border-color: var(--p-primary-color);
+  box-shadow: 0 0 0 1px var(--p-primary-color);
+}
+
+.subscription-plans span,
+.subscription-plans strong {
+  display: block;
+}
+
+.subscription-plans strong {
+  color: var(--p-text-color);
+  font-size: 1.65rem;
+  margin-top: .5rem;
+}
+
+.subscription-plans strong small {
+  color: var(--p-text-muted-color);
+  font-size: .8rem;
+  font-weight: 500;
+}
+
+.subscription-plans ul {
+  color: var(--p-text-muted-color);
+  line-height: 1.8;
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .subscription-banner {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .subscription-plans {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,6 +4,8 @@ import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, finaliz
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
 import { AgendaSnapshot, DashboardFilters, FinancialSnapshot, GroupExpense } from './models/dashboard.models';
 import { DashboardService } from './services/dashboard.service';
+import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
+import {TranslateService} from '../../shared/services/translate/translate.service';
 
 @Component({
   selector: 'app-dash',
@@ -23,10 +25,16 @@ export class DashComponent implements OnInit, OnDestroy {
   filters: DashboardFilters = this.defaultFilters();
   private readonly filterChanges = new Subject<DashboardFilters>();
   private readonly destroy$ = new Subject<void>();
+  featureBlocked = false;
 
-  constructor(private readonly dashboardService: DashboardService, private readonly router: Router) {}
+  constructor(private readonly dashboardService: DashboardService, private readonly router: Router, public readonly subscription: SubscriptionService, public readonly translate: TranslateService) {}
 
   ngOnInit(): void {
+    if (!this.subscription.hasFeature('EXECUTIVE_DASHBOARD')) {
+      this.featureBlocked = true;
+      this.loadingFinancial = this.loadingAgenda = false;
+      return;
+    }
     this.filterChanges.pipe(
       debounceTime(250),
       distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),

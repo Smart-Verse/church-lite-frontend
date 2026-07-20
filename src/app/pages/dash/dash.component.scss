@@ -48,3 +48,4 @@ h1, h2, h3, p { margin: 0; } h1 { font-size: 1.85rem; margin: .2rem 0; } h2 { fo
   .alert-row { color: var(--p-text-color); }
   .primary-button { background: var(--p-primary-color); }
 }
+.feature-gate{min-height:60vh;display:grid;place-content:center;text-align:center;justify-items:center;gap:1rem;padding:2rem}.feature-gate>i{font-size:3rem;color:var(--primary-color)}.feature-gate h1,.feature-gate p{margin:0}.feature-gate p{max-width:34rem;color:var(--text-color-secondary)}

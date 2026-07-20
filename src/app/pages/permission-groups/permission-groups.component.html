@@ -12,7 +12,7 @@
         <p-iconField iconPosition="left" class="permissions-card__search"><p-inputIcon><i class="pi pi-search"></i></p-inputIcon><input pInputText type="search" [(ngModel)]="search" [placeholder]="translate.translate('datatable_search')" /></p-iconField>
         <div class="permissions-card__toolbar-actions">
           <p-button icon="pi pi-refresh" [text]="true" [rounded]="true" [ariaLabel]="translate.translate('datatable_refresh')" (onClick)="load()" />
-          <p-button icon="pi pi-plus" [label]="translate.translate('permission_group_new')" (onClick)="create()" />
+          <p-button icon="pi pi-plus" [disabled]="!subscription.canCreate('ACTIVE_PERMISSION_GROUP')" [label]="translate.translate('permission_group_new')" (onClick)="create()" />
         </div>
       </div>
       <div class="permissions-card__content">

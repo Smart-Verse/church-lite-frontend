@@ -14,6 +14,7 @@ import { ConfirmationService } from 'primeng/api';
 import { FormsModule } from "@angular/forms";
 import { SelectModule } from "primeng/select";
 import { TranslateService } from '../../services/translate/translate.service';
+import {TooltipModule} from 'primeng/tooltip';
 
 
 export enum Action {
@@ -34,7 +35,8 @@ export enum Action {
     PaginatorModule,
     ConfirmDialogModule,
     FormsModule,
-    SelectModule
+    SelectModule,
+    TooltipModule
 ],
     providers: [
         ConfirmationService,
@@ -53,6 +55,8 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
   readonly tableStyle = {width: "100%", "min-width": "42rem"};
   @Input() config: DataTable = new DataTable();
   @Input() loading: boolean = false;
+  @Input() createDisabled: boolean = false;
+  @Input() createDisabledReason: string = '';
   @ViewChild('mobileSentinel') mobileSentinel?: ElementRef<HTMLElement>;
 
   @Output() onRegister: EventEmitter<any> = new EventEmitter();
@@ -142,6 +146,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   onRegisterData(item: any, action: Action){
+    if (action === Action.ADD && this.createDisabled) return;
     let obj = {
       data: item,
       action: action

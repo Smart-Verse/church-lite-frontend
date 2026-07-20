@@ -16,6 +16,8 @@
       (onRefresh)="onLoadAllData($event)"
       (onRegister)="onSelectedData($event)"
       [loading]="incrementalLoading"
+      [createDisabled]="createDisabled"
+      [createDisabledReason]="createDisabledReason"
       [config]="datatable" />
   </main>
 </section>

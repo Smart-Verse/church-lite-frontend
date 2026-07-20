@@ -1,3 +1,5 @@
 <div class="home">
-    <app-sidebar></app-sidebar>
+    @if (subscription.resolved()) {
+      <app-sidebar />
+    }
 </div>

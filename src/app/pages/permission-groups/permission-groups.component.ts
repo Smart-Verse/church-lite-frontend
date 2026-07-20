@@ -10,6 +10,7 @@ import {ToggleSwitchModule} from 'primeng/toggleswitch';
 import {SharedCommonModule} from '../../shared/common/shared-common.module';
 import {ToastService} from '../../shared/services/toast/toast.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
+import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 interface ResourcePermission{resource:string;description:string;permissions:string[]}
 interface Denial{id?:string;resource:string;permission:string}
 interface Group{id?:string;name:string;description?:string;active:boolean;userIds:string[];members?:{id?:string;userId:string}[];denials:Denial[]}
@@ -24,7 +25,7 @@ export class PermissionGroupsComponent implements OnInit{
  readonly breadcrumbHome:MenuItem={icon:'pi pi-home',routerLink:'/home/dashboard'};
  breadcrumbItems:MenuItem[]=[];groups:Group[]=[];resources:ResourcePermission[]=[];users:User[]=[];
  selected?:Group;selectedUser?:User;loading=false;saving=false;search='';
- constructor(private http:HttpClient,private toast:ToastService,public translate:TranslateService){}
+ constructor(private http:HttpClient,private toast:ToastService,public translate:TranslateService,public subscription:SubscriptionService){}
  ngOnInit(){this.breadcrumbItems=[{label:this.translate.translate('menu_permissions')}];this.load();}
  get selectedUsers(){return this.selected?.userIds.map(id=>this.users.find(user=>(user.hash??user.id)===id)).filter((user):user is User=>!!user)??[];}
  hasPermission(resource:ResourcePermission,permission:string){return resource.permissions.includes(permission);}
@@ -41,7 +42,7 @@ export class PermissionGroupsComponent implements OnInit{
    this.users=r.users?.contents??[];
    this.loading=false;
   },error:e=>this.error(e)});}
- create(){this.selectedUser=undefined;this.selected={name:'',description:'',active:true,userIds:[],denials:[]};}
+ create(){if(!this.subscription.canCreate('ACTIVE_PERMISSION_GROUP')){this.subscription.requestUpgrade();return;}this.selectedUser=undefined;this.selected={name:'',description:'',active:true,userIds:[],denials:[]};}
  edit(group:Group){this.selectedUser=undefined;this.selected={...group,userIds:[...group.userIds],denials:group.denials.map(d=>({...d}))};}
  cancel(){this.selectedUser=undefined;this.selected=undefined;}
  allowed(resource:string,permission:string){return !this.selected?.denials.some(d=>d.resource===resource&&d.permission===permission);}
