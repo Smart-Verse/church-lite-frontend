@@ -2,12 +2,16 @@
 <div class="signup">
     <div class="signup-container">
         <div class="formgrid grid">
-            <div class="field col-12 md:col-12 image-logo">
+            <div class="field col-12 md:col-12 brand-lockup">
+                <span class="product-mark">✦</span>
+                <div><strong>Church <em>Lite</em></strong><small>Um produto SmartVerse</small></div>
             </div>
-            <div class="field col-12 md:col-12">
-                <p class="text">Cadastre-se</p>
+            <div class="field col-12 md:col-12 signup-heading">
+                <span class="signup-kicker">COMECE GRATUITAMENTE</span>
+                <p class="text">Crie sua igreja</p>
+                <p class="signup-intro">Dê o primeiro passo para organizar pessoas, células, agenda e finanças em um só lugar.</p>
             </div>
-            <form class="field col-12 md:col-12" action="" [formGroup]="signUp">
+            <form class="field col-12 md:col-12" [formGroup]="signUp" (ngSubmit)="onRegister()">
                 <div class="field">
                     <p-floatLabel>
                         <input pInputText id="name" class="w-full"  formControlName="name"/>
@@ -32,20 +36,26 @@
                         <label for="confirPassword">Confirmação de senha</label>
                     </p-floatLabel>
                 </div>
+                <div class="outline field col-12 md:col-12">
+                    <p-button type="submit" pRipple [outlined]="false" styleClass="p-button-rounded w-full">
+                        <div class="btn-tx">Criar conta</div>
+                    </p-button>
+                </div>
             </form>
-            <div class="outline field col-12 md:col-12 ">
-                <p-button pRipple (onClick)="onRegister()" [outlined]="false"  styleClass="p-button-rounded w-full">
-                    <div class="btn-tx">
-                    Criar conta
-                    </div>
-                </p-button>
-            </div>
             <div class="w-full c-margin">
                 <div class="text-sign">Ja possui conta? <a (click)="onSign()">Entre</a></div>
             </div>
         </div>
     </div>
     <div class="signup-area">
-        <div class="image-area"></div>
+        <span class="ambient ambient-one"></span>
+        <span class="ambient ambient-two"></span>
+        <div class="ecosystem-panel">
+            <span class="ecosystem-label">SUA IGREJA, MAIS CONECTADA</span>
+            <span class="smartverse-wordmark"><img src="assets/logo/smartverse.svg" alt="SmartVerse"></span>
+            <h1>Comece simples. Organize com clareza. <em>Cresça com propósito.</em></h1>
+            <p>O Church Lite reúne a rotina da sua igreja em uma plataforma leve, segura e preparada para acompanhar cada nova fase.</p>
+            <div class="signup-benefits"><span>✓ Sem cartão</span><span>✓ Plano grátis permanente</span><span>✓ Comece em minutos</span></div>
+        </div>
     </div>
 </div>

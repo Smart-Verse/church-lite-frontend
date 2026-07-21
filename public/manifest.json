@@ -1,0 +1,29 @@
+{
+  "name": "Church Lite — Gestão de Igrejas",
+  "short_name": "Church Lite",
+  "description": "Gestão de pessoas, células, agenda e finanças para igrejas.",
+  "id": "/church-lite/",
+  "start_url": "/church-lite/",
+  "scope": "/church-lite/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#faf9fc",
+  "theme_color": "#7043de",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/church-lite-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/church-lite-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

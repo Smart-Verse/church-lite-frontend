@@ -47,7 +47,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
 
   onSignUp() {
-    this.router.navigate(["singup"])
+    this.router.navigate(["signup"])
   }
 
   onLogin(){

@@ -50,7 +50,7 @@ export const routes: Routes = [
     canActivate: [publicGuard],
   },
   {
-    path: 'singup',
+    path: 'signup',
     component: SignupComponent,
     pathMatch: 'full',
     canActivate: [publicGuard],

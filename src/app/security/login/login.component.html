@@ -2,12 +2,16 @@
 <div class="login">
     <div class="login-container">
         <div class="formgrid grid">
-            <div class="field col-12 md:col-12 image-logo">
+            <div class="field col-12 md:col-12 brand-lockup">
+                <span class="product-mark">✦</span>
+                <div><strong>Church <em>Lite</em></strong><small>Um produto SmartVerse</small></div>
             </div>
             <div class="field col-12 md:col-12 c-margin">
-                <p class="text">Login na sua conta</p>
+                <span class="login-kicker">BEM-VINDO DE VOLTA</span>
+                <p class="text">Acesse sua igreja</p>
+                <p class="login-intro">Entre para continuar cuidando de pessoas, células, agenda e finanças.</p>
             </div>
-            <form class="field col-12 md:col-12" [formGroup]="loginForm">
+            <form class="field col-12 md:col-12" [formGroup]="loginForm" (ngSubmit)="onLogin()">
                 <div class="field col-12 md:col-12 c-margin">
                     <p-floatLabel >
                         <input pInputText id="email" formControlName="email" class="w-full" />
@@ -20,15 +24,12 @@
                         <label for="password">Senha</label>
                     </p-floatLabel>
                 </div>
+                <div class="outline field col-12 md:col-12">
+                    <p-button type="submit" pRipple [outlined]="false" styleClass="p-button-rounded w-full">
+                        <div class="btn-tx">Login</div>
+                    </p-button>
+                </div>
             </form>
-            
-            <div class="outline field col-12 md:col-12">
-                <p-button (onClick)="onLogin()" pRipple [outlined]="false"  styleClass="p-button-rounded w-full">
-                    <div class="btn-tx">
-                    Login
-                    </div>
-                </p-button>
-            </div>
             <div class="outline field col-12 md:col-12">
                 <p-button pRipple [outlined]="true"  styleClass="p-button-rounded w-full">
                     <div class="btn-tx">
@@ -42,6 +43,14 @@
         </div>
     </div>
     <div class="login-area">
-        <div class="image-area"></div>
+        <span class="ambient ambient-one"></span>
+        <span class="ambient ambient-two"></span>
+        <div class="ecosystem-panel">
+            <span class="ecosystem-label">ECOSSISTEMA DE SOLUÇÕES DIGITAIS</span>
+            <span class="smartverse-wordmark"><img src="assets/logo/smartverse.svg" alt="SmartVerse"></span>
+            <h1>Tecnologia para simplificar rotinas e <em>conectar pessoas.</em></h1>
+            <p>O Church Lite é o primeiro produto SmartVerse, criado para transformar a gestão de igrejas com clareza, cuidado e propósito.</p>
+            <div class="ecosystem-proof"><span>Church Lite</span><i></i><small>O primeiro capítulo do nosso ecossistema</small></div>
+        </div>
     </div>
 </div>

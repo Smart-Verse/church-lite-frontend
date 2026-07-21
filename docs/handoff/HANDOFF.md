@@ -202,7 +202,7 @@ Rotas públicas:
 
 - `/login`;
 - `/select-tenant`;
-- `/singup`;
+- `/signup`;
 - `/register-church/:hash`.
 
 Rotas privadas sob `/home`:
@@ -217,7 +217,7 @@ Rotas privadas sob `/home`:
 - rotas explícitas de receitas, despesas, bancos, caixas, cargos, tipos de evento e usuários;
 - `planAccount` e `costCenter`, incluindo criação/edição.
 
-As grafias `singup` e `bank-statament` são legadas e ainda estão em uso. Não renomear sem revisar todos os links.
+A grafia `bank-statament` é legada e ainda está em uso. A antiga rota incorreta `singup` foi corrigida para `signup` em 21/07/2026.
 
 ## Funcionalidades implementadas
 
@@ -474,7 +474,7 @@ O formulário de caixas limita separadamente registros físicos (`CASH_ACCOUNT`)
 
 O `authInterceptor` diferencia as duas camadas de bloqueio: `permission_access_denied` representa autorização do usuário; respostas `403/422` com chave `subscription_*` representam plano, feature ou limite e devem manter a mensagem específica do backend. A interface pode ocultar e desabilitar ações para orientar o usuário, mas o backend continua sendo a autoridade.
 
-O site público de lançamento vive em `../site/`, separado em `index.html`, `styles.css` e `app.js`, com Vue 3 via CDN. `APP_URL`, no topo de `app.js`, é a única origem dos links para `/login` e `/singup`. A landing apresenta somente funcionalidades confirmadas pelos handoffs e pelo produto atual. Não anunciar notificações, conciliação, impressão, exportações, checkout ou qualquer fluxo ainda não consolidado.
+O site público de lançamento vive em `../site/`, separado em `index.html`, `styles.css` e `app.js`, com Vue 3 via CDN. `APP_URL`, no topo de `app.js`, é a única origem dos links para `/login` e `/signup`. A landing apresenta somente funcionalidades confirmadas pelos handoffs e pelo produto atual. Não anunciar notificações, conciliação, impressão, exportações, checkout ou qualquer fluxo ainda não consolidado.
 
 A seção de planos contém os valores e limites persistidos: pessoas 30/150/500, usuários 2/5/15, células ativas 2/15/60, caixas 1/5/20, contas bancárias 1/5/20, grupos ativos 1/5/ilimitado e armazenamento 100 MB/1 GB/5 GB. Dashboard financeiro/agenda, traduções personalizadas e template de relatório aparecem como recursos pagos implementados. Os CTAs dos planos pagos levam ao cadastro gratuito porque ainda não existe checkout online.
 

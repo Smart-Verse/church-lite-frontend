@@ -90,3 +90,42 @@ a{
       color: rgb(20, 13, 13);
     }
   }
+/* Identidade Church Lite + ecossistema SmartVerse */
+.login{min-height:100vh;height:auto;background:#faf9fc}
+.login .login-container{width:38%;min-width:430px;padding:48px;background:#faf9fc}
+.login .login-container>.formgrid{width:100%;max-width:420px}
+.brand-lockup{display:flex;align-items:center;gap:13px;margin-bottom:58px}
+.product-mark{width:44px;height:44px;display:grid;place-items:center;border-radius:13px;color:#fff;background:linear-gradient(135deg,#9c7cff,#6840d0);box-shadow:0 10px 26px rgba(104,64,208,.28)}
+.brand-lockup strong{display:block;color:#201a30;font:700 22px Manrope,Inter,sans-serif;letter-spacing:-.04em}
+.brand-lockup strong em{color:#7950df;font-style:normal}
+.brand-lockup small{display:block;margin-top:2px;color:#8b8495;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.login-kicker{display:block;margin-bottom:10px;color:#7650d0;font-size:10px;font-weight:800;letter-spacing:.15em}
+.login .text{margin-bottom:8px;color:#201a30;font:700 30px Manrope,Inter,sans-serif;letter-spacing:-.04em}
+.login-intro{max-width:355px;margin-bottom:34px;color:#746d7e;font-size:13px;line-height:1.65}
+.login .c-margin{margin-bottom:23px}
+.login .outline{margin-top:4px}
+.login .text-sign{margin-top:42px;color:#817989;font-size:13px}
+.login a{color:#7043de;font-weight:700}
+.login .login-area{position:relative;width:62%;overflow:hidden;background:radial-gradient(circle at 78% 18%,rgba(55,190,168,.2),transparent 27%),radial-gradient(circle at 18% 82%,rgba(139,92,246,.3),transparent 34%),linear-gradient(145deg,#171426,#211735 58%,#17242d)}
+.ambient{position:absolute;border-radius:50%;filter:blur(4px);pointer-events:none}
+.ambient-one{width:430px;height:430px;right:-190px;top:-180px;border:1px solid rgba(116,214,191,.16);box-shadow:0 0 0 65px rgba(116,214,191,.025),0 0 0 130px rgba(116,214,191,.02)}
+.ambient-two{width:360px;height:360px;left:-170px;bottom:-160px;border:1px solid rgba(156,124,255,.18);box-shadow:0 0 0 60px rgba(156,124,255,.03)}
+.ecosystem-panel{position:relative;z-index:1;width:min(650px,78%);color:#fff}
+.ecosystem-label{color:#bcaaf2;font-size:10px;font-weight:800;letter-spacing:.2em}
+.smartverse-wordmark{width:360px;height:112px;margin:21px 0 28px;overflow:hidden;display:block}
+.smartverse-wordmark img{width:360px;height:360px;display:block;object-fit:cover;object-position:center;transform:translateY(-124px);filter:brightness(1.3)}
+.ecosystem-panel h1{max-width:620px;margin:0 0 22px;font:700 clamp(34px,4vw,55px)/1.08 Manrope,Inter,sans-serif;letter-spacing:-.05em}
+.ecosystem-panel h1 em{color:#bca8ff;font-family:Georgia,serif;font-weight:400}
+.ecosystem-panel>p{max-width:560px;color:#b8b1c3;font-size:16px;line-height:1.75}
+.ecosystem-proof{margin-top:48px;display:flex;align-items:center;gap:15px;color:#fff;font-size:12px;font-weight:700}
+.ecosystem-proof i{width:34px;height:1px;background:#7253c1}
+.ecosystem-proof small{color:#8f879a;font-weight:500}
+:host::ng-deep .login .p-inputtext{min-height:50px;border:1px solid #e4dfeb;background:#fff;box-shadow:none}
+:host::ng-deep .login .p-inputtext:enabled:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+:host::ng-deep .login .p-button{min-height:48px}
+:host::ng-deep .login .p-button:not(.p-button-outlined){color:#fff;background:linear-gradient(135deg,#8b5cf6,#7043de);border-color:transparent}
+:host::ng-deep .login .p-button.p-button-outlined{color:#5f5769;border-color:#dcd6e5;background:#fff}
+@media(max-width:900px){.login .login-container{width:46%;min-width:390px}.login .login-area{width:54%}.ecosystem-panel{width:82%}.smartverse-wordmark{width:280px}.smartverse-wordmark img{width:280px;height:280px;transform:translateY(-96px)}.ecosystem-panel h1{font-size:36px}}
+@media(max-width:700px){.login{display:block}.login .login-container{width:100%;min-width:0;padding:32px 24px}.login .login-container>.formgrid{max-width:430px;margin:auto}.login .login-area{display:none}.brand-lockup{margin-bottom:48px}}
+
+@media(min-width:701px){.login{height:100vh;overflow:hidden}.login .login-area{min-height:100vh;align-self:stretch}}
