@@ -1,0 +1,11 @@
+@if (reports.length) {
+  <p-menu #reportMenu [model]="menuItems" [popup]="true" appendTo="body" />
+  <p-button
+    type="button"
+    icon="pi pi-print"
+    [outlined]="outlined"
+    [loading]="loading"
+    [disabled]="disabled"
+    [label]="translate.translate(reports.length > 1 ? 'screen_reports' : 'common_print')"
+    (onClick)="open($event, reportMenu)" />
+}

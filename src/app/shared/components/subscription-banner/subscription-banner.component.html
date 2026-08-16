@@ -4,9 +4,7 @@
       <i class="pi pi-sparkles"></i>
       <span>{{ translate.translate('subscription_free_banner') }}</span>
     </div>
-    <p-button
-      size="small"
-      icon="pi pi-arrow-up-right"
+    <p-button size="small" icon="pi pi-arrow-up-right"
       [label]="translate.translate('subscription_upgrade')"
       (onClick)="subscription.requestUpgrade()" />
   </aside>
@@ -18,29 +16,95 @@
   [draggable]="false"
   [resizable]="false"
   [visible]="subscription.upgradeVisible()"
-  (visibleChange)="subscription.upgradeVisible.set($event)"
+  (visibleChange)="visibleChanged($event)"
   styleClass="subscription-dialog"
-  [style]="{width: 'min(760px, 94vw)'}">
+  [style]="{width: 'min(820px, 94vw)'}">
   <p class="subscription-dialog__intro">{{ translate.translate('subscription_upgrade_description') }}</p>
+
+  <div class="billing-cycle">
+    <div>
+      <label for="billing-cycle">{{ translate.translate('subscription_billing_cycle') }}</label>
+      <small>{{ translate.translate('subscription_billing_cycle_help') }}</small>
+    </div>
+    <p-select inputId="billing-cycle" [(ngModel)]="billingCycle" [options]="cycles"
+      optionValue="value" appendTo="body">
+      <ng-template #selectedItem let-selected>
+        {{ translate.translate(selected.labelKey) }}
+      </ng-template>
+      <ng-template #item let-option>
+        <div class="cycle-option">
+          <span>{{ translate.translate(option.labelKey) }}</span>
+          @if (option.discount > 0) {
+            <small>{{ option.discount }}% {{ translate.translate('subscription_discount') }}</small>
+          }
+        </div>
+      </ng-template>
+    </p-select>
+  </div>
+
   <div class="subscription-plans">
     <article>
       <span>{{ translate.translate('subscription_essential') }}</span>
-      <strong>R$ 19,99<small>/mês</small></strong>
+      <strong>R$ 19,99<small>/{{ translate.translate('subscription_month') }}</small></strong>
       <ul>
         <li>{{ translate.translate('subscription_essential_people') }}</li>
         <li>{{ translate.translate('subscription_essential_users') }}</li>
         <li>{{ translate.translate('subscription_paid_features') }}</li>
       </ul>
+      <div class="plan-checkout">
+        <small>{{ translate.translate('subscription_checkout_total') }}</small>
+        <b>{{ money(total('ESSENTIAL')) }}</b>
+      </div>
+      <p-button icon="pi pi-lock" [label]="translate.translate('subscription_subscribe')"
+        [loading]="checkoutPlan === 'ESSENTIAL'" [disabled]="checkoutPlan !== null"
+        (onClick)="checkout('ESSENTIAL')" />
     </article>
     <article class="featured">
       <span>{{ translate.translate('subscription_premium') }}</span>
-      <strong>R$ 39,99<small>/mês</small></strong>
+      <strong>R$ 39,99<small>/{{ translate.translate('subscription_month') }}</small></strong>
       <ul>
         <li>{{ translate.translate('subscription_premium_people') }}</li>
         <li>{{ translate.translate('subscription_premium_users') }}</li>
         <li>{{ translate.translate('subscription_premium_support') }}</li>
       </ul>
+      <div class="plan-checkout">
+        <small>{{ translate.translate('subscription_checkout_total') }}</small>
+        <b>{{ money(total('PREMIUM')) }}</b>
+      </div>
+      <p-button icon="pi pi-lock" [label]="translate.translate('subscription_subscribe')"
+        [loading]="checkoutPlan === 'PREMIUM'" [disabled]="checkoutPlan !== null"
+        (onClick)="checkout('PREMIUM')" />
     </article>
   </div>
-  <p class="subscription-dialog__contact">{{ translate.translate('subscription_contact_message') }}</p>
+
+  <p class="subscription-dialog__contact">
+    <i class="pi pi-shield"></i>
+    {{ translate.translate('subscription_checkout_security') }}
+  </p>
+
+  @if (historyLoading || history.length) {
+    <section class="payment-history">
+      <h3>{{ translate.translate('subscription_payment_history') }}</h3>
+      @if (historyLoading) {
+        <p>{{ translate.translate('subscription_payment_history_loading') }}</p>
+      } @else {
+        <div class="payment-history__list">
+          @for (payment of history.slice(0, 5); track payment.id) {
+            <div class="payment-history__item">
+              <div>
+                <b>{{ payment.planCode }}</b>
+                <small>{{ cycleLabel(payment.billingCycle) }} · {{ payment.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
+              </div>
+              <div class="payment-history__summary">
+                <b>{{ money(payment.amountCents / 100) }}</b>
+                <span [class]="'status status--' + payment.status.toLowerCase()">
+                  {{ statusLabel(payment.status) }}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </section>
+  }
 </p-dialog>

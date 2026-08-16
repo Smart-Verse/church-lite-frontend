@@ -18,4 +18,8 @@ export class SecurityService {
     return this.http.post<any>(`register`, params);
   }
 
+  public resendConfirmation(email: string): Observable<{ accepted: boolean }> {
+    return this.http.post<{ accepted: boolean }>(`resendConfirmation`, { email });
+  }
+
 }

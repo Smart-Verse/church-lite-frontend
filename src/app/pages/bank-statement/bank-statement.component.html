@@ -15,7 +15,7 @@
   </section>
 
   <main class="statement-card">
-    <div class="statement-card__toolbar"><div><h2>{{ translateService.translate('financial_page_transactions') }}</h2><span>{{ _currentAccount?.description || translateService.translate('bank_statement_select_account') }}</span></div><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_currentAccount?.id" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div>
+    <div class="statement-card__toolbar"><div><h2>{{ translateService.translate('financial_page_transactions') }}</h2><span>{{ _currentAccount?.description || translateService.translate('bank_statement_select_account') }}</span></div><div class="statement-card__toolbar-actions"><app-screen-report-button screen="/home/bank-statament" [data]="reportData" [disabled]="!_currentAccount?.id" /><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_currentAccount?.id" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div></div>
     <div class="statement-card__content">
       <p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="statement-table p-datatable-sm">
         <ng-template pTemplate="header"><tr><th>{{ translateService.translate('common_date') }}</th><th>{{ translateService.translate('common_description') }}</th><th>{{ translateService.translate('common_name') }}</th><th>{{ translateService.translate('transactions_operation') }}</th><th class="statement-table__value">{{ translateService.translate('financial_value') }}</th></tr></ng-template>

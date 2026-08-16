@@ -13,6 +13,7 @@ import {CrudService} from "../../shared/services/crud/crud.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {RequestData} from "../../shared/interfaces/request-data";
 import {DataTable} from "../../shared/components/datatable/datatable";
+import {ScreenReportButtonComponent} from '../../shared/components/screen-report-button/screen-report-button.component';
 
 @Component({
     selector: 'app-transactions',
@@ -21,7 +22,8 @@ import {DataTable} from "../../shared/components/datatable/datatable";
         SharedCommonModule,
         TableModule,
         PaginatorModule,
-        BreadcrumbModule
+        BreadcrumbModule,
+        ScreenReportButtonComponent
     ],
     providers: [
         TransactionsService,
@@ -127,6 +129,21 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   onRefresh(): void {
     if (!this._transactionID) return;
     this.onLoadAllData(this._requestData);
+  }
+
+  get reportData(): Record<string, unknown> {
+    return {
+      contents: this._datatable.values,
+      total: this._datatable.totalRecords,
+      size: this._datatable.size,
+      offset: Math.max(0, this._datatable.page - 1),
+      cash: this._currentCash,
+      initialBalance: this._startBalance,
+      revenues: this._revenues,
+      expenses: this._expenses,
+      balance: this._totalBalance,
+      filter: this._requestData.filter,
+    };
   }
 
   private includeFilters(requestData: RequestData) {

@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
 
   public signUp: FormGroup;
   public showLoading = false;
+  public pendingConfirmation = false;
   
   constructor(
     private readonly fieldsService: FieldsService,
@@ -46,6 +47,7 @@ export class SignupComponent implements OnInit {
       this.toastService.info({summary: "Erro", detail: "Existem campos no formulario invalido"});
       return;
     }
+    this.pendingConfirmation = false;
     this.showLoading = true;
     this.securityService.register(this.signUp.value).subscribe({
       next: (res) => {
@@ -54,7 +56,34 @@ export class SignupComponent implements OnInit {
         this.onSign();
       },
       error: (error) => {
-        this.toastService.error({summary: "Erro", detail: "ocorreu um erro ao cadastrar usuário"});
+        const errorKey = error?.error?.message ?? error?.error?.detail ?? error?.error;
+        this.pendingConfirmation = errorKey === 'account_confirmation_pending';
+        this.toastService.error({
+          summary: "Erro",
+          detail: this.pendingConfirmation
+            ? "Esta conta ainda precisa ser confirmada. Você pode reenviar o e-mail."
+            : "Ocorreu um erro ao cadastrar o usuário."
+        });
+        this.showLoading = false;
+      }
+    });
+  }
+
+  onResendConfirmation(): void {
+    const email = this.signUp.value.email;
+    if (!email || this.showLoading) return;
+
+    this.showLoading = true;
+    this.securityService.resendConfirmation(email).subscribe({
+      next: () => {
+        this.toastService.success({
+          summary: "E-mail solicitado",
+          detail: "Se a conta estiver pendente, você receberá um novo link de confirmação."
+        });
+        this.showLoading = false;
+      },
+      error: () => {
+        this.toastService.error({ summary: "Erro", detail: "Não foi possível solicitar o reenvio agora." });
         this.showLoading = false;
       }
     });

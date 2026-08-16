@@ -38,8 +38,10 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
       this.registerChurchService.onValidURL(this.token).subscribe({
         next: (res) => {
           if(res.authorize){
-            this.toast.success({summary:"Conta confirmada com suceesso",detail: "Conta confirmada com sucesso"});
+            this.toast.success({summary:"Conta confirmada", detail: "Conta confirmada com sucesso"});
             this.router.navigate(["login"]);
+          } else {
+            this.showMessage = "Este link de confirmação é inválido ou não está mais disponível.";
           }
           this.onShowLoading();
         },

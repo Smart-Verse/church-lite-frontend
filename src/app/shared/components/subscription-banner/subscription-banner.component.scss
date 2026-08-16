@@ -37,6 +37,41 @@
   line-height: 1.5;
 }
 
+.billing-cycle {
+  align-items: center;
+  background: color-mix(in srgb, var(--p-primary-color) 7%, var(--p-content-background));
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 12px;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: .85rem 1rem;
+}
+
+.billing-cycle label,
+.billing-cycle small,
+.cycle-option span,
+.cycle-option small {
+  display: block;
+}
+
+.billing-cycle label {
+  color: var(--p-text-color);
+  font-weight: 650;
+}
+
+.billing-cycle small,
+.cycle-option small {
+  color: var(--p-text-muted-color);
+  margin-top: .2rem;
+}
+
+.cycle-option small {
+  color: var(--p-primary-color);
+  font-size: .72rem;
+}
+
 .subscription-plans {
   display: grid;
   gap: 1rem;
@@ -48,6 +83,8 @@
   background: var(--p-content-background);
   border: 1px solid var(--p-content-border-color);
   border-radius: 14px;
+  display: flex;
+  flex-direction: column;
   padding: 1.25rem;
 }
 
@@ -75,10 +112,75 @@
 
 .subscription-plans ul {
   color: var(--p-text-muted-color);
+  flex: 1;
   line-height: 1.8;
   margin: 1rem 0 0;
   padding-left: 1.1rem;
 }
+
+.plan-checkout {
+  border-top: 1px solid var(--p-content-border-color);
+  display: flex;
+  justify-content: space-between;
+  margin: .9rem 0;
+  padding-top: .9rem;
+}
+
+.plan-checkout small { color: var(--p-text-muted-color); }
+.plan-checkout b { color: var(--p-text-color); }
+
+.subscription-dialog__contact {
+  align-items: center;
+  display: flex;
+  gap: .5rem;
+}
+
+.subscription-dialog__contact i { color: var(--p-primary-color); }
+
+.payment-history {
+  border-top: 1px solid var(--p-content-border-color);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.payment-history h3 {
+  color: var(--p-text-color);
+  font-size: 1rem;
+  margin: 0 0 .75rem;
+}
+
+.payment-history p { color: var(--p-text-muted-color); }
+.payment-history__list { display: grid; gap: .5rem; }
+
+.payment-history__item {
+  align-items: center;
+  background: var(--p-content-hover-background);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: .7rem .85rem;
+}
+
+.payment-history__item b,
+.payment-history__item small { display: block; }
+.payment-history__item b { color: var(--p-text-color); }
+.payment-history__item small { color: var(--p-text-muted-color); margin-top: .15rem; }
+.payment-history__summary { text-align: right; }
+
+.status {
+  border-radius: 999px;
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  margin-top: .25rem;
+  padding: .15rem .5rem;
+}
+
+.status--paid { background: color-mix(in srgb, #22c55e 16%, transparent); color: #16a34a; }
+.status--pending { background: color-mix(in srgb, #f59e0b 16%, transparent); color: #d97706; }
+.status--failed,
+.status--cancelled,
+.status--expired { background: color-mix(in srgb, #ef4444 14%, transparent); color: #dc2626; }
 
 @media (max-width: 640px) {
   .subscription-banner {
@@ -89,4 +191,12 @@
   .subscription-plans {
     grid-template-columns: 1fr;
   }
+
+  .billing-cycle,
+  .payment-history__item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .payment-history__summary { text-align: left; }
 }

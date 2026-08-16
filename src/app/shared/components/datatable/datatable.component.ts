@@ -15,6 +15,8 @@ import { FormsModule } from "@angular/forms";
 import { SelectModule } from "primeng/select";
 import { TranslateService } from '../../services/translate/translate.service';
 import {TooltipModule} from 'primeng/tooltip';
+import { Router } from '@angular/router';
+import { ScreenReportButtonComponent } from '../screen-report-button/screen-report-button.component';
 
 
 export enum Action {
@@ -36,7 +38,8 @@ export enum Action {
     ConfirmDialogModule,
     FormsModule,
     SelectModule,
-    TooltipModule
+    TooltipModule,
+    ScreenReportButtonComponent
 ],
     providers: [
         ConfirmationService,
@@ -68,6 +71,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     private confirmationService: ConfirmationService,
     public readonly translateService: TranslateService,
     private datePipe: DatePipe,
+    private readonly router: Router,
     @Inject(PLATFORM_ID) private readonly platformId: object,
   ){
   }
@@ -199,6 +203,20 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   translatedOptions(options?: {label: string; value: string}[]): {label: string; value: string}[] {
     return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
+  }
+
+  get reportScreen(): string {
+    return this.router.url.split('?')[0];
+  }
+
+  get reportData(): Record<string, unknown> {
+    return {
+      contents: this.config.values,
+      total: this.config.totalRecords,
+      size: this.config.size,
+      offset: Math.max(0, this.config.page - 1),
+      filter: this.appliedFilter,
+    };
   }
 
   onDeleteData(item: any, action: Action){

@@ -44,3 +44,34 @@ export interface CurrentSubscription {
 export interface CurrentSubscriptionResponse {
   subscription: CurrentSubscription;
 }
+
+export type BillingCycle = 'MONTHLY' | 'QUARTERLY' | 'SEMIANNUAL';
+export type PaymentStatus = 'PENDING' | 'PAID' | 'FAILED' | 'CANCELLED' | 'EXPIRED';
+
+export interface CreatePaymentLinkRequest {
+  planCode: 'ESSENTIAL' | 'PREMIUM';
+  billingCycle: BillingCycle;
+}
+
+export interface CreatePaymentLinkResponse {
+  url: string;
+  orderNsu: string;
+  status: string;
+  reused: boolean;
+}
+
+export interface PaymentHistoryItem {
+  id: string;
+  planCode: string;
+  billingCycle: BillingCycle;
+  amountCents: number;
+  status: PaymentStatus;
+  createdAt: string;
+  paidAt?: string | null;
+  coverageStartAt?: string | null;
+  coverageEndAt?: string | null;
+}
+
+export interface PaymentHistoryResponse {
+  payments: PaymentHistoryItem[];
+}

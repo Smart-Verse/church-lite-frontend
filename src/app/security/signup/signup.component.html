@@ -41,6 +41,13 @@
                         <div class="btn-tx">Criar conta</div>
                     </p-button>
                 </div>
+                @if (pendingConfirmation) {
+                    <div class="field col-12 md:col-12">
+                        <p-button type="button" severity="secondary" [text]="true" styleClass="w-full" (onClick)="onResendConfirmation()">
+                            <span>Reenviar e-mail de confirmação</span>
+                        </p-button>
+                    </div>
+                }
             </form>
             <div class="w-full c-margin">
                 <div class="text-sign">Ja possui conta? <a (click)="onSign()">Entre</a></div>

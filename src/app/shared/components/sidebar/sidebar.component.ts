@@ -168,7 +168,7 @@ export class SidebarComponent implements OnInit {
 
   private filterPaidItems(items: any[]): any[] {
     if (!this.subscriptionService.isFree()) return items;
-    const blockedRoutes = new Set(['translations', 'report-template']);
+    const blockedRoutes = new Set(['dashboard', 'translations', 'report-template']);
     return items.map(item => ({
       ...item,
       submenu: this.filterPaidItems(item.submenu ?? [])

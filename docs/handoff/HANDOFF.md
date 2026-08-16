@@ -1,6 +1,6 @@
 # Handoff — Church Lite Frontend
 
-> Atualizado em 17/07/2026.
+> Atualizado em 21/07/2026.
 
 > Configuração da igreja e aprovação de fechamento documentadas em `spec/SESSION_2026-07-17_CASH_CLOSING.md` na raiz do workspace.
 
@@ -479,3 +479,41 @@ O site público de lançamento vive em `../site/`, separado em `index.html`, `st
 A seção de planos contém os valores e limites persistidos: pessoas 30/150/500, usuários 2/5/15, células ativas 2/15/60, caixas 1/5/20, contas bancárias 1/5/20, grupos ativos 1/5/ilimitado e armazenamento 100 MB/1 GB/5 GB. Dashboard financeiro/agenda, traduções personalizadas e template de relatório aparecem como recursos pagos implementados. Os CTAs dos planos pagos levam ao cadastro gratuito porque ainda não existe checkout online.
 
 Validações finais: build de produção Angular aprovado; site validado com `node --check`, balanceamento CSS e DOM Vue renderizado em Chrome headless.
+
+## Identidade pública e experiência instalável — 21/07/2026
+
+O Church Lite é o primeiro produto do ecossistema SmartVerse. Nas telas públicas, Church Lite identifica o produto de gestão de igrejas e SmartVerse funciona como assinatura institucional. Login e cadastro usam a mesma composição visual: marca Church Lite junto ao formulário, logo vetorial SmartVerse no painel institucional e fundo escuro violeta com apoios azul/verde alinhados à interface interna.
+
+A tela `/login` contextualiza o retorno à igreja e aceita submissão nativa do formulário. A tela `/signup` contextualiza a criação gratuita da igreja e apresenta o Church Lite como início da jornada dentro do ecossistema. Em telas pequenas, o painel institucional é ocultado para priorizar os formulários. O SVG oficial usado nessas páginas está em `src/assets/logo/smartverse.svg`.
+
+O favicon do Angular é `src/favicon.svg`, com quadrado violeta e estrela branca. As páginas de desenvolvimento e produção referenciam esse SVG.
+
+A pasta `public/` contém a experiência de instalação móvel:
+
+- `manifest.json`: nome, descrição, escopo e cores do Church Lite;
+- `icons/church-lite-192.png` e `icons/church-lite-512.png`: ícones `any maskable`;
+- `start_url`, `scope` e `id`: `/church-lite/`;
+- exibição `standalone`, idioma `pt-BR` e orientação livre;
+- metadados Android/iOS declarados em `index.html` e `index.dev.html`.
+
+O `angular.json` exporta todo o conteúdo de `public/` para a raiz do build. O manifest oferece nome, ícone e aparência de aplicativo ao adicionar à tela inicial, mas não fornece operação offline; isso exigirá service worker em uma evolução própria.
+
+## Atualização — confirmação e reenvio de e-mail (11/08/2026)
+
+Após o cadastro, o backend envia o link de confirmação. Quando uma nova tentativa de cadastro retorna `account_confirmation_pending`, `/signup` oferece a ação de reenvio usando o endpoint anônimo `POST /resendConfirmation`. A resposta é deliberadamente neutra para não revelar a existência da conta. A rota `/register-church/:hash` agora informa quando o token é inválido e mantém o redirecionamento ao login após confirmação válida. Build de produção validado com `npm run build`.
+
+## Atualização — contratação de planos pelo Smart Payment (15/08/2026)
+
+O modal compartilhado de upgrade deixou de ser apenas informativo. A igreja escolhe entre Essencial e Premium, seleciona o ciclo `MONTHLY`, `QUARTERLY` ou `SEMIANNUAL`, visualiza o total com desconto e chama `POST /createPaymentLink`. O frontend não envia valor nem tenant; esses dados são resolvidos e validados pelo backend. A URL retornada só é aberta quando usa HTTPS ou HTTP local, e o checkout substitui a página atual.
+
+O mesmo modal consulta `GET /getPaymentHistory` e mostra as cinco cobranças mais recentes, com plano, ciclo, valor, data e situação. A confirmação visual não ativa a assinatura: após o Smart Payment publicar o evento confirmado, o próximo carregamento de `GET /getCurrentSubscription` reflete o plano concedido pelo backend. Textos da jornada existem nos quatro catálogos e o limite exibido do Essencial foi alinhado para 150 pessoas.
+
+Erros `403/422` continuam centralizados no interceptor; indisponibilidade ou resposta inválida do checkout recebe feedback próprio. Build de produção validado com `npm run build`; permaneceu apenas o aviso conhecido de CommonJS do `quill-delta`.
+
+## Atualização — relatórios dinâmicos por tela (15/08/2026)
+
+O componente compartilhado `ScreenReportButtonComponent` consulta `GET /getScreenReports` usando a URL canônica atual, sem query string e sem barra final. Se não houver relatório ativo para a tela, nenhuma ação é exibida. Com um relatório, o clique gera diretamente; com dois ou mais, abre um menu com os nomes vindos do banco. Assim, novos relatórios tenant-local podem ser disponibilizados sem alteração ou nova publicação do frontend.
+
+O `DatatableComponent` incorpora essa ação em todas as listagens compartilhadas e envia ao backend o snapshot que está na tela: `contents`, `total`, `size`, `offset` e `filter`. A tela `/home/transactions` substituiu o botão de impressão inativo e acrescenta caixa, saldo inicial, receitas, despesas e saldo final. `/home/bank-statament` também expõe a ação e acrescenta conta, receitas, despesas e saldo. As duas ações contextuais ficam desabilitadas até a seleção da conta/caixa.
+
+`ScreenReportService` mantém os contratos tipados e envia somente o UUID local e o JSON para `POST /generateScreenReport`. O navegador decodifica o Base64, cria um `Blob` PDF e abre uma nova aba; API key e UUID remoto permanecem exclusivamente no backend. Falhas fecham a aba provisória e mostram toast traduzido. Textos foram adicionados aos quatro catálogos. Build de produção validado com `npm run build`; permaneceu apenas o aviso conhecido de CommonJS do `quill-delta`.

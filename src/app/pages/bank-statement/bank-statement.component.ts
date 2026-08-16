@@ -13,6 +13,7 @@ import {TableModule} from "primeng/table";
 import {PaginatorModule, PaginatorState} from "primeng/paginator";
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {MenuItem} from "primeng/api";
+import {ScreenReportButtonComponent} from '../../shared/components/screen-report-button/screen-report-button.component';
 
 @Component({
     selector: 'app-bank-statement',
@@ -21,7 +22,8 @@ import {MenuItem} from "primeng/api";
         SharedCommonModule,
         TableModule,
         PaginatorModule,
-        BreadcrumbModule
+        BreadcrumbModule,
+        ScreenReportButtonComponent
     ],
     providers: [
         DialogService,
@@ -110,6 +112,20 @@ export class BankStatementComponent extends BaseComponent implements OnInit {
   onRefresh(): void {
     if (!this._currentAccount?.id) return;
     this.onLoadAllData(this._requestData);
+  }
+
+  get reportData(): Record<string, unknown> {
+    return {
+      contents: this._datatable.values,
+      total: this._datatable.totalRecords,
+      size: this._datatable.size,
+      offset: Math.max(0, this._datatable.page - 1),
+      account: this._currentAccount,
+      revenues: this._revenues,
+      expenses: this._expenses,
+      balance: this._totalBalance,
+      filter: this._requestData.filter,
+    };
   }
 
   private includeFilters(requestData: RequestData) {

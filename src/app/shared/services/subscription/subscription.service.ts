@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import {
+  BillingCycle,
+  CreatePaymentLinkResponse,
   CurrentSubscription,
   CurrentSubscriptionResponse,
+  PaymentHistoryResponse,
   SubscriptionFeature,
   SubscriptionResource,
   SubscriptionResourceUsage
@@ -55,10 +58,25 @@ export class SubscriptionService {
   }
 
   hasFeature(feature: SubscriptionFeature): boolean {
-    return this.currentState()?.features.find(item => item.feature === feature)?.enabled ?? true;
+    if (!this.resolvedState()) return false;
+    return this.currentState()?.features.find(item => item.feature === feature)?.enabled ?? false;
   }
 
   requestUpgrade(): void {
     this.upgradeVisible.set(true);
+  }
+
+  createPaymentLink(
+    planCode: 'ESSENTIAL' | 'PREMIUM',
+    billingCycle: BillingCycle
+  ): Observable<CreatePaymentLinkResponse> {
+    return this.http.post<CreatePaymentLinkResponse>('createPaymentLink', {
+      planCode,
+      billingCycle
+    });
+  }
+
+  paymentHistory(): Observable<PaymentHistoryResponse> {
+    return this.http.get<PaymentHistoryResponse>('getPaymentHistory');
   }
 }
