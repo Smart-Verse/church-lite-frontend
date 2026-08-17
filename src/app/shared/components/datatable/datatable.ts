@@ -22,4 +22,6 @@ export class Filters {
   label: string = "";
   options?: {label: string; value: string}[];
   operator?: "eq" | "nullability";
+  route?: string;
+  optionLabel?: string;
 }

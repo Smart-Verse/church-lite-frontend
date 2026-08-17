@@ -24,5 +24,11 @@ export const fieldsPlanAccount: any[] = [
     required: true,
     hidden: false,
     type: 'string'
+  },
+  {
+    fieldName: 'financialNature',
+    required: true,
+    hidden: false,
+    type: 'string'
   }
 ]

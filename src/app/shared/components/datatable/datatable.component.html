@@ -157,7 +157,9 @@
       @for (filter of config.filters; track filter.field) {
         <label class="datatable__filter-field">
           <span>{{ translateService.translate(filter.label || filter.field) }}</span>
-          @if (filter.type === 'select') {
+          @if (filter.type === 'entity-select') {
+            <p-select [(ngModel)]="filterValues[filter.field]" [options]="filter.options ?? []" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" [showClear]="true" [placeholder]="translateService.translate('datatable_all')" appendTo="body" />
+          } @else if (filter.type === 'select') {
             <p-select [(ngModel)]="filterValues[filter.field]" [options]="translatedOptions(filter.options)" optionLabel="label" optionValue="value" [showClear]="true" [placeholder]="translateService.translate('datatable_all')" appendTo="body" />
           } @else {
             <input pInputText [(ngModel)]="filterValues[filter.field]" type="text" [placeholder]="translateService.translate('datatable_filter_by') + ' ' + translateService.translate(filter.label || filter.field).toLowerCase()" />

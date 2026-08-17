@@ -35,6 +35,7 @@ import { CellsFoundationComponent } from './pages/cells-foundation/cells-foundat
 import { CellsOperationsComponent } from './pages/cells-operations/cells-operations.component';
 import { PermissionGroupsComponent } from './pages/permission-groups/permission-groups.component';
 import { ReportTemplateComponent } from './pages/report-template/report-template.component';
+import { RecurringFinancialComponent } from './pages/recurring-financial/recurring-financial.component';
 
 export const routes: Routes = [
   {
@@ -73,7 +74,7 @@ export const routes: Routes = [
       { path: 'permission-groups', component: PermissionGroupsComponent },
             { path: 'report-template', component: ReportTemplateComponent },
             { path: 'church-configuration', component: ChurchConfigurationComponent },
-            { path: 'cash-approvals', component: CashApprovalsComponent },
+      { path: 'cash-approvals', component: CashApprovalsComponent },
       {
         path: 'cells/organization',
         component: CellsFoundationComponent,
@@ -132,6 +133,8 @@ export const routes: Routes = [
         component: FinancialComponent,
         data: { context: 'expenses' },
       },
+      { path: 'register/recurringFinancial/new', component: RecurringFinancialComponent },
+      { path: 'register/recurringFinancial/:id', component: RecurringFinancialComponent },
       { path: 'register/bank/new', component: BankComponent },
       { path: 'register/bank/:id', component: BankComponent },
       { path: 'register/cash/new', component: CashComponent },

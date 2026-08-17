@@ -159,7 +159,7 @@ export class RegisterComponent
   }
 
   private setBreadcrumb(): void {
-    const financial = ['bank', 'cash', 'revenues', 'expenses'].includes(
+    const financial = ['bank', 'cash', 'revenues', 'expenses', 'recurringFinancial'].includes(
       this.configuration.view,
     );
     const others = ['positions', 'memberFunctions', 'eventsType'].includes(

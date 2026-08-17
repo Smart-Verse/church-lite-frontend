@@ -19,6 +19,7 @@ export class DTOConverter {
       description: formGroup.get('description')?.value,
       codeTree: formGroup.get('codeTree')?.value,
       type: formGroup.get('type')?.value["key"],
+      financialNature: formGroup.get('financialNature')?.value?.["key"] ?? formGroup.get('financialNature')?.value,
       children: []
     };
     return dto;

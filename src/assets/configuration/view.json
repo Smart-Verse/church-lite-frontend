@@ -361,19 +361,25 @@
         "label": "financial_person"
       },
       {
-        "field": "cash.description",
-        "type": "string",
-        "label": "financial_cash"
+        "field": "cash.id",
+        "type": "entity-select",
+        "label": "financial_cash",
+        "route": "cash",
+        "optionLabel": "description"
       },
       {
-        "field": "planAccount.description",
-        "type": "string",
-        "label": "financial_planAccount"
+        "field": "planAccount.id",
+        "type": "entity-select",
+        "label": "financial_planAccount",
+        "route": "planAccount",
+        "optionLabel": "description"
       },
       {
-        "field": "costCenter.description",
-        "type": "string",
-        "label": "financial_costCenter"
+        "field": "costCenter.id",
+        "type": "entity-select",
+        "label": "financial_costCenter",
+        "route": "costCenter",
+        "optionLabel": "description"
       },
       {
         "field": "paymentReceiptDate",
@@ -454,19 +460,25 @@
         "label": "financial_person"
       },
       {
-        "field": "cash.description",
-        "type": "string",
-        "label": "financial_cash"
+        "field": "cash.id",
+        "type": "entity-select",
+        "label": "financial_cash",
+        "route": "cash",
+        "optionLabel": "description"
       },
       {
-        "field": "planAccount.description",
-        "type": "string",
-        "label": "financial_planAccount"
+        "field": "planAccount.id",
+        "type": "entity-select",
+        "label": "financial_planAccount",
+        "route": "planAccount",
+        "optionLabel": "description"
       },
       {
-        "field": "costCenter.description",
-        "type": "string",
-        "label": "financial_costCenter"
+        "field": "costCenter.id",
+        "type": "entity-select",
+        "label": "financial_costCenter",
+        "route": "costCenter",
+        "optionLabel": "description"
       },
       {
         "field": "paymentReceiptDate",
@@ -530,6 +542,26 @@
         "width": "10%",
         "customValue": "MONEY"
       }
+    ]
+  },
+  {
+    "route": "recurringFinancial",
+    "hash": "recurringFinancial",
+    "filters": [
+      {"field":"description","type":"string","label":"common_description"},
+      {"field":"typeFinancial","type":"select","label":"financial_recurrence_type","options":[{"label":"financial_recurrence_type_revenue","value":"REVENUE"},{"label":"financial_recurrence_type_expense","value":"EXPENSE"}]},
+      {"field":"recurrenceMode","type":"select","label":"financial_recurrence_mode","options":[{"label":"financial_recurrence_mode_installment","value":"INSTALLMENT"},{"label":"financial_recurrence_mode_continuous","value":"CONTINUOUS"}]},
+      {"field":"status","type":"select","label":"financial_recurrence_status","options":[{"label":"financial_recurrence_status_active","value":"ACTIVE"},{"label":"financial_recurrence_status_paused","value":"PAUSED"},{"label":"financial_recurrence_status_ended","value":"ENDED"}]}
+    ],
+    "fields": [
+      {"field":"description","header":"common_description","width":"25%"},
+      {"field":"typeFinancial","header":"financial_recurrence_type","width":"10%"},
+      {"field":"recurrenceMode","header":"financial_recurrence_mode","width":"15%"},
+      {"field":"frequency","header":"financial_recurrence_frequency","width":"10%"},
+      {"field":"firstDueDate","header":"financial_recurrence_first_due_date","width":"12%","customValue":"DATE"},
+      {"field":"value","header":"financial_value","width":"12%","customValue":"MONEY"},
+      {"field":"generatedOccurrences","header":"financial_recurrence_generated","width":"8%"},
+      {"field":"status","header":"financial_recurrence_status","width":"8%"}
     ]
   },
   {

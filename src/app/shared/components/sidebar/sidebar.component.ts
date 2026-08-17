@@ -1,4 +1,6 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, DestroyRef, HostListener, OnInit} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, of, switchMap, timer } from 'rxjs';
 import { SharedCommonModule } from '../../common/shared-common.module';
 import { RouterLink, RouterOutlet} from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
@@ -14,6 +16,7 @@ import {ThemeService} from "../../services/theme/theme.service";
 import {TranslateService} from "../../services/translate/translate.service";
 import {SubscriptionBannerComponent} from '../subscription-banner/subscription-banner.component';
 import {SubscriptionService} from '../../services/subscription/subscription.service';
+import {NotificationService} from '../../../services/notification/notification.service';
 
 
 
@@ -50,6 +53,7 @@ export class SidebarComponent implements OnInit {
   screenWidth: number = 0;
   isMobile: boolean = false;
   image: string | null = null;
+  unreadNotifications = 0;
 
   constructor(
     private readonly userConfigurationService: UserConfigurationService,
@@ -57,6 +61,8 @@ export class SidebarComponent implements OnInit {
     private readonly themeService: ThemeService,
     private readonly translateService: TranslateService,
     private readonly subscriptionService: SubscriptionService,
+    private readonly notificationService: NotificationService,
+    private readonly destroyRef: DestroyRef,
   ){
     this.menu = new MenuItens(this.translateService);
     this.menuItems = this.menu.menuItems;
@@ -68,6 +74,10 @@ export class SidebarComponent implements OnInit {
     this.onVerifyMobile();
     this.onSetConfigurationMobile();
     this.onLoadImage();
+    timer(0, 60_000).pipe(
+      switchMap(() => this.notificationService.list(true).pipe(catchError(() => of(null)))),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(response => this.unreadNotifications = response?.unreadCount ?? 0);
 
   }
 

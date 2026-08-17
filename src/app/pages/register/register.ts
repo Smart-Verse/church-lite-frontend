@@ -8,6 +8,7 @@ import { EventsTypeComponent } from '../../components/events-type/events-type.co
 import { UserAdminComponent } from '../../components/user-admin/user-admin.component';
 import { CellComponent } from '../../components/cell/cell.component';
 import { MemberFunctionComponent } from '../../components/member-function/member-function.component';
+import { RecurringFinancialComponent } from '../recurring-financial/recurring-financial.component';
 
 export const config: RegisterRoutes[] = [
   {
@@ -113,6 +114,14 @@ export const config: RegisterRoutes[] = [
     paramExtra: '',
     defaultFilter: 'typeFinancial eq 1',
     component: FinancialComponent,
+  },
+  {
+    header: 'financial_recurrence_title',
+    view: 'recurringFinancial',
+    route: 'recurringFinancial',
+    paramExtra: '',
+    defaultFilter: '',
+    component: RecurringFinancialComponent,
   },
   {
     header: 'cells_list',

@@ -14,6 +14,12 @@ export class SignUp {
             type: 'email'
         },
         {
+            fieldName: 'cpf',
+            required: true,
+            hidden: false,
+            type: 'string'
+        },
+        {
             fieldName: 'password',
             required: true,
             hidden: false,

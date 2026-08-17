@@ -17,6 +17,7 @@ import { TranslateService } from '../../services/translate/translate.service';
 import {TooltipModule} from 'primeng/tooltip';
 import { Router } from '@angular/router';
 import { ScreenReportButtonComponent } from '../screen-report-button/screen-report-button.component';
+import { CrudService } from '../../services/crud/crud.service';
 
 
 export enum Action {
@@ -72,6 +73,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     public readonly translateService: TranslateService,
     private datePipe: DatePipe,
     private readonly router: Router,
+    private readonly crudService: CrudService,
     @Inject(PLATFORM_ID) private readonly platformId: object,
   ){
   }
@@ -82,7 +84,9 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.filterValues = {};
       this.appliedFilter = "";
       this.sidebarVisible = false;
+      this.loadEntityFilterOptions();
     }
+    if (changes["config"]?.firstChange) this.loadEntityFilterOptions();
     if (changes["loading"] && !this.loading) {
       this.requestingNextPage = false;
       if (isPlatformBrowser(this.platformId)) {
@@ -203,6 +207,25 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   translatedOptions(options?: {label: string; value: string}[]): {label: string; value: string}[] {
     return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
+  }
+
+  private loadEntityFilterOptions(): void {
+    this.config.filters.filter(filter => filter.type === 'entity-select' && filter.route).forEach(filter => {
+      const request = new RequestData();
+      request.size = 500;
+      request.offset = 0;
+      this.crudService.onGetAll(filter.route!, request).subscribe({
+        next: response => filter.options = (response.contents ?? []).map((item: any) => ({
+          label: this.nestedValue(item, filter.optionLabel ?? 'description'),
+          value: item.id
+        })),
+        error: () => filter.options = []
+      });
+    });
+  }
+
+  private nestedValue(item: any, field: string): string {
+    return field.split('.').reduce((value, key) => value?.[key], item) ?? '';
   }
 
   get reportScreen(): string {

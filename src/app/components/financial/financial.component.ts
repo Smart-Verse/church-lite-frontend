@@ -31,6 +31,7 @@ export class FinancialComponent extends BaseComponent implements OnInit {
   configuration = new FinancialConfig();
   _paidInvoice = false;
   _buttonText = this.translateService.translate("financial_saveAndQuit");
+  get planAccountFilter(): string { return `financialNature eq ${this._type}`; }
 
   constructor(
     private readonly fieldsService: FieldsService,

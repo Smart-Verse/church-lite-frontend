@@ -69,6 +69,16 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  onCpfInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const digits = input.value.replace(/\D/g, '').slice(0, 11);
+    const formatted = digits
+      .replace(/^(\d{3})(\d)/, '$1.$2')
+      .replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3')
+      .replace(/\.(\d{3})(\d)/, '.$1-$2');
+    this.signUp.get('cpf')?.setValue(formatted, {emitEvent: false});
+  }
+
   onResendConfirmation(): void {
     const email = this.signUp.value.email;
     if (!email || this.showLoading) return;

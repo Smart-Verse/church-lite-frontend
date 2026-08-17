@@ -46,7 +46,7 @@
         <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-sitemap"></i></span><div><h2>{{ translateService.translate('financial_page_classification') }}</h2><p>Defina onde a movimentação será registrada e como aparecerá nos relatórios financeiros.</p></div></div>
         <div class="fields-grid">
           <app-auto-complete formControlName="cash" name="cash" [disabled]="_paidInvoice" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_cash')" route="cash" defaultFilter="(status eq 0 or typeCash eq 1) " optionLabel="description" type="text" />
-          <app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_planAccount')" route="planAccount" optionLabel="description" type="text" />
+          <app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_planAccount')" route="planAccount" [defaultFilter]="planAccountFilter" optionLabel="description" type="text" />
           <app-auto-complete formControlName="costCenter" name="costCenter" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_costCenter')" route="costCenter" optionLabel="description" type="text" />
         </div>
       </section>

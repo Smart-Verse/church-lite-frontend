@@ -11,6 +11,7 @@
 .sidebar__navigation button, .sidebar__account button { position: relative; display: grid; width: 100%; border: 0; background: transparent; color: var(--p-text-muted-color); cursor: pointer; place-items: center; transition: background .18s ease, color .18s ease, transform .18s ease; }
 .sidebar__navigation button { height: 46px; border-radius: 11px; }
 .sidebar__navigation button > i { font-size: 1.12rem; }
+.notification-badge { position: absolute; top: 5px; right: 5px; display: grid; min-width: 17px; height: 17px; padding: 0 4px; place-items: center; border: 2px solid var(--p-content-background); border-radius: 10px; background: #ef4444; color: #fff; font-size: .55rem; font-weight: 800; line-height: 1; }
 .sidebar__navigation button:hover { background: color-mix(in srgb, var(--p-primary-color), transparent 91%); color: var(--p-primary-color); transform: translateY(-1px); }
 .sidebar__navigation li.active button { background: color-mix(in srgb, var(--p-primary-color), transparent 86%); color: var(--p-primary-color); }
 .sidebar__navigation .indicator { position: absolute; top: 50%; left: -.55rem; width: 3px; height: 22px; border-radius: 0 4px 4px 0; background: transparent; transform: translateY(-50%); }

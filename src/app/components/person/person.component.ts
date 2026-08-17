@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUploadService } from '../../shared/components/inputs/image-upload/image-upload.service';
 import { CrudService } from '../../shared/services/crud/crud.service';
+import {PostalCodeService} from '../../shared/services/address/postal-code.service';
 
 @Component({
   selector: 'app-person-members',
@@ -34,6 +35,7 @@ export class PersonComponent extends BaseComponent implements OnInit {
   public personId: string | null = null;
   public pageTitle = 'personal_page_member_title';
   public isSaving = false;
+  private lastPostalCode = '';
   public breadcrumbItems: MenuItem[] = [];
   public breadcrumbHome: MenuItem = {
     icon: 'pi pi-home',
@@ -53,6 +55,7 @@ export class PersonComponent extends BaseComponent implements OnInit {
     private readonly router: Router,
     private readonly imageService: ImageUploadService,
     private readonly crudService: CrudService,
+    private readonly postalCodeService: PostalCodeService,
   ) {
     super();
     this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(
@@ -227,6 +230,16 @@ export class PersonComponent extends BaseComponent implements OnInit {
 
   public onGetTokenImage(image: any): void {
     this.imageToken = image;
+  }
+
+  lookupPostalCode(): void {
+    const addressGroup = this.personFormGroup.get('personAddress');
+    const postalCode = String(addressGroup?.get('postalCode')?.value ?? '').replace(/\D/g, '');
+    if (postalCode.length !== 8 || postalCode === this.lastPostalCode) return;
+    this.postalCodeService.lookup(postalCode).subscribe({next: result => {
+      this.lastPostalCode = postalCode;
+      addressGroup?.patchValue({postalCode: result.postalCode, address: result.address, neighborhood: result.neighborhood, city: result.city, ...(result.complement ? {complement: result.complement} : {})});
+    }, error: error => this.toastService.warn({summary: this.translatePersonMembers.translate('common_message'), detail: this.translatePersonMembers.translate(error.error?.message ?? 'postal_code_lookup_error')})});
   }
 
   private onGetUrlImage(): void {

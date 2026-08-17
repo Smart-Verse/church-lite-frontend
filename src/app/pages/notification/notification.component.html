@@ -1,6 +1,41 @@
-<app-loading [showLoading]="showLoading"></app-loading>
-<div class="notification">
-  <h2>{{translateService.translate("notification")}}</h2>
-  <hr>
-</div>
+<app-loading [showLoading]="showLoading" />
 
+<section class="notification-page">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">CENTRAL</span>
+      <h1>{{ translateService.translate('notification') }}</h1>
+      <p>Acompanhe seus compromissos e movimentações que precisam da sua atenção.</p>
+    </div>
+    <p-button icon="pi pi-check" [outlined]="true" label="Marcar todas como lidas"
+              [disabled]="!unreadCount" (onClick)="markAllRead()" />
+  </header>
+
+  <div class="summary-card">
+    <span class="summary-icon"><i class="pi pi-bell"></i></span>
+    <div><strong>{{ unreadCount }}</strong><span>não {{ unreadCount === 1 ? 'lida' : 'lidas' }}</span></div>
+  </div>
+
+  <nav class="filters" aria-label="Filtros de notificações">
+    <button type="button" [class.active]="!unreadOnly" (click)="setUnreadOnly(false)">Todas</button>
+    <button type="button" [class.active]="unreadOnly" (click)="setUnreadOnly(true)">Não lidas</button>
+    <button type="button" class="refresh" (click)="load()"><i class="pi pi-refresh"></i> Atualizar</button>
+  </nav>
+
+  @if (error) {
+    <div class="error"><i class="pi pi-exclamation-circle"></i><span>Não foi possível carregar as notificações.</span><button type="button" (click)="load()">Tentar novamente</button></div>
+  } @else if (!showLoading && !notifications.length) {
+    <div class="empty"><i class="pi pi-bell-slash"></i><strong>Nenhuma notificação por aqui</strong><span>{{ unreadOnly ? 'Você já leu todas as notificações.' : 'Quando algo precisar da sua atenção, aparecerá aqui.' }}</span></div>
+  } @else {
+    <div class="notification-list">
+      @for (item of notifications; track item.id) {
+        <button type="button" class="notification-item" [class.unread]="!item.readAt" (click)="open(item)">
+          <span class="type-icon" [ngClass]="tone(item.type)"><i [class]="icon(item.type)"></i></span>
+          <span class="content"><strong>{{ item.title }}</strong><span>{{ item.message }}</span><time>{{ item.createdAt | date:'dd/MM/yyyy HH:mm' }}</time></span>
+          @if (!item.readAt) { <span class="unread-dot" aria-label="Não lida"></span> }
+          @if (item.actionUrl) { <i class="pi pi-chevron-right arrow"></i> }
+        </button>
+      }
+    </div>
+  }
+</section>

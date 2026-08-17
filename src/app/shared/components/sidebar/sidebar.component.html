@@ -16,6 +16,9 @@
             <li [id]="item.name" [class.active]="currentMenu === item">
               <button type="button" (click)="toggleMenu(item)" [routerLink]="item.route" [attr.aria-label]="item.tooltip" pTooltip="{{ item.tooltip }}" tooltipPosition="right">
                 <span class="indicator"></span><i [ngClass]="item.iconClass"></i>
+                @if (item.route === 'notification' && unreadNotifications > 0) {
+                  <span class="notification-badge">{{ unreadNotifications > 99 ? '99+' : unreadNotifications }}</span>
+                }
               </button>
             </li>
           }

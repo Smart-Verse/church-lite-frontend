@@ -517,3 +517,11 @@ O componente compartilhado `ScreenReportButtonComponent` consulta `GET /getScree
 O `DatatableComponent` incorpora essa ação em todas as listagens compartilhadas e envia ao backend o snapshot que está na tela: `contents`, `total`, `size`, `offset` e `filter`. A tela `/home/transactions` substituiu o botão de impressão inativo e acrescenta caixa, saldo inicial, receitas, despesas e saldo final. `/home/bank-statament` também expõe a ação e acrescenta conta, receitas, despesas e saldo. As duas ações contextuais ficam desabilitadas até a seleção da conta/caixa.
 
 `ScreenReportService` mantém os contratos tipados e envia somente o UUID local e o JSON para `POST /generateScreenReport`. O navegador decodifica o Base64, cria um `Blob` PDF e abre uma nova aba; API key e UUID remoto permanecem exclusivamente no backend. Falhas fecham a aba provisória e mostram toast traduzido. Textos foram adicionados aos quatro catálogos. Build de produção validado com `npm run build`; permaneceu apenas o aviso conhecido de CommonJS do `quill-delta`.
+
+## Atualização — lançamentos financeiros recorrentes (17/08/2026)
+
+A rota `/home/register/recurringFinancial`, acessível pelo menu Financeiro, usa a listagem compartilhada `RegisterComponent`/`DatatableComponent`; criação e edição abrem o formulário padronizado em `new` e `:id`. O formulário oferece tipo financeiro, repetição, frequência, valor fixo ou estimado, datas, quantidade de 2 a 60 parcelas e classificações. Na edição, a programação fica bloqueada e somente dados aplicáveis às ocorrências futuras podem mudar. Os textos existem nos quatro catálogos de idioma. Build de produção validado com `npm run build`.
+
+## Atualização — preenchimento de endereço por CEP (17/08/2026)
+
+`PostalCodeService` consulta exclusivamente o endpoint interno `GET /lookupPostalCode`. O componente compartilhado de máscara expõe `blurred`; pessoa e configuração da igreja usam o evento para preencher logradouro, bairro, complemento não vazio e a entidade `city`. Número e dados manuais são preservados quando a consulta falha. Mensagens existem nos quatro catálogos.

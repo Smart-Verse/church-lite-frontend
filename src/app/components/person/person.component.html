@@ -242,6 +242,7 @@
               translatePersonMembers.translate('personal_field_postalCode')
             "
             mask="99999-999"
+            (blurred)="lookupPostalCode()"
           />
           <app-input-text
             formControlName="address"

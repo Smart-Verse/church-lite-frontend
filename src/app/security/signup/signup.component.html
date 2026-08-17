@@ -25,6 +25,12 @@
                     </p-floatLabel>
                 </div>
                 <div class="field c-margin">
+                    <p-floatLabel>
+                        <input pInputText id="cpf" class="w-full" formControlName="cpf" inputmode="numeric" maxlength="14" autocomplete="off" (input)="onCpfInput($event)" />
+                        <label for="cpf">CPF</label>
+                    </p-floatLabel>
+                </div>
+                <div class="field c-margin">
                     <p-floatLabel >
                         <input type="password" pInputText id="password" class="w-full" formControlName="password"/>
                         <label for="password">Senha</label>

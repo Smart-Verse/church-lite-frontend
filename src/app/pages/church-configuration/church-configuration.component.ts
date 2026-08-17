@@ -7,6 +7,8 @@ import {CrudService} from '../../shared/services/crud/crud.service';
 import {RequestData} from '../../shared/interfaces/request-data';
 import {ToastService} from '../../shared/services/toast/toast.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
+import {UserConfigurationService} from '../../services/user-configuration/user-configuration.service';
+import {PostalCodeService} from '../../shared/services/address/postal-code.service';
 
 @Component({selector: 'app-church-configuration', imports: [SharedCommonModule], providers: [CrudService, ToastService], templateUrl: './church-configuration.component.html', styleUrl: './church-configuration.component.scss'})
 export class ChurchConfigurationComponent extends BaseComponent implements OnInit {
@@ -15,8 +17,10 @@ export class ChurchConfigurationComponent extends BaseComponent implements OnIni
   assignments: any[] = [];
   saving = false;
   approvalPolicies: any[] = [];
+  users: any[] = [];
+  private lastPostalCode = '';
 
-  constructor(fb: FormBuilder, private crud: CrudService, private toast: ToastService, public translate: TranslateService) {
+  constructor(fb: FormBuilder, private crud: CrudService, private toast: ToastService, public translate: TranslateService, private userConfigurationService: UserConfigurationService, private postalCodeService: PostalCodeService) {
     super();
     this.form = fb.group({cnpj: ['', Validators.required], name: ['', Validators.required], foundationDate: [null], postalCode: [''], address: [''], number: [''], complement: [''], neighborhood: [''], city: [null], phone: [''], leader: [null], treasurers: [[]], financialApprovers: [[]], cashApprovalPolicy: ['DISABLED', Validators.required]});
   }
@@ -30,8 +34,10 @@ export class ChurchConfigurationComponent extends BaseComponent implements OnIni
 
   private load(): void {
     this.showLoading = true;
-    forkJoin({configurations: this.all('churchConfiguration', 1), assignments: this.all('churchResponsibleUser')}).subscribe({
-      next: ({configurations, assignments}) => {
+    forkJoin({configurations: this.all('churchConfiguration', 1), assignments: this.all('churchResponsibleUser'), users: this.all('userConfiguration', 10000), currentUser: this.userConfigurationService.getUser()}).subscribe({
+      next: ({configurations, assignments, users, currentUser}) => {
+        const current = currentUser?.output;
+        this.users = this.uniqueUsers([...(users.contents ?? []), ...(current ? [current] : [])]);
         this.configuration = configurations.contents?.[0] ?? null;
         this.assignments = assignments.contents ?? [];
         const treasurers = this.assignments.filter(x => x.treasurer).map(x => x.userConfiguration);
@@ -42,6 +48,10 @@ export class ChurchConfigurationComponent extends BaseComponent implements OnIni
       error: error => {this.showLoading = false; this.showError(error);}
     });
   }
+
+  private uniqueUsers(users: any[]): any[] {return [...new Map(users.filter(user => user?.id).map(user => [user.id, user])).values()];}
+
+  lookupPostalCode(): void {const postalCode = String(this.form.get('postalCode')?.value ?? '').replace(/\D/g, ''); if (postalCode.length !== 8 || postalCode === this.lastPostalCode) return; this.postalCodeService.lookup(postalCode).subscribe({next: result => {this.lastPostalCode = postalCode; this.form.patchValue({postalCode: result.postalCode, address: result.address, neighborhood: result.neighborhood, city: result.city, ...(result.complement ? {complement: result.complement} : {})});}, error: error => this.toast.warn({summary: this.translate.translate('common_message'), detail: this.translate.translate(error.error?.message ?? 'postal_code_lookup_error')})});}
 
   save(): void {
     if (this.form.invalid) {this.form.markAllAsTouched(); this.toast.warn({summary: this.translate.translate('common_message'), detail: this.translate.translate('common_message_invalid_fields')}); return;}

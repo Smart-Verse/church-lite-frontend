@@ -8,6 +8,11 @@ export const typePlanAccount = [
   { key: "SYNTHETIC", value: "Sintético" }
 ]
 
+export const planAccountFinancialNature = [
+  { key: "REVENUE", value: "Receita" },
+  { key: "EXPENSE", value: "Despesa" }
+]
+
 export const typeCash = [
   { key: "CASH", value: "Caixa" },
   { key: "BANK", value: "Conta bancária" }

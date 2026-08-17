@@ -142,6 +142,10 @@ export class MenuItens {
             route: 'register/expenses',
           },
           {
+            name: this.translate.translate('financial_recurrence_title'),
+            route: 'register/recurringFinancial',
+          },
+          {
             name: this.translate.translate('cash_approvals_title'),
             route: 'cash-approvals',
           },

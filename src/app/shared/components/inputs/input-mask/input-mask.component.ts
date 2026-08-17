@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FloatLabelModule} from "primeng/floatlabel";
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
@@ -36,6 +36,7 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 export class InputMaskComponent extends AppControlValueAccessor {
 
   @Input() mask: string = "";
+  @Output() blurred = new EventEmitter<void>();
 
   constructor(
     private readonly fieldServiceInputText: FieldsService,
