@@ -14,6 +14,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {SubscriptionResource} from '../../shared/services/subscription/subscription.models';
+import {MemberPortalAccessService} from '../../services/member-portal/member-portal-access.service';
 
 @Component({
   selector: 'app-register',
@@ -45,8 +46,17 @@ export class RegisterComponent
     private readonly toastService: ToastService,
     public readonly translateService: TranslateService,
     public readonly subscriptionService: SubscriptionService,
+    private readonly memberPortalAccess: MemberPortalAccessService,
   ) {
     super();
+  }
+
+  copyMemberRegistrationLink(): void {
+    this.memberPortalAccess.churchLink().subscribe(response => {
+      this.memberPortalAccess.copyUrl(response.path)
+        .then(() => this.toastService.success({summary: 'Link copiado', detail: 'O link de autocadastro está pronto para compartilhar.'}))
+        .catch(() => this.toastService.error({summary: 'Falha ao copiar', detail: 'O navegador não permitiu acessar a área de transferência.'}));
+    });
   }
 
   ngOnInit(): void {

@@ -111,17 +111,33 @@ export class CashTransactionComponent extends BaseComponent implements OnInit {
     this.showLoading = true;
     this.transactionsService.getResumeTransaction(cash.id).subscribe({
       next: data => {
+        const transaction = data?.output ?? null;
         if (this.action === 0) {
-          this.formGroup.patchValue({previousBalance: data.output.finalBalance, initialBalance: data.output.finalBalance});
+          const previousBalance = transaction?.finalBalance ?? 0;
+          this.formGroup.patchValue({previousBalance, initialBalance: previousBalance});
         } else {
-          data.output.startDate = new Date(data.output.startDate);
-          data.output.endDate = new Date();
-          data.output.finalBalance = data.output.initialBalance + data.output.balance;
-          this.formGroup.patchValue(data.output);
+          if (!transaction) {
+            this.showLoading = false;
+            this.toastService.warn({
+              summary: this.translateService.translate("common_message"),
+              detail: "Não foi encontrada uma abertura ativa para este caixa."
+            });
+            return;
+          }
+          transaction.startDate = new Date(transaction.startDate);
+          transaction.endDate = new Date();
+          transaction.finalBalance = (transaction.initialBalance ?? 0) + (transaction.balance ?? 0);
+          this.formGroup.patchValue(transaction);
         }
         this.showLoading = false;
       },
-      error: () => { this.showLoading = false; }
+      error: error => {
+        this.showLoading = false;
+        this.toastService.error({
+          summary: this.translateService.translate("common_message"),
+          detail: error.error?.message ?? "Não foi possível consultar o saldo do caixa."
+        });
+      }
     });
   }
 }

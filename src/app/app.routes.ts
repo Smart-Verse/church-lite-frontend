@@ -36,8 +36,26 @@ import { CellsOperationsComponent } from './pages/cells-operations/cells-operati
 import { PermissionGroupsComponent } from './pages/permission-groups/permission-groups.component';
 import { ReportTemplateComponent } from './pages/report-template/report-template.component';
 import { RecurringFinancialComponent } from './pages/recurring-financial/recurring-financial.component';
+import { MemberAccessComponent } from './pages/member-access/member-access.component';
+import { MemberAccessConfirmComponent } from './pages/member-access-confirm/member-access-confirm.component';
+import { AccessSelectionComponent } from './security/access-selection/access-selection.component';
+import { MemberHomeComponent } from './pages/member-home/member-home.component';
+import { MemberFinanceComponent } from './pages/member-finance/member-finance.component';
+import { MemberApprovalsComponent } from './pages/member-approvals/member-approvals.component';
+import { MemberApprovalAdminComponent } from './pages/member-approval-admin/member-approval-admin.component';
+import { MemberLayoutComponent } from './pages/member-layout/member-layout.component';
+import { memberGuard, staffGuard } from './security/guards/access-profile.guard';
 
 export const routes: Routes = [
+  { path: 'member-access/confirm/:token', component: MemberAccessConfirmComponent },
+  { path: 'member-access/:churchId/:memberId', component: MemberAccessComponent },
+  { path: 'member-access/:churchId', component: MemberAccessComponent },
+  { path: 'select-access', component: AccessSelectionComponent, canActivate: [privateGuard] },
+  { path: 'member', component:MemberLayoutComponent, canActivate: [privateGuard, memberGuard], children: [
+    {path: '', component: MemberHomeComponent},
+    {path: 'finance', component: MemberFinanceComponent},
+    {path: 'approvals', component: MemberApprovalsComponent}
+  ]},
   {
     path: 'login',
     component: LoginComponent,
@@ -65,7 +83,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivateChild: [privateGuard],
+    canActivateChild: [privateGuard, staffGuard],
     children: [
       { path: 'dashboard', component: DashComponent },
       { path: 'scheduler', component: SchedulerComponent },
@@ -75,6 +93,7 @@ export const routes: Routes = [
             { path: 'report-template', component: ReportTemplateComponent },
             { path: 'church-configuration', component: ChurchConfigurationComponent },
       { path: 'cash-approvals', component: CashApprovalsComponent },
+      { path: 'member-approvals', component: MemberApprovalAdminComponent },
       {
         path: 'cells/organization',
         component: CellsFoundationComponent,

@@ -9,6 +9,7 @@ export interface AuthenticatedChurch {
   name: string;
   tenant: string;
   accessToken: string;
+  accessProfiles: Array<'MEMBER' | 'STAFF'>;
 }
 
 @Component({
@@ -42,7 +43,18 @@ export class TenantSelectionComponent implements OnInit {
     this.cookiesService.set(EnumCookie.AUTHORIZATION, church.accessToken);
     this.cookiesService.set(EnumCookie.HASH, church.userId);
     sessionStorage.removeItem('authenticatedChurches');
-    this.router.navigate(['/home']);
+    const profiles = church.accessProfiles ?? ['STAFF'];
+    this.cookiesService.set(EnumCookie.AVAILABLE_ACCESS_PROFILES, profiles.join(','));
+    if (profiles.includes('MEMBER') && profiles.includes('STAFF')) {
+      sessionStorage.setItem('selectedChurchAccess', JSON.stringify(church));
+      this.router.navigate(['/select-access']);
+    } else if (profiles.includes('MEMBER')) {
+      this.cookiesService.set(EnumCookie.ACCESS_PROFILE, 'MEMBER');
+      this.router.navigate(['/member']);
+    } else {
+      this.cookiesService.set(EnumCookie.ACCESS_PROFILE, 'STAFF');
+      this.router.navigate(['/home']);
+    }
   }
 
   cancel(): void {

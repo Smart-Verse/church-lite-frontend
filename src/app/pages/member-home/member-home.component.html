@@ -1,0 +1,41 @@
+<main class="member-page">
+  @if (loading) {
+    <section class="state"><i class="pi pi-spin pi-spinner"></i><span>Carregando seu portal...</span></section>
+  } @else if (error) {
+    <section class="state state--error"><i class="pi pi-exclamation-circle"></i><strong>{{ error }}</strong><p-button label="Tentar novamente" [outlined]="true" (onClick)="load()" /></section>
+  } @else if (dashboard) {
+    <section class="welcome"><div><small>BEM-VINDO DE VOLTA</small><h1>Olá, {{ dashboard.memberName.split(' ')[0] }}!</h1><p>Acompanhe os próximos encontros e seu histórico de contribuições.</p></div><span class="welcome__date">{{ today | date:'EEEE, dd MMMM' }}</span></section>
+
+    <section class="summary">
+      <article><span class="summary__icon"><i class="pi pi-wallet"></i></span><div><small>Contribuições neste mês</small><strong>{{ dashboard.monthTotal | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+      <article><span class="summary__icon summary__icon--year"><i class="pi pi-chart-line"></i></span><div><small>Contribuições neste ano</small><strong>{{ dashboard.yearTotal | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+    </section>
+
+    <button type="button" class="transparency-callout" (click)="openTransparency()"><span><i class="pi pi-eye"></i></span><div><small>PORTAL DA TRANSPARÊNCIA</small><strong>Veja como os recursos da igreja estão sendo aplicados</strong></div><i class="pi pi-arrow-right"></i></button>
+    <button type="button" class="transparency-callout" (click)="openApprovals()"><span><i class="pi pi-thumbs-up"></i></span><div><small>PARTICIPAÇÃO DOS MEMBROS</small><strong>Avalie anonimamente as prestações de contas publicadas</strong></div><i class="pi pi-arrow-right"></i></button>
+
+    <section class="content-grid">
+      <article class="panel events-panel">
+        <header><div><small>AGENDA DA IGREJA</small><h2>Próximos eventos</h2></div><i class="pi pi-calendar"></i></header>
+        @if (dashboard.upcomingEvents.length) {
+          <div class="event-list">
+            @for (event of dashboard.upcomingEvents; track event.id) {
+              <div class="event"><time><strong>{{ event.initialDate | date:'dd' }}</strong><span>{{ event.initialDate | date:'MMM' }}</span></time><span class="event__line" [style.background]="event.color"></span><div class="event__info"><strong>{{ event.name }}</strong><span><i class="pi pi-clock"></i>{{ event.initialDate | date:'HH:mm' }} · {{ event.local }}</span></div></div>
+            }
+          </div>
+        } @else { <div class="empty"><i class="pi pi-calendar-times"></i><p>Nenhum evento futuro agendado.</p></div> }
+      </article>
+
+      <article class="panel contributions-panel">
+        <header><div><small>SEU HISTÓRICO</small><h2>Contribuições recentes</h2></div><i class="pi pi-receipt"></i></header>
+        @if (dashboard.recentContributions.length) {
+          <div class="contribution-list">
+            @for (item of dashboard.recentContributions; track item.id) {
+              <div class="contribution"><span class="contribution__icon"><i class="pi pi-arrow-up-right"></i></span><div><strong>{{ item.description }}</strong><span>{{ item.planAccount || 'Contribuição' }} · {{ item.date | date:'dd/MM/yyyy' }}</span></div><b>{{ item.value | currency:'BRL':'symbol':'1.2-2' }}</b></div>
+            }
+          </div>
+        } @else { <div class="empty"><i class="pi pi-receipt"></i><p>Nenhuma contribuição encontrada.</p></div> }
+      </article>
+    </section>
+  }
+</main>

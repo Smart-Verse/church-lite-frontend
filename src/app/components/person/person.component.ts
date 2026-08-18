@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUploadService } from '../../shared/components/inputs/image-upload/image-upload.service';
 import { CrudService } from '../../shared/services/crud/crud.service';
 import {PostalCodeService} from '../../shared/services/address/postal-code.service';
+import {MemberPortalAccessService} from '../../services/member-portal/member-portal-access.service';
 
 @Component({
   selector: 'app-person-members',
@@ -35,6 +36,7 @@ export class PersonComponent extends BaseComponent implements OnInit {
   public personId: string | null = null;
   public pageTitle = 'personal_page_member_title';
   public isSaving = false;
+  public memberId: string | null = null;
   private lastPostalCode = '';
   public breadcrumbItems: MenuItem[] = [];
   public breadcrumbHome: MenuItem = {
@@ -56,6 +58,7 @@ export class PersonComponent extends BaseComponent implements OnInit {
     private readonly imageService: ImageUploadService,
     private readonly crudService: CrudService,
     private readonly postalCodeService: PostalCodeService,
+    private readonly memberPortalAccess: MemberPortalAccessService,
   ) {
     super();
     this.personFormGroup = this.fieldsService.onCreateFormBuiderDynamic(
@@ -92,6 +95,7 @@ export class PersonComponent extends BaseComponent implements OnInit {
   }
 
   private patchPerson(person: any): void {
+    this.memberId = person.personMember?.id ?? null;
     const data = {
       ...person,
       status: status.find((item) => item.key === person.status),
@@ -118,6 +122,35 @@ export class PersonComponent extends BaseComponent implements OnInit {
     if (this.imageToken) {
       this.onGetUrlImage();
     }
+  }
+
+  copyPortalLink(): void {
+    if (!this.memberId) return;
+    this.memberPortalAccess.memberLink(this.memberId).subscribe(response => {
+      this.memberPortalAccess.copyUrl(response.path)
+        .then(() => this.toastService.success({summary: 'Link copiado', detail: 'Envie o link ao membro para ele criar o acesso.'}))
+        .catch(() => this.toastService.error({summary: 'Falha ao copiar', detail: 'O navegador não permitiu acessar a área de transferência.'}));
+    }, () => this.toastService.error({summary: 'Falha ao gerar acesso', detail: 'Não foi possível gerar o link deste membro.'}));
+  }
+
+  sharePortalWhatsApp(): void {
+    if (!this.memberId) return;
+    this.memberPortalAccess.memberLink(this.memberId).subscribe(response => {
+      const text = encodeURIComponent(`Olá! Use este link para criar seu acesso ao Portal do Membro: ${this.memberPortalAccess.absoluteUrl(response.path)}`);
+      window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer');
+    });
+  }
+
+  sendPortalEmail(): void {
+    if (!this.memberId) return;
+    this.showLoading = true;
+    this.memberPortalAccess.sendMemberLink(this.memberId).subscribe({next: () => {
+      this.showLoading = false;
+      this.toastService.success({summary: 'E-mail enviado', detail: 'O membro recebeu o link para criar o acesso.'});
+    }, error: error => {
+      this.showLoading = false;
+      this.toastService.error({summary: 'Falha no envio', detail: error.error?.message ?? 'Verifique o e-mail do membro.'});
+    }});
   }
 
   onConvertDate(data: any): Date | null {

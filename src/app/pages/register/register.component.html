@@ -18,6 +18,10 @@
       [loading]="incrementalLoading"
       [createDisabled]="createDisabled"
       [createDisabledReason]="createDisabledReason"
-      [config]="datatable" />
+      [config]="datatable">
+      @if (configuration.view === 'personMembers') {
+        <p-button datatableToolbarAction icon="pi pi-link" [outlined]="true" label="Copiar link de autocadastro" (onClick)="copyMemberRegistrationLink()" />
+      }
+    </app-datatable>
   </main>
 </section>

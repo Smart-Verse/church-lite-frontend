@@ -21,10 +21,25 @@ export class AppointmentsConfig {
     const value = formGroup.getRawValue();
     return {
       ...value,
+      initialDate: this.localDateTime(value.initialDate),
+      finalDate: this.localDateTime(value.finalDate),
       status: value.status ?? 'SCHEDULED',
       recurrenceType: value.recurrenceType ?? 'NONE',
       recurrenceDays: value.recurrenceType === 'WEEKLY' ? recurrenceDays.join(',') : null,
-      recurrenceEndDate: value.recurrenceType === 'WEEKLY' ? value.recurrenceEndDate : null
+      recurrenceEndDate: value.recurrenceType === 'WEEKLY' ? this.localDate(value.recurrenceEndDate) : null
     };
+  }
+
+  private localDateTime(value: Date | string | null): string {
+    const date = value instanceof Date ? value : new Date(value!);
+    const part = (number: number) => String(number).padStart(2, '0');
+    return `${date.getFullYear()}-${part(date.getMonth() + 1)}-${part(date.getDate())}T${part(date.getHours())}:${part(date.getMinutes())}:00`;
+  }
+
+  private localDate(value: Date | string | null): string | null {
+    if (!value) return null;
+    const date = value instanceof Date ? value : new Date(`${value}T12:00:00`);
+    const part = (number: number) => String(number).padStart(2, '0');
+    return `${date.getFullYear()}-${part(date.getMonth() + 1)}-${part(date.getDate())}`;
   }
 }

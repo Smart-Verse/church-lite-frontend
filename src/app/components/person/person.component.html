@@ -18,6 +18,11 @@
       </p>
     </div>
     <div class="person-page__actions">
+      @if (_type === 'MEMBER' && memberId) {
+        <p-button type="button" icon="pi pi-copy" [outlined]="true" label="Copiar acesso" (onClick)="copyPortalLink()" />
+        <p-button type="button" icon="pi pi-whatsapp" severity="success" [outlined]="true" label="WhatsApp" (onClick)="sharePortalWhatsApp()" />
+        <p-button type="button" icon="pi pi-envelope" [outlined]="true" label="Enviar acesso" (onClick)="sendPortalEmail()" />
+      }
       <p-button
         type="button"
         [outlined]="true"

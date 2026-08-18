@@ -58,8 +58,9 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
       this.formGroup.patchValue({
         ...appointment,
         eventsType: selectedEventType ?? appointment.eventsType,
-        initialDate: this.toDateTimeLocal(appointment.initialDate),
-        finalDate: this.toDateTimeLocal(appointment.finalDate)
+        initialDate: this.toDate(appointment.initialDate),
+        finalDate: this.toDate(appointment.finalDate),
+        recurrenceEndDate: this.toDate(appointment.recurrenceEndDate)
       });
       (appointment.recurrenceDays ?? '')
         .split(',')
@@ -68,8 +69,8 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
     } else {
       this.formGroup.patchValue({
         userConfiguration: this.config.data?.user,
-        initialDate: this.toDateTimeLocal(this.config.data?.initialDate),
-        finalDate: this.toDateTimeLocal(this.config.data?.finalDate),
+        initialDate: this.toDate(this.config.data?.initialDate),
+        finalDate: this.toDate(this.config.data?.finalDate),
         status: 'SCHEDULED',
         recurrenceType: 'NONE'
       });
@@ -121,10 +122,9 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
     this.fieldsService.verifyIsValid();
   }
 
-  private toDateTimeLocal(value?: string | Date): string | null {
+  private toDate(value?: string | Date): Date | null {
     if (!value) return null;
-    const date = value instanceof Date ? value : new Date(value);
-    const offset = date.getTimezoneOffset() * 60000;
-    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+    if (value instanceof Date) return new Date(value);
+    return new Date(/^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T12:00:00` : value);
   }
 }

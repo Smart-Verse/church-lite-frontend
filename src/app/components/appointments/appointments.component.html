@@ -1,23 +1,15 @@
 <form class="appointment-form" [formGroup]="formGroup" (ngSubmit)="onSave()">
-  <div class="field">
-    <label for="eventsType">Tipo de evento *</label>
-    <select id="eventsType" formControlName="eventsType">
-      <option [ngValue]="null">Selecione</option>
-      @for (eventType of eventTypes; track eventType.id) {
-        <option [ngValue]="eventType">{{ eventType.name }}</option>
-      }
-    </select>
-  </div>
+  <app-dropdown
+    formControlName="eventsType"
+    name="eventsType"
+    [field]="formGroup"
+    label="Tipo de evento *"
+    [options]="eventTypes"
+    optionLabel="name" />
 
   <div class="date-grid">
-    <div class="field">
-      <label for="initialDate">Início *</label>
-      <input id="initialDate" type="datetime-local" formControlName="initialDate">
-    </div>
-    <div class="field">
-      <label for="finalDate">Fim *</label>
-      <input id="finalDate" type="datetime-local" formControlName="finalDate">
-    </div>
+    <app-input-date formControlName="initialDate" name="initialDate" [field]="formGroup" label="Início *" [showTime]="true" />
+    <app-input-date formControlName="finalDate" name="finalDate" [field]="formGroup" label="Fim *" [showTime]="true" />
   </div>
 
   <div class="field">
@@ -52,10 +44,7 @@
           </label>
         }
       </fieldset>
-      <div class="field">
-        <label for="recurrenceEndDate">Repetir até *</label>
-        <input id="recurrenceEndDate" type="date" formControlName="recurrenceEndDate">
-      </div>
+      <app-input-date formControlName="recurrenceEndDate" name="recurrenceEndDate" [field]="formGroup" label="Repetir até *" />
     }
   }
 

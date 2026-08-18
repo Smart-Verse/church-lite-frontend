@@ -150,6 +150,10 @@ export class MenuItens {
             route: 'cash-approvals',
           },
           {
+            name: 'Aprovação dos membros',
+            route: 'member-approvals',
+          },
+          {
             name: this.translate.translate('financial_page_transactions'),
             submenu: [
               {

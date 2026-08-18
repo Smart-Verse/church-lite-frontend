@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -36,6 +36,8 @@ import {PrimeNG} from "primeng/config";
     styleUrl: './input-date.component.scss'
 })
 export class InputDateComponent extends AppControlValueAccessor {
+
+  @Input() showTime = false;
 
   ptBr: any = {
     firstDayOfWeek: 0,

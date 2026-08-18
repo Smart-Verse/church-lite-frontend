@@ -65,10 +65,23 @@ export class LoginComponent extends BaseComponent implements OnInit {
         } else if (churches.length === 1) {
           this.coockieService.set(EnumCookie.AUTHORIZATION, churches[0].accessToken);
           this.coockieService.set(EnumCookie.HASH, churches[0].userId);
-          this.router.navigate(['/home']);
+          const profiles = churches[0].accessProfiles ?? ['STAFF'];
+          this.coockieService.set(EnumCookie.AVAILABLE_ACCESS_PROFILES, profiles.join(','));
+          if (profiles.includes('MEMBER') && profiles.includes('STAFF')) {
+            sessionStorage.setItem('selectedChurchAccess', JSON.stringify(churches[0]));
+            this.router.navigate(['/select-access']);
+          } else if (profiles.includes('MEMBER')) {
+            this.coockieService.set(EnumCookie.ACCESS_PROFILE, 'MEMBER');
+            this.router.navigate(['/member']);
+          } else {
+            this.coockieService.set(EnumCookie.ACCESS_PROFILE, 'STAFF');
+            this.router.navigate(['/home']);
+          }
         } else if (res.accessToken) {
           this.coockieService.set(EnumCookie.AUTHORIZATION, res.accessToken);
           this.coockieService.set(EnumCookie.HASH, res.token);
+          this.coockieService.set(EnumCookie.AVAILABLE_ACCESS_PROFILES, 'STAFF');
+          this.coockieService.set(EnumCookie.ACCESS_PROFILE, 'STAFF');
           this.router.navigate(['/home']);
         }
         this.onShowLoading();

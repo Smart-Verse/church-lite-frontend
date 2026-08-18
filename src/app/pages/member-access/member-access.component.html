@@ -1,0 +1,23 @@
+<app-loading [showLoading]="loading" />
+<main class="access-page">
+  <section class="access-card">
+    <div class="brand"><span>✦</span><div><strong>Church <em>Lite</em></strong><small>Um produto SmartVerse</small></div></div>
+    @if (!context && !loading) {
+      <div class="state"><i class="pi pi-link"></i><h1>Link indisponível</h1><p>Solicite à sua igreja um novo link de acesso.</p></div>
+    } @else if (submitted) {
+      <div class="state success"><i class="pi pi-envelope"></i><h1>{{ existingAccess ? 'Perfil de membro vinculado' : 'Confira seu e-mail' }}</h1><p>{{ existingAccess ? 'Seu acesso já estava ativo e o perfil de membro foi adicionado à conta.' : 'Enviamos um link para confirmar seu e-mail e ativar o portal do membro.' }}</p><p-button label="Ir para o login" icon="pi pi-sign-in" (onClick)="goLogin()" /></div>
+    } @else if (context) {
+      <header><span class="kicker">PORTAL DO MEMBRO</span><h1>{{ context.existingMember ? 'Ative seu acesso' : 'Faça parte da nossa comunidade' }}</h1><p>{{ context.churchName }}</p></header>
+      @if (context.existingMember) { <div class="welcome"><i class="pi pi-user"></i><div><strong>Olá, {{ context.memberName }}!</strong><span>Encontramos seu cadastro{{ context.maskedEmail ? ' · ' + context.maskedEmail : '' }}.</span></div></div> }
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>Nome completo<input pInputText formControlName="name" [readonly]="context.existingMember" /></label>
+        <div class="grid"><label>CPF<input pInputText formControlName="cpf" inputmode="numeric" maxlength="14" (input)="formatCpf($event)" /></label><label>Celular<input pInputText formControlName="phone" inputmode="tel" /></label></div>
+        <label>E-mail<input pInputText formControlName="email" type="email" /></label>
+        <div class="grid"><label>Senha<input pInputText formControlName="password" type="password" /></label><label>Confirme a senha<input pInputText formControlName="passwordConfirmation" type="password" /></label></div>
+        <small>Ao continuar, você confirma que os dados informados são seus.</small>
+        <p-button type="submit" styleClass="w-full" icon="pi pi-check" label="Criar acesso ao portal" />
+      </form>
+    }
+  </section>
+  <aside><span>UM ESPAÇO PARA VOCÊ</span><h2>Mais perto da sua igreja, onde você estiver.</h2><p>Acompanhe sua jornada, seus eventos e sua participação com privacidade e segurança.</p></aside>
+</main>

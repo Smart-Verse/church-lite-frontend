@@ -8,6 +8,7 @@
     </p-iconField>
 
     <div class="datatable__toolbar-actions">
+      <ng-content select="[datatableToolbarAction]" />
       <app-screen-report-button [screen]="reportScreen" [data]="reportData" />
       <p-button
         type="button"

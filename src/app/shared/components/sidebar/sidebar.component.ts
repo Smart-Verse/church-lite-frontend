@@ -2,7 +2,7 @@ import {Component, DestroyRef, HostListener, OnInit} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { catchError, of, switchMap, timer } from 'rxjs';
 import { SharedCommonModule } from '../../common/shared-common.module';
-import { RouterLink, RouterOutlet} from '@angular/router';
+import { Router, RouterLink, RouterOutlet} from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
@@ -17,6 +17,8 @@ import {TranslateService} from "../../services/translate/translate.service";
 import {SubscriptionBannerComponent} from '../subscription-banner/subscription-banner.component';
 import {SubscriptionService} from '../../services/subscription/subscription.service';
 import {NotificationService} from '../../../services/notification/notification.service';
+import {CookiesService} from '../../services/cookies/cookies.service';
+import {EnumCookie} from '../../services/cookies/cookie.enum';
 
 
 
@@ -54,6 +56,7 @@ export class SidebarComponent implements OnInit {
   isMobile: boolean = false;
   image: string | null = null;
   unreadNotifications = 0;
+  canSwitchToMember = false;
 
   constructor(
     private readonly userConfigurationService: UserConfigurationService,
@@ -63,6 +66,8 @@ export class SidebarComponent implements OnInit {
     private readonly subscriptionService: SubscriptionService,
     private readonly notificationService: NotificationService,
     private readonly destroyRef: DestroyRef,
+    private readonly cookiesService: CookiesService,
+    private readonly router: Router,
   ){
     this.menu = new MenuItens(this.translateService);
     this.menuItems = this.menu.menuItems;
@@ -74,11 +79,19 @@ export class SidebarComponent implements OnInit {
     this.onVerifyMobile();
     this.onSetConfigurationMobile();
     this.onLoadImage();
+    this.canSwitchToMember = this.cookiesService.get(EnumCookie.AVAILABLE_ACCESS_PROFILES)
+      .split(',').includes('MEMBER');
     timer(0, 60_000).pipe(
       switchMap(() => this.notificationService.list(true).pipe(catchError(() => of(null)))),
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(response => this.unreadNotifications = response?.unreadCount ?? 0);
 
+  }
+
+  switchToMember(): void {
+    if (!this.canSwitchToMember) return;
+    this.cookiesService.set(EnumCookie.ACCESS_PROFILE, 'MEMBER');
+    this.router.navigate(['/member']);
   }
 
   toggleMenu(menu: any) {

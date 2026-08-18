@@ -525,3 +525,15 @@ A rota `/home/register/recurringFinancial`, acessível pelo menu Financeiro, usa
 ## Atualização — preenchimento de endereço por CEP (17/08/2026)
 
 `PostalCodeService` consulta exclusivamente o endpoint interno `GET /lookupPostalCode`. O componente compartilhado de máscara expõe `blurred`; pessoa e configuração da igreja usam o evento para preencher logradouro, bairro, complemento não vazio e a entidade `city`. Número e dados manuais são preservados quando a consulta falha. Mensagens existem nos quatro catálogos.
+
+## Atualização — Portal do Membro e ajustes finais da sessão (18/08/2026)
+
+As rotas `/member`, `/member/finance` e `/member/approvals` usam `MemberLayoutComponent`, um shell sem árvore com links diretos. No desktop o coração original alterna o sidebar entre 232 px e 72 px; ícones recolhidos usam o mesmo `pTooltip` do gerencial. No mobile há cabeçalho compacto e navegação inferior. Troca para `STAFF` e logout pertencem ao layout, não às páginas filhas.
+
+O início mostra próximos eventos, totais e contribuições pessoais. Transparência mostra receitas/despesas conforme a configuração devolvida pelo backend. Aprovações lista prestações abertas/encerradas e permite um voto anônimo. A administração mantém as prestações em `/home/member-approvals`, escolhendo caixas fechados, publicando e encerrando a votação. A configuração da igreja habilita a votação consultiva e define transparência total/parcial e visibilidade por plano.
+
+Na agenda, o modal `AppointmentsComponent` usa `app-input-date` para início/fim com horário e para término de recorrência, e `app-dropdown` para tipo de evento. `InputDateComponent` agora aceita `showTime`, usa 24 horas e tradução pt-BR. A conversão preserva `LocalDateTime` sem deslocamento UTC.
+
+Em `/home/transactions`, o header separa texto e ações e mantém gaps responsivos. Na abertura de um caixa sem movimento anterior, `output: null` é tratado como saldo zero; no fechamento sem abertura válida aparece aviso, e falhas de consulta não ficam mais silenciosas.
+
+Próxima integração: o feed social será apresentado dentro do mesmo `MemberLayout`, mas servido pelo novo `church-lite-social`. Não criar login paralelo no frontend nem enviar tenant escolhido pelo navegador; aguardar a definição do contrato confiável de identidade/JWT descrita no handoff do serviço social.

@@ -26,12 +26,13 @@ export function authInterceptor(
 
   if (!isPublicAssetOrExternalUrl(originalRequest.url)) {
     const token = cookiesService.get(EnumCookie.AUTHORIZATION);
+    const accessProfile = cookiesService.get(EnumCookie.ACCESS_PROFILE);
     const apiUrl = environment.apiUrl.replace(/\/$/, '');
     const relativeUrl = originalRequest.url.replace(/^\/+/, '');
 
     request = originalRequest.clone({
       url: `${apiUrl}/${relativeUrl}`,
-      setHeaders: token ? { Authorization: `Bearer ${token}` } : {}
+      setHeaders: token ? { Authorization: `Bearer ${token}`, ...(accessProfile ? {XAccessProfile: accessProfile} : {}) } : {}
     });
   }
 

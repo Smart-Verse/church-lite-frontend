@@ -17,6 +17,8 @@
 .sidebar__navigation .indicator { position: absolute; top: 50%; left: -.55rem; width: 3px; height: 22px; border-radius: 0 4px 4px 0; background: transparent; transform: translateY(-50%); }
 .sidebar__navigation li.active .indicator { background: var(--p-primary-color); box-shadow: 0 0 10px color-mix(in srgb, var(--p-primary-color), transparent 35%); }
 .sidebar__account { flex: 0 0 auto; padding: .75rem .65rem 1rem; border-top: 1px solid var(--p-content-border-color); }
+.sidebar__account { display: flex; flex-direction: column; gap: .35rem; }
+.sidebar__switch-profile { border-color: color-mix(in srgb, var(--p-primary-color), transparent 35%); color: var(--p-primary-color); }
 .sidebar__account button { height: 48px; border-radius: 12px; }
 .sidebar__account button:hover { background: color-mix(in srgb, var(--p-primary-color), transparent 92%); }
 .sidebar__account img, .sidebar__account-placeholder { display: grid; width: 34px; height: 34px; overflow: hidden; place-items: center; border: 2px solid color-mix(in srgb, var(--p-primary-color), transparent 45%); border-radius: 10px; background: var(--p-form-field-background); object-fit: cover; }

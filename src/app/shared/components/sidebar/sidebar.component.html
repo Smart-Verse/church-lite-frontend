@@ -26,6 +26,11 @@
       </nav>
 
       <div class="sidebar__account">
+        @if (canSwitchToMember) {
+          <button type="button" (click)="switchToMember()" aria-label="Ir para o Portal do Membro" pTooltip="Portal do membro" tooltipPosition="right">
+            <span class="sidebar__account-placeholder sidebar__switch-profile"><i class="pi pi-heart"></i></span>
+          </button>
+        }
         <button type="button" routerLink="user-configuration" (click)="closeMenu()" aria-label="Configurações do usuário" pTooltip="Minha conta" tooltipPosition="right">
           @if (image) { <img [src]="image" alt="Foto do usuário" /> } @else { <span class="sidebar__account-placeholder"><i class="pi pi-user"></i></span> }
           <span class="sidebar__account-status"></span>
