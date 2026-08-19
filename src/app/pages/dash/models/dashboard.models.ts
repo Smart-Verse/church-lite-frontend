@@ -18,4 +18,4 @@ export interface AgendaItem { id: string; titulo: string; tipoEvento: string; da
 export interface AgendaSnapshot { agendaHoje: AgendaItem[]; proximosEventos: AgendaItem[]; resumo: { quantidadeHoje: number; quantidadeSemana: number; quantidadeMes: number; }; }
 export interface DashboardFinancialResponse { data: FinancialSnapshot; }
 export interface DashboardAgendaResponse { data: AgendaSnapshot; }
-export interface DashboardFilters { dataInicial: string; dataFinal: string; bancoId: string; contaBancariaId: string; caixaId: string; somenteCaixasAbertos: boolean; centroCustoId: string; planoContaId: string; }
+export interface DashboardFilters { dataInicial: Date; dataFinal: Date; bancoId: string; contaBancariaId: string; caixaId: string; somenteCaixasAbertos: boolean; centroCustoId: string; planoContaId: string; }

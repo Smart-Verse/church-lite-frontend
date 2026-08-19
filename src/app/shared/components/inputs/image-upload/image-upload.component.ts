@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {ButtonModule} from "primeng/button";
 import {Ripple} from "primeng/ripple";
@@ -7,6 +7,7 @@ import {base64ToArrayBuffer, generateUUIDv4} from "../../../util/constants";
 import {ToastService} from "../../../services/toast/toast.service";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
+import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 
 
 
@@ -15,6 +16,7 @@ import {FieldsService} from "../../../services/fields/fields.service";
     imports: [
     ButtonModule,
     Ripple,
+    ImageCropperComponent,
 ],
     providers: [
         ImageUploadService,
@@ -28,8 +30,14 @@ export class ImageUploadComponent extends AppControlValueAccessor{
   _image: File | null = null;
   @Input() imageUrl: string | null = null;
   @Input() tokenImageUrl: string = "";
+  @Input() ownerId: string = "";
+  @Input() cropAspectRatio?: number;
+  @Input() cropResizeWidth = 1600;
   @Output() eventLoading: EventEmitter<void> = new EventEmitter();
   @Output() eventImageToken: EventEmitter<string> = new EventEmitter();
+  imageChangedEvent: Event | null = null;
+  croppedImage: Blob | null = null;
+  cropVisible = false;
 
   constructor(
     private readonly imageUploadService: ImageUploadService,
@@ -49,6 +57,10 @@ export class ImageUploadComponent extends AppControlValueAccessor{
       if (file.size > 5 * 1024 * 1024) {
         this._image = null;
         this.imageUrl = "";
+      } else if (this.cropAspectRatio) {
+        this.imageChangedEvent = event;
+        this.croppedImage = null;
+        this.cropVisible = true;
       } else {
         this._image = file;
         const reader = new FileReader();
@@ -57,7 +69,8 @@ export class ImageUploadComponent extends AppControlValueAccessor{
           if(this._image){
             const imageId = generateUUIDv4().toUpperCase();
             const extension = this.imageExtension(this._image.name);
-            this.tokenImageUrl = `${imageId}/${imageId}${extension}`;
+            const folder = this.ownerId || imageId;
+            this.tokenImageUrl = `${folder}/${imageId}${extension}`;
             this.imageUploadService.onRequestUpload(this.tokenImageUrl).subscribe({
               next: (res) => {
                 var arr = base64ToArrayBuffer(reader.result);
@@ -72,6 +85,34 @@ export class ImageUploadComponent extends AppControlValueAccessor{
         reader.readAsDataURL(file);
       }
     }
+  }
+
+  onImageCropped(event: ImageCroppedEvent): void {
+    this.croppedImage = event.blob ?? null;
+  }
+
+  cancelCrop(fileInput?: HTMLInputElement): void {
+    this.cropVisible = false;
+    this.imageChangedEvent = null;
+    this.croppedImage = null;
+    if (fileInput) fileInput.value = '';
+  }
+
+  async confirmCrop(fileInput?: HTMLInputElement): Promise<void> {
+    if (!this.croppedImage) return;
+    const imageId = generateUUIDv4().toUpperCase();
+    const folder = this.ownerId || imageId;
+    this.tokenImageUrl = `${folder}/${imageId}.jpg`;
+    const buffer = await this.croppedImage.arrayBuffer();
+    this.cropVisible = false;
+    this.imageChangedEvent = null;
+    this.croppedImage = null;
+    if (fileInput) fileInput.value = '';
+    this.onShowLoading();
+    this.imageUploadService.onRequestUpload(this.tokenImageUrl).subscribe({
+      next: res => this.onSendAws(res.url, buffer),
+      error: () => this.onShowLoading()
+    });
   }
 
 

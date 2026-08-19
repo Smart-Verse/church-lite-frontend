@@ -4,15 +4,12 @@
   } @else if (error) {
     <section class="state state--error"><i class="pi pi-exclamation-circle"></i><strong>{{ error }}</strong><p-button label="Tentar novamente" [outlined]="true" (onClick)="load()" /></section>
   } @else if (dashboard) {
-    <section class="welcome"><div><small>BEM-VINDO DE VOLTA</small><h1>Olá, {{ dashboard.memberName.split(' ')[0] }}!</h1><p>Acompanhe os próximos encontros e seu histórico de contribuições.</p></div><span class="welcome__date">{{ today | date:'EEEE, dd MMMM' }}</span></section>
+    <section class="contributions-heading"><div><small>PORTAL DO MEMBRO</small><h1>Minhas contribuições</h1><p>Acompanhe seus valores, próximos encontros e histórico.</p></div></section>
 
     <section class="summary">
       <article><span class="summary__icon"><i class="pi pi-wallet"></i></span><div><small>Contribuições neste mês</small><strong>{{ dashboard.monthTotal | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
       <article><span class="summary__icon summary__icon--year"><i class="pi pi-chart-line"></i></span><div><small>Contribuições neste ano</small><strong>{{ dashboard.yearTotal | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
     </section>
-
-    <button type="button" class="transparency-callout" (click)="openTransparency()"><span><i class="pi pi-eye"></i></span><div><small>PORTAL DA TRANSPARÊNCIA</small><strong>Veja como os recursos da igreja estão sendo aplicados</strong></div><i class="pi pi-arrow-right"></i></button>
-    <button type="button" class="transparency-callout" (click)="openApprovals()"><span><i class="pi pi-thumbs-up"></i></span><div><small>PARTICIPAÇÃO DOS MEMBROS</small><strong>Avalie anonimamente as prestações de contas publicadas</strong></div><i class="pi pi-arrow-right"></i></button>
 
     <section class="content-grid">
       <article class="panel events-panel">

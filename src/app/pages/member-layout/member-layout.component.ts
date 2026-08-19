@@ -9,7 +9,7 @@ import {TooltipModule} from 'primeng/tooltip';
 export class MemberLayoutComponent{
  collapsed=false;
  readonly canSwitchToStaff:boolean;
- readonly items=[{label:'Início',icon:'pi pi-home',route:'/member',exact:true},{label:'Transparência',icon:'pi pi-eye',route:'/member/finance',exact:false},{label:'Aprovações',icon:'pi pi-thumbs-up',route:'/member/approvals',exact:false}];
+ readonly items=[{label:'Feed',icon:'pi pi-images',route:'/member',exact:true},{label:'Minhas contribuições',icon:'pi pi-wallet',route:'/member/contributions',exact:false},{label:'Meu perfil',icon:'pi pi-user',route:'/member/profile',exact:false},{label:'Transparência',icon:'pi pi-eye',route:'/member/finance',exact:false},{label:'Aprovações',icon:'pi pi-thumbs-up',route:'/member/approvals',exact:false}];
  constructor(private readonly cookies:CookiesService,private readonly router:Router){this.canSwitchToStaff=this.cookies.get(EnumCookie.AVAILABLE_ACCESS_PROFILES).split(',').includes('STAFF');}
  switchToStaff():void{this.cookies.set(EnumCookie.ACCESS_PROFILE,'STAFF');this.router.navigate(['/home']);}
  logout():void{this.cookies.clear();this.router.navigate(['/login']);}

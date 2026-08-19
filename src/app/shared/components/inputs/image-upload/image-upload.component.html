@@ -48,4 +48,25 @@
       </button>
     }
   </div>
+
+  @if (cropVisible) {
+    <div class="crop-dialog" role="dialog" aria-modal="true" aria-label="Recortar imagem">
+      <div class="crop-dialog__backdrop" (click)="cancelCrop(fileInput)"></div>
+      <section class="crop-dialog__panel">
+        <header><div><strong>Ajustar imagem</strong><small>Arraste e redimensione para escolher o enquadramento.</small></div><button type="button" aria-label="Fechar" (click)="cancelCrop(fileInput)"><i class="pi pi-times"></i></button></header>
+        <div class="crop-dialog__canvas">
+          <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="cropAspectRatio || 1"
+            [resizeToWidth]="cropResizeWidth"
+            [onlyScaleDown]="true"
+            output="blob"
+            format="jpeg"
+            (imageCropped)="onImageCropped($event)" />
+        </div>
+        <footer><button type="button" pButton class="p-button-outlined" label="Cancelar" (click)="cancelCrop(fileInput)"></button><button type="button" pButton label="Usar este recorte" icon="pi pi-check" [disabled]="!croppedImage" (click)="confirmCrop(fileInput)"></button></footer>
+      </section>
+    </div>
+  }
 </div>

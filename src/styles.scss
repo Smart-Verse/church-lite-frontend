@@ -146,3 +146,23 @@ html:not(.app-dark) ::selection {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+app-member-feed .engagement { gap: 1.5rem; }
+app-member-feed .engagement button,
+app-member-feed .engagement span,
+app-member-feed .comment-meta button {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+app-member-feed .comment-body { flex: 1; min-width: 0; }
+app-member-feed .comment-meta { display: flex; gap: 1rem; margin-top: .35rem; }
+app-member-feed .comment-meta button,
+app-member-feed .comment-delete,
+app-member-feed .reply-form button { border: 0; background: transparent; cursor: pointer; }
+app-member-feed .comment-meta button { padding: 0; color: var(--p-text-muted-color); font-size: .75rem; }
+app-member-feed .comment-meta .liked { color: #e11d48; }
+app-member-feed .comment.reply { margin-left: 2.65rem; padding-left: .8rem; border-left: 2px solid var(--p-content-border-color); }
+app-member-feed .reply-form { display: flex; gap: .4rem; margin: .5rem 0 .75rem 2.65rem; }
+app-member-feed .reply-form input { flex: 1; }
+app-member-feed .reply-form button { color: var(--p-primary-color); }

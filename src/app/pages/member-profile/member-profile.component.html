@@ -1,0 +1,19 @@
+<main class="profile-page">
+  @if(loading){<section class="state"><i class="pi pi-spin pi-spinner"></i><span>Carregando perfil...</span></section>}
+  @else if(error){<section class="state state--error"><i class="pi pi-exclamation-circle"></i><strong>{{error}}</strong><p-button label="Tentar novamente" [outlined]="true" (onClick)="load()"/></section>}
+  @else if(profile){
+    <header><div><small>PORTAL DO MEMBRO</small><h1>Meu perfil social</h1><p>Escolha como você aparecerá para as pessoas da sua igreja.</p></div></header>
+    <section class="profile-card">
+      <div class="cover"><div class="cover-upload"><app-image-upload [ownerId]="profile.ownerId" [cropAspectRatio]="104/23" [cropResizeWidth]="1600" [imageUrl]="coverUrl" [tokenImageUrl]="profile.coverImage||''" (eventLoading)="toggleUpload()" (eventImageToken)="coverChanged($event)"/></div></div>
+      <div class="profile-body">
+        <aside><div class="avatar"><app-image-upload [ownerId]="profile.ownerId" [cropAspectRatio]="1" [cropResizeWidth]="720" [imageUrl]="avatarUrl" [tokenImageUrl]="profile.profileImage||''" (eventLoading)="toggleUpload()" (eventImageToken)="avatarChanged($event)"/></div><small>JPG ou PNG, até 5 MB.</small></aside>
+        <form (ngSubmit)="save()">
+          <label><span>Nome de exibição</span><input pInputText name="displayName" maxlength="160" required [(ngModel)]="profile.displayName"/></label>
+          <label><span>Nome de usuário</span><div class="username"><b>@</b><input pInputText name="username" maxlength="30" placeholder="seu.nome" [(ngModel)]="profile.username"/></div><small>Use letras minúsculas, números, ponto ou sublinhado.</small></label>
+          <label><span>Bio</span><textarea name="bio" rows="5" maxlength="500" placeholder="Conte um pouco sobre você..." [(ngModel)]="profile.bio"></textarea><small>{{(profile.bio||'').length}}/500</small></label>
+          <div class="actions"><p-button type="submit" label="Salvar perfil" icon="pi pi-check" [loading]="saving||uploading" [disabled]="!profile.displayName.trim()"/></div>
+        </form>
+      </div>
+    </section>
+  }
+</main>

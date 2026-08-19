@@ -45,6 +45,8 @@ import { MemberApprovalsComponent } from './pages/member-approvals/member-approv
 import { MemberApprovalAdminComponent } from './pages/member-approval-admin/member-approval-admin.component';
 import { MemberLayoutComponent } from './pages/member-layout/member-layout.component';
 import { memberGuard, staffGuard } from './security/guards/access-profile.guard';
+import { MemberProfileComponent } from './pages/member-profile/member-profile.component';
+import { MemberFeedComponent } from './pages/member-feed/member-feed.component';
 
 export const routes: Routes = [
   { path: 'member-access/confirm/:token', component: MemberAccessConfirmComponent },
@@ -52,9 +54,12 @@ export const routes: Routes = [
   { path: 'member-access/:churchId', component: MemberAccessComponent },
   { path: 'select-access', component: AccessSelectionComponent, canActivate: [privateGuard] },
   { path: 'member', component:MemberLayoutComponent, canActivate: [privateGuard, memberGuard], children: [
-    {path: '', component: MemberHomeComponent},
+    {path: '', component: MemberFeedComponent},
+    {path: 'contributions', component: MemberHomeComponent},
     {path: 'finance', component: MemberFinanceComponent},
     {path: 'approvals', component: MemberApprovalsComponent}
+    ,{path: 'profile', component: MemberProfileComponent}
+    ,{path: 'feed', redirectTo: '', pathMatch: 'full'}
   ]},
   {
     path: 'login',

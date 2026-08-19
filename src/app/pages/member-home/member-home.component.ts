@@ -35,4 +35,5 @@ export class MemberHomeComponent implements OnInit {
 
   openTransparency(): void { this.router.navigate(['/member/finance']); }
   openApprovals(): void { this.router.navigate(['/member/approvals']); }
+  openFeed(): void { this.router.navigate(['/member/feed']); }
 }

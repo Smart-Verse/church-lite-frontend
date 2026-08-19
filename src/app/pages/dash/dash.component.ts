@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { AgendaSnapshot, DashboardFilters, FinancialSnapshot, GroupExpense } from './models/dashboard.models';
+import { AgendaSnapshot, DashboardFilters, FilterOption, FinancialSnapshot, GroupExpense } from './models/dashboard.models';
 import { DashboardService } from './services/dashboard.service';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
@@ -26,6 +26,9 @@ export class DashComponent implements OnInit, OnDestroy {
   private readonly filterChanges = new Subject<DashboardFilters>();
   private readonly destroy$ = new Subject<void>();
   featureBlocked = false;
+  bankOptions: FilterOption[] = [];
+  bankAccountOptions: FilterOption[] = [];
+  cashOptions: FilterOption[] = [];
 
   constructor(private readonly dashboardService: DashboardService, private readonly router: Router, public readonly subscription: SubscriptionService, public readonly translate: TranslateService) {}
 
@@ -48,7 +51,12 @@ export class DashComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe({
-      next: response => this.financial = response.data,
+      next: response => {
+        this.financial = response.data;
+        this.bankOptions = [{ id: '', descricao: 'Todos' }, ...response.data.filtros.bancos];
+        this.bankAccountOptions = [{ id: '', descricao: 'Todas' }, ...response.data.filtros.contasBancarias];
+        this.cashOptions = [{ id: '', descricao: 'Todos' }, ...response.data.filtros.caixas];
+      },
       error: () => this.financialError = 'Não foi possível carregar os dados financeiros.'
     });
     this.applyFilters();
@@ -63,8 +71,8 @@ export class DashComponent implements OnInit, OnDestroy {
     if (period === 'month') start = new Date(today.getFullYear(), today.getMonth(), 1);
     if (period === '30days') start.setDate(today.getDate() - 29);
     if (period === 'year') start = new Date(today.getFullYear(), 0, 1);
-    this.filters.dataInicial = this.dateValue(start);
-    this.filters.dataFinal = this.dateValue(today);
+    this.filters.dataInicial = start;
+    this.filters.dataFinal = today;
     this.applyFilters();
   }
 
@@ -90,12 +98,7 @@ export class DashComponent implements OnInit, OnDestroy {
 
   private defaultFilters(): DashboardFilters {
     const today = new Date();
-    return { dataInicial: this.dateValue(new Date(today.getFullYear(), today.getMonth(), 1)), dataFinal: this.dateValue(today),
+    return { dataInicial: new Date(today.getFullYear(), today.getMonth(), 1), dataFinal: today,
       bancoId: '', contaBancariaId: '', caixaId: '', somenteCaixasAbertos: false, centroCustoId: '', planoContaId: '' };
-  }
-
-  private dateValue(date: Date): string {
-    const offset = date.getTimezoneOffset();
-    return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10);
   }
 }

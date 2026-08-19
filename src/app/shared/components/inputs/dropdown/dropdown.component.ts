@@ -37,6 +37,7 @@ export class DropdownComponent extends AppControlValueAccessor {
 
   @Input() options: any[] = [];
   @Input() optionLabel: string = "";
+  @Input() optionValue: string = "";
 
   constructor(
     private readonly fieldServiceInputText: FieldsService,

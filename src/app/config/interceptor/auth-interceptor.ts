@@ -24,14 +24,15 @@ export function authInterceptor(
 
   let request = originalRequest;
 
-  if (!isPublicAssetOrExternalUrl(originalRequest.url)) {
+  const socialRequest = originalRequest.url.startsWith(environment.socialApiUrl);
+  if (!isPublicAssetOrExternalUrl(originalRequest.url) || socialRequest) {
     const token = cookiesService.get(EnumCookie.AUTHORIZATION);
     const accessProfile = cookiesService.get(EnumCookie.ACCESS_PROFILE);
     const apiUrl = environment.apiUrl.replace(/\/$/, '');
     const relativeUrl = originalRequest.url.replace(/^\/+/, '');
 
     request = originalRequest.clone({
-      url: `${apiUrl}/${relativeUrl}`,
+      url: socialRequest ? originalRequest.url : `${apiUrl}/${relativeUrl}`,
       setHeaders: token ? { Authorization: `Bearer ${token}`, ...(accessProfile ? {XAccessProfile: accessProfile} : {}) } : {}
     });
   }

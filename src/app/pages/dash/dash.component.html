@@ -18,11 +18,11 @@
       <button (click)="applyPeriod('30days')">Últimos 30 dias</button><button (click)="applyPeriod('year')">Ano atual</button>
     </div>
     <div class="filter-grid">
-      <label>Data inicial<input type="date" [(ngModel)]="filters.dataInicial" (change)="applyFilters()"></label>
-      <label>Data final<input type="date" [(ngModel)]="filters.dataFinal" (change)="applyFilters()"></label>
-      <label>Banco<select [(ngModel)]="filters.bancoId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.bancos" [value]="item.id">{{item.descricao}}</option></select></label>
-      <label>Conta bancária<select [(ngModel)]="filters.contaBancariaId" (change)="applyFilters()"><option value="">Todas</option><option *ngFor="let item of financial?.filtros?.contasBancarias" [value]="item.id">{{item.descricao}}</option></select></label>
-      <label>Caixa<select [(ngModel)]="filters.caixaId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.caixas" [value]="item.id">{{item.descricao}}</option></select></label>
+      <app-input-date class="date-filter" name="dashboardStartDate" label="Data inicial" [(ngModel)]="filters.dataInicial" (ngModelChange)="applyFilters()" />
+      <app-input-date class="date-filter" name="dashboardEndDate" label="Data final" [(ngModel)]="filters.dataFinal" (ngModelChange)="applyFilters()" />
+      <app-dropdown name="dashboardBank" label="Banco" [(ngModel)]="filters.bancoId" (ngModelChange)="applyFilters()" [options]="bankOptions" optionLabel="descricao" optionValue="id" />
+      <app-dropdown name="dashboardBankAccount" label="Conta bancária" [(ngModel)]="filters.contaBancariaId" (ngModelChange)="applyFilters()" [options]="bankAccountOptions" optionLabel="descricao" optionValue="id" />
+      <app-dropdown name="dashboardCash" label="Caixa" [(ngModel)]="filters.caixaId" (ngModelChange)="applyFilters()" [options]="cashOptions" optionLabel="descricao" optionValue="id" />
       <label>Centro de custo<select [(ngModel)]="filters.centroCustoId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.centrosCusto" [value]="item.id">{{item.descricao}}</option></select></label>
       <label>Plano de contas<select [(ngModel)]="filters.planoContaId" (change)="applyFilters()"><option value="">Todos</option><option *ngFor="let item of financial?.filtros?.planosConta" [value]="item.id">{{item.descricao}}</option></select></label>
       <label class="check-filter"><input type="checkbox" [(ngModel)]="filters.somenteCaixasAbertos" (change)="applyFilters()"><span>Somente caixas abertos</span></label>
