@@ -112,7 +112,17 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
       next: user => {
         this.userHash = user.hash ?? null;
         this.formGroup.patchValue(user);
-        this.showLoading = false;
+        if (this.userHash) {
+          this.usersService.getLinkedMemberPerson(this.userHash).subscribe({
+            next: member => {
+              this.selectedMember = member;
+              this.showLoading = false;
+            },
+            error: () => this.showLoading = false
+          });
+        } else {
+          this.showLoading = false;
+        }
       },
       error: (error: any) => {
         this.showLoading = false;

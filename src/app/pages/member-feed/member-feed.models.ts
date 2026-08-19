@@ -19,6 +19,7 @@ export interface FeedComment {
 
 export interface FeedPost {
   id: string;
+  groupId?: string | null;
   author: FeedAuthor;
   content: string | null;
   images: string[];

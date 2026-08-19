@@ -15,8 +15,8 @@ export class MemberFeedService {
     return this.http.get<FeedPost[]>(this.url)
   }
 
-  create(content: string, images: string[]): Observable<FeedPost> {
-    return this.http.post<FeedPost>(this.url, {content, images})
+  create(content: string, images: string[], groupId?: string): Observable<FeedPost> {
+    return this.http.post<FeedPost>(this.url, {content, images, groupId: groupId || null})
   }
 
   like(id: string): Observable<FeedPost> {

@@ -24,7 +24,7 @@ export class MemberLayoutComponent {
     icon: 'pi pi-wallet',
     route: '/member/contributions',
     exact: false
-  }, {label: 'Transparência', icon: 'pi pi-eye', route: '/member/finance', exact: false}, {
+  }, {label: 'Grupos', icon: 'pi pi-users', route: '/member/groups', exact: false}, {label: 'Transparência', icon: 'pi pi-eye', route: '/member/finance', exact: false}, {
     label: 'Aprovações',
     icon: 'pi pi-thumbs-up',
     route: '/member/approvals',

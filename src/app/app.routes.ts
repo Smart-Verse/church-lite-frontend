@@ -47,6 +47,8 @@ import { MemberLayoutComponent } from './pages/member-layout/member-layout.compo
 import { memberGuard, staffGuard } from './security/guards/access-profile.guard';
 import { MemberProfileComponent } from './pages/member-profile/member-profile.component';
 import { MemberFeedComponent } from './pages/member-feed/member-feed.component';
+import { MemberGroupsComponent } from './pages/member-groups/member-groups.component';
+import { MemberGroupDetailComponent } from './pages/member-groups/member-group-detail.component';
 
 export const routes: Routes = [
   { path: 'member-access/confirm/:token', component: MemberAccessConfirmComponent },
@@ -58,6 +60,8 @@ export const routes: Routes = [
     {path: 'contributions', component: MemberHomeComponent},
     {path: 'finance', component: MemberFinanceComponent},
     {path: 'approvals', component: MemberApprovalsComponent}
+    ,{path: 'groups', component: MemberGroupsComponent}
+    ,{path: 'groups/:id', component: MemberGroupDetailComponent}
     ,{path: 'profile', component: MemberProfileComponent}
     ,{path: 'feed', redirectTo: '', pathMatch: 'full'}
   ]},

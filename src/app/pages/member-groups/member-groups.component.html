@@ -1,0 +1,36 @@
+<main class="groups-page">
+  <header class="groups-heading">
+    <div><small>PORTAL DO MEMBRO</small><h1>Grupos da comunidade</h1>
+      <p>Encontre as comunidades da sua igreja e participe das conversas.</p></div>
+    <p-button label="Criar grupo" icon="pi pi-plus" (onClick)="creating = !creating"/>
+  </header>
+
+  @if (creating) {
+    <section class="create-card">
+      <div><h2>Novo grupo</h2><p>Dê um nome e uma breve descrição para sua comunidade.</p></div>
+      <form (ngSubmit)="create()">
+        <label><span>Nome</span><input pInputText name="name" maxlength="160" required [(ngModel)]="name"/></label>
+        <label><span>Descrição</span><textarea name="description" rows="3" maxlength="2000" [(ngModel)]="description"></textarea></label>
+        <label><span>Visibilidade</span><select name="visibility" [(ngModel)]="visibility"><option value="PUBLIC">Público</option><option value="PRIVATE">Privado</option></select></label>
+        <div class="actions"><p-button type="button" label="Cancelar" [outlined]="true" (onClick)="creating = false"/>
+          <p-button type="submit" label="Salvar grupo" icon="pi pi-check" [loading]="saving" [disabled]="!name.trim()"/></div>
+      </form>
+    </section>
+  }
+
+  @if (loading) {
+    <section class="state"><i class="pi pi-spin pi-spinner"></i><span>Carregando grupos...</span></section>
+  } @else if (!groups.length) {
+    <section class="state empty"><i class="pi pi-users"></i><strong>Ainda não existem grupos.</strong><p>Crie o primeiro grupo da comunidade.</p></section>
+  } @else {
+    <section class="groups-grid">
+      @for (group of groups; track group.id) {
+        <article class="group-card">
+          <div class="group-icon"><i class="pi pi-users"></i></div>
+          <a class="group-card__body" [routerLink]="['/member/groups', group.id]"><h2>{{ group.name }}</h2><p>{{ group.description || 'Grupo da comunidade' }}</p><small><i [class]="group.visibility === 'PRIVATE' ? 'pi pi-lock' : 'pi pi-globe'"></i> {{ group.visibility === 'PRIVATE' ? 'Privado' : 'Público' }}</small></a>
+          <div class="group-card__actions"><a class="open-group" [routerLink]="['/member/groups', group.id]">Abrir grupo <i class="pi pi-arrow-right"></i></a><p-button label="Entrar" [outlined]="true" size="small" (onClick)="join(group)"/></div>
+        </article>
+      }
+    </section>
+  }
+</main>

@@ -310,6 +310,12 @@ Ao salvar com um membro selecionado, o frontend chama `promoteMemberPortalUser` 
 `linkMemberPortalUser` quando o membro ainda está livre. A exclusão usa `deleteChurchUser`, preservando o acesso
 `MEMBER` e removendo apenas o vínculo administrativo quando aplicável.
 O cadastro administrativo também coleta CPF; o vínculo só prossegue quando CPF, e-mail e telefone conferem com os dados do membro.
+Ao editar um usuário já vinculado, a tela consulta `getMemberPortalUserLink` e repopula o `app-auto-complete` com o membro associado.
+
+O portal do membro também possui a rota `/member/groups`, com listagem dos grupos ativos e criação de grupo pelo próprio
+membro. A tela consome o Social através de `MemberGroupsService`.
+Também foi adicionada a rota `/member/groups/:id`: ela exibe o feed filtrado do grupo, permite publicar com `groupId`,
+editar nome/descrição/visibilidade/imagem e lista os participantes retornados pela projeção gerada de membros.
 
 Comportamento importante:
 

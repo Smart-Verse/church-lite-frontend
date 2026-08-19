@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 export interface ChurchUserInput {
   name: string;
@@ -32,6 +32,11 @@ export class UsersService {
 
   get(id: string): Observable<UserConfiguration> {
     return this.http.get<UserConfiguration>(`userConfiguration/${id}`);
+  }
+
+  getLinkedMemberPerson(userId: string): Observable<any> {
+    return this.http.get<{ personId: string }>('getMemberPortalUserLink', {params: {userId}})
+      .pipe(switchMap(link => this.http.get<any>(`person/${link.personId}`)));
   }
 
   update(id: string, user: UserConfiguration): Observable<UserConfiguration> {
