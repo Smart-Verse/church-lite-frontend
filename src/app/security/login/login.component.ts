@@ -87,7 +87,34 @@ export class LoginComponent extends BaseComponent implements OnInit {
         this.onShowLoading();
       },
       error: (error) => {
+        const errorKey = error?.error?.message ?? error?.error?.detail ?? error?.error;
+        if (errorKey === 'account_confirmation_required') {
+          this.resendRequiredConfirmation();
+          return;
+        }
         this.toastService.error({summary: "Erro", detail: "Ocorreu um erro"});
+        this.onShowLoading();
+      }
+    });
+  }
+
+  private resendRequiredConfirmation(): void {
+    const email = this.loginForm.value.email?.trim();
+    if (!email) {
+      this.toastService.error({summary: "Erro", detail: "Não foi possível identificar o e-mail para confirmação."});
+      this.onShowLoading();
+      return;
+    }
+    this.securityService.resendConfirmation(email).subscribe({
+      next: () => {
+        this.toastService.success({
+          summary: "Confirmação necessária",
+          detail: "Enviamos um novo link de confirmação para o seu e-mail."
+        });
+        this.onShowLoading();
+      },
+      error: () => {
+        this.toastService.error({summary: "Erro", detail: "Não foi possível reenviar o e-mail de confirmação agora."});
         this.onShowLoading();
       }
     });
