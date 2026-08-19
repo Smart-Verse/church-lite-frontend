@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SchedulerComponent } from './scheduler.component';
+import {SchedulerComponent} from './scheduler.component';
 
 describe('SchedulerComponent', () => {
   let component: SchedulerComponent;
@@ -10,8 +10,8 @@ describe('SchedulerComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SchedulerComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(SchedulerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

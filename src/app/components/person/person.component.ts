@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { gender, maritalStatus, status } from '../../shared/util/constants';
-import { FormGroup } from '@angular/forms';
-import { FieldsService } from '../../shared/services/fields/fields.service';
-import { PersonConfig } from './person.config';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { DatePipe } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ImageUploadService } from '../../shared/components/inputs/image-upload/image-upload.service';
-import { CrudService } from '../../shared/services/crud/crud.service';
+import {Component, OnInit} from '@angular/core';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {MenuItem} from 'primeng/api';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {gender, maritalStatus, status} from '../../shared/util/constants';
+import {FormGroup} from '@angular/forms';
+import {FieldsService} from '../../shared/services/fields/fields.service';
+import {PersonConfig} from './person.config';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {DatePipe} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ImageUploadService} from '../../shared/components/inputs/image-upload/image-upload.service';
+import {CrudService} from '../../shared/services/crud/crud.service';
 import {PostalCodeService} from '../../shared/services/address/postal-code.service';
 import {MemberPortalAccessService} from '../../services/member-portal/member-portal-access.service';
 
@@ -128,9 +128,18 @@ export class PersonComponent extends BaseComponent implements OnInit {
     if (!this.memberId) return;
     this.memberPortalAccess.memberLink(this.memberId).subscribe(response => {
       this.memberPortalAccess.copyUrl(response.path)
-        .then(() => this.toastService.success({summary: 'Link copiado', detail: 'Envie o link ao membro para ele criar o acesso.'}))
-        .catch(() => this.toastService.error({summary: 'Falha ao copiar', detail: 'O navegador não permitiu acessar a área de transferência.'}));
-    }, () => this.toastService.error({summary: 'Falha ao gerar acesso', detail: 'Não foi possível gerar o link deste membro.'}));
+        .then(() => this.toastService.success({
+          summary: 'Link copiado',
+          detail: 'Envie o link ao membro para ele criar o acesso.'
+        }))
+        .catch(() => this.toastService.error({
+          summary: 'Falha ao copiar',
+          detail: 'O navegador não permitiu acessar a área de transferência.'
+        }));
+    }, () => this.toastService.error({
+      summary: 'Falha ao gerar acesso',
+      detail: 'Não foi possível gerar o link deste membro.'
+    }));
   }
 
   sharePortalWhatsApp(): void {
@@ -144,13 +153,18 @@ export class PersonComponent extends BaseComponent implements OnInit {
   sendPortalEmail(): void {
     if (!this.memberId) return;
     this.showLoading = true;
-    this.memberPortalAccess.sendMemberLink(this.memberId).subscribe({next: () => {
-      this.showLoading = false;
-      this.toastService.success({summary: 'E-mail enviado', detail: 'O membro recebeu o link para criar o acesso.'});
-    }, error: error => {
-      this.showLoading = false;
-      this.toastService.error({summary: 'Falha no envio', detail: error.error?.message ?? 'Verifique o e-mail do membro.'});
-    }});
+    this.memberPortalAccess.sendMemberLink(this.memberId).subscribe({
+      next: () => {
+        this.showLoading = false;
+        this.toastService.success({summary: 'E-mail enviado', detail: 'O membro recebeu o link para criar o acesso.'});
+      }, error: error => {
+        this.showLoading = false;
+        this.toastService.error({
+          summary: 'Falha no envio',
+          detail: error.error?.message ?? 'Verifique o e-mail do membro.'
+        });
+      }
+    });
   }
 
   onConvertDate(data: any): Date | null {
@@ -248,12 +262,12 @@ export class PersonComponent extends BaseComponent implements OnInit {
     this._type = selectedContext.type;
     this.pageTitle = selectedContext.title;
     this.breadcrumbItems = [
-      { label: this.translatePersonMembers.translate('registrations') },
+      {label: this.translatePersonMembers.translate('registrations')},
       {
         label: this.translatePersonMembers.translate(selectedContext.listLabel),
         routerLink: ['/home/register', this.context],
       },
-      { label: this.translatePersonMembers.translate(this.pageTitle) },
+      {label: this.translatePersonMembers.translate(this.pageTitle)},
     ];
   }
 
@@ -269,10 +283,21 @@ export class PersonComponent extends BaseComponent implements OnInit {
     const addressGroup = this.personFormGroup.get('personAddress');
     const postalCode = String(addressGroup?.get('postalCode')?.value ?? '').replace(/\D/g, '');
     if (postalCode.length !== 8 || postalCode === this.lastPostalCode) return;
-    this.postalCodeService.lookup(postalCode).subscribe({next: result => {
-      this.lastPostalCode = postalCode;
-      addressGroup?.patchValue({postalCode: result.postalCode, address: result.address, neighborhood: result.neighborhood, city: result.city, ...(result.complement ? {complement: result.complement} : {})});
-    }, error: error => this.toastService.warn({summary: this.translatePersonMembers.translate('common_message'), detail: this.translatePersonMembers.translate(error.error?.message ?? 'postal_code_lookup_error')})});
+    this.postalCodeService.lookup(postalCode).subscribe({
+      next: result => {
+        this.lastPostalCode = postalCode;
+        addressGroup?.patchValue({
+          postalCode: result.postalCode,
+          address: result.address,
+          neighborhood: result.neighborhood,
+          city: result.city, ...(result.complement ? {complement: result.complement} : {})
+        });
+      },
+      error: error => this.toastService.warn({
+        summary: this.translatePersonMembers.translate('common_message'),
+        detail: this.translatePersonMembers.translate(error.error?.message ?? 'postal_code_lookup_error')
+      })
+    });
   }
 
   private onGetUrlImage(): void {

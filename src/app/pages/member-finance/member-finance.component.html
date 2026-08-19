@@ -1,12 +1,77 @@
 <main class="finance-page">
-  @if(loading){<section class="state"><i class="pi pi-spin pi-spinner"></i><span>Carregando informações...</span></section>}
-  @else if(error){<section class="state state--error"><i class="pi pi-exclamation-circle"></i><strong>{{error}}</strong><p-button label="Tentar novamente" [outlined]="true" (onClick)="load()"/></section>}
-  @else if(data&&!data.enabled){<section class="disabled"><span><i class="pi pi-lock"></i></span><h1>Portal da transparência indisponível</h1><p>A igreja ainda não disponibilizou as informações financeiras no Portal do Membro.</p></section>}
-  @else if(data){
-    <section class="intro"><div><small>PRESTAÇÃO DE CONTAS</small><h1>Transparência que fortalece a confiança.</h1><p>Valores realizados entre {{data.startDate|date:'dd/MM/yyyy'}} e {{data.endDate|date:'dd/MM/yyyy'}}.</p></div><span class="privacy"><i class="pi pi-shield"></i>Nenhuma identidade de contribuinte é exibida.</span></section>
-    <section class="totals"><article class="total revenue"><span><i class="pi pi-arrow-up-right"></i></span><div><small>Total de receitas</small><strong>{{data.revenueTotal|currency:'BRL':'symbol':'1.2-2'}}</strong></div></article><article class="total expense"><span><i class="pi pi-arrow-down-right"></i></span><div><small>Total de despesas</small><strong>{{data.expenseTotal|currency:'BRL':'symbol':'1.2-2'}}</strong></div></article><article class="total balance"><span><i class="pi pi-scale"></i></span><div><small>Resultado do período</small><strong>{{data.revenueTotal-data.expenseTotal|currency:'BRL':'symbol':'1.2-2'}}</strong></div></article></section>
-    <section class="grid"><article class="panel"><header><div><small>ORIGEM DOS RECURSOS</small><h2>Receitas por plano de contas</h2></div><i class="pi pi-chart-pie"></i></header><div class="account-list">@for(item of revenueAccounts();track item.planAccountId){<div class="account"><div><span>{{item.codeTree}}</span><strong>{{item.description}}</strong></div><b>{{item.total|currency:'BRL':'symbol':'1.2-2'}}</b></div>}@empty{<div class="empty">Nenhuma receita disponível.</div>}</div></article>
-    <article class="panel"><header><div><small>APLICAÇÃO DOS RECURSOS</small><h2>Despesas por plano de contas</h2></div><i class="pi pi-list"></i></header><div class="account-list">@for(item of expenseAccounts();track item.planAccountId){<div class="account"><div><span>{{item.codeTree}}</span><strong>{{item.description}}</strong></div><b>{{item.total|currency:'BRL':'symbol':'1.2-2'}}</b></div>}@empty{<div class="empty">Nenhuma despesa disponível.</div>}</div></article></section>
-    @if(data.expenses.length){<section class="panel details"><header><div><small>DETALHAMENTO AUTORIZADO</small><h2>Despesas realizadas</h2></div><i class="pi pi-receipt"></i></header><div>@for(item of data.expenses;track item.id){<div class="detail"><time>{{item.date|date:'dd/MM/yyyy'}}</time><div><strong>{{item.description}}</strong><span>{{item.planAccount}}</span></div><b>{{item.value|currency:'BRL':'symbol':'1.2-2'}}</b></div>}</div></section>}
+  @if (loading) {
+    <section class="state"><i class="pi pi-spin pi-spinner"></i><span>Carregando informações...</span></section>
+  } @else if (error) {
+    <section class="state state--error"><i class="pi pi-exclamation-circle"></i><strong>{{ error }}</strong>
+      <p-button label="Tentar novamente" [outlined]="true" (onClick)="load()"/>
+    </section>
+  } @else if (data && !data.enabled) {
+    <section class="disabled"><span><i class="pi pi-lock"></i></span>
+      <h1>Portal da transparência indisponível</h1>
+      <p>A igreja ainda não disponibilizou as informações financeiras no Portal do Membro.</p></section>
+  } @else if (data) {
+    <section class="intro">
+      <div><small>PRESTAÇÃO DE CONTAS</small>
+        <h1>Transparência que fortalece a confiança.</h1>
+        <p>Valores realizados entre {{ data.startDate|date:'dd/MM/yyyy' }} e {{ data.endDate|date:'dd/MM/yyyy' }}.</p>
+      </div>
+      <span class="privacy"><i class="pi pi-shield"></i>Nenhuma identidade de contribuinte é exibida.</span></section>
+    <section class="totals">
+      <article class="total revenue"><span><i class="pi pi-arrow-up-right"></i></span>
+        <div><small>Total de receitas</small><strong>{{ data.revenueTotal|currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </div>
+      </article>
+      <article class="total expense"><span><i class="pi pi-arrow-down-right"></i></span>
+        <div><small>Total de despesas</small><strong>{{ data.expenseTotal|currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </div>
+      </article>
+      <article class="total balance"><span><i class="pi pi-scale"></i></span>
+        <div><small>Resultado do
+          período</small><strong>{{ data.revenueTotal - data.expenseTotal|currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </div>
+      </article>
+    </section>
+    <section class="grid">
+      <article class="panel">
+        <header>
+          <div><small>ORIGEM DOS RECURSOS</small>
+            <h2>Receitas por plano de contas</h2></div>
+          <i class="pi pi-chart-pie"></i></header>
+        <div class="account-list">@for (item of revenueAccounts(); track item.planAccountId) {
+          <div class="account">
+            <div><span>{{ item.codeTree }}</span><strong>{{ item.description }}</strong></div>
+            <b>{{ item.total|currency:'BRL':'symbol':'1.2-2' }}</b></div>
+        } @empty {
+          <div class="empty">Nenhuma receita disponível.</div>
+        }</div>
+      </article>
+      <article class="panel">
+        <header>
+          <div><small>APLICAÇÃO DOS RECURSOS</small>
+            <h2>Despesas por plano de contas</h2></div>
+          <i class="pi pi-list"></i></header>
+        <div class="account-list">@for (item of expenseAccounts(); track item.planAccountId) {
+          <div class="account">
+            <div><span>{{ item.codeTree }}</span><strong>{{ item.description }}</strong></div>
+            <b>{{ item.total|currency:'BRL':'symbol':'1.2-2' }}</b></div>
+        } @empty {
+          <div class="empty">Nenhuma despesa disponível.</div>
+        }</div>
+      </article>
+    </section>
+    @if (data.expenses.length) {
+      <section class="panel details">
+        <header>
+          <div><small>DETALHAMENTO AUTORIZADO</small>
+            <h2>Despesas realizadas</h2></div>
+          <i class="pi pi-receipt"></i></header>
+        <div>@for (item of data.expenses; track item.id) {
+          <div class="detail">
+            <time>{{ item.date|date:'dd/MM/yyyy' }}</time>
+            <div><strong>{{ item.description }}</strong><span>{{ item.planAccount }}</span></div>
+            <b>{{ item.value|currency:'BRL':'symbol':'1.2-2' }}</b></div>
+        }</div>
+      </section>
+    }
   }
 </main>

@@ -1,22 +1,68 @@
-<app-loading [showLoading]="showLoading" />
+<app-loading [showLoading]="showLoading"/>
 <section class="history-page">
-  <nav class="history-page__breadcrumb" aria-label="Breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
-  <header class="history-page__header"><h1>{{ translateService.translate('history') }}</h1><p>{{ translateService.translate('history_page_description') }}</p></header>
+  <nav class="history-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
+  </nav>
+  <header class="history-page__header"><h1>{{ translateService.translate('history') }}</h1>
+    <p>{{ translateService.translate('history_page_description') }}</p></header>
 
   <main class="history-card">
     <div class="history-card__toolbar">
-      <p-iconField iconPosition="left" class="history-card__search"><p-inputIcon><i class="pi pi-search"></i></p-inputIcon><input pInputText type="search" [placeholder]="translateService.translate('datatable_search')" /></p-iconField>
-      <p-button icon="pi pi-refresh" [outlined]="true" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" />
+      <p-iconField iconPosition="left" class="history-card__search">
+        <p-inputIcon><i class="pi pi-search"></i></p-inputIcon>
+        <input pInputText type="search" [placeholder]="translateService.translate('datatable_search')"/></p-iconField>
+      <p-button icon="pi pi-refresh" [outlined]="true" [label]="translateService.translate('datatable_refresh')"
+                (onClick)="onRefresh()"/>
     </div>
 
     <div class="history-card__content">
       <p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="history-table p-datatable-sm">
-        <ng-template pTemplate="header"><tr><th>{{ translateService.translate('history_open_date') }}</th><th>{{ translateService.translate('history_close_date') }}</th><th>{{ translateService.translate('history_initial_balance') }}</th><th>{{ translateService.translate('history_operations_total') }}</th><th>{{ translateService.translate('history_final_balance') }}</th><th class="history-table__actions">{{ translateService.translate('datatable_actions') }}</th></tr></ng-template>
-        <ng-template pTemplate="body" let-rowData><tr><td>{{ rowData.startDate | date:'dd/MM/yyyy' }}</td><td>{{ rowData.endDate | date:'dd/MM/yyyy' }}</td><td>{{ rowData.initialBalance | currency:'BRL':'symbol':'1.2-2' }}</td><td>{{ rowData.balance | currency:'BRL':'symbol':'1.2-2' }}</td><td>{{ rowData.finalBalance | currency:'BRL':'symbol':'1.2-2' }}</td><td class="history-table__actions"><p-button icon="pi pi-print" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('common_print')" (onClick)="onPrint(rowData.id)" /></td></tr></ng-template>
-        <ng-template pTemplate="emptymessage"><tr><td colspan="6" class="history-table__empty-cell"><div class="history-table__empty"><svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg><strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate('history_empty_description') }}</span></div></td></tr></ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ translateService.translate('history_open_date') }}</th>
+            <th>{{ translateService.translate('history_close_date') }}</th>
+            <th>{{ translateService.translate('history_initial_balance') }}</th>
+            <th>{{ translateService.translate('history_operations_total') }}</th>
+            <th>{{ translateService.translate('history_final_balance') }}</th>
+            <th class="history-table__actions">{{ translateService.translate('datatable_actions') }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td>{{ rowData.startDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ rowData.endDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ rowData.initialBalance | currency:'BRL':'symbol':'1.2-2' }}</td>
+            <td>{{ rowData.balance | currency:'BRL':'symbol':'1.2-2' }}</td>
+            <td>{{ rowData.finalBalance | currency:'BRL':'symbol':'1.2-2' }}</td>
+            <td class="history-table__actions">
+              <p-button icon="pi pi-print" [text]="true" [rounded]="true"
+                        [ariaLabel]="translateService.translate('common_print')" (onClick)="onPrint(rowData.id)"/>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="history-table__empty-cell">
+              <div class="history-table__empty">
+                <svg viewBox="0 0 220 150" aria-hidden="true">
+                  <rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface"/>
+                  <path d="M58 49h68M58 69h104M58 89h52" class="empty-line"/>
+                  <circle cx="151" cy="103" r="27" class="empty-accent"/>
+                  <path d="m171 123 18 18M141 103h20" class="empty-icon"/>
+                </svg>
+                <strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate('history_empty_description') }}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
       </p-table>
     </div>
 
-    <footer class="history-card__footer"><span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span><p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size" [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body" /></footer>
+    <footer class="history-card__footer">
+      <span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span>
+      <p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size"
+                   [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords"
+                   [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body"/>
+    </footer>
   </main>
 </section>

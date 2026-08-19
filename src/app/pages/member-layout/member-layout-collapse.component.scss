@@ -1,9 +1,39 @@
-.brand-collapse{cursor:pointer}
-.member-sidebar,.member-content{transition:width .22s ease,margin-left .22s ease}
-.sidebar-collapsed .member-sidebar{width:72px}
-.sidebar-collapsed .member-content{margin-left:72px}
-.sidebar-collapsed .brand{justify-content:center;padding:0}
-.sidebar-collapsed .brand>div,.sidebar-collapsed .member-sidebar nav span,.sidebar-collapsed .member-sidebar footer span{display:none}
-.sidebar-collapsed .member-sidebar a,.sidebar-collapsed .member-sidebar footer button{justify-content:center;padding:0}
-.sidebar-collapsed .member-sidebar a i,.sidebar-collapsed .member-sidebar button i{width:auto}
-@media(max-width:720px){.sidebar-collapsed .member-content{margin-left:0}}
+.brand-collapse {
+  cursor: pointer
+}
+
+.member-sidebar, .member-content {
+  transition: width .22s ease, margin-left .22s ease
+}
+
+.sidebar-collapsed .member-sidebar {
+  width: 72px
+}
+
+.sidebar-collapsed .member-content {
+  margin-left: 72px
+}
+
+.sidebar-collapsed .brand {
+  justify-content: center;
+  padding: 0
+}
+
+.sidebar-collapsed .brand > div, .sidebar-collapsed .member-sidebar nav span, .sidebar-collapsed .member-sidebar footer span {
+  display: none
+}
+
+.sidebar-collapsed .member-sidebar a, .sidebar-collapsed .member-sidebar footer button {
+  justify-content: center;
+  padding: 0
+}
+
+.sidebar-collapsed .member-sidebar a i, .sidebar-collapsed .member-sidebar button i {
+  width: auto
+}
+
+@media(max-width: 720px) {
+  .sidebar-collapsed .member-content {
+    margin-left: 0
+  }
+}

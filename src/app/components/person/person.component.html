@@ -1,7 +1,7 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <section class="person-page">
   <nav class="person-page__breadcrumb" aria-label="Breadcrumb">
-    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
   </nav>
 
   <header class="person-page__header">
@@ -19,9 +19,11 @@
     </div>
     <div class="person-page__actions">
       @if (_type === 'MEMBER' && memberId) {
-        <p-button type="button" icon="pi pi-copy" [outlined]="true" label="Copiar acesso" (onClick)="copyPortalLink()" />
-        <p-button type="button" icon="pi pi-whatsapp" severity="success" [outlined]="true" label="WhatsApp" (onClick)="sharePortalWhatsApp()" />
-        <p-button type="button" icon="pi pi-envelope" [outlined]="true" label="Enviar acesso" (onClick)="sendPortalEmail()" />
+        <p-button type="button" icon="pi pi-copy" [outlined]="true" label="Copiar acesso" (onClick)="copyPortalLink()"/>
+        <p-button type="button" icon="pi pi-whatsapp" severity="success" [outlined]="true" label="WhatsApp"
+                  (onClick)="sharePortalWhatsApp()"/>
+        <p-button type="button" icon="pi pi-envelope" [outlined]="true" label="Enviar acesso"
+                  (onClick)="sendPortalEmail()"/>
       }
       <p-button
         type="button"
@@ -59,9 +61,9 @@
       <div class="person-card__hint">
         <i class="pi pi-info-circle"></i
         ><span
-          >Use uma foto quadrada, bem iluminada e com o rosto
+      >Use uma foto quadrada, bem iluminada e com o rosto
           centralizado.</span
-        >
+      >
       </div>
     </aside>
 
@@ -227,7 +229,7 @@
       <section class="person-card" formGroupName="personAddress">
         <div class="person-card__heading">
           <span class="person-card__icon"
-            ><i class="pi pi-map-marker"></i
+          ><i class="pi pi-map-marker"></i
           ></span>
           <div>
             <h2>Endereço</h2>

@@ -171,6 +171,7 @@
 .entity-page__body {
   padding-top: 1.5rem;
 }
+
 .entity-section {
   width: 100%;
   box-sizing: border-box;
@@ -178,27 +179,30 @@
   border: 1px solid var(--p-content-border-color);
   border-radius: 12px;
   background: var(--p-content-background);
-  box-shadow: 0 8px 24px
-    color-mix(in srgb, var(--p-text-color), transparent 96%);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%);
 }
+
 .entity-section__heading {
   display: flex;
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 1.5rem;
 }
+
 .entity-section__heading h2 {
   margin: 0;
   color: var(--p-text-color);
   font-size: 0.95rem;
   font-weight: 650;
 }
+
 .entity-section__heading p {
   margin: 0.22rem 0 0;
   color: var(--p-text-muted-color);
   font-size: 0.73rem;
   line-height: 1.4;
 }
+
 .entity-section__icon {
   display: grid;
   flex: 0 0 auto;
@@ -209,6 +213,7 @@
   background: color-mix(in srgb, var(--p-primary-color), transparent 88%);
   color: var(--p-primary-color);
 }
+
 :host ::ng-deep .entity-fields .p-floatlabel,
 :host ::ng-deep .entity-fields .p-inputtext,
 :host ::ng-deep .entity-fields .p-select,
@@ -217,6 +222,7 @@
   display: flex;
   width: 100%;
 }
+
 @media (max-width: 768px) {
   .entity-page {
     padding-right: 0.5rem;

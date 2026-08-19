@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {DataTable} from "../../shared/components/datatable/datatable";
 import {RequestData} from "../../shared/interfaces/request-data";
@@ -16,23 +16,23 @@ import {MenuItem} from "primeng/api";
 import {ScreenReportButtonComponent} from '../../shared/components/screen-report-button/screen-report-button.component';
 
 @Component({
-    selector: 'app-bank-statement',
-    imports: [
-        LoadingComponent,
-        SharedCommonModule,
-        TableModule,
-        PaginatorModule,
-        BreadcrumbModule,
-        ScreenReportButtonComponent
-    ],
-    providers: [
-        DialogService,
-        TransactionsService,
-        ToastService,
-        CrudService
-    ],
-    templateUrl: './bank-statement.component.html',
-    styleUrl: './bank-statement.component.scss'
+  selector: 'app-bank-statement',
+  imports: [
+    LoadingComponent,
+    SharedCommonModule,
+    TableModule,
+    PaginatorModule,
+    BreadcrumbModule,
+    ScreenReportButtonComponent
+  ],
+  providers: [
+    DialogService,
+    TransactionsService,
+    ToastService,
+    CrudService
+  ],
+  templateUrl: './bank-statement.component.html',
+  styleUrl: './bank-statement.component.scss'
 })
 export class BankStatementComponent extends BaseComponent implements OnInit {
 
@@ -49,7 +49,7 @@ export class BankStatementComponent extends BaseComponent implements OnInit {
   constructor(
     public readonly translateService: TranslateService,
     private readonly transactionsService: TransactionsService,
-    private readonly crudService : CrudService
+    private readonly crudService: CrudService
   ) {
     super();
   }
@@ -62,7 +62,7 @@ export class BankStatementComponent extends BaseComponent implements OnInit {
     ];
   }
 
-  onSelectedBankAccount(){
+  onSelectedBankAccount() {
     this._requestData = new RequestData();
     this.onLoadAllData(this._requestData);
   }
@@ -70,7 +70,7 @@ export class BankStatementComponent extends BaseComponent implements OnInit {
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
     requestData = this.includeFilters(requestData);
-    this.crudService.onGetAll("transactions",requestData).subscribe({
+    this.crudService.onGetAll("transactions", requestData).subscribe({
       next: (res) => {
         this._datatable.values = res.contents;
         this._datatable.totalRecords = res.total;
@@ -85,7 +85,7 @@ export class BankStatementComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onGetTotal(){
+  onGetTotal() {
     this.onShowLoading();
     this.transactionsService.getBalanceBankAccount(this._currentAccount.id).subscribe({
       next: (res) => {

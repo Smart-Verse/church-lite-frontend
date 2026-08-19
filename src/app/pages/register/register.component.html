@@ -1,7 +1,7 @@
-<app-loading [showLoading]="showLoading" />
+<app-loading [showLoading]="showLoading"/>
 <section class="register-page">
   <nav class="register-page__breadcrumb" aria-label="Breadcrumb">
-    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
   </nav>
 
   <header class="register-page__header">
@@ -20,7 +20,8 @@
       [createDisabledReason]="createDisabledReason"
       [config]="datatable">
       @if (configuration.view === 'personMembers') {
-        <p-button datatableToolbarAction icon="pi pi-link" [outlined]="true" label="Copiar link de autocadastro" (onClick)="copyMemberRegistrationLink()" />
+        <p-button datatableToolbarAction icon="pi pi-link" [outlined]="true" label="Copiar link de autocadastro"
+                  (onClick)="copyMemberRegistrationLink()"/>
       }
     </app-datatable>
   </main>

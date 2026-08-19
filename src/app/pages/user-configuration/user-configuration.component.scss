@@ -1,28 +1,228 @@
-:host { display: block; min-height: 100%; color: var(--p-text-color); }
-.settings-page { min-height: 100%; padding: 1.25rem .75rem 1.5rem; }
-.settings-page__breadcrumb, .settings-page__header, .settings-page__content, .settings-page__footer { width: 100%; margin-inline: auto; }
-:host ::ng-deep .settings-page__breadcrumb .p-breadcrumb { padding: 0; border: 0; background: transparent; font-size: .78rem; }
-.settings-page__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; padding: 1.35rem 0 1.5rem; border-bottom: 1px solid var(--p-content-border-color); }
-.settings-page__eyebrow { display: inline-flex; align-items: center; gap: .45rem; margin-bottom: .6rem; color: var(--p-primary-color); font-size: .72rem; font-weight: 700; letter-spacing: .045em; text-transform: uppercase; }
-.settings-page__header h1 { margin: 0; font-size: clamp(1.55rem, 2vw, 2rem); font-weight: 650; line-height: 1.2; }
-.settings-page__header p { max-width: 42rem; margin: .45rem 0 0; color: var(--p-text-muted-color); line-height: 1.55; }
-.settings-page__content { display: grid; grid-template-columns: minmax(230px, 290px) minmax(0, 1fr); gap: 1rem; padding-top: 1.5rem; align-items: start; }
-.settings-profile, .settings-section { border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%); }
-.settings-profile { position: sticky; top: 1rem; padding: 1.25rem; }
-.settings-sections { display: grid; gap: 1rem; min-width: 0; }
-.settings-section { padding: 1.35rem 1.5rem 1.55rem; }
-.settings-section__heading { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.4rem; }
-.settings-section__heading h2 { margin: 0; font-size: .95rem; font-weight: 650; }
-.settings-section__heading p { margin: .22rem 0 0; color: var(--p-text-muted-color); font-size: .73rem; line-height: 1.4; }
-.settings-section__icon { display: grid; flex: 0 0 auto; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--p-primary-color), transparent 88%); color: var(--p-primary-color); }
-.settings-profile__upload { width: min(100%, 190px); margin: 0 auto; }
-.settings-profile__upload app-image-upload { display: block; width: 100%; }
-.settings-profile__hint { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1rem; padding: .7rem .75rem; border-radius: 8px; background: var(--p-form-field-background); color: var(--p-text-muted-color); font-size: .68rem; line-height: 1.45; }
-.settings-profile__hint i { margin-top: .08rem; color: var(--p-primary-color); }
-.settings-fields { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem 1.25rem; padding-top: .35rem; }
-.settings-fields > * { grid-column: span 12; width: 100%; min-width: 0; margin: 0; padding: 0; }
-:host ::ng-deep .settings-fields .p-floatlabel, :host ::ng-deep .settings-fields .p-inputtext, :host ::ng-deep .settings-fields .p-select { display: flex; width: 100%; }
-.settings-page__footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem 1.25rem; border: 1px solid var(--p-content-border-color); border-radius: 10px; background: color-mix(in srgb, var(--p-content-background), transparent 10%); }
-.settings-page__footer span { color: var(--p-text-muted-color); font-size: .73rem; }
-@media (min-width: 769px) { .settings-fields .span-5 { grid-column: span 5; } .settings-fields .span-6 { grid-column: span 6; } .settings-fields .span-7 { grid-column: span 7; } .settings-fields .span-12 { grid-column: span 12; } }
-@media (max-width: 768px) { .settings-page { padding: 1rem .5rem; } .settings-page__header { align-items: stretch; flex-direction: column; } :host ::ng-deep .settings-page__header > p-button .p-button { width: 100%; } .settings-page__content { grid-template-columns: 1fr; } .settings-profile { position: static; } .settings-section { padding: 1.15rem 1rem 1.35rem; } .settings-page__footer { align-items: stretch; flex-direction: column; } :host ::ng-deep .settings-page__footer p-button .p-button { width: 100%; } }
+:host {
+  display: block;
+  min-height: 100%;
+  color: var(--p-text-color);
+}
+
+.settings-page {
+  min-height: 100%;
+  padding: 1.25rem .75rem 1.5rem;
+}
+
+.settings-page__breadcrumb, .settings-page__header, .settings-page__content, .settings-page__footer {
+  width: 100%;
+  margin-inline: auto;
+}
+
+:host ::ng-deep .settings-page__breadcrumb .p-breadcrumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: .78rem;
+}
+
+.settings-page__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.35rem 0 1.5rem;
+  border-bottom: 1px solid var(--p-content-border-color);
+}
+
+.settings-page__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  margin-bottom: .6rem;
+  color: var(--p-primary-color);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.settings-page__header h1 {
+  margin: 0;
+  font-size: clamp(1.55rem, 2vw, 2rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.settings-page__header p {
+  max-width: 42rem;
+  margin: .45rem 0 0;
+  color: var(--p-text-muted-color);
+  line-height: 1.55;
+}
+
+.settings-page__content {
+  display: grid;
+  grid-template-columns: minmax(230px, 290px) minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1.5rem;
+  align-items: start;
+}
+
+.settings-profile, .settings-section {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 12px;
+  background: var(--p-content-background);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%);
+}
+
+.settings-profile {
+  position: sticky;
+  top: 1rem;
+  padding: 1.25rem;
+}
+
+.settings-sections {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.settings-section {
+  padding: 1.35rem 1.5rem 1.55rem;
+}
+
+.settings-section__heading {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: 1.4rem;
+}
+
+.settings-section__heading h2 {
+  margin: 0;
+  font-size: .95rem;
+  font-weight: 650;
+}
+
+.settings-section__heading p {
+  margin: .22rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: .73rem;
+  line-height: 1.4;
+}
+
+.settings-section__icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--p-primary-color), transparent 88%);
+  color: var(--p-primary-color);
+}
+
+.settings-profile__upload {
+  width: min(100%, 190px);
+  margin: 0 auto;
+}
+
+.settings-profile__upload app-image-upload {
+  display: block;
+  width: 100%;
+}
+
+.settings-profile__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-top: 1rem;
+  padding: .7rem .75rem;
+  border-radius: 8px;
+  background: var(--p-form-field-background);
+  color: var(--p-text-muted-color);
+  font-size: .68rem;
+  line-height: 1.45;
+}
+
+.settings-profile__hint i {
+  margin-top: .08rem;
+  color: var(--p-primary-color);
+}
+
+.settings-fields {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem 1.25rem;
+  padding-top: .35rem;
+}
+
+.settings-fields > * {
+  grid-column: span 12;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:host ::ng-deep .settings-fields .p-floatlabel, :host ::ng-deep .settings-fields .p-inputtext, :host ::ng-deep .settings-fields .p-select {
+  display: flex;
+  width: 100%;
+}
+
+.settings-page__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--p-content-background), transparent 10%);
+}
+
+.settings-page__footer span {
+  color: var(--p-text-muted-color);
+  font-size: .73rem;
+}
+
+@media (min-width: 769px) {
+  .settings-fields .span-5 {
+    grid-column: span 5;
+  }
+  .settings-fields .span-6 {
+    grid-column: span 6;
+  }
+  .settings-fields .span-7 {
+    grid-column: span 7;
+  }
+  .settings-fields .span-12 {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 1rem .5rem;
+  }
+  .settings-page__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  :host ::ng-deep .settings-page__header > p-button .p-button {
+    width: 100%;
+  }
+  .settings-page__content {
+    grid-template-columns: 1fr;
+  }
+  .settings-profile {
+    position: static;
+  }
+  .settings-section {
+    padding: 1.15rem 1rem 1.35rem;
+  }
+  .settings-page__footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  :host ::ng-deep .settings-page__footer p-button .p-button {
+    width: 100%;
+  }
+}

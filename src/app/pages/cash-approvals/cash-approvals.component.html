@@ -1,2 +1,38 @@
-<app-loading [showLoading]="showLoading" />
-<section class="approval-page"><header><div><h1>{{ translate.translate('cash_approvals_title') }}</h1><p>{{ translate.translate('cash_approvals_description') }}</p></div><p-button icon="pi pi-refresh" [outlined]="true" [label]="translate.translate('common_action_refresh')" (onClick)="load()" /></header><section class="card"><p-table [value]="approvals"><ng-template pTemplate="header"><tr><th>{{ translate.translate('entity_cash_title') }}</th><th>{{ translate.translate('transactions_endDate') }}</th><th>{{ translate.translate('transactions_final_balance') }}</th><th class="action">{{ translate.translate('datatable_actions') }}</th></tr></ng-template><ng-template pTemplate="body" let-item><tr><td>{{ item.cashTransaction?.cash?.description }}</td><td>{{ item.cashTransaction?.startDate | date:'dd/MM/yyyy' }}</td><td>{{ item.cashTransaction?.finalBalance | currency:'BRL' }}</td><td class="action"><p-button icon="pi pi-check" severity="success" [loading]="approving === item.id" [label]="translate.translate('cash_approve')" (onClick)="approve(item)" /></td></tr></ng-template><ng-template pTemplate="emptymessage"><tr><td colspan="4" class="empty"><i class="pi pi-check-circle"></i><strong>{{ translate.translate('cash_approvals_empty') }}</strong></td></tr></ng-template></p-table></section></section>
+<app-loading [showLoading]="showLoading"/>
+<section class="approval-page">
+  <header>
+    <div><h1>{{ translate.translate('cash_approvals_title') }}</h1>
+      <p>{{ translate.translate('cash_approvals_description') }}</p></div>
+    <p-button icon="pi pi-refresh" [outlined]="true" [label]="translate.translate('common_action_refresh')"
+              (onClick)="load()"/>
+  </header>
+  <section class="card">
+    <p-table [value]="approvals">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ translate.translate('entity_cash_title') }}</th>
+          <th>{{ translate.translate('transactions_endDate') }}</th>
+          <th>{{ translate.translate('transactions_final_balance') }}</th>
+          <th class="action">{{ translate.translate('datatable_actions') }}</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.cashTransaction?.cash?.description }}</td>
+          <td>{{ item.cashTransaction?.startDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ item.cashTransaction?.finalBalance | currency:'BRL' }}</td>
+          <td class="action">
+            <p-button icon="pi pi-check" severity="success" [loading]="approving === item.id"
+                      [label]="translate.translate('cash_approve')" (onClick)="approve(item)"/>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="empty"><i
+            class="pi pi-check-circle"></i><strong>{{ translate.translate('cash_approvals_empty') }}</strong></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </section>
+</section>

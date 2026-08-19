@@ -48,7 +48,9 @@
   overflow: auto;
 }
 
-.datatable__mobile-list { display: none; }
+.datatable__mobile-list {
+  display: none;
+}
 
 :host ::ng-deep .datatable__prime .p-datatable-table {
   table-layout: auto;
@@ -213,14 +215,47 @@
   font-weight: 600;
 }
 
-.datatable__filter-form { display: flex; flex-direction: column; gap: 1.25rem; }
-.datatable__filter-description { margin: 0; color: var(--p-text-muted-color); font-size: .8rem; line-height: 1.5; }
-.datatable__filter-field { display: flex; flex-direction: column; gap: .5rem; }
-.datatable__filter-field > span { font-size: .78rem; font-weight: 600; }
-.datatable__filter-field > input { width: 100%; }
-:host ::ng-deep .datatable__filter-field .p-select { width: 100%; }
-.datatable__filter-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-:host ::ng-deep .datatable__filter-actions .p-button { width: 100%; }
+.datatable__filter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.datatable__filter-description {
+  margin: 0;
+  color: var(--p-text-muted-color);
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.datatable__filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.datatable__filter-field > span {
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+.datatable__filter-field > input {
+  width: 100%;
+}
+
+:host ::ng-deep .datatable__filter-field .p-select {
+  width: 100%;
+}
+
+.datatable__filter-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+
+:host ::ng-deep .datatable__filter-actions .p-button {
+  width: 100%;
+}
 
 .datatable__filter-empty {
   display: flex;
@@ -266,16 +301,65 @@
     width: 100%;
   }
 
-  :host ::ng-deep .datatable__prime { display: none; }
-  .datatable__mobile-list { display: flex; flex-direction: column; gap: .65rem; padding: .75rem; }
-  .datatable__mobile-card { display: flex; align-items: center; gap: .75rem; padding: .85rem .6rem .85rem .9rem; border: 1px solid var(--p-content-border-color); border-radius: 10px; background: var(--p-content-background); }
-  .datatable__mobile-fields { display: grid; flex: 1; min-width: 0; gap: .55rem; }
-  .datatable__mobile-field { display: flex; min-width: 0; flex-direction: column; gap: .15rem; }
-  .datatable__mobile-field span { color: var(--p-text-muted-color); font-size: .65rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-  .datatable__mobile-field strong { overflow: hidden; color: var(--p-text-color); font-size: .85rem; font-weight: 550; text-overflow: ellipsis; white-space: nowrap; }
-  .datatable__mobile-actions { display: flex; flex: 0 0 auto; }
-  .datatable__mobile-empty { min-height: 22rem; }
-  .datatable__mobile-sentinel { display: flex; align-items: center; justify-content: center; min-height: 2.5rem; color: var(--p-primary-color); }
+  :host ::ng-deep .datatable__prime {
+    display: none;
+  }
+  .datatable__mobile-list {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    padding: .75rem;
+  }
+  .datatable__mobile-card {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .85rem .6rem .85rem .9rem;
+    border: 1px solid var(--p-content-border-color);
+    border-radius: 10px;
+    background: var(--p-content-background);
+  }
+  .datatable__mobile-fields {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    gap: .55rem;
+  }
+  .datatable__mobile-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: .15rem;
+  }
+  .datatable__mobile-field span {
+    color: var(--p-text-muted-color);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .datatable__mobile-field strong {
+    overflow: hidden;
+    color: var(--p-text-color);
+    font-size: .85rem;
+    font-weight: 550;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .datatable__mobile-actions {
+    display: flex;
+    flex: 0 0 auto;
+  }
+  .datatable__mobile-empty {
+    min-height: 22rem;
+  }
+  .datatable__mobile-sentinel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    color: var(--p-primary-color);
+  }
 
   .datatable__footer {
     align-items: flex-start;

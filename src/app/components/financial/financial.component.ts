@@ -31,7 +31,10 @@ export class FinancialComponent extends BaseComponent implements OnInit {
   configuration = new FinancialConfig();
   _paidInvoice = false;
   _buttonText = this.translateService.translate("financial_saveAndQuit");
-  get planAccountFilter(): string { return `financialNature eq ${this._type}`; }
+
+  get planAccountFilter(): string {
+    return `financialNature eq ${this._type}`;
+  }
 
   constructor(
     private readonly fieldsService: FieldsService,
@@ -72,7 +75,10 @@ export class FinancialComponent extends BaseComponent implements OnInit {
       },
       error: error => {
         this.showLoading = false;
-        this.toastService.error({summary: this.translateService.translate("common_message"), detail: error.error?.message ?? "Falha ao carregar o lançamento"});
+        this.toastService.error({
+          summary: this.translateService.translate("common_message"),
+          detail: error.error?.message ?? "Falha ao carregar o lançamento"
+        });
         this.navigateToList();
       }
     });
@@ -80,7 +86,10 @@ export class FinancialComponent extends BaseComponent implements OnInit {
 
   onSave(action = 0): void {
     if (!this.formGroup.valid) {
-      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
+      this.toastService.warn({
+        summary: this.translateService.translate("common_message"),
+        detail: this.translateService.translate("common_message_invalid_fields")
+      });
       this.fieldsService.verifyIsValid();
       return;
     }
@@ -99,13 +108,19 @@ export class FinancialComponent extends BaseComponent implements OnInit {
       next: () => {
         this.isSaving = false;
         this.showLoading = false;
-        this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
+        this.toastService.success({
+          summary: this.translateService.translate("common_message"),
+          detail: this.translateService.translate("common_message_success")
+        });
         this.navigateToList();
       },
       error: error => {
         this.isSaving = false;
         this.showLoading = false;
-        this.toastService.error({summary: this.translateService.translate("common_message"), detail: error.error?.message ?? "Falha ao salvar o lançamento"});
+        this.toastService.error({
+          summary: this.translateService.translate("common_message"),
+          detail: error.error?.message ?? "Falha ao salvar o lançamento"
+        });
       }
     });
   }

@@ -1,23 +1,36 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PLATFORM_ID, SimpleChanges, ViewChild } from '@angular/core';
-import { DatePipe, isPlatformBrowser } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { TableModule  } from 'primeng/table';
-import { DataTable } from './datatable';
-import { DrawerModule } from 'primeng/drawer';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  PLATFORM_ID,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {DatePipe, isPlatformBrowser} from '@angular/common';
+import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {DataTable} from './datatable';
+import {DrawerModule} from 'primeng/drawer';
 import {RequestData} from "../../interfaces/request-data";
 import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule, PaginatorState} from 'primeng/paginator';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { FormsModule } from "@angular/forms";
-import { SelectModule } from "primeng/select";
-import { TranslateService } from '../../services/translate/translate.service';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import {FormsModule} from "@angular/forms";
+import {SelectModule} from "primeng/select";
+import {TranslateService} from '../../services/translate/translate.service';
 import {TooltipModule} from 'primeng/tooltip';
-import { Router } from '@angular/router';
-import { ScreenReportButtonComponent } from '../screen-report-button/screen-report-button.component';
-import { CrudService } from '../../services/crud/crud.service';
+import {Router} from '@angular/router';
+import {ScreenReportButtonComponent} from '../screen-report-button/screen-report-button.component';
+import {CrudService} from '../../services/crud/crud.service';
 
 
 export enum Action {
@@ -27,8 +40,8 @@ export enum Action {
 }
 
 @Component({
-    selector: 'app-datatable',
-    imports: [
+  selector: 'app-datatable',
+  imports: [
     ButtonModule,
     TableModule,
     DrawerModule,
@@ -41,13 +54,13 @@ export enum Action {
     SelectModule,
     TooltipModule,
     ScreenReportButtonComponent
-],
-    providers: [
-        ConfirmationService,
-        DatePipe
-    ],
-    templateUrl: './datatable.component.html',
-    styleUrl: './datatable.component.scss'
+  ],
+  providers: [
+    ConfirmationService,
+    DatePipe
+  ],
+  templateUrl: './datatable.component.html',
+  styleUrl: './datatable.component.scss'
 })
 export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
@@ -75,7 +88,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     private readonly router: Router,
     private readonly crudService: CrudService,
     @Inject(PLATFORM_ID) private readonly platformId: object,
-  ){
+  ) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -103,17 +116,19 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.mobileObserver.observe(this.mobileSentinel.nativeElement);
   }
 
-  ngOnDestroy(): void { this.mobileObserver?.disconnect(); }
-
-  onRowData(row: any, header: string, col: any){
-    const keys = header.split(".");
-    let value = keys.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : null), row);
-    return this.onCustomValue(value,col);
+  ngOnDestroy(): void {
+    this.mobileObserver?.disconnect();
   }
 
-  onCustomValue(value: any, col: any): any{
-    if(col.customValue){
-      switch (col.customValue){
+  onRowData(row: any, header: string, col: any) {
+    const keys = header.split(".");
+    let value = keys.reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : null), row);
+    return this.onCustomValue(value, col);
+  }
+
+  onCustomValue(value: any, col: any): any {
+    if (col.customValue) {
+      switch (col.customValue) {
         case "MONEY":
           value = parseFloat(value).toFixed(2);
           break;
@@ -153,7 +168,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.sidebarVisible = !this.sidebarVisible;
   }
 
-  onRegisterData(item: any, action: Action){
+  onRegisterData(item: any, action: Action) {
     if (action === Action.ADD && this.createDisabled) return;
     let obj = {
       data: item,
@@ -162,7 +177,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.onRegister.emit(obj);
   }
 
-  onRefreshData(){
+  onRefreshData() {
     this.quickSearch = "";
     this.filterValues = {};
     this.appliedFilter = "";
@@ -205,7 +220,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     return value.trim().replace(/\s+(and|or)\s+/gi, " ");
   }
 
-  translatedOptions(options?: {label: string; value: string}[]): {label: string; value: string}[] {
+  translatedOptions(options?: { label: string; value: string }[]): { label: string; value: string }[] {
     return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
   }
 
@@ -242,21 +257,22 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     };
   }
 
-  onDeleteData(item: any, action: Action){
+  onDeleteData(item: any, action: Action) {
     this.confirmationService.confirm({
       message: this.translateService.translate("common_message_confirmation_delete"),
       header: this.translateService.translate("common_message_header_confirmation_delete"),
       icon: 'pi pi-info-circle',
-      acceptButtonStyleClass:"p-button-danger p-button-text",
-      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
       acceptLabel: this.translateService.translate("common_action_yes"),
       rejectLabel: this.translateService.translate("common_action_no"),
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptIcon: "none",
+      rejectIcon: "none",
       accept: () => {
-        this.onRegisterData(item,action)
+        this.onRegisterData(item, action)
       },
-      reject: () => {}
+      reject: () => {
+      }
     });
   }
 }

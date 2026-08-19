@@ -1,7 +1,7 @@
-<app-loading [showLoading]="showLoading" />
+<app-loading [showLoading]="showLoading"/>
 <section class="entity-page">
   <nav class="entity-page__breadcrumb">
-    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
   </nav>
   <header class="entity-page__header">
     <div>
@@ -21,7 +21,8 @@
         [outlined]="true"
         [label]="translateService.translate('common_action_cancel')"
         (onClick)="onCancel()"
-      /><p-button
+      />
+      <p-button
         icon="pi pi-check"
         [disabled]="isSaving"
         [label]="translateService.translate('common_action_save')"
@@ -47,7 +48,8 @@
           [field]="functionFormGroup"
           [label]="translateService.translate('common_name')"
           type="text"
-        /><app-input-text
+        />
+        <app-input-text
           fieldType="input-text-area"
           formControlName="description"
           name="description"

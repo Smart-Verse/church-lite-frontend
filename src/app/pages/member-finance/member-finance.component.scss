@@ -1,1 +1,266 @@
-:host{display:block;min-height:100dvh;background:var(--app-page-background);color:var(--p-text-color)}.finance-page{width:min(1180px,100%);margin:auto;padding:1.35rem 1.5rem 3rem}.page-header{padding-bottom:2.5rem}.page-header>div{display:flex;align-items:center;gap:.6rem}.page-header span{display:grid}.page-header small,.intro small,.panel header small{font-size:.67rem;font-weight:800;letter-spacing:.11em;color:var(--p-primary-color)}.intro{display:flex;align-items:end;justify-content:space-between;gap:2rem;margin-bottom:1.6rem}.intro h1{max-width:650px;font-size:clamp(2rem,4vw,3rem);line-height:1.05;margin:.55rem 0}.intro p{margin:0;color:var(--p-text-muted-color)}.privacy{display:flex;align-items:center;gap:.5rem;padding:.7rem .85rem;border-radius:10px;background:color-mix(in srgb,var(--p-primary-color) 8%,transparent);color:var(--p-text-muted-color);font-size:.8rem}.privacy i{color:var(--p-primary-color)}.totals{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}.total,.panel{border:1px solid var(--p-content-border-color);border-radius:18px;background:var(--p-content-background)}.total{display:flex;align-items:center;gap:1rem;padding:1.2rem}.total>span{display:grid;width:2.8rem;height:2.8rem;place-items:center;border-radius:13px}.total>div{display:grid;gap:.25rem}.total small{color:var(--p-text-muted-color)}.total strong{font-size:1.25rem}.revenue>span{color:var(--p-green-500);background:color-mix(in srgb,var(--p-green-500) 14%,transparent)}.expense>span{color:var(--p-red-500);background:color-mix(in srgb,var(--p-red-500) 12%,transparent)}.balance>span{color:var(--p-primary-color);background:color-mix(in srgb,var(--p-primary-color) 12%,transparent)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.panel{padding:1.3rem}.panel>header{display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--p-content-border-color)}.panel header div{display:grid;gap:.3rem}.panel h2{font-size:1.1rem;margin:0}.panel header>i{color:var(--p-text-muted-color)}.account,.detail{display:flex;align-items:center;gap:1rem;min-height:68px;border-bottom:1px solid var(--p-content-border-color)}.account:last-child,.detail:last-child{border:0}.account>div,.detail>div{display:grid;flex:1;gap:.2rem}.account span,.detail span,.detail time{font-size:.75rem;color:var(--p-text-muted-color)}.account b{white-space:nowrap}.details{margin-top:1rem}.detail time{width:80px}.detail b{color:var(--p-red-500);white-space:nowrap}.empty{display:grid;min-height:150px;place-items:center;color:var(--p-text-muted-color)}.state,.disabled{display:grid;min-height:65dvh;place-items:center;align-content:center;text-align:center;gap:1rem;color:var(--p-text-muted-color)}.state>i{font-size:2rem}.state--error{color:var(--p-red-500)}.disabled>span{display:grid;width:4rem;height:4rem;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--p-primary-color) 10%,transparent);color:var(--p-primary-color);font-size:1.5rem}.disabled h1,.disabled p{margin:0}.disabled p{max-width:500px}@media(max-width:760px){.finance-page{padding:1rem}.intro{display:block}.privacy{margin-top:1rem}.totals,.grid{grid-template-columns:1fr}.detail{align-items:flex-start;flex-wrap:wrap;padding:.85rem 0}.detail time{width:auto}.detail>div{flex-basis:60%}}
+:host {
+  display: block;
+  min-height: 100dvh;
+  background: var(--app-page-background);
+  color: var(--p-text-color)
+}
+
+.finance-page {
+  width: min(1180px, 100%);
+  margin: auto;
+  padding: 1.35rem 1.5rem 3rem
+}
+
+.page-header {
+  padding-bottom: 2.5rem
+}
+
+.page-header > div {
+  display: flex;
+  align-items: center;
+  gap: .6rem
+}
+
+.page-header span {
+  display: grid
+}
+
+.page-header small, .intro small, .panel header small {
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .11em;
+  color: var(--p-primary-color)
+}
+
+.intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.6rem
+}
+
+.intro h1 {
+  max-width: 650px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: .55rem 0
+}
+
+.intro p {
+  margin: 0;
+  color: var(--p-text-muted-color)
+}
+
+.privacy {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .7rem .85rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--p-primary-color) 8%, transparent);
+  color: var(--p-text-muted-color);
+  font-size: .8rem
+}
+
+.privacy i {
+  color: var(--p-primary-color)
+}
+
+.totals {
+  display: grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem
+}
+
+.total, .panel {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 18px;
+  background: var(--p-content-background)
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem
+}
+
+.total > span {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border-radius: 13px
+}
+
+.total > div {
+  display: grid;
+  gap: .25rem
+}
+
+.total small {
+  color: var(--p-text-muted-color)
+}
+
+.total strong {
+  font-size: 1.25rem
+}
+
+.revenue > span {
+  color: var(--p-green-500);
+  background: color-mix(in srgb, var(--p-green-500) 14%, transparent)
+}
+
+.expense > span {
+  color: var(--p-red-500);
+  background: color-mix(in srgb, var(--p-red-500) 12%, transparent)
+}
+
+.balance > span {
+  color: var(--p-primary-color);
+  background: color-mix(in srgb, var(--p-primary-color) 12%, transparent)
+}
+
+.grid {
+  display: grid;
+  grid-template-columns:1fr 1fr;
+  gap: 1rem
+}
+
+.panel {
+  padding: 1.3rem
+}
+
+.panel > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--p-content-border-color)
+}
+
+.panel header div {
+  display: grid;
+  gap: .3rem
+}
+
+.panel h2 {
+  font-size: 1.1rem;
+  margin: 0
+}
+
+.panel header > i {
+  color: var(--p-text-muted-color)
+}
+
+.account, .detail {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 68px;
+  border-bottom: 1px solid var(--p-content-border-color)
+}
+
+.account:last-child, .detail:last-child {
+  border: 0
+}
+
+.account > div, .detail > div {
+  display: grid;
+  flex: 1;
+  gap: .2rem
+}
+
+.account span, .detail span, .detail time {
+  font-size: .75rem;
+  color: var(--p-text-muted-color)
+}
+
+.account b {
+  white-space: nowrap
+}
+
+.details {
+  margin-top: 1rem
+}
+
+.detail time {
+  width: 80px
+}
+
+.detail b {
+  color: var(--p-red-500);
+  white-space: nowrap
+}
+
+.empty {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  color: var(--p-text-muted-color)
+}
+
+.state, .disabled {
+  display: grid;
+  min-height: 65dvh;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+  gap: 1rem;
+  color: var(--p-text-muted-color)
+}
+
+.state > i {
+  font-size: 2rem
+}
+
+.state--error {
+  color: var(--p-red-500)
+}
+
+.disabled > span {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--p-primary-color) 10%, transparent);
+  color: var(--p-primary-color);
+  font-size: 1.5rem
+}
+
+.disabled h1, .disabled p {
+  margin: 0
+}
+
+.disabled p {
+  max-width: 500px
+}
+
+@media(max-width: 760px) {
+  .finance-page {
+    padding: 1rem
+  }
+  .intro {
+    display: block
+  }
+  .privacy {
+    margin-top: 1rem
+  }
+  .totals, .grid {
+    grid-template-columns:1fr
+  }
+  .detail {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: .85rem 0
+  }
+  .detail time {
+    width: auto
+  }
+  .detail > div {
+    flex-basis: 60%
+  }
+}

@@ -1,17 +1,100 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <section class="finance-page">
-  <nav class="finance-page__breadcrumb" aria-label="Breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
+  <nav class="finance-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
+  </nav>
   <header class="finance-page__header">
-    <div><h1>{{ translateService.translate(recurringId && recurringId !== 'new' ? 'financial_recurrence_edit' : 'financial_recurrence_new') }}</h1><p>{{ translateService.translate('financial_recurrence_form_help') }}</p></div>
-    <div class="finance-page__actions"><p-button type="button" [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()" /><p-button type="button" icon="pi pi-check" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" /></div>
+    <div>
+      <h1>{{ translateService.translate(recurringId && recurringId !== 'new' ? 'financial_recurrence_edit' : 'financial_recurrence_new') }}</h1>
+      <p>{{ translateService.translate('financial_recurrence_form_help') }}</p></div>
+    <div class="finance-page__actions">
+      <p-button type="button" [outlined]="true" [label]="translateService.translate('common_action_cancel')"
+                (onClick)="onCancel()"/>
+      <p-button type="button" icon="pi pi-check" [disabled]="isSaving"
+                [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
+    </div>
   </header>
   <main class="finance-page__body" [formGroup]="formGroup">
-    <div class="finance-status"><span class="finance-status__icon"><i class="pi pi-sync"></i></span><div><strong>{{ translateService.translate('financial_recurrence_title') }}</strong><span>{{ installment ? translateService.translate('financial_recurrence_installment_hint') : translateService.translate('financial_recurrence_continuous_hint') }}</span></div></div>
+    <div class="finance-status"><span class="finance-status__icon"><i class="pi pi-sync"></i></span>
+      <div>
+        <strong>{{ translateService.translate('financial_recurrence_title') }}</strong><span>{{ installment ? translateService.translate('financial_recurrence_installment_hint') : translateService.translate('financial_recurrence_continuous_hint') }}</span>
+      </div>
+    </div>
     <div class="finance-cards">
-      <section class="finance-card"><div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-file-edit"></i></span><div><h2>{{ translateService.translate('financial_recurrence_identification') }}</h2><p>{{ translateService.translate('financial_recurrence_identification_help') }}</p></div></div><div class="fields-grid"><app-input-text [focus]="true" formControlName="description" name="description" [field]="formGroup" class="span-8" [label]="translateService.translate('common_description')" type="text" /><app-dropdown formControlName="typeFinancial" name="typeFinancial" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_recurrence_type')" [options]="types" optionLabel="label" /><app-auto-complete formControlName="person" name="person" [field]="formGroup" class="span-12" [label]="translateService.translate('financial_person')" route="person" optionLabel="name" type="text" /></div></section>
-      <section class="finance-card"><div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-calendar-clock"></i></span><div><h2>{{ translateService.translate('financial_recurrence_schedule') }}</h2><p>{{ translateService.translate('financial_recurrence_schedule_help') }}</p></div></div><div class="fields-grid"><app-dropdown formControlName="recurrenceMode" name="recurrenceMode" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_recurrence_mode')" [options]="modes" optionLabel="label" /><app-dropdown formControlName="frequency" name="frequency" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_recurrence_frequency')" [options]="frequencies" optionLabel="label" /><app-input-date formControlName="firstDueDate" name="firstDueDate" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_recurrence_first_due_date')" type="text" /><app-input-date formControlName="endDate" name="endDate" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_recurrence_end_date')" type="text" /><app-input-number *ngIf="installment" formControlName="occurrenceCount" name="occurrenceCount" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_recurrence_installments')" type="text" /><app-dropdown *ngIf="recurringId && recurringId !== 'new'" formControlName="status" name="status" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_recurrence_status')" [options]="statuses" optionLabel="label" /></div></section>
-      <section class="finance-card"><div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-wallet"></i></span><div><h2>{{ translateService.translate('financial_recurrence_values') }}</h2><p>{{ translateService.translate('financial_recurrence_values_help') }}</p></div></div><div class="fields-grid"><app-dropdown formControlName="valueType" name="valueType" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_recurrence_value_type')" [options]="valueTypes" optionLabel="label" /><app-input-number formControlName="value" name="value" [field]="formGroup" class="span-6" [label]="translateService.translate('financial_value')" type="text" /></div><div class="finance-card__hint"><i class="pi pi-info-circle"></i><span>{{ translateService.translate('financial_recurrence_variable_help') }}</span></div></section>
-      <section class="finance-card finance-card--wide"><div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-sitemap"></i></span><div><h2>{{ translateService.translate('financial_page_classification') }}</h2><p>{{ translateService.translate('financial_recurrence_classification_help') }}</p></div></div><div class="fields-grid"><app-auto-complete formControlName="cash" name="cash" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_cash')" route="cash" defaultFilter="(status eq 0 or typeCash eq 1) " optionLabel="description" type="text" /><app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_planAccount')" route="planAccount" [defaultFilter]="planAccountFilter" optionLabel="description" type="text" /><app-auto-complete formControlName="costCenter" name="costCenter" [field]="formGroup" class="span-4" [label]="translateService.translate('financial_costCenter')" route="costCenter" optionLabel="description" type="text" /></div></section>
+      <section class="finance-card">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-file-edit"></i></span>
+          <div><h2>{{ translateService.translate('financial_recurrence_identification') }}</h2>
+            <p>{{ translateService.translate('financial_recurrence_identification_help') }}</p></div>
+        </div>
+        <div class="fields-grid">
+          <app-input-text [focus]="true" formControlName="description" name="description" [field]="formGroup"
+                          class="span-8" [label]="translateService.translate('common_description')" type="text"/>
+          <app-dropdown formControlName="typeFinancial" name="typeFinancial" [field]="formGroup" class="span-4"
+                        [label]="translateService.translate('financial_recurrence_type')" [options]="types"
+                        optionLabel="label"/>
+          <app-auto-complete formControlName="person" name="person" [field]="formGroup" class="span-12"
+                             [label]="translateService.translate('financial_person')" route="person" optionLabel="name"
+                             type="text"/>
+        </div>
+      </section>
+      <section class="finance-card">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-calendar-clock"></i></span>
+          <div><h2>{{ translateService.translate('financial_recurrence_schedule') }}</h2>
+            <p>{{ translateService.translate('financial_recurrence_schedule_help') }}</p></div>
+        </div>
+        <div class="fields-grid">
+          <app-dropdown formControlName="recurrenceMode" name="recurrenceMode" [field]="formGroup" class="span-6"
+                        [label]="translateService.translate('financial_recurrence_mode')" [options]="modes"
+                        optionLabel="label"/>
+          <app-dropdown formControlName="frequency" name="frequency" [field]="formGroup" class="span-6"
+                        [label]="translateService.translate('financial_recurrence_frequency')" [options]="frequencies"
+                        optionLabel="label"/>
+          <app-input-date formControlName="firstDueDate" name="firstDueDate" [field]="formGroup" class="span-4"
+                          [label]="translateService.translate('financial_recurrence_first_due_date')" type="text"/>
+          <app-input-date formControlName="endDate" name="endDate" [field]="formGroup" class="span-4"
+                          [label]="translateService.translate('financial_recurrence_end_date')" type="text"/>
+          <app-input-number *ngIf="installment" formControlName="occurrenceCount" name="occurrenceCount"
+                            [field]="formGroup" class="span-4"
+                            [label]="translateService.translate('financial_recurrence_installments')" type="text"/>
+          <app-dropdown *ngIf="recurringId && recurringId !== 'new'" formControlName="status" name="status"
+                        [field]="formGroup" class="span-4"
+                        [label]="translateService.translate('financial_recurrence_status')" [options]="statuses"
+                        optionLabel="label"/>
+        </div>
+      </section>
+      <section class="finance-card">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-wallet"></i></span>
+          <div><h2>{{ translateService.translate('financial_recurrence_values') }}</h2>
+            <p>{{ translateService.translate('financial_recurrence_values_help') }}</p></div>
+        </div>
+        <div class="fields-grid">
+          <app-dropdown formControlName="valueType" name="valueType" [field]="formGroup" class="span-6"
+                        [label]="translateService.translate('financial_recurrence_value_type')" [options]="valueTypes"
+                        optionLabel="label"/>
+          <app-input-number formControlName="value" name="value" [field]="formGroup" class="span-6"
+                            [label]="translateService.translate('financial_value')" type="text"/>
+        </div>
+        <div class="finance-card__hint"><i
+          class="pi pi-info-circle"></i><span>{{ translateService.translate('financial_recurrence_variable_help') }}</span>
+        </div>
+      </section>
+      <section class="finance-card finance-card--wide">
+        <div class="finance-card__heading"><span class="finance-card__icon"><i class="pi pi-sitemap"></i></span>
+          <div><h2>{{ translateService.translate('financial_page_classification') }}</h2>
+            <p>{{ translateService.translate('financial_recurrence_classification_help') }}</p></div>
+        </div>
+        <div class="fields-grid">
+          <app-auto-complete formControlName="cash" name="cash" [field]="formGroup" class="span-4"
+                             [label]="translateService.translate('financial_cash')" route="cash"
+                             defaultFilter="(status eq 0 or typeCash eq 1) " optionLabel="description" type="text"/>
+          <app-auto-complete formControlName="planAccount" name="planAccount" [field]="formGroup" class="span-4"
+                             [label]="translateService.translate('financial_planAccount')" route="planAccount"
+                             [defaultFilter]="planAccountFilter" optionLabel="description" type="text"/>
+          <app-auto-complete formControlName="costCenter" name="costCenter" [field]="formGroup" class="span-4"
+                             [label]="translateService.translate('financial_costCenter')" route="costCenter"
+                             optionLabel="description" type="text"/>
+        </div>
+      </section>
     </div>
   </main>
 </section>

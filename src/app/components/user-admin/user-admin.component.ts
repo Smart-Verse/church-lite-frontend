@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
-import { Observable } from 'rxjs';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { FieldsService } from '../../shared/services/fields/fields.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { UsersService } from '../../services/users/users.service';
-import { UserAdminConfig } from './user-admin.config';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormGroup} from '@angular/forms';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {MenuItem} from 'primeng/api';
+import {Observable} from 'rxjs';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {FieldsService} from '../../shared/services/fields/fields.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {UsersService} from '../../services/users/users.service';
+import {UserAdminConfig} from './user-admin.config';
 
 @Component({
   selector: 'app-user-admin',
@@ -23,10 +23,10 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
   formGroup: FormGroup;
   id: string | null = null;
   isSaving = false;
-  breadcrumbHome: MenuItem = { icon: 'pi pi-home', routerLink: '/home/dashboard' };
+  breadcrumbHome: MenuItem = {icon: 'pi pi-home', routerLink: '/home/dashboard'};
   breadcrumbItems: MenuItem[] = [
-    { label: 'Configurações' },
-    { label: 'Usuários', routerLink: '/home/register/users' }
+    {label: 'Configurações'},
+    {label: 'Usuários', routerLink: '/home/register/users'}
   ];
 
   private readonly configuration = new UserAdminConfig();
@@ -54,7 +54,7 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
 
   onSave(): void {
     if (!this.formGroup.valid) {
-      this.toast.warn({ summary: 'Usuários', detail: 'Preencha os campos obrigatórios' });
+      this.toast.warn({summary: 'Usuários', detail: 'Preencha os campos obrigatórios'});
       this.fieldsService.verifyIsValid();
       return;
     }
@@ -67,7 +67,7 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
     request.subscribe({
       next: () => {
         this.isSaving = this.showLoading = false;
-        this.toast.success({ summary: 'Usuários', detail: 'Usuário salvo com sucesso' });
+        this.toast.success({summary: 'Usuários', detail: 'Usuário salvo com sucesso'});
         this.onCancel();
       },
       error: (error: any) => {

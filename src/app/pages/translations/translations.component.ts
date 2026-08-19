@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuItem } from 'primeng/api';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { LoadingComponent } from '../../shared/components/loading/loading.component';
-import { CrudService } from '../../shared/services/crud/crud.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { TranslateService, TranslationOverride } from '../../shared/services/translate/translate.service';
+import {Component, OnInit} from '@angular/core';
+import {forkJoin} from 'rxjs';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {TableModule} from 'primeng/table';
+import {TooltipModule} from 'primeng/tooltip';
+import {MenuItem} from 'primeng/api';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {LoadingComponent} from '../../shared/components/loading/loading.component';
+import {CrudService} from '../../shared/services/crud/crud.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {TranslateService, TranslationOverride} from '../../shared/services/translate/translate.service';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {Router} from '@angular/router';
 
@@ -48,10 +48,15 @@ export class TranslationsComponent implements OnInit {
     private readonly toast: ToastService,
     private readonly subscription: SubscriptionService,
     private readonly router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    if (!this.subscription.hasFeature('CUSTOM_TRANSLATIONS')) { this.subscription.requestUpgrade(); this.router.navigate(['/home/dashboard']); return; }
+    if (!this.subscription.hasFeature('CUSTOM_TRANSLATIONS')) {
+      this.subscription.requestUpgrade();
+      this.router.navigate(['/home/dashboard']);
+      return;
+    }
     this.language = this.translateService.currentLanguage();
     this.breadcrumbItems = [{label: this.translateService.translate('translations')}];
     this.load();
@@ -83,7 +88,9 @@ export class TranslationsComponent implements OnInit {
     });
   }
 
-  restore(row: TranslationRow): void { row.value = row.defaultValue; }
+  restore(row: TranslationRow): void {
+    row.value = row.defaultValue;
+  }
 
   save(): void {
     const changed = this.rows.filter(row => row.value.trim() !== (row.override?.value ?? row.defaultValue));
@@ -99,7 +106,10 @@ export class TranslationsComponent implements OnInit {
       next: () => {
         this.saving = false;
         this.translateService.loadLanguage(this.language, true).subscribe(() => this.load());
-        this.toast.success({summary: this.translateService.translate('common_message'), detail: this.translateService.translate('translations_save_success')});
+        this.toast.success({
+          summary: this.translateService.translate('common_message'),
+          detail: this.translateService.translate('translations_save_success')
+        });
       },
       error: error => this.handleError(error, 'translations_save_error')
     });
@@ -107,6 +117,9 @@ export class TranslationsComponent implements OnInit {
 
   private handleError(error: any, key: string): void {
     this.loading = this.saving = false;
-    this.toast.error({summary: this.translateService.translate('common_message'), detail: error?.error?.message ?? this.translateService.translate(key)});
+    this.toast.error({
+      summary: this.translateService.translate('common_message'),
+      detail: error?.error?.message ?? this.translateService.translate(key)
+    });
   }
 }

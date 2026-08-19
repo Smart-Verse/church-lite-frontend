@@ -1,7 +1,7 @@
-<app-loading [showLoading]="showLoading" />
+<app-loading [showLoading]="showLoading"/>
 <section class="settings-page">
   <nav class="settings-page__breadcrumb" aria-label="Breadcrumb">
-    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
   </nav>
 
   <header class="settings-page__header">
@@ -16,35 +16,45 @@
     <aside class="settings-profile">
       <div class="settings-section__heading">
         <span class="settings-section__icon"><i class="pi pi-user"></i></span>
-        <div><h2>Foto do perfil</h2><p>Utilizada no menu e na identificação da conta.</p></div>
+        <div><h2>Foto do perfil</h2>
+          <p>Utilizada no menu e na identificação da conta.</p></div>
       </div>
       <div class="settings-profile__upload">
-        <app-image-upload [imageUrl]="urlImage" (eventLoading)="loading()" (eventImageToken)="onGetTokenImage($event)" [tokenImageUrl]="imageToken" />
+        <app-image-upload [imageUrl]="urlImage" (eventLoading)="loading()" (eventImageToken)="onGetTokenImage($event)"
+                          [tokenImageUrl]="imageToken"/>
       </div>
-      <div class="settings-profile__hint"><i class="pi pi-info-circle"></i><span>Prefira uma imagem quadrada, nítida e com até 5 MB.</span></div>
+      <div class="settings-profile__hint"><i class="pi pi-info-circle"></i><span>Prefira uma imagem quadrada, nítida e com até 5 MB.</span>
+      </div>
     </aside>
 
     <div class="settings-sections">
       <section class="settings-section">
         <div class="settings-section__heading">
           <span class="settings-section__icon"><i class="pi pi-id-card"></i></span>
-          <div><h2>Informações pessoais</h2><p>Dados básicos vinculados ao seu acesso.</p></div>
+          <div><h2>Informações pessoais</h2>
+            <p>Dados básicos vinculados ao seu acesso.</p></div>
         </div>
         <div class="settings-fields">
-          <app-input-text formControlName="name" name="name" [field]="formGroup" class="span-7" [label]="translateService.translate('personal_field_name')" type="text" />
-          <app-input-text formControlName="phone" name="phone" [field]="formGroup" class="span-5" label="Telefone" type="tel" />
-          <app-input-text formControlName="email" name="email" [disabled]="true" [field]="formGroup" class="span-12" [label]="translateService.translate('personal_field_email')" type="email" />
+          <app-input-text formControlName="name" name="name" [field]="formGroup" class="span-7"
+                          [label]="translateService.translate('personal_field_name')" type="text"/>
+          <app-input-text formControlName="phone" name="phone" [field]="formGroup" class="span-5" label="Telefone"
+                          type="tel"/>
+          <app-input-text formControlName="email" name="email" [disabled]="true" [field]="formGroup" class="span-12"
+                          [label]="translateService.translate('personal_field_email')" type="email"/>
         </div>
       </section>
 
       <section class="settings-section">
         <div class="settings-section__heading">
           <span class="settings-section__icon"><i class="pi pi-palette"></i></span>
-          <div><h2>Aparência e idioma</h2><p>Personalize como o Church Lite aparece para você.</p></div>
+          <div><h2>Aparência e idioma</h2>
+            <p>Personalize como o Church Lite aparece para você.</p></div>
         </div>
         <div class="settings-fields">
-          <app-dropdown formControlName="theme" name="theme" [field]="formGroup" label="Tema" [options]="_theme" optionLabel="value" class="span-6" />
-          <app-dropdown formControlName="lang" name="lang" [field]="formGroup" label="Idioma" [options]="_language" optionLabel="value" class="span-6" />
+          <app-dropdown formControlName="theme" name="theme" [field]="formGroup" label="Tema" [options]="_theme"
+                        optionLabel="value" class="span-6"/>
+          <app-dropdown formControlName="lang" name="lang" [field]="formGroup" label="Idioma" [options]="_language"
+                        optionLabel="value" class="span-6"/>
         </div>
       </section>
     </div>
@@ -52,6 +62,7 @@
 
   <footer class="settings-page__footer">
     <span>As alterações de tema e idioma serão aplicadas após salvar.</span>
-    <p-button icon="pi pi-check" [loading]="isSaving" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
+    <p-button icon="pi pi-check" [loading]="isSaving" [disabled]="isSaving"
+              [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
   </footer>
 </section>

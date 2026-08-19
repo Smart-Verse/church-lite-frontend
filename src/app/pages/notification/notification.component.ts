@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import { NotificationService, NotificationType, UserNotification } from '../../services/notification/notification.service';
+import {
+  NotificationService,
+  NotificationType,
+  UserNotification
+} from '../../services/notification/notification.service';
 
 @Component({
-    selector: 'app-notification',
-    imports: [
-        LoadingComponent,
-        SharedCommonModule
-    ],
-    templateUrl: './notification.component.html',
-    styleUrl: './notification.component.scss'
+  selector: 'app-notification',
+  imports: [
+    LoadingComponent,
+    SharedCommonModule
+  ],
+  templateUrl: './notification.component.html',
+  styleUrl: './notification.component.scss'
 })
 export class NotificationComponent extends BaseComponent implements OnInit {
   notifications: UserNotification[] = [];

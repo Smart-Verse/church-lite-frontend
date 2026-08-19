@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RegisterChurchService } from '../../services/register-church/register-church.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
+import {Component, OnInit} from '@angular/core';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RegisterChurchService} from '../../services/register-church/register-church.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
 
 
 @Component({
-    selector: 'app-register-church',
-    providers: [RegisterChurchService, ToastService],
-    imports: [SharedCommonModule],
-    templateUrl: './register-church.component.html',
-    styleUrl: './register-church.component.scss'
+  selector: 'app-register-church',
+  providers: [RegisterChurchService, ToastService],
+  imports: [SharedCommonModule],
+  templateUrl: './register-church.component.html',
+  styleUrl: './register-church.component.scss'
 })
 export class RegisterChurchComponent extends BaseComponent implements OnInit {
 
@@ -25,8 +25,7 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
     private readonly router: Router,
     private readonly registerChurchService: RegisterChurchService,
     private readonly toast: ToastService
-
-  ){
+  ) {
     super();
   }
 
@@ -37,8 +36,8 @@ export class RegisterChurchComponent extends BaseComponent implements OnInit {
 
       this.registerChurchService.onValidURL(this.token).subscribe({
         next: (res) => {
-          if(res.authorize){
-            this.toast.success({summary:"Conta confirmada", detail: "Conta confirmada com sucesso"});
+          if (res.authorize) {
+            this.toast.success({summary: "Conta confirmada", detail: "Conta confirmada com sucesso"});
             this.router.navigate(["login"]);
           } else {
             this.showMessage = "Este link de confirmação é inválido ou não está mais disponível.";

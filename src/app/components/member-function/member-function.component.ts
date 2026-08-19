@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { DTOConverter } from '../../../core/dto/dto-converter';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { CrudService } from '../../shared/services/crud/crud.service';
-import { FieldsService } from '../../shared/services/fields/fields.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { MemberFunctionConfig } from './member-function.config';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MenuItem} from 'primeng/api';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {DTOConverter} from '../../../core/dto/dto-converter';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {CrudService} from '../../shared/services/crud/crud.service';
+import {FieldsService} from '../../shared/services/fields/fields.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {MemberFunctionConfig} from './member-function.config';
+
 @Component({
   selector: 'app-member-function',
   imports: [SharedCommonModule, BreadcrumbModule],
@@ -27,6 +28,7 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
     routerLink: '/home/dashboard',
   };
   public breadcrumbItems: MenuItem[] = [];
+
   constructor(
     private fieldsService: FieldsService,
     public translateService: TranslateService,
@@ -40,11 +42,12 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
       new MemberFunctionConfig().fields,
     );
   }
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.breadcrumbItems = [
-      { label: this.translateService.translate('entity_secretariat') },
-      { label: this.translateService.translate('entity_others') },
+      {label: this.translateService.translate('entity_secretariat')},
+      {label: this.translateService.translate('entity_others')},
       {
         label: this.translateService.translate('entity_member_function_title'),
         routerLink: '/home/register/memberFunctions',
@@ -57,6 +60,7 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
     ];
     if (this.id && this.id !== 'new') this.load(this.id);
   }
+
   private load(id: string): void {
     this.showLoading = true;
     this.crud.onGet('memberFunction', id).subscribe({
@@ -71,6 +75,7 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
       },
     });
   }
+
   onSave(): void {
     if (!this.functionFormGroup.valid) {
       this.toast.warn({
@@ -89,9 +94,11 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
         : this.crud.onSave('memberFunction', dto);
     this.persist(request);
   }
+
   onCancel(): void {
     this.router.navigate(['/home/register/memberFunctions']);
   }
+
   private persist(request: any): void {
     this.isSaving = this.showLoading = true;
     request.subscribe({
@@ -109,6 +116,7 @@ export class MemberFunctionComponent extends BaseComponent implements OnInit {
       },
     });
   }
+
   private error(e: any): void {
     this.toast.error({
       summary: this.translateService.translate('common_message'),

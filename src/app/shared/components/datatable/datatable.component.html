@@ -1,35 +1,36 @@
 <div class="datatable">
-  <p-confirmDialog />
+  <p-confirmDialog/>
 
   <div class="datatable__toolbar">
     <p-iconField iconPosition="left" class="datatable__search">
       <p-inputIcon><i class="pi pi-search"></i></p-inputIcon>
-      <input pInputText type="search" [(ngModel)]="quickSearch" (keyup.enter)="onQuickSearch()" [placeholder]="translateService.translate('datatable_search')" />
+      <input pInputText type="search" [(ngModel)]="quickSearch" (keyup.enter)="onQuickSearch()"
+             [placeholder]="translateService.translate('datatable_search')"/>
     </p-iconField>
 
     <div class="datatable__toolbar-actions">
-      <ng-content select="[datatableToolbarAction]" />
-      <app-screen-report-button [screen]="reportScreen" [data]="reportData" />
+      <ng-content select="[datatableToolbarAction]"/>
+      <app-screen-report-button [screen]="reportScreen" [data]="reportData"/>
       <p-button
         type="button"
         icon="pi pi-refresh"
         [text]="true"
         [rounded]="true"
         [ariaLabel]="translateService.translate('datatable_refresh')"
-        (onClick)="onRefreshData()" />
+        (onClick)="onRefreshData()"/>
       <p-button
         type="button"
         icon="pi pi-filter"
         [outlined]="true"
         [label]="translateService.translate('datatable_filters')"
-        (onClick)="onShowFilters()" />
+        (onClick)="onShowFilters()"/>
       <p-button
         type="button"
         icon="pi pi-plus"
         [disabled]="createDisabled"
         [pTooltip]="createDisabled ? createDisabledReason : ''"
         [label]="translateService.translate('datatable_add')"
-        (onClick)="onRegisterData(null, 2)" />
+        (onClick)="onRegisterData(null, 2)"/>
     </div>
   </div>
 
@@ -43,7 +44,9 @@
       [tableStyle]="tableStyle">
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th class="datatable__select"><p-tableHeaderCheckbox /></th>
+          <th class="datatable__select">
+            <p-tableHeaderCheckbox/>
+          </th>
           @for (col of columns; track col.field) {
             <th [style.width]="col.width || null">{{ translateService.translate(col.header) }}</th>
           }
@@ -53,7 +56,9 @@
 
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
-          <td class="datatable__select"><p-tableCheckbox [value]="rowData" /></td>
+          <td class="datatable__select">
+            <p-tableCheckbox [value]="rowData"/>
+          </td>
           @for (col of columns; track col.field) {
             <td [style.width]="col.width || null" [title]="onRowData(rowData, col.field, col)">
               <span class="datatable__cell-value">{{ onRowData(rowData, col.field, col) }}</span>
@@ -67,7 +72,7 @@
                 [text]="true"
                 [rounded]="true"
                 [ariaLabel]="translateService.translate('datatable_edit')"
-                (onClick)="onRegisterData(rowData, 1)" />
+                (onClick)="onRegisterData(rowData, 1)"/>
               <p-button
                 type="button"
                 icon="pi pi-trash"
@@ -75,7 +80,7 @@
                 [text]="true"
                 [rounded]="true"
                 [ariaLabel]="translateService.translate('datatable_delete')"
-                (onClick)="onDeleteData(rowData, 0)" />
+                (onClick)="onDeleteData(rowData, 0)"/>
             </div>
           </td>
         </tr>
@@ -86,10 +91,10 @@
           <td [attr.colspan]="config.fields.length + 2" class="datatable__empty-cell">
             <div class="datatable__empty">
               <svg viewBox="0 0 220 150" role="img" aria-hidden="true">
-                <rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" />
-                <path d="M58 49h68M58 69h104M58 89h52" class="empty-line" />
-                <circle cx="151" cy="103" r="27" class="empty-accent" />
-                <path d="m171 123 18 18M141 103h20" class="empty-icon" />
+                <rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface"/>
+                <path d="M58 49h68M58 69h104M58 89h52" class="empty-line"/>
+                <circle cx="151" cy="103" r="27" class="empty-accent"/>
+                <path d="m171 123 18 18M141 103h20" class="empty-icon"/>
               </svg>
               <strong>{{ translateService.translate('datatable_empty_title') }}</strong>
               <span>{{ translateService.translate('datatable_empty_description') }}</span>
@@ -100,7 +105,7 @@
                 [pTooltip]="createDisabled ? createDisabledReason : ''"
                 [outlined]="true"
                 [label]="translateService.translate('datatable_add_first')"
-                (onClick)="onRegisterData(null, 2)" />
+                (onClick)="onRegisterData(null, 2)"/>
             </div>
           </td>
         </tr>
@@ -111,22 +116,37 @@
         <article class="datatable__mobile-card">
           <div class="datatable__mobile-fields">
             @for (col of config.fields; track col.field) {
-              <div class="datatable__mobile-field"><span>{{ translateService.translate(col.header) }}</span><strong>{{ onRowData(rowData, col.field, col) }}</strong></div>
+              <div class="datatable__mobile-field">
+                <span>{{ translateService.translate(col.header) }}</span><strong>{{ onRowData(rowData, col.field, col) }}</strong>
+              </div>
             }
           </div>
           <div class="datatable__mobile-actions">
-            <p-button type="button" icon="pi pi-pencil" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_edit')" (onClick)="onRegisterData(rowData, 1)" />
-            <p-button type="button" icon="pi pi-trash" severity="danger" [text]="true" [rounded]="true" [ariaLabel]="translateService.translate('datatable_delete')" (onClick)="onDeleteData(rowData, 0)" />
+            <p-button type="button" icon="pi pi-pencil" [text]="true" [rounded]="true"
+                      [ariaLabel]="translateService.translate('datatable_edit')"
+                      (onClick)="onRegisterData(rowData, 1)"/>
+            <p-button type="button" icon="pi pi-trash" severity="danger" [text]="true" [rounded]="true"
+                      [ariaLabel]="translateService.translate('datatable_delete')"
+                      (onClick)="onDeleteData(rowData, 0)"/>
           </div>
         </article>
       } @empty {
         <div class="datatable__empty datatable__mobile-empty">
-          <svg viewBox="0 0 220 150" role="img" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg>
+          <svg viewBox="0 0 220 150" role="img" aria-hidden="true">
+            <rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface"/>
+            <path d="M58 49h68M58 69h104M58 89h52" class="empty-line"/>
+            <circle cx="151" cy="103" r="27" class="empty-accent"/>
+            <path d="m171 123 18 18M141 103h20" class="empty-icon"/>
+          </svg>
           <strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate('datatable_empty_description') }}</span>
-          <p-button type="button" icon="pi pi-plus" [disabled]="createDisabled" [pTooltip]="createDisabled ? createDisabledReason : ''" [outlined]="true" [label]="translateService.translate('datatable_add_first')" (onClick)="onRegisterData(null, 2)" />
+          <p-button type="button" icon="pi pi-plus" [disabled]="createDisabled"
+                    [pTooltip]="createDisabled ? createDisabledReason : ''" [outlined]="true"
+                    [label]="translateService.translate('datatable_add_first')" (onClick)="onRegisterData(null, 2)"/>
         </div>
       }
-      <div #mobileSentinel class="datatable__mobile-sentinel" aria-hidden="true">@if (loading && config.values.length) { <i class="pi pi-spin pi-spinner"></i> }</div>
+      <div #mobileSentinel class="datatable__mobile-sentinel" aria-hidden="true">@if (loading && config.values.length) {
+        <i class="pi pi-spin pi-spinner"></i>
+      }</div>
     </div>
   </div>
 
@@ -141,11 +161,12 @@
       [totalRecords]="config.totalRecords"
       [rowsPerPageOptions]="[10, 20, 30, 50]"
       appendTo="body"
-      dropdownAppendTo="body" />
+      dropdownAppendTo="body"/>
   </footer>
 </div>
 
-<p-drawer [(visible)]="sidebarVisible" position="right" [modal]="false" [blockScroll]="false" [dismissible]="true" appendTo="body" styleClass="datatable__filter-drawer">
+<p-drawer [(visible)]="sidebarVisible" position="right" [modal]="false" [blockScroll]="false" [dismissible]="true"
+          appendTo="body" styleClass="datatable__filter-drawer">
   <ng-template pTemplate="header">
     <div class="datatable__drawer-title">
       <i class="pi pi-filter"></i>
@@ -159,18 +180,32 @@
         <label class="datatable__filter-field">
           <span>{{ translateService.translate(filter.label || filter.field) }}</span>
           @if (filter.type === 'entity-select') {
-            <p-select [(ngModel)]="filterValues[filter.field]" [options]="filter.options ?? []" optionLabel="label" optionValue="value" [filter]="true" filterBy="label" [showClear]="true" [placeholder]="translateService.translate('datatable_all')" appendTo="body" />
+            <p-select [(ngModel)]="filterValues[filter.field]" [options]="filter.options ?? []" optionLabel="label"
+                      optionValue="value" [filter]="true" filterBy="label" [showClear]="true"
+                      [placeholder]="translateService.translate('datatable_all')" appendTo="body"/>
           } @else if (filter.type === 'select') {
-            <p-select [(ngModel)]="filterValues[filter.field]" [options]="translatedOptions(filter.options)" optionLabel="label" optionValue="value" [showClear]="true" [placeholder]="translateService.translate('datatable_all')" appendTo="body" />
+            <p-select [(ngModel)]="filterValues[filter.field]" [options]="translatedOptions(filter.options)"
+                      optionLabel="label" optionValue="value" [showClear]="true"
+                      [placeholder]="translateService.translate('datatable_all')" appendTo="body"/>
           } @else {
-            <input pInputText [(ngModel)]="filterValues[filter.field]" type="text" [placeholder]="translateService.translate('datatable_filter_by') + ' ' + translateService.translate(filter.label || filter.field).toLowerCase()" />
+            <input pInputText [(ngModel)]="filterValues[filter.field]" type="text"
+                   [placeholder]="translateService.translate('datatable_filter_by') + ' ' + translateService.translate(filter.label || filter.field).toLowerCase()"/>
           }
         </label>
       }
-      @if (!config.filters.length) { <div class="datatable__filter-empty"><i class="pi pi-sliders-h"></i><span>{{ translateService.translate('datatable_filters_description') }}</span></div> }
+      @if (!config.filters.length) {
+        <div class="datatable__filter-empty"><i
+          class="pi pi-sliders-h"></i><span>{{ translateService.translate('datatable_filters_description') }}</span>
+        </div>
+      }
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <div class="datatable__filter-actions"><p-button icon="pi pi-times" [outlined]="true" [label]="translateService.translate('datatable_clear')" (onClick)="onRefreshData()" /><p-button icon="pi pi-check" [label]="translateService.translate('datatable_apply_filters')" (onClick)="onApplyFilters()" /></div>
+    <div class="datatable__filter-actions">
+      <p-button icon="pi pi-times" [outlined]="true" [label]="translateService.translate('datatable_clear')"
+                (onClick)="onRefreshData()"/>
+      <p-button icon="pi pi-check" [label]="translateService.translate('datatable_apply_filters')"
+                (onClick)="onApplyFilters()"/>
+    </div>
   </ng-template>
 </p-drawer>

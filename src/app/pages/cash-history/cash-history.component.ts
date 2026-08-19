@@ -15,21 +15,21 @@ import {IconFieldModule} from "primeng/iconfield";
 import {InputIconModule} from "primeng/inputicon";
 
 @Component({
-    selector: 'app-cash-history',
-    imports: [
-        LoadingComponent,
-        SharedCommonModule,
-        TableModule,
-        PaginatorModule,
-        BreadcrumbModule,
-        IconFieldModule,
-        InputIconModule
-    ],
-    providers: [
-        CrudService
-    ],
-    templateUrl: './cash-history.component.html',
-    styleUrl: './cash-history.component.scss'
+  selector: 'app-cash-history',
+  imports: [
+    LoadingComponent,
+    SharedCommonModule,
+    TableModule,
+    PaginatorModule,
+    BreadcrumbModule,
+    IconFieldModule,
+    InputIconModule
+  ],
+  providers: [
+    CrudService
+  ],
+  templateUrl: './cash-history.component.html',
+  styleUrl: './cash-history.component.scss'
 })
 export class CashHistoryComponent extends BaseComponent implements OnInit {
 
@@ -41,7 +41,7 @@ export class CashHistoryComponent extends BaseComponent implements OnInit {
 
   constructor(
     public readonly translateService: TranslateService,
-    private readonly crudService : CrudService,
+    private readonly crudService: CrudService,
   ) {
     super();
   }
@@ -58,7 +58,7 @@ export class CashHistoryComponent extends BaseComponent implements OnInit {
   onLoadAllData(requestData: any) {
     this.onShowLoading();
     requestData = this.includeFilters(requestData);
-    this.crudService.onGetAll("cashTransactions",requestData).subscribe({
+    this.crudService.onGetAll("cashTransactions", requestData).subscribe({
       next: (res) => {
         this._datatable.values = res.contents;
         this._datatable.totalRecords = res.total;

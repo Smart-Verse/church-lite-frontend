@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { DataTable } from '../../shared/components/datatable/datatable';
-import { RegisterService } from '../../services/register/register.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CrudService } from '../../shared/services/crud/crud.service';
-import { config, RegisterRoutes } from './register';
-import { RequestData } from '../../shared/interfaces/request-data';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { Subscription } from 'rxjs';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {DataTable} from '../../shared/components/datatable/datatable';
+import {RegisterService} from '../../services/register/register.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CrudService} from '../../shared/services/crud/crud.service';
+import {config, RegisterRoutes} from './register';
+import {RequestData} from '../../shared/interfaces/request-data';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {Subscription} from 'rxjs';
+import {BreadcrumbModule} from 'primeng/breadcrumb';
+import {MenuItem} from 'primeng/api';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {SubscriptionResource} from '../../shared/services/subscription/subscription.models';
 import {MemberPortalAccessService} from '../../services/member-portal/member-portal-access.service';
@@ -25,8 +25,7 @@ import {MemberPortalAccessService} from '../../services/member-portal/member-por
 })
 export class RegisterComponent
   extends BaseComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
   datatable: DataTable = new DataTable();
   routeComponent: string | null = '';
   configuration: RegisterRoutes = new RegisterRoutes();
@@ -54,8 +53,14 @@ export class RegisterComponent
   copyMemberRegistrationLink(): void {
     this.memberPortalAccess.churchLink().subscribe(response => {
       this.memberPortalAccess.copyUrl(response.path)
-        .then(() => this.toastService.success({summary: 'Link copiado', detail: 'O link de autocadastro está pronto para compartilhar.'}))
-        .catch(() => this.toastService.error({summary: 'Falha ao copiar', detail: 'O navegador não permitiu acessar a área de transferência.'}));
+        .then(() => this.toastService.success({
+          summary: 'Link copiado',
+          detail: 'O link de autocadastro está pronto para compartilhar.'
+        }))
+        .catch(() => this.toastService.error({
+          summary: 'Falha ao copiar',
+          detail: 'O navegador não permitiu acessar a área de transferência.'
+        }));
     });
   }
 
@@ -106,7 +111,10 @@ export class RegisterComponent
     const seen = new Set<unknown>();
     return values.filter(value => {
       const key = value?.id;
-      if (key == null || !seen.has(key)) { if (key != null) seen.add(key); return true; }
+      if (key == null || !seen.has(key)) {
+        if (key != null) seen.add(key);
+        return true;
+      }
       return false;
     });
   }
@@ -134,12 +142,12 @@ export class RegisterComponent
     }
 
     const target = obj.data?.id ?? 'new';
-    this.router.navigate([target], { relativeTo: this.activatedRoute });
+    this.router.navigate([target], {relativeTo: this.activatedRoute});
   }
 
   onToast(type: number, message: string): void {
     if (type === 0) {
-      this.toastService.error({ summary: 'Mensagem', detail: message });
+      this.toastService.error({summary: 'Mensagem', detail: message});
     } else {
       this.toastService.success({
         summary: 'Mensagem',
@@ -181,9 +189,9 @@ export class RegisterComponent
         ? 'entity_others'
         : 'registrations_persons';
     this.breadcrumbItems = [
-      { label: this.translateService.translate('entity_secretariat') },
-      { label: this.translateService.translate(category) },
-      { label: this.translateService.translate(this.configuration.header) },
+      {label: this.translateService.translate('entity_secretariat')},
+      {label: this.translateService.translate(category)},
+      {label: this.translateService.translate(this.configuration.header)},
     ];
   }
 

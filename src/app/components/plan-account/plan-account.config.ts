@@ -1,5 +1,3 @@
-
-
 export const fieldsPlanAccount: any[] = [
   {
     fieldName: 'id',

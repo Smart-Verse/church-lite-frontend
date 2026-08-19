@@ -7,7 +7,7 @@ import {FieldsService} from "../../shared/services/fields/fields.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {FormGroup} from "@angular/forms";
 import {UserConfigurationConfig} from "./user-configuration.config";
-import { language, theme } from "../../shared/util/constants";
+import {language, theme} from "../../shared/util/constants";
 import {UserConfigurationService} from "../../services/user-configuration/user-configuration.service";
 import {ImageUploadService} from "../../shared/components/inputs/image-upload/image-upload.service";
 import {ThemeService} from "../../shared/services/theme/theme.service";
@@ -15,19 +15,19 @@ import {MenuItem} from "primeng/api";
 import {BreadcrumbModule} from "primeng/breadcrumb";
 
 @Component({
-    selector: 'app-user-configuration',
-    imports: [
-        LoadingComponent,
-        SharedCommonModule,
-        BreadcrumbModule
-    ],
-    providers: [
-        ToastService,
-        UserConfigurationService,
-        ImageUploadService
-    ],
-    templateUrl: './user-configuration.component.html',
-    styleUrl: './user-configuration.component.scss'
+  selector: 'app-user-configuration',
+  imports: [
+    LoadingComponent,
+    SharedCommonModule,
+    BreadcrumbModule
+  ],
+  providers: [
+    ToastService,
+    UserConfigurationService,
+    ImageUploadService
+  ],
+  templateUrl: './user-configuration.component.html',
+  styleUrl: './user-configuration.component.scss'
 })
 export class UserConfigurationComponent extends BaseComponent implements OnInit {
 
@@ -47,7 +47,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
     private readonly toastService: ToastService,
     private readonly userConfigurationService: UserConfigurationService,
     private readonly imageService: ImageUploadService,
-    private readonly  themeService: ThemeService
+    private readonly themeService: ThemeService
   ) {
     super();
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
@@ -60,7 +60,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
   }
 
   public onSave(): void {
-    if(this.formGroup.valid){
+    if (this.formGroup.valid) {
       this.isSaving = true;
       this.onShowLoading();
       const dto = this.configuration.convertToDTO(this.formGroup, this.imageToken);
@@ -70,21 +70,30 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
           this.themeService.onConfigurationTheme(dto.theme);
           this.onShowLoading();
           this.translateService.loadTranslationsUser(dto.lang).subscribe();
-          this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_success")});
+          this.toastService.success({
+            summary: this.translateService.translate("common_message"),
+            detail: this.translateService.translate("common_message_success")
+          });
         },
         error: error => {
           this.isSaving = false;
           this.onShowLoading();
-          this.toastService.error({summary: this.translateService.translate("common_message"), detail: error?.error?.message ?? "Não foi possível salvar as configurações"});
+          this.toastService.error({
+            summary: this.translateService.translate("common_message"),
+            detail: error?.error?.message ?? "Não foi possível salvar as configurações"
+          });
         }
       })
     } else {
       this.fieldsService.verifyIsValid();
-      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
+      this.toastService.warn({
+        summary: this.translateService.translate("common_message"),
+        detail: this.translateService.translate("common_message_invalid_fields")
+      });
     }
   }
 
-  public onGetUserConfiguration(){
+  public onGetUserConfiguration() {
     this.onShowLoading();
     this.userConfigurationService.getUser().subscribe({
       next: (res) => {
@@ -102,7 +111,7 @@ export class UserConfigurationComponent extends BaseComponent implements OnInit 
     });
   }
 
-  private onGetUrlImage(){
+  private onGetUrlImage() {
 
     this.imageService.onRequestDonwload(this.imageToken).subscribe({
       next: (res) => {

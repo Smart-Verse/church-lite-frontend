@@ -1,17 +1,17 @@
-import { FormGroup } from '@angular/forms';
-import { ChurchUserInput, UserConfiguration } from '../../services/users/users.service';
+import {FormGroup} from '@angular/forms';
+import {ChurchUserInput, UserConfiguration} from '../../services/users/users.service';
 
 export class UserAdminConfig {
   fields: any[] = [
-    { fieldName: 'id', required: false, hidden: true, type: 'string' },
-    { fieldName: 'hash', required: false, hidden: true, type: 'string' },
-    { fieldName: 'name', required: true, hidden: false, type: 'string' },
-    { fieldName: 'email', required: true, hidden: false, type: 'email' },
-    { fieldName: 'phone', required: false, hidden: false, type: 'string' },
-    { fieldName: 'password', required: true, hidden: false, type: 'password' },
-    { fieldName: 'userPhoto', required: false, hidden: true, type: 'string' },
-    { fieldName: 'theme', required: false, hidden: true, type: 'string' },
-    { fieldName: 'lang', required: false, hidden: true, type: 'string' }
+    {fieldName: 'id', required: false, hidden: true, type: 'string'},
+    {fieldName: 'hash', required: false, hidden: true, type: 'string'},
+    {fieldName: 'name', required: true, hidden: false, type: 'string'},
+    {fieldName: 'email', required: true, hidden: false, type: 'email'},
+    {fieldName: 'phone', required: false, hidden: false, type: 'string'},
+    {fieldName: 'password', required: true, hidden: false, type: 'password'},
+    {fieldName: 'userPhoto', required: false, hidden: true, type: 'string'},
+    {fieldName: 'theme', required: false, hidden: true, type: 'string'},
+    {fieldName: 'lang', required: false, hidden: true, type: 'string'}
   ];
 
   toCreateInput(form: FormGroup): ChurchUserInput {

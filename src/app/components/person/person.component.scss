@@ -1,27 +1,228 @@
-:host { display: block; min-height: 100%; color: var(--p-text-color); }
-.person-page { min-height: 100%; padding: 1.25rem .75rem 1.5rem; background: transparent; }
-.person-page__breadcrumb, .person-page__header, .person-page__body { width: 100%; margin-inline: auto; }
-:host ::ng-deep .person-page__breadcrumb .p-breadcrumb { padding: 0; border: 0; background: transparent; font-size: .78rem; }
-.person-page__header { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--p-content-border-color); }
-.person-page__heading h1 { margin: 0; color: var(--p-text-color); font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 650; line-height: 1.2; }
-.person-page__heading p { margin: .5rem 0 0; color: var(--p-text-muted-color); line-height: 1.5; }
-.person-page__actions { display: flex; flex: 0 0 auto; gap: .75rem; }
-.person-layout { display: grid; grid-template-columns: minmax(230px, 285px) minmax(0, 1fr); gap: 1rem; align-items: start; padding-top: 1.5rem; }
-.person-sections { display: grid; gap: 1rem; min-width: 0; }
-.person-profile-card, .person-card { border: 1px solid var(--p-content-border-color); border-radius: 12px; background: var(--p-content-background); box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%); }
-.person-profile-card { position: sticky; top: 1rem; padding: 1.25rem; }
-.person-card { padding: 1.35rem 1.5rem 1.6rem; }
-.person-card__heading { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
-.person-card__heading h2 { margin: 0; color: var(--p-text-color); font-size: .95rem; font-weight: 650; }
-.person-card__heading p { margin: .22rem 0 0; color: var(--p-text-muted-color); font-size: .73rem; line-height: 1.4; }
-.person-card__icon { display: grid; flex: 0 0 auto; width: 2.35rem; height: 2.35rem; place-items: center; border-radius: 9px; background: color-mix(in srgb, var(--p-primary-color), transparent 88%); color: var(--p-primary-color); }
-.person-profile-card__upload { width: min(100%, 195px); margin: 0 auto; }
-.person-profile-card__upload app-image-upload { display: block; width: 100%; }
-.person-card__hint { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1rem; padding: .7rem .75rem; border-radius: 8px; background: var(--p-form-field-background); color: var(--p-text-muted-color); font-size: .68rem; line-height: 1.45; }
-.person-card__hint i { margin-top: .08rem; color: var(--p-primary-color); }
-.fields-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2rem 1.25rem; align-items: start; padding-top: .3rem; }
-.fields-grid > * { grid-column: span 12; min-width: 0; width: 100%; margin: 0; padding: 0; }
-.person-card__subrow { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--p-content-border-color); }
-:host ::ng-deep .fields-grid .p-floatlabel, :host ::ng-deep .fields-grid .p-inputtext, :host ::ng-deep .fields-grid .p-select, :host ::ng-deep .fields-grid .p-datepicker, :host ::ng-deep .fields-grid .p-autocomplete, :host ::ng-deep .fields-grid .p-inputmask { display: flex; width: 100%; }
-@media (min-width: 769px) { .fields-grid .span-2 { grid-column: span 2; } .fields-grid .span-3 { grid-column: span 3; } .fields-grid .span-4 { grid-column: span 4; } .fields-grid .span-5 { grid-column: span 5; } .fields-grid .span-6 { grid-column: span 6; } .fields-grid .span-7 { grid-column: span 7; } .fields-grid .span-8 { grid-column: span 8; } .fields-grid .span-12 { grid-column: span 12; } }
-@media (max-width: 768px) { .person-page { padding: 1rem .5rem; } .person-page__header { align-items: stretch; flex-direction: column; gap: 1.25rem; padding: 1.25rem 0; } .person-page__actions { width: 100%; } .person-page__actions p-button { flex: 1; } :host ::ng-deep .person-page__actions .p-button { width: 100%; } .person-layout { grid-template-columns: 1fr; padding-top: 1rem; } .person-profile-card { position: static; } .person-card { padding: 1.15rem 1rem 1.4rem; } }
+:host {
+  display: block;
+  min-height: 100%;
+  color: var(--p-text-color);
+}
+
+.person-page {
+  min-height: 100%;
+  padding: 1.25rem .75rem 1.5rem;
+  background: transparent;
+}
+
+.person-page__breadcrumb, .person-page__header, .person-page__body {
+  width: 100%;
+  margin-inline: auto;
+}
+
+:host ::ng-deep .person-page__breadcrumb .p-breadcrumb {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: .78rem;
+}
+
+.person-page__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+}
+
+.person-page__heading h1 {
+  margin: 0;
+  color: var(--p-text-color);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.person-page__heading p {
+  margin: .5rem 0 0;
+  color: var(--p-text-muted-color);
+  line-height: 1.5;
+}
+
+.person-page__actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: .75rem;
+}
+
+.person-layout {
+  display: grid;
+  grid-template-columns: minmax(230px, 285px) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding-top: 1.5rem;
+}
+
+.person-sections {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.person-profile-card, .person-card {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 12px;
+  background: var(--p-content-background);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--p-text-color), transparent 96%);
+}
+
+.person-profile-card {
+  position: sticky;
+  top: 1rem;
+  padding: 1.25rem;
+}
+
+.person-card {
+  padding: 1.35rem 1.5rem 1.6rem;
+}
+
+.person-card__heading {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  margin-bottom: 1.5rem;
+}
+
+.person-card__heading h2 {
+  margin: 0;
+  color: var(--p-text-color);
+  font-size: .95rem;
+  font-weight: 650;
+}
+
+.person-card__heading p {
+  margin: .22rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: .73rem;
+  line-height: 1.4;
+}
+
+.person-card__icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--p-primary-color), transparent 88%);
+  color: var(--p-primary-color);
+}
+
+.person-profile-card__upload {
+  width: min(100%, 195px);
+  margin: 0 auto;
+}
+
+.person-profile-card__upload app-image-upload {
+  display: block;
+  width: 100%;
+}
+
+.person-card__hint {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  margin-top: 1rem;
+  padding: .7rem .75rem;
+  border-radius: 8px;
+  background: var(--p-form-field-background);
+  color: var(--p-text-muted-color);
+  font-size: .68rem;
+  line-height: 1.45;
+}
+
+.person-card__hint i {
+  margin-top: .08rem;
+  color: var(--p-primary-color);
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 2rem 1.25rem;
+  align-items: start;
+  padding-top: .3rem;
+}
+
+.fields-grid > * {
+  grid-column: span 12;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.person-card__subrow {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--p-content-border-color);
+}
+
+:host ::ng-deep .fields-grid .p-floatlabel, :host ::ng-deep .fields-grid .p-inputtext, :host ::ng-deep .fields-grid .p-select, :host ::ng-deep .fields-grid .p-datepicker, :host ::ng-deep .fields-grid .p-autocomplete, :host ::ng-deep .fields-grid .p-inputmask {
+  display: flex;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .fields-grid .span-2 {
+    grid-column: span 2;
+  }
+  .fields-grid .span-3 {
+    grid-column: span 3;
+  }
+  .fields-grid .span-4 {
+    grid-column: span 4;
+  }
+  .fields-grid .span-5 {
+    grid-column: span 5;
+  }
+  .fields-grid .span-6 {
+    grid-column: span 6;
+  }
+  .fields-grid .span-7 {
+    grid-column: span 7;
+  }
+  .fields-grid .span-8 {
+    grid-column: span 8;
+  }
+  .fields-grid .span-12 {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .person-page {
+    padding: 1rem .5rem;
+  }
+  .person-page__header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+  }
+  .person-page__actions {
+    width: 100%;
+  }
+  .person-page__actions p-button {
+    flex: 1;
+  }
+  :host ::ng-deep .person-page__actions .p-button {
+    width: 100%;
+  }
+  .person-layout {
+    grid-template-columns: 1fr;
+    padding-top: 1rem;
+  }
+  .person-profile-card {
+    position: static;
+  }
+  .person-card {
+    padding: 1.15rem 1rem 1.4rem;
+  }
+}

@@ -1,14 +1,14 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { catchError, forkJoin, of } from 'rxjs';
-import { DialogService } from 'primeng/dynamicdialog';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {catchError, forkJoin, of} from 'rxjs';
+import {DialogService} from 'primeng/dynamicdialog';
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {MenuItem} from "primeng/api";
-import { DayPilot, DayPilotModule } from '@daypilot/daypilot-lite-angular';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { UserConfigurationService } from '../../services/user-configuration/user-configuration.service';
+import {DayPilot, DayPilotModule} from '@daypilot/daypilot-lite-angular';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {UserConfigurationService} from '../../services/user-configuration/user-configuration.service';
 import {
   Appointment,
   AppointmentsService,
@@ -33,13 +33,22 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
   readonly breadcrumbHome: MenuItem = {icon: "pi pi-home", routerLink: "/home/dashboard"};
   readonly breadcrumbItems: MenuItem[] = [{label: this.translateService.translate("scheduler")}];
 
-  get totalAppointments(): number { return this.appointments.filter(item => item.status !== "CANCELLED").length; }
+  get totalAppointments(): number {
+    return this.appointments.filter(item => item.status !== "CANCELLED").length;
+  }
+
   get upcomingAppointments(): number {
     const now = new Date();
     const limit = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-    return this.appointments.filter(item => { const date = new Date(item.initialDate); return item.status !== "CANCELLED" && date >= now && date <= limit; }).length;
+    return this.appointments.filter(item => {
+      const date = new Date(item.initialDate);
+      return item.status !== "CANCELLED" && date >= now && date <= limit;
+    }).length;
   }
-  get availableEventTypes(): EventType[] { return this.eventTypes.slice(0, 6); }
+
+  get availableEventTypes(): EventType[] {
+    return this.eventTypes.slice(0, 6);
+  }
 
   calendarView: "Month" | "Week" | "Day" = "Month";
   calendarDate = DayPilot.Date.today().toString("yyyy-MM-dd");
@@ -66,11 +75,21 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
 
   get calendarTitle(): string {
     const date = new Date(this.calendarDate + "T12:00:00");
-    if (this.calendarView === "Day") return new Intl.DateTimeFormat("pt-BR", {weekday: "long", day: "2-digit", month: "long", year: "numeric"}).format(date);
+    if (this.calendarView === "Day") return new Intl.DateTimeFormat("pt-BR", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    }).format(date);
     if (this.calendarView === "Week") {
-      const start = new Date(date); start.setDate(date.getDate() - date.getDay());
-      const end = new Date(start); end.setDate(start.getDate() + 6);
-      return start.toLocaleDateString("pt-BR", {day: "2-digit", month: "short"}) + " – " + end.toLocaleDateString("pt-BR", {day: "2-digit", month: "short", year: "numeric"});
+      const start = new Date(date);
+      start.setDate(date.getDate() - date.getDay());
+      const end = new Date(start);
+      end.setDate(start.getDate() + 6);
+      return start.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "short"
+      }) + " – " + end.toLocaleDateString("pt-BR", {day: "2-digit", month: "short", year: "numeric"});
     }
     return new Intl.DateTimeFormat("pt-BR", {month: "long", year: "numeric"}).format(date);
   }
@@ -110,13 +129,20 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
 
   private syncDayPilotView(): void {
     this.monthConfig = {...this.monthConfig, startDate: this.calendarDate};
-    this.dayConfig = {...this.dayConfig, startDate: this.calendarDate, viewType: this.calendarView === "Day" ? "Day" : "Week"};
+    this.dayConfig = {
+      ...this.dayConfig,
+      startDate: this.calendarDate,
+      viewType: this.calendarView === "Day" ? "Day" : "Week"
+    };
   }
 
   private openDayPilotRange(start: DayPilot.Date, end: DayPilot.Date, allDay = false): void {
     const initialDate = start.toDate();
     const finalDate = end.toDate();
-    if (allDay) { initialDate.setHours(9, 0, 0, 0); finalDate.setTime(initialDate.getTime() + 60 * 60 * 1000); }
+    if (allDay) {
+      initialDate.setHours(9, 0, 0, 0);
+      finalDate.setTime(initialDate.getTime() + 60 * 60 * 1000);
+    }
     this.openDialog(undefined, initialDate, finalDate);
   }
 
@@ -128,11 +154,19 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
   private updateDayPilotEvent(id: string | number, start: DayPilot.Date, end: DayPilot.Date): void {
     const current = this.appointments.find(item => String(item.id) === String(id));
     if (!current) return;
-    const appointment = {...current, initialDate: this.toLocalISOString(start.toDate()), finalDate: this.toLocalISOString(end.toDate())};
+    const appointment = {
+      ...current,
+      initialDate: this.toLocalISOString(start.toDate()),
+      finalDate: this.toLocalISOString(end.toDate())
+    };
     this.showLoading = true;
     this.appointmentsService.update(appointment).subscribe({
       next: () => this.load(),
-      error: error => { this.showLoading = false; this.showError(error, "Não foi possível reagendar o compromisso"); this.refreshCalendar(); }
+      error: error => {
+        this.showLoading = false;
+        this.showError(error, "Não foi possível reagendar o compromisso");
+        this.refreshCalendar();
+      }
     });
   }
 
@@ -156,19 +190,19 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
       appointments: this.appointmentsService.getAppointments().pipe(
         catchError(error => {
           this.showError(error, 'Não foi possível carregar os compromissos');
-          return of({ contents: [] as Appointment[] });
+          return of({contents: [] as Appointment[]});
         })
       ),
       eventTypes: this.appointmentsService.getEventTypes().pipe(
         catchError(error => {
           this.showError(error, 'Não foi possível carregar os tipos de evento');
-          return of({ contents: [] as EventType[] });
+          return of({contents: [] as EventType[]});
         })
       ),
       user: this.userConfigurationService.getUser().pipe(
         catchError(error => {
           this.showError(error, 'Não foi possível carregar o usuário');
-          return of({ output: null });
+          return of({output: null});
         })
       )
     }).subscribe(result => {
@@ -196,11 +230,11 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
 
   private openDialog(appointment?: Appointment, start?: Date, end?: Date): void {
     if (!this.user) {
-      this.toast.warn({ summary: 'Agenda', detail: 'Usuário ainda não foi carregado' });
+      this.toast.warn({summary: 'Agenda', detail: 'Usuário ainda não foi carregado'});
       return;
     }
     if (!appointment && this.eventTypes.length === 0) {
-      this.toast.warn({ summary: 'Agenda', detail: 'Cadastre um tipo de evento antes de criar compromissos' });
+      this.toast.warn({summary: 'Agenda', detail: 'Cadastre um tipo de evento antes de criar compromissos'});
       return;
     }
 
@@ -254,7 +288,7 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
 
         if (!validStatus || !validBody) {
           this.onFailure(
-            { error: { message: 'O servidor não confirmou a criação do compromisso' } },
+            {error: {message: 'O servidor não confirmou a criação do compromisso'}},
             'Não foi possível criar o compromisso'
           );
           return;
@@ -267,7 +301,7 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
   }
 
   private onSuccess(message: string): void {
-    this.toast.success({ summary: 'Agenda', detail: message });
+    this.toast.success({summary: 'Agenda', detail: message});
     this.load();
   }
 

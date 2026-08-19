@@ -20,6 +20,17 @@ export class RecurringFinancialConfig {
 
   convertToDTO(raw: any, datePipe: DatePipe, installment: boolean): any {
     const valueOf = (value: any) => value?.value ?? value;
-    return {...raw, typeFinancial: valueOf(raw.typeFinancial), recurrenceMode: valueOf(raw.recurrenceMode), frequency: valueOf(raw.frequency), valueType: valueOf(raw.valueType), status: valueOf(raw.status), firstDueDate: datePipe.transform(raw.firstDueDate, 'yyyy-MM-dd'), endDate: raw.endDate ? datePipe.transform(raw.endDate, 'yyyy-MM-dd') : null, occurrenceCount: installment ? Number(raw.occurrenceCount) : null, generatedOccurrences: raw.generatedOccurrences ?? 0};
+    return {
+      ...raw,
+      typeFinancial: valueOf(raw.typeFinancial),
+      recurrenceMode: valueOf(raw.recurrenceMode),
+      frequency: valueOf(raw.frequency),
+      valueType: valueOf(raw.valueType),
+      status: valueOf(raw.status),
+      firstDueDate: datePipe.transform(raw.firstDueDate, 'yyyy-MM-dd'),
+      endDate: raw.endDate ? datePipe.transform(raw.endDate, 'yyyy-MM-dd') : null,
+      occurrenceCount: installment ? Number(raw.occurrenceCount) : null,
+      generatedOccurrences: raw.generatedOccurrences ?? 0
+    };
   }
 }

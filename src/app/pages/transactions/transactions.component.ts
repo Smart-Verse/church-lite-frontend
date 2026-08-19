@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {LoadingComponent} from "../../shared/components/loading/loading.component";
 import {BaseComponent} from "../../shared/common/base-component/base-component";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
-import { TableModule } from 'primeng/table';
+import {TableModule} from 'primeng/table';
 import {PaginatorModule, PaginatorState} from "primeng/paginator";
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {MenuItem} from "primeng/api";
@@ -16,22 +16,22 @@ import {DataTable} from "../../shared/components/datatable/datatable";
 import {ScreenReportButtonComponent} from '../../shared/components/screen-report-button/screen-report-button.component';
 
 @Component({
-    selector: 'app-transactions',
-    imports: [
-        LoadingComponent,
-        SharedCommonModule,
-        TableModule,
-        PaginatorModule,
-        BreadcrumbModule,
-        ScreenReportButtonComponent
-    ],
-    providers: [
-        TransactionsService,
-        ToastService,
-        CrudService
-    ],
-    templateUrl: './transactions.component.html',
-    styleUrl: './transactions.component.scss'
+  selector: 'app-transactions',
+  imports: [
+    LoadingComponent,
+    SharedCommonModule,
+    TableModule,
+    PaginatorModule,
+    BreadcrumbModule,
+    ScreenReportButtonComponent
+  ],
+  providers: [
+    TransactionsService,
+    ToastService,
+    CrudService
+  ],
+  templateUrl: './transactions.component.html',
+  styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent extends BaseComponent implements OnInit {
 
@@ -51,7 +51,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     public readonly translateService: TranslateService,
     private readonly router: Router,
     private readonly transactionsService: TransactionsService,
-    private readonly crudService : CrudService,
+    private readonly crudService: CrudService,
     private readonly toastService: ToastService,
   ) {
     super();
@@ -64,7 +64,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     ];
   }
 
-  onSelectedCash(){
+  onSelectedCash() {
     this.onShowLoading();
     this.transactionsService.getIDCashTransaction(this._currentCash.id).subscribe({
       next: (result) => {
@@ -87,7 +87,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   onLoadAllData(requestData: RequestData): void {
     this.onShowLoading();
     requestData = this.includeFilters(requestData);
-    this.crudService.onGetAll("transactions",requestData).subscribe({
+    this.crudService.onGetAll("transactions", requestData).subscribe({
       next: (res) => {
         this._datatable.values = res.contents;
         this._datatable.totalRecords = res.total;
@@ -102,7 +102,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onGetTotal(){
+  onGetTotal() {
     this.onShowLoading();
     this.transactionsService.getSumValuesCash(this._transactionID).subscribe({
       next: (res) => {

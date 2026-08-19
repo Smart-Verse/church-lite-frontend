@@ -1,14 +1,14 @@
-import { Type } from '@angular/core';
-import { PersonComponent } from '../../components/person/person.component';
-import { PositionsComponent } from '../../components/positions/positions.component';
-import { BankComponent } from '../../components/bank/bank.component';
-import { CashComponent } from '../../components/cash/cash.component';
-import { FinancialComponent } from '../../components/financial/financial.component';
-import { EventsTypeComponent } from '../../components/events-type/events-type.component';
-import { UserAdminComponent } from '../../components/user-admin/user-admin.component';
-import { CellComponent } from '../../components/cell/cell.component';
-import { MemberFunctionComponent } from '../../components/member-function/member-function.component';
-import { RecurringFinancialComponent } from '../recurring-financial/recurring-financial.component';
+import {Type} from '@angular/core';
+import {PersonComponent} from '../../components/person/person.component';
+import {PositionsComponent} from '../../components/positions/positions.component';
+import {BankComponent} from '../../components/bank/bank.component';
+import {CashComponent} from '../../components/cash/cash.component';
+import {FinancialComponent} from '../../components/financial/financial.component';
+import {EventsTypeComponent} from '../../components/events-type/events-type.component';
+import {UserAdminComponent} from '../../components/user-admin/user-admin.component';
+import {CellComponent} from '../../components/cell/cell.component';
+import {MemberFunctionComponent} from '../../components/member-function/member-function.component';
+import {RecurringFinancialComponent} from '../recurring-financial/recurring-financial.component';
 
 export const config: RegisterRoutes[] = [
   {

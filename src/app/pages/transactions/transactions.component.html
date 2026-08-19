@@ -1,24 +1,105 @@
-<app-loading [showLoading]="showLoading" />
+<app-loading [showLoading]="showLoading"/>
 <section class="transactions-page">
-  <nav class="transactions-page__breadcrumb" aria-label="Breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
-  <header class="transactions-page__header"><div><h1>{{ translateService.translate('transactions') }}</h1><p>{{ translateService.translate('transactions_page_description') }}</p></div><div class="transactions-page__actions"><p-button icon="pi pi-lock-open" [outlined]="true" (onClick)="onNavigateCashAction(0)" [label]="translateService.translate('transactions_open_cash')" /><p-button icon="pi pi-lock" (onClick)="onNavigateCashAction(1)" [label]="translateService.translate('transactions_close_cash')" /><app-screen-report-button screen="/home/transactions" [data]="reportData" [disabled]="!_transactionID" [outlined]="false" /></div></header>
+  <nav class="transactions-page__breadcrumb" aria-label="Breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
+  </nav>
+  <header class="transactions-page__header">
+    <div><h1>{{ translateService.translate('transactions') }}</h1>
+      <p>{{ translateService.translate('transactions_page_description') }}</p></div>
+    <div class="transactions-page__actions">
+      <p-button icon="pi pi-lock-open" [outlined]="true" (onClick)="onNavigateCashAction(0)"
+                [label]="translateService.translate('transactions_open_cash')"/>
+      <p-button icon="pi pi-lock" (onClick)="onNavigateCashAction(1)"
+                [label]="translateService.translate('transactions_close_cash')"/>
+      <app-screen-report-button screen="/home/transactions" [data]="reportData" [disabled]="!_transactionID"
+                                [outlined]="false"/>
+    </div>
+  </header>
 
-  <section class="transactions-filter"><div class="transactions-filter__heading"><span class="transactions-filter__icon"><i class="pi pi-wallet"></i></span><div><h2>{{ translateService.translate('transactions_cash') }}</h2><p>{{ translateService.translate('transactions_cash_description') }}</p></div></div><app-auto-complete (onSelectChange)="onSelectedCash()" [(ngModel)]="_currentCash" name="cash" defaultFilter="typeCash eq 0 and status eq 0" [label]="translateService.translate('transactions_cash')" route="cash" optionLabel="description" type="text" /></section>
+  <section class="transactions-filter">
+    <div class="transactions-filter__heading"><span class="transactions-filter__icon"><i
+      class="pi pi-wallet"></i></span>
+      <div><h2>{{ translateService.translate('transactions_cash') }}</h2>
+        <p>{{ translateService.translate('transactions_cash_description') }}</p></div>
+    </div>
+    <app-auto-complete (onSelectChange)="onSelectedCash()" [(ngModel)]="_currentCash" name="cash"
+                       defaultFilter="typeCash eq 0 and status eq 0"
+                       [label]="translateService.translate('transactions_cash')" route="cash" optionLabel="description"
+                       type="text"/>
+  </section>
 
   <section class="transactions-summary">
-    <article class="summary-card summary-card--initial"><span><i class="pi pi-flag"></i></span><div><small>{{ translateService.translate('transactions_start_balance') }}</small><strong>{{ _startBalance | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
-    <article class="summary-card summary-card--revenue"><span><i class="pi pi-arrow-up-right"></i></span><div><small>{{ translateService.translate('transactions_revenues') }}</small><strong>{{ _revenues | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
-    <article class="summary-card summary-card--expense"><span><i class="pi pi-arrow-down-right"></i></span><div><small>{{ translateService.translate('transactions_expenses') }}</small><strong>{{ _expenses | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
-    <article class="summary-card summary-card--balance"><span><i class="pi pi-calculator"></i></span><div><small>{{ translateService.translate('transactions_end_balance') }}</small><strong>{{ _totalBalance | currency:'BRL':'symbol':'1.2-2' }}</strong></div></article>
+    <article class="summary-card summary-card--initial"><span><i class="pi pi-flag"></i></span>
+      <div>
+        <small>{{ translateService.translate('transactions_start_balance') }}</small><strong>{{ _startBalance | currency:'BRL':'symbol':'1.2-2' }}</strong>
+      </div>
+    </article>
+    <article class="summary-card summary-card--revenue"><span><i class="pi pi-arrow-up-right"></i></span>
+      <div>
+        <small>{{ translateService.translate('transactions_revenues') }}</small><strong>{{ _revenues | currency:'BRL':'symbol':'1.2-2' }}</strong>
+      </div>
+    </article>
+    <article class="summary-card summary-card--expense"><span><i class="pi pi-arrow-down-right"></i></span>
+      <div>
+        <small>{{ translateService.translate('transactions_expenses') }}</small><strong>{{ _expenses | currency:'BRL':'symbol':'1.2-2' }}</strong>
+      </div>
+    </article>
+    <article class="summary-card summary-card--balance"><span><i class="pi pi-calculator"></i></span>
+      <div>
+        <small>{{ translateService.translate('transactions_end_balance') }}</small><strong>{{ _totalBalance | currency:'BRL':'symbol':'1.2-2' }}</strong>
+      </div>
+    </article>
   </section>
 
   <main class="transactions-card">
-    <div class="transactions-card__toolbar"><div><h2>{{ translateService.translate('financial_page_transactions') }}</h2><span>{{ _currentCash?.description || translateService.translate('transactions_select_cash') }}</span></div><p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_transactionID" [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()" /></div>
-    <div class="transactions-card__content"><p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="transactions-table p-datatable-sm">
-      <ng-template pTemplate="header"><tr><th>{{ translateService.translate('common_date') }}</th><th>{{ translateService.translate('common_description') }}</th><th>{{ translateService.translate('common_name') }}</th><th>{{ translateService.translate('transactions_operation') }}</th><th class="transactions-table__value">{{ translateService.translate('financial_value') }}</th></tr></ng-template>
-      <ng-template pTemplate="body" let-rowData><tr><td>{{ rowData.dateTransaction | date:'dd/MM/yyyy' }}</td><td>{{ rowData.description }}</td><td>{{ rowData.person?.name || '—' }}</td><td>{{ rowData.transactionOperation }}</td><td class="transactions-table__value">{{ rowData.value | currency:'BRL':'symbol':'1.2-2' }}</td></tr></ng-template>
-      <ng-template pTemplate="emptymessage"><tr><td colspan="5" class="transactions-table__empty-cell"><div class="transactions-table__empty"><svg viewBox="0 0 220 150" aria-hidden="true"><rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface" /><path d="M58 49h68M58 69h104M58 89h52" class="empty-line" /><circle cx="151" cy="103" r="27" class="empty-accent" /><path d="m171 123 18 18M141 103h20" class="empty-icon" /></svg><strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate(_currentCash ? 'transactions_empty' : 'transactions_select_cash_empty') }}</span></div></td></tr></ng-template>
-    </p-table></div>
-    <footer class="transactions-card__footer"><span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span><p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size" [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body" /></footer>
+    <div class="transactions-card__toolbar">
+      <div><h2>{{ translateService.translate('financial_page_transactions') }}</h2>
+        <span>{{ _currentCash?.description || translateService.translate('transactions_select_cash') }}</span></div>
+      <p-button icon="pi pi-refresh" [outlined]="true" [disabled]="!_transactionID"
+                [label]="translateService.translate('datatable_refresh')" (onClick)="onRefresh()"/>
+    </div>
+    <div class="transactions-card__content">
+      <p-table [tableStyle]="tableStyle" [value]="_datatable.values" styleClass="transactions-table p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>{{ translateService.translate('common_date') }}</th>
+            <th>{{ translateService.translate('common_description') }}</th>
+            <th>{{ translateService.translate('common_name') }}</th>
+            <th>{{ translateService.translate('transactions_operation') }}</th>
+            <th class="transactions-table__value">{{ translateService.translate('financial_value') }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td>{{ rowData.dateTransaction | date:'dd/MM/yyyy' }}</td>
+            <td>{{ rowData.description }}</td>
+            <td>{{ rowData.person?.name || '—' }}</td>
+            <td>{{ rowData.transactionOperation }}</td>
+            <td class="transactions-table__value">{{ rowData.value | currency:'BRL':'symbol':'1.2-2' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="transactions-table__empty-cell">
+              <div class="transactions-table__empty">
+                <svg viewBox="0 0 220 150" aria-hidden="true">
+                  <rect x="38" y="24" width="144" height="98" rx="12" class="empty-surface"/>
+                  <path d="M58 49h68M58 69h104M58 89h52" class="empty-line"/>
+                  <circle cx="151" cy="103" r="27" class="empty-accent"/>
+                  <path d="m171 123 18 18M141 103h20" class="empty-icon"/>
+                </svg>
+                <strong>{{ translateService.translate('datatable_empty_title') }}</strong><span>{{ translateService.translate(_currentCash ? 'transactions_empty' : 'transactions_select_cash_empty') }}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <footer class="transactions-card__footer">
+      <span>{{ _datatable.totalRecords }} {{ translateService.translate('datatable_records') }}</span>
+      <p-paginator (onPageChange)="pageChange($event)" [first]="(_datatable.page - 1) * _datatable.size"
+                   [rows]="_datatable.size" [totalRecords]="_datatable.totalRecords"
+                   [rowsPerPageOptions]="[10, 20, 30, 50]" appendTo="body" dropdownAppendTo="body"/>
+    </footer>
   </main>
 </section>

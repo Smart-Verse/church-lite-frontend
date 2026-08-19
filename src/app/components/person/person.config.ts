@@ -1,5 +1,5 @@
-import { FormGroup } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import {FormGroup} from '@angular/forms';
+import {DatePipe} from '@angular/common';
 
 export class PersonConfig {
   person: any[] = [
