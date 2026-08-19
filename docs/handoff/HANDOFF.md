@@ -1,6 +1,6 @@
 # Handoff — Church Lite Frontend
 
-> Atualizado em 21/07/2026.
+> Atualizado em 19/08/2026.
 
 > Configuração da igreja e aprovação de fechamento documentadas em `spec/SESSION_2026-07-17_CASH_CLOSING.md` na raiz do workspace.
 
@@ -27,12 +27,14 @@ npm run build
 npm test
 ```
 
-API configurada nos environments:
+APIs configuradas nos environments:
 
-- desenvolvimento: `http://localhost:5050/church-lite`;
-- produção: `https://develop.smartverse.com.br/api/church-lite`.
+- Church Lite em desenvolvimento: `http://localhost:5000/api/church-lite`;
+- Church Lite em produção: `https://app.smartverse.com.br/api/church-lite`;
+- Social em desenvolvimento: `http://localhost:5000/api/church-lite-social`;
+- Social em produção: `https://app.smartverse.com.br/api/church-lite-social`.
 
-O build de produção foi validado em 15/07/2026.
+As duas APIs passam pelo mesmo gateway. O `authInterceptor` reconhece a URL absoluta do Social e envia o JWT e o contexto de acesso necessários. Não apontar o frontend diretamente para portas internas dos serviços.
 
 ## Organização
 
@@ -536,4 +538,60 @@ Na agenda, o modal `AppointmentsComponent` usa `app-input-date` para início/fim
 
 Em `/home/transactions`, o header separa texto e ações e mantém gaps responsivos. Na abertura de um caixa sem movimento anterior, `output: null` é tratado como saldo zero; no fechamento sem abertura válida aparece aviso, e falhas de consulta não ficam mais silenciosas.
 
-Próxima integração: o feed social será apresentado dentro do mesmo `MemberLayout`, mas servido pelo novo `church-lite-social`. Não criar login paralelo no frontend nem enviar tenant escolhido pelo navegador; aguardar a definição do contrato confiável de identidade/JWT descrita no handoff do serviço social.
+O feed social é apresentado dentro do mesmo `MemberLayout` e servido pelo `church-lite-social`. Não criar login paralelo no frontend nem enviar tenant escolhido pelo navegador; identidade e tenant são derivados do JWT e validados nos serviços.
+
+## Atualização — perfil, feed e navegação da comunidade (19/08/2026)
+
+O portal do membro passou a usar o feed como página principal:
+
+- `/member`: feed da comunidade;
+- `/member/feed`: redireciona para `/member`;
+- `/member/contributions`: resumo, agenda e histórico das próprias contribuições;
+- `/member/profile`: perfil social;
+- `/member/finance`: transparência;
+- `/member/approvals`: aprovações disponíveis ao membro.
+
+O menu mostra `Feed`, `Minhas contribuições`, `Transparência` e `Aprovações`. `Meu perfil` fica no rodapé, próximo de `Gestão` e `Sair` no desktop, e continua acessível pela navegação inferior no mobile. As mensagens promocionais e de boas-vindas redundantes foram removidas da página de contribuições.
+
+### Perfil social e imagens
+
+A página de perfil mantém nome de exibição, username, bio, avatar e capa. A capa preenche o banner horizontal; não deve voltar ao avatar quadrado nem ao degradê substituto quando houver imagem.
+
+O upload reutiliza `app-image-upload`, agora com recorte opcional via `ngx-image-cropper`:
+
+- avatar: proporção 1:1 e saída de até 720 px;
+- capa: proporção 104:23 e saída de até 1600 px;
+- saída JPEG;
+- pasta do objeto baseada no UUID do acesso autenticado.
+
+O frontend salva apenas a chave retornada pelo Church Lite. A atualização do cadastro administrativo ocorre por evento entre os backends; não chamar endpoint HTTP direto para sincronizar a foto.
+
+### Feed
+
+O feed permite publicar texto, até dez imagens, ou ambos. A interface exibe avatar e nome dos autores em posts, comentários e respostas. Estão implementados:
+
+- curtir e descurtir posts;
+- comentar;
+- responder comentários;
+- curtir e descurtir comentários e respostas;
+- excluir conteúdo próprio;
+- ocultar e reexibir o próprio post.
+
+Imagens e avatares privados são convertidos em URLs assinadas pelo Church Lite. A autorização é feita por tenant no backend, permitindo a visualização por outros membros da mesma igreja. Os controles de curtida e comentário usam espaçamento global escopado em `app-member-feed`; preservar esse escopo para não afetar telas administrativas.
+
+O componente compartilhado de upload/crop deve ser reutilizado em novas funções da comunidade. A regra geral do frontend continua sendo evoluir componentes compartilhados, e não duplicar seletores, uploaders, cropper, dropdowns ou inputs de data.
+
+### Login e configuração do usuário
+
+Quando o login recebe a chave `account_confirmation_required`, o frontend chama automaticamente `POST /resendConfirmation` com o e-mail informado e apresenta o feedback correspondente. O botão `Salvar` duplicado no cabeçalho de `/user-configuration` foi removido; permanece somente a ação principal do formulário.
+
+### Padronizações recentes
+
+- campos de data da agenda/dashboard reutilizam `app-input-date`;
+- `Banco`, `Conta bancária` e `Caixa` usam os dropdowns compartilhados;
+- URLs de serviços usam o gateway e nunca `localhost:8081/basebackend`;
+- o build Angular foi validado após a integração do perfil, feed, respostas, curtidas e reorganização de rotas.
+
+### Próximo módulo
+
+Grupos da comunidade ainda não foram implementados. Eles devem reutilizar o feed e os componentes atuais sempre que possível, acrescentando associação, papéis, visibilidade e contexto do grupo sem duplicar a experiência de publicação.
