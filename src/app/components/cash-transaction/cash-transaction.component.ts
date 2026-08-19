@@ -61,7 +61,10 @@ export class CashTransactionComponent extends BaseComponent implements OnInit {
 
   onSave(): void {
     if (!this.formGroup.valid) {
-      this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
+      this.toastService.warn({
+        summary: this.translateService.translate("common_message"),
+        detail: this.translateService.translate("common_message_invalid_fields")
+      });
       this.fieldsService.verifyIsValid();
       return;
     }
@@ -75,13 +78,19 @@ export class CashTransactionComponent extends BaseComponent implements OnInit {
         this.isSaving = false;
         this.showLoading = false;
         const detail = this.action !== 0 && !response.endDate ? 'cash_closing_pending' : 'common_message_success';
-        this.toastService.success({summary: this.translateService.translate("common_message"), detail: this.translateService.translate(detail)});
+        this.toastService.success({
+          summary: this.translateService.translate("common_message"),
+          detail: this.translateService.translate(detail)
+        });
         this.router.navigate(["/home/transactions"]);
       },
       error: error => {
         this.isSaving = false;
         this.showLoading = false;
-        this.toastService.error({summary: this.translateService.translate("common_message"), detail: error.error?.message ?? "Falha ao salvar a movimentação"});
+        this.toastService.error({
+          summary: this.translateService.translate("common_message"),
+          detail: error.error?.message ?? "Falha ao salvar a movimentação"
+        });
       }
     });
   }

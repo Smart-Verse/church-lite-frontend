@@ -1,7 +1,7 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <section class="cash-page">
   <nav class="cash-page__breadcrumb" aria-label="Breadcrumb">
-    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" />
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
   </nav>
   <header class="cash-page__header">
     <div>
@@ -9,43 +9,69 @@
       <p>{{ translateService.translate(action === 0 ? 'transactions_page_open_description' : 'transactions_page_close_description') }}</p>
     </div>
     <div class="cash-page__actions">
-      <p-button type="button" [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="onCancel()" />
-      <p-button type="button" icon="pi pi-check" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
+      <p-button type="button" [outlined]="true" [label]="translateService.translate('common_action_cancel')"
+                (onClick)="onCancel()"/>
+      <p-button type="button" icon="pi pi-check" [disabled]="isSaving"
+                [label]="translateService.translate('common_action_save')" (onClick)="onSave()"/>
     </div>
   </header>
 
   <main class="cash-page__body" [formGroup]="formGroup">
     <div class="transaction-status" [class.transaction-status--closing]="action !== 0">
       <span class="transaction-status__icon"><i [class]="action === 0 ? 'pi pi-lock-open' : 'pi pi-lock'"></i></span>
-      <div><strong>{{ action === 0 ? 'Abertura de caixa' : 'Fechamento de caixa' }}</strong><span>{{ action === 0 ? 'Selecione um caixa fechado e confirme o saldo que iniciará o movimento.' : 'Selecione um caixa aberto, confira os totais calculados e finalize o movimento.' }}</span></div>
+      <div>
+        <strong>{{ action === 0 ? 'Abertura de caixa' : 'Fechamento de caixa' }}</strong><span>{{ action === 0 ? 'Selecione um caixa fechado e confirme o saldo que iniciará o movimento.' : 'Selecione um caixa aberto, confira os totais calculados e finalize o movimento.' }}</span>
+      </div>
     </div>
 
     <div class="transaction-cards">
       <section class="transaction-card">
-        <div class="transaction-card__heading"><span class="transaction-card__icon"><i class="pi pi-wallet"></i></span><div><h2>{{ translateService.translate('transactions_page_cash_data') }}</h2><p>Escolha o caixa da operação e confira o período correspondente.</p></div></div>
+        <div class="transaction-card__heading"><span class="transaction-card__icon"><i class="pi pi-wallet"></i></span>
+          <div><h2>{{ translateService.translate('transactions_page_cash_data') }}</h2>
+            <p>Escolha o caixa da operação e confira o período correspondente.</p></div>
+        </div>
         <div class="fields-grid">
-          <app-auto-complete formControlName="cash" [field]="formGroup" name="cash" (onSelectChange)="onGetCashTransaction()" [defaultFilter]="_filter" class="span-12" [label]="translateService.translate('transactions_cash')" route="cash" optionLabel="description" type="text" />
-          <app-input-date formControlName="startDate" name="startDate" [field]="formGroup" [disabled]="true" class="span-6" [label]="translateService.translate('transactions_openingDate')" type="text" />
+          <app-auto-complete formControlName="cash" [field]="formGroup" name="cash"
+                             (onSelectChange)="onGetCashTransaction()" [defaultFilter]="_filter" class="span-12"
+                             [label]="translateService.translate('transactions_cash')" route="cash"
+                             optionLabel="description" type="text"/>
+          <app-input-date formControlName="startDate" name="startDate" [field]="formGroup" [disabled]="true"
+                          class="span-6" [label]="translateService.translate('transactions_openingDate')" type="text"/>
           @if (!_close) {
-            <app-input-date formControlName="endDate" name="endDate" [field]="formGroup" [disabled]="true" class="span-6" [label]="translateService.translate('transactions_endDate')" type="text" />
+            <app-input-date formControlName="endDate" name="endDate" [field]="formGroup" [disabled]="true"
+                            class="span-6" [label]="translateService.translate('transactions_endDate')" type="text"/>
           }
         </div>
-        <div class="transaction-card__hint"><i class="pi pi-info-circle"></i><span>Os caixas disponíveis são filtrados automaticamente conforme a operação de abertura ou fechamento.</span></div>
+        <div class="transaction-card__hint"><i class="pi pi-info-circle"></i><span>Os caixas disponíveis são filtrados automaticamente conforme a operação de abertura ou fechamento.</span>
+        </div>
       </section>
 
       <section class="transaction-card">
-        <div class="transaction-card__heading"><span class="transaction-card__icon"><i class="pi pi-calculator"></i></span><div><h2>{{ translateService.translate('transactions_page_balances') }}</h2><p>Confira os valores carregados e informe somente os campos liberados para edição.</p></div></div>
+        <div class="transaction-card__heading"><span class="transaction-card__icon"><i
+          class="pi pi-calculator"></i></span>
+          <div><h2>{{ translateService.translate('transactions_page_balances') }}</h2>
+            <p>Confira os valores carregados e informe somente os campos liberados para edição.</p></div>
+        </div>
         <div class="fields-grid">
           @if (!_open) {
-            <app-input-number formControlName="previousBalance" name="previousBalance" [disabled]="true" [field]="formGroup" class="span-6" [label]="translateService.translate('transactions_previousBalance')" type="text" />
+            <app-input-number formControlName="previousBalance" name="previousBalance" [disabled]="true"
+                              [field]="formGroup" class="span-6"
+                              [label]="translateService.translate('transactions_previousBalance')" type="text"/>
           }
-          <app-input-number formControlName="initialBalance" name="initialBalance" [disabled]="_disabledCloseCash" [field]="formGroup" [class]="_close ? 'span-6' : 'span-12'" [label]="translateService.translate('transactions_start_balance')" type="text" />
+          <app-input-number formControlName="initialBalance" name="initialBalance" [disabled]="_disabledCloseCash"
+                            [field]="formGroup" [class]="_close ? 'span-6' : 'span-12'"
+                            [label]="translateService.translate('transactions_start_balance')" type="text"/>
           @if (!_close) {
-            <app-input-number formControlName="balance" name="balance" [disabled]="true" [field]="formGroup" class="span-6" [label]="translateService.translate('transactions_balance')" type="text" />
-            <app-input-number formControlName="finalBalance" name="finalBalance" [disabled]="true" [field]="formGroup" class="span-6" [label]="translateService.translate('transactions_final_balance')" type="text" />
+            <app-input-number formControlName="balance" name="balance" [disabled]="true" [field]="formGroup"
+                              class="span-6" [label]="translateService.translate('transactions_balance')" type="text"/>
+            <app-input-number formControlName="finalBalance" name="finalBalance" [disabled]="true" [field]="formGroup"
+                              class="span-6" [label]="translateService.translate('transactions_final_balance')"
+                              type="text"/>
           }
         </div>
-        <div class="transaction-summary"><i class="pi pi-shield"></i><span>{{ action === 0 ? 'O saldo inicial será a base para todas as movimentações deste caixa.' : 'O saldo final é calculado pelo sistema a partir do saldo inicial e das operações realizadas.' }}</span></div>
+        <div class="transaction-summary"><i
+          class="pi pi-shield"></i><span>{{ action === 0 ? 'O saldo inicial será a base para todas as movimentações deste caixa.' : 'O saldo final é calculado pelo sistema a partir do saldo inicial e das operações realizadas.' }}</span>
+        </div>
       </section>
     </div>
   </main>

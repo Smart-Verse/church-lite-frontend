@@ -1,10 +1,91 @@
-<app-loading [showLoading]="loading" />
-<section class="entity-page"><nav class="entity-page__breadcrumb"><p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome" /></nav>
-<header class="entity-page__header"><div><h1>{{ translateService.translate(id && id !== 'new' ? 'cells_edit_title' : 'cells_new_title') }}</h1><p>{{ translateService.translate('cells_form_description') }}</p></div><div class="entity-page__actions"><p-button [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="cancel()"/><p-button icon="pi pi-check" [disabled]="saving" [label]="translateService.translate('common_action_save')" (onClick)="save()"/></div></header>
-<main class="entity-page__body" [formGroup]="form">
-<section class="entity-section"><div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-home"></i></span><div><h2>{{translateService.translate('cells_basic_data')}}</h2><p>{{translateService.translate('cells_basic_description')}}</p></div></div><div class="entity-fields">
-<app-input-text formControlName="code" name="code" [field]="form" class="span-3" [label]="translateService.translate('common_code')" type="text"/><app-input-text formControlName="name" name="name" [field]="form" class="span-9" [label]="translateService.translate('common_name')" type="text"/><app-input-text formControlName="description" name="description" [field]="form" class="span-12" [label]="translateService.translate('common_description')" type="text"/><app-dropdown formControlName="type" name="type" [field]="form" class="span-6" [label]="translateService.translate('common_type')" [options]="options(types)" optionLabel="label"/><app-dropdown formControlName="status" name="status" [field]="form" class="span-6" [label]="translateService.translate('personal_field_status')" [options]="options(statuses)" optionLabel="label"/></div></section>
-<section class="entity-section"><div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-sitemap"></i></span><div><h2>{{translateService.translate('cells_structure')}}</h2><p>{{translateService.translate('cells_structure_description')}}</p></div></div><div class="entity-fields"><app-auto-complete formControlName="organizationUnit" name="organizationUnit" [field]="form" class="span-8" [label]="translateService.translate('cells_organization_unit')" route="cellOrganizationUnit" optionLabel="name" type="text"/><app-input-date formControlName="startDate" name="startDate" [field]="form" class="span-4" [label]="translateService.translate('cells_start_date')" type="date"/></div></section>
-<section class="entity-section"><div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-calendar"></i></span><div><h2>{{translateService.translate('cells_meeting')}}</h2><p>{{translateService.translate('cells_meeting_description')}}</p></div></div><div class="entity-fields"><app-dropdown formControlName="meetingDay" name="meetingDay" [field]="form" class="span-6" [label]="translateService.translate('cells_meeting_day')" [options]="options(weekdays)" optionLabel="label"/><app-input-text formControlName="meetingTime" name="meetingTime" [field]="form" class="span-6" [label]="translateService.translate('cells_meeting_time')" type="time"/><app-input-text formControlName="address" name="address" [field]="form" class="span-8" [label]="translateService.translate('personal_field_address')" type="text"/><app-input-text formControlName="neighborhood" name="neighborhood" [field]="form" class="span-4" [label]="translateService.translate('personal_field_neighborhood')" type="text"/><app-auto-complete formControlName="city" name="city" [field]="form" class="span-12" [label]="translateService.translate('personal_field_city')" route="city" optionLabel="name" type="text"/></div></section>
-<section class="entity-section"><div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-chart-line"></i></span><div><h2>{{translateService.translate('cells_goals')}}</h2><p>{{translateService.translate('cells_goals_description')}}</p></div></div><div class="entity-fields"><app-input-number formControlName="capacity" name="capacity" [field]="form" class="span-3" [label]="translateService.translate('cells_capacity')" type="number"/><app-input-number formControlName="memberGoal" name="memberGoal" [field]="form" class="span-3" [label]="translateService.translate('cells_member_goal')" type="number"/><app-input-number formControlName="visitorGoal" name="visitorGoal" [field]="form" class="span-3" [label]="translateService.translate('cells_visitor_goal')" type="number"/><app-input-number formControlName="multiplicationGoal" name="multiplicationGoal" [field]="form" class="span-3" [label]="translateService.translate('cells_multiplication_goal')" type="number"/><app-input-date formControlName="expectedMultiplicationDate" name="expectedMultiplicationDate" [field]="form" class="span-6" [label]="translateService.translate('cells_expected_multiplication')" type="date"/><app-input-text formControlName="notes" name="notes" [field]="form" class="span-12" [label]="translateService.translate('cells_notes')" type="text"/></div></section>
-</main></section>
+<app-loading [showLoading]="loading"/>
+<section class="entity-page">
+  <nav class="entity-page__breadcrumb">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="breadcrumbHome"/>
+  </nav>
+  <header class="entity-page__header">
+    <div><h1>{{ translateService.translate(id && id !== 'new' ? 'cells_edit_title' : 'cells_new_title') }}</h1>
+      <p>{{ translateService.translate('cells_form_description') }}</p></div>
+    <div class="entity-page__actions">
+      <p-button [outlined]="true" [label]="translateService.translate('common_action_cancel')" (onClick)="cancel()"/>
+      <p-button icon="pi pi-check" [disabled]="saving" [label]="translateService.translate('common_action_save')"
+                (onClick)="save()"/>
+    </div>
+  </header>
+  <main class="entity-page__body" [formGroup]="form">
+    <section class="entity-section">
+      <div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-home"></i></span>
+        <div><h2>{{ translateService.translate('cells_basic_data') }}</h2>
+          <p>{{ translateService.translate('cells_basic_description') }}</p></div>
+      </div>
+      <div class="entity-fields">
+        <app-input-text formControlName="code" name="code" [field]="form" class="span-3"
+                        [label]="translateService.translate('common_code')" type="text"/>
+        <app-input-text formControlName="name" name="name" [field]="form" class="span-9"
+                        [label]="translateService.translate('common_name')" type="text"/>
+        <app-input-text formControlName="description" name="description" [field]="form" class="span-12"
+                        [label]="translateService.translate('common_description')" type="text"/>
+        <app-dropdown formControlName="type" name="type" [field]="form" class="span-6"
+                      [label]="translateService.translate('common_type')" [options]="options(types)"
+                      optionLabel="label"/>
+        <app-dropdown formControlName="status" name="status" [field]="form" class="span-6"
+                      [label]="translateService.translate('personal_field_status')" [options]="options(statuses)"
+                      optionLabel="label"/>
+      </div>
+    </section>
+    <section class="entity-section">
+      <div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-sitemap"></i></span>
+        <div><h2>{{ translateService.translate('cells_structure') }}</h2>
+          <p>{{ translateService.translate('cells_structure_description') }}</p></div>
+      </div>
+      <div class="entity-fields">
+        <app-auto-complete formControlName="organizationUnit" name="organizationUnit" [field]="form" class="span-8"
+                           [label]="translateService.translate('cells_organization_unit')" route="cellOrganizationUnit"
+                           optionLabel="name" type="text"/>
+        <app-input-date formControlName="startDate" name="startDate" [field]="form" class="span-4"
+                        [label]="translateService.translate('cells_start_date')" type="date"/>
+      </div>
+    </section>
+    <section class="entity-section">
+      <div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-calendar"></i></span>
+        <div><h2>{{ translateService.translate('cells_meeting') }}</h2>
+          <p>{{ translateService.translate('cells_meeting_description') }}</p></div>
+      </div>
+      <div class="entity-fields">
+        <app-dropdown formControlName="meetingDay" name="meetingDay" [field]="form" class="span-6"
+                      [label]="translateService.translate('cells_meeting_day')" [options]="options(weekdays)"
+                      optionLabel="label"/>
+        <app-input-text formControlName="meetingTime" name="meetingTime" [field]="form" class="span-6"
+                        [label]="translateService.translate('cells_meeting_time')" type="time"/>
+        <app-input-text formControlName="address" name="address" [field]="form" class="span-8"
+                        [label]="translateService.translate('personal_field_address')" type="text"/>
+        <app-input-text formControlName="neighborhood" name="neighborhood" [field]="form" class="span-4"
+                        [label]="translateService.translate('personal_field_neighborhood')" type="text"/>
+        <app-auto-complete formControlName="city" name="city" [field]="form" class="span-12"
+                           [label]="translateService.translate('personal_field_city')" route="city" optionLabel="name"
+                           type="text"/>
+      </div>
+    </section>
+    <section class="entity-section">
+      <div class="entity-section__heading"><span class="entity-section__icon"><i class="pi pi-chart-line"></i></span>
+        <div><h2>{{ translateService.translate('cells_goals') }}</h2>
+          <p>{{ translateService.translate('cells_goals_description') }}</p></div>
+      </div>
+      <div class="entity-fields">
+        <app-input-number formControlName="capacity" name="capacity" [field]="form" class="span-3"
+                          [label]="translateService.translate('cells_capacity')" type="number"/>
+        <app-input-number formControlName="memberGoal" name="memberGoal" [field]="form" class="span-3"
+                          [label]="translateService.translate('cells_member_goal')" type="number"/>
+        <app-input-number formControlName="visitorGoal" name="visitorGoal" [field]="form" class="span-3"
+                          [label]="translateService.translate('cells_visitor_goal')" type="number"/>
+        <app-input-number formControlName="multiplicationGoal" name="multiplicationGoal" [field]="form" class="span-3"
+                          [label]="translateService.translate('cells_multiplication_goal')" type="number"/>
+        <app-input-date formControlName="expectedMultiplicationDate" name="expectedMultiplicationDate" [field]="form"
+                        class="span-6" [label]="translateService.translate('cells_expected_multiplication')"
+                        type="date"/>
+        <app-input-text formControlName="notes" name="notes" [field]="form" class="span-12"
+                        [label]="translateService.translate('cells_notes')" type="text"/>
+      </div>
+    </section>
+  </main>
+</section>

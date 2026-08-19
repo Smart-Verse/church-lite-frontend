@@ -1,4 +1,6 @@
-:host { display: block; }
+:host {
+  display: block;
+}
 
 .appointment-form {
   display: grid;
@@ -66,10 +68,18 @@
   padding-top: 0.75rem;
 }
 
-.actions__spacer { flex: 1; }
+.actions__spacer {
+  flex: 1;
+}
 
 @media (max-width: 640px) {
-  .date-grid { grid-template-columns: 1fr; }
-  .actions__spacer { display: none; }
-  .actions p-button { flex: 1; }
+  .date-grid {
+    grid-template-columns: 1fr;
+  }
+  .actions__spacer {
+    display: none;
+  }
+  .actions p-button {
+    flex: 1;
+  }
 }

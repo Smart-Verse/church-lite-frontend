@@ -54,7 +54,7 @@ export class CashTransactionConfig {
     },
   ]
 
-  convertToDTO(formGroup: FormGroup, datePipe: DatePipe,dateClose: any): any {
+  convertToDTO(formGroup: FormGroup, datePipe: DatePipe, dateClose: any): any {
     let dto = {
       id: formGroup.get('id')?.value,
       startDate: formGroup.get('startDate')?.value,
@@ -65,7 +65,7 @@ export class CashTransactionConfig {
       endDate: dateClose,
     };
     dto.startDate = datePipe.transform(dto.startDate, 'yyyy-MM-dd')!;
-    if(dateClose !== null){
+    if (dateClose !== null) {
       dto.endDate = datePipe.transform(dto.endDate, 'yyyy-MM-dd')!;
     }
     return dto;

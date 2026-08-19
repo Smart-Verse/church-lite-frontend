@@ -5,11 +5,12 @@
     [field]="formGroup"
     label="Tipo de evento *"
     [options]="eventTypes"
-    optionLabel="name" />
+    optionLabel="name"/>
 
   <div class="date-grid">
-    <app-input-date formControlName="initialDate" name="initialDate" [field]="formGroup" label="Início *" [showTime]="true" />
-    <app-input-date formControlName="finalDate" name="finalDate" [field]="formGroup" label="Fim *" [showTime]="true" />
+    <app-input-date formControlName="initialDate" name="initialDate" [field]="formGroup" label="Início *"
+                    [showTime]="true"/>
+    <app-input-date formControlName="finalDate" name="finalDate" [field]="formGroup" label="Fim *" [showTime]="true"/>
   </div>
 
   <div class="field">
@@ -44,7 +45,8 @@
           </label>
         }
       </fieldset>
-      <app-input-date formControlName="recurrenceEndDate" name="recurrenceEndDate" [field]="formGroup" label="Repetir até *" />
+      <app-input-date formControlName="recurrenceEndDate" name="recurrenceEndDate" [field]="formGroup"
+                      label="Repetir até *"/>
     }
   }
 
@@ -59,18 +61,18 @@
         [outlined]="true"
         label="Excluir"
         type="button"
-        (onClick)="deleteEvent()" />
+        (onClick)="deleteEvent()"/>
       @if (formGroup.get('status')?.value !== 'CANCELLED') {
         <p-button
           severity="warn"
           [outlined]="true"
           label="Cancelar evento"
           type="button"
-          (onClick)="cancelEvent()" />
+          (onClick)="cancelEvent()"/>
       }
     }
     <span class="actions__spacer"></span>
-    <p-button [outlined]="true" label="Fechar" type="button" (onClick)="onCancel()" />
-    <p-button label="Salvar" type="submit" />
+    <p-button [outlined]="true" label="Fechar" type="button" (onClick)="onCancel()"/>
+    <p-button label="Salvar" type="submit"/>
   </div>
 </form>

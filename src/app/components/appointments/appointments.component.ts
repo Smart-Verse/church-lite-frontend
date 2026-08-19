@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { BaseComponent } from '../../shared/common/base-component/base-component';
-import { FieldsService } from '../../shared/services/fields/fields.service';
-import { ToastService } from '../../shared/services/toast/toast.service';
-import { TranslateService } from '../../shared/services/translate/translate.service';
-import { Appointment, EventType } from '../../services/appointments/appointments.service';
-import { AppointmentsConfig } from './appointments.config';
+import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {SharedCommonModule} from '../../shared/common/shared-common.module';
+import {BaseComponent} from '../../shared/common/base-component/base-component';
+import {FieldsService} from '../../shared/services/fields/fields.service';
+import {ToastService} from '../../shared/services/toast/toast.service';
+import {TranslateService} from '../../shared/services/translate/translate.service';
+import {Appointment, EventType} from '../../services/appointments/appointments.service';
+import {AppointmentsConfig} from './appointments.config';
 
 export type AppointmentDialogAction =
   | { action: 'SAVE'; appointment: Appointment }
@@ -24,13 +24,13 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
   formGroup: FormGroup;
   eventTypes: EventType[] = [];
   weekDays = [
-    { value: 'SUNDAY', label: 'Domingo' },
-    { value: 'MONDAY', label: 'Segunda' },
-    { value: 'TUESDAY', label: 'Terça' },
-    { value: 'WEDNESDAY', label: 'Quarta' },
-    { value: 'THURSDAY', label: 'Quinta' },
-    { value: 'FRIDAY', label: 'Sexta' },
-    { value: 'SATURDAY', label: 'Sábado' }
+    {value: 'SUNDAY', label: 'Domingo'},
+    {value: 'MONDAY', label: 'Segunda'},
+    {value: 'TUESDAY', label: 'Terça'},
+    {value: 'WEDNESDAY', label: 'Quarta'},
+    {value: 'THURSDAY', label: 'Quinta'},
+    {value: 'FRIDAY', label: 'Sexta'},
+    {value: 'SATURDAY', label: 'Sábado'}
   ];
   selectedWeekDays = new Set<string>();
   isExisting = false;
@@ -99,18 +99,18 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
       this.formGroup,
       Array.from(this.selectedWeekDays)
     );
-    this.ref.close({ action: 'SAVE', appointment } satisfies AppointmentDialogAction);
+    this.ref.close({action: 'SAVE', appointment} satisfies AppointmentDialogAction);
   }
 
   cancelEvent(): void {
     const appointment = this.configuration.convertToDTO(this.formGroup, Array.from(this.selectedWeekDays));
     appointment.status = 'CANCELLED';
-    this.ref.close({ action: 'CANCEL_EVENT', appointment } satisfies AppointmentDialogAction);
+    this.ref.close({action: 'CANCEL_EVENT', appointment} satisfies AppointmentDialogAction);
   }
 
   deleteEvent(): void {
     const appointment = this.configuration.convertToDTO(this.formGroup, Array.from(this.selectedWeekDays));
-    this.ref.close({ action: 'DELETE', appointment } satisfies AppointmentDialogAction);
+    this.ref.close({action: 'DELETE', appointment} satisfies AppointmentDialogAction);
   }
 
   onCancel(): void {
@@ -118,7 +118,7 @@ export class AppointmentsComponent extends BaseComponent implements OnInit {
   }
 
   private invalid(message: string): void {
-    this.toastService.warn({ summary: 'Agenda', detail: message });
+    this.toastService.warn({summary: 'Agenda', detail: message});
     this.fieldsService.verifyIsValid();
   }
 
