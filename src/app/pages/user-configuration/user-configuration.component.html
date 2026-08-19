@@ -10,7 +10,6 @@
       <h1>{{ translateService.translate('user_configuration') }}</h1>
       <p>Atualize seus dados pessoais, foto e preferências de exibição do sistema.</p>
     </div>
-    <p-button icon="pi pi-check" [loading]="isSaving" [disabled]="isSaving" [label]="translateService.translate('common_action_save')" (onClick)="onSave()" />
   </header>
 
   <main class="settings-page__content" [formGroup]="formGroup">
