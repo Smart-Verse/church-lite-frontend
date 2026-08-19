@@ -6,6 +6,7 @@ export interface ChurchUserInput {
   name: string;
   email: string;
   phone?: string;
+  cpf: string;
   password: string;
 }
 
@@ -15,6 +16,7 @@ export interface UserConfiguration {
   name: string;
   email: string;
   phone?: string;
+  cpf?: string;
   userPhoto?: string;
   theme?: string;
   lang?: string;
@@ -34,5 +36,17 @@ export class UsersService {
 
   update(id: string, user: UserConfiguration): Observable<UserConfiguration> {
     return this.http.put<UserConfiguration>(`userConfiguration/${id}`, user);
+  }
+
+  linkMember(memberId: string, userId: string): Observable<{ linked: boolean }> {
+    return this.http.post<{ linked: boolean }>('linkMemberPortalUser', {memberId, userId});
+  }
+
+  promoteMember(memberId: string): Observable<{ user: UserConfiguration }> {
+    return this.http.post<{ user: UserConfiguration }>('promoteMemberPortalUser', {memberId});
+  }
+
+  deleteAdministrativeUser(userConfigurationId: string): Observable<{ deleted: boolean }> {
+    return this.http.post<{ deleted: boolean }>('deleteChurchUser', {userConfigurationId});
   }
 }

@@ -303,6 +303,14 @@ O frontend consome dois snapshots:
 - `GET /getDashboardFinancial`: filtros disponíveis, cards, evolução, despesas por centro de custo/plano de contas, saldos, movimentações e alertas;
 - `GET /getDashboardAgenda`: agenda do dia, próximos eventos e indicadores.
 
+Os cards de receitas e despesas exibem o realizado em destaque e o `valorPrevisto` pendente em uma linha secundária.
+
+No cadastro de usuário administrativo, a busca opcional “Vincular membro ao Portal do Membro” usa `app-auto-complete`.
+Ao salvar com um membro selecionado, o frontend chama `promoteMemberPortalUser` quando já existe acesso, ou
+`linkMemberPortalUser` quando o membro ainda está livre. A exclusão usa `deleteChurchUser`, preservando o acesso
+`MEMBER` e removendo apenas o vínculo administrativo quando aplicável.
+O cadastro administrativo também coleta CPF; o vínculo só prossegue quando CPF, e-mail e telefone conferem com os dados do membro.
+
 Comportamento importante:
 
 - filtros financeiros usam `Subject`, `debounceTime`, `distinctUntilChanged` e `switchMap`, cancelando respostas antigas;

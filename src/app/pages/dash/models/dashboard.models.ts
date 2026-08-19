@@ -2,6 +2,7 @@ export interface DashboardIndicator {
   valorTotal: number;
   valorPeriodoAnterior: number;
   percentualVariacao: number | null;
+  valorPrevisto: number;
 }
 
 export interface DashboardResult {

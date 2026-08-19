@@ -47,6 +47,13 @@
           class="span-6"
           label="Telefone"
           type="tel"/>
+        <app-input-mask
+          formControlName="cpf"
+          name="cpf"
+          [field]="formGroup"
+          class="span-6"
+          label="CPF"
+          mask="999.999.999-99"/>
         @if (!id || id === 'new') {
           <app-input-text
             formControlName="password"
@@ -56,6 +63,16 @@
             label="Senha"
             type="password"/>
         }
+        <app-auto-complete
+          [(ngModel)]="selectedMember"
+          [ngModelOptions]="{standalone: true}"
+          name="memberPortalLink"
+          class="span-12"
+          label="Vincular membro ao Portal do Membro"
+          route="person"
+          defaultFilter="type eq 0"
+          optionLabel="name"
+          type="text"/>
       </div>
     </section>
   </main>

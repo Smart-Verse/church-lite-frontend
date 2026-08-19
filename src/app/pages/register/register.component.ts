@@ -15,6 +15,7 @@ import {MenuItem} from 'primeng/api';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {SubscriptionResource} from '../../shared/services/subscription/subscription.models';
 import {MemberPortalAccessService} from '../../services/member-portal/member-portal-access.service';
+import {UsersService} from '../../services/users/users.service';
 
 @Component({
   selector: 'app-register',
@@ -46,6 +47,7 @@ export class RegisterComponent
     public readonly translateService: TranslateService,
     public readonly subscriptionService: SubscriptionService,
     private readonly memberPortalAccess: MemberPortalAccessService,
+    private readonly usersService: UsersService,
   ) {
     super();
   }
@@ -121,7 +123,10 @@ export class RegisterComponent
 
   onDelete(id: any): void {
     this.onShowLoading();
-    this.crudService.onDelete(this.configuration.route, id).subscribe({
+    const request = this.configuration.route === 'userConfiguration'
+      ? this.usersService.deleteAdministrativeUser(id)
+      : this.crudService.onDelete(this.configuration.route, id);
+    request.subscribe({
       next: (res) => {
         this.subscriptionService.load(true);
         this.onLoadAllData(new RequestData());

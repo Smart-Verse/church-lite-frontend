@@ -22,6 +22,8 @@ import {UserAdminConfig} from './user-admin.config';
 export class UserAdminComponent extends BaseComponent implements OnInit {
   formGroup: FormGroup;
   id: string | null = null;
+  userHash: string | null = null;
+  selectedMember: any = null;
   isSaving = false;
   breadcrumbHome: MenuItem = {icon: 'pi pi-home', routerLink: '/home/dashboard'};
   breadcrumbItems: MenuItem[] = [
@@ -60,15 +62,35 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
     }
 
     this.isSaving = this.showLoading = true;
+    const memberId = this.selectedMember?.personMember?.id ?? this.selectedMember?.personMember?.hash;
+    if ((!this.id || this.id === 'new') && memberId) {
+      this.usersService.promoteMember(memberId).subscribe({
+        next: () => this.finishSave('Membro promovido para usuário administrativo com sucesso'),
+        error: (error: any) => {
+          if (String(error?.error?.message ?? '').includes('ainda não possui acesso')) {
+            this.createAndLinkMember(memberId);
+            return;
+          }
+          this.failSave(error, 'Não foi possível promover o membro para usuário administrativo');
+        }
+      });
+      return;
+    }
     const request: Observable<unknown> = this.id && this.id !== 'new'
       ? this.usersService.update(this.id, this.configuration.toUpdateInput(this.formGroup))
       : this.usersService.create(this.configuration.toCreateInput(this.formGroup));
 
     request.subscribe({
-      next: () => {
-        this.isSaving = this.showLoading = false;
-        this.toast.success({summary: 'Usuários', detail: 'Usuário salvo com sucesso'});
-        this.onCancel();
+      next: (response: any) => {
+        const userId = response?.user?.hash ?? response?.hash ?? this.userHash;
+        if (memberId && userId) {
+          this.usersService.linkMember(memberId, userId).subscribe({
+            next: () => this.finishSave('Usuário salvo e vinculado ao membro com acesso confirmado.'),
+            error: (error: any) => this.failSave(error, 'Usuário salvo, mas não foi possível concluir o vínculo com o membro')
+          });
+          return;
+        }
+        this.finishSave('Usuário salvo com sucesso');
       },
       error: (error: any) => {
         this.isSaving = this.showLoading = false;
@@ -88,6 +110,7 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
     this.showLoading = true;
     this.usersService.get(id).subscribe({
       next: user => {
+        this.userHash = user.hash ?? null;
         this.formGroup.patchValue(user);
         this.showLoading = false;
       },
@@ -100,5 +123,33 @@ export class UserAdminComponent extends BaseComponent implements OnInit {
         this.onCancel();
       }
     });
+  }
+
+  private finishSave(detail: string): void {
+    this.isSaving = this.showLoading = false;
+    this.toast.success({summary: 'Usuários', detail});
+    this.onCancel();
+  }
+
+  private createAndLinkMember(memberId: string): void {
+    this.usersService.create(this.configuration.toCreateInput(this.formGroup)).subscribe({
+      next: response => {
+        const userId = response?.user?.hash;
+        if (!userId) {
+          this.failSave(null, 'Usuário criado, mas não foi possível identificar o acesso');
+          return;
+        }
+        this.usersService.linkMember(memberId, userId).subscribe({
+          next: () => this.finishSave('Usuário salvo e vinculado ao membro com acesso confirmado.'),
+          error: (error: any) => this.failSave(error, 'Usuário salvo, mas não foi possível concluir o vínculo com o membro')
+        });
+      },
+      error: (error: any) => this.failSave(error, 'Não foi possível salvar o usuário')
+    });
+  }
+
+  private failSave(error: any, fallback: string): void {
+    this.isSaving = this.showLoading = false;
+    this.toast.error({summary: 'Usuários', detail: error?.error?.message ?? fallback});
   }
 }

@@ -76,13 +76,13 @@
       <section class="summary-grid" [class.is-loading]="loadingFinancial">
         <article class="summary-card revenue">
           <div class="card-icon"><i class="pi pi-arrow-down-left"></i></div>
-          <span>Receitas do período</span><strong>{{ money(data.resumo.receitasPeriodo.valorTotal) }}</strong><small
+          <span>Receitas do período</span><strong>{{ money(data.resumo.receitasPeriodo.valorTotal) }}</strong><small class="planned-summary">Previsto: {{ money(data.resumo.receitasPeriodo.valorPrevisto) }}</small><small
           [class]="variationClass(data.resumo.receitasPeriodo.percentualVariacao)"><i
           class="pi pi-chart-line"></i> {{ variation(data.resumo.receitasPeriodo.percentualVariacao) }} <em>vs. período
           anterior</em></small></article>
         <article class="summary-card expense">
           <div class="card-icon"><i class="pi pi-arrow-up-right"></i></div>
-          <span>Despesas do período</span><strong>{{ money(data.resumo.despesasPeriodo.valorTotal) }}</strong><small
+          <span>Despesas do período</span><strong>{{ money(data.resumo.despesasPeriodo.valorTotal) }}</strong><small class="planned-summary">Previsto: {{ money(data.resumo.despesasPeriodo.valorPrevisto) }}</small><small
           [class]="variationClass(data.resumo.despesasPeriodo.percentualVariacao)"><i
           class="pi pi-chart-line"></i> {{ variation(data.resumo.despesasPeriodo.percentualVariacao) }} <em>vs. período
           anterior</em></small></article>

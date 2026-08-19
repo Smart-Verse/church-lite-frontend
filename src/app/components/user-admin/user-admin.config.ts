@@ -8,6 +8,7 @@ export class UserAdminConfig {
     {fieldName: 'name', required: true, hidden: false, type: 'string'},
     {fieldName: 'email', required: true, hidden: false, type: 'email'},
     {fieldName: 'phone', required: false, hidden: false, type: 'string'},
+    {fieldName: 'cpf', required: true, hidden: false, type: 'string'},
     {fieldName: 'password', required: true, hidden: false, type: 'password'},
     {fieldName: 'userPhoto', required: false, hidden: true, type: 'string'},
     {fieldName: 'theme', required: false, hidden: true, type: 'string'},
@@ -20,6 +21,7 @@ export class UserAdminConfig {
       name: value.name,
       email: value.email,
       phone: value.phone,
+      cpf: value.cpf,
       password: value.password
     };
   }
@@ -32,6 +34,7 @@ export class UserAdminConfig {
       name: value.name,
       email: value.email,
       phone: value.phone,
+      cpf: value.cpf,
       userPhoto: value.userPhoto,
       theme: value.theme,
       lang: value.lang
