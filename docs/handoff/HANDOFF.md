@@ -334,6 +334,12 @@ Validação executada:
 npm run build
 ```
 
+### Evolução — gráfico de realizado e previsto (19/08/2026)
+
+O gráfico de evolução financeira usa barras agrupadas para receitas e despesas realizadas e previstas. As séries
+previstas usam a mesma cor da série realizada com opacidade reduzida. O seletor visual oferece `Realizados e previstos`,
+`Somente realizados` e `Somente previstos`; o hover exibe tooltip contextual com período e valores das quatro séries.
+
 
 ## Atualização — traduções customizadas (15/07/2026)
 
@@ -595,3 +601,11 @@ Quando o login recebe a chave `account_confirmation_required`, o frontend chama 
 ### Próximo módulo
 
 Grupos da comunidade ainda não foram implementados. Eles devem reutilizar o feed e os componentes atuais sempre que possível, acrescentando associação, papéis, visibilidade e contexto do grupo sem duplicar a experiência de publicação.
+
+## Contratos gerados do Portal do Membro (19/08/2026)
+
+O frontend deixou de consumir as rotas artesanais `/member-api/**`, `/memberPortal/**`, `/memberApproval/**` e
+`/member-access/**` da API. Os serviços usam agora os endpoints planos gerados pelo Gonthera, incluindo
+`getMemberDashboard`, `getMemberTransparency`, `getMemberFinancialApprovals`, `getMemberRegistrationContext` e
+`registerMemberAccess`. As respostas seguem os envelopes gerados; os services Angular extraem `dashboard`,
+`transparency`, `configuration`, `statements` ou `statement` antes de expor os contratos às páginas.

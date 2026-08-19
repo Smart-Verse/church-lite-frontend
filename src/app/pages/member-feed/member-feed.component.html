@@ -1,1 +1,87 @@
-<main class="feed"><header><small>COMUNIDADE</small><h1>Feed da igreja</h1><p>Compartilhe momentos com as pessoas da sua igreja.</p></header><section class="composer"><textarea [(ngModel)]="content" maxlength="3000" placeholder="No que você está pensando?"></textarea><div class="uploads">@for(key of imageKeys;track $index){<app-image-upload [ownerId]="ownerId" [cropAspectRatio]="1" [tokenImageUrl]="key" (eventImageToken)="imageChanged($index,$event)"/>}</div><footer><span>{{content.length}}/3000 · {{imageCount()}}/10 imagens</span><p-button label="Publicar" icon="pi pi-send" [loading]="saving" [disabled]="!content.trim()&&!imageCount()" (onClick)="publish()"/></footer></section>@if(loading){<div class="state"><i class="pi pi-spin pi-spinner"></i></div>}@for(post of posts;track post.id){<article class="post" [class.hidden]="post.hidden"><header><span class="avatar">@if(post.author.avatarUrl){<img [src]="post.author.avatarUrl"/>}@else{<i class="pi pi-user"></i>}</span><div><strong>{{post.author.name}}</strong><small>{{post.createdAt|date:'dd/MM/yyyy HH:mm'}} @if(post.hidden){ · OCULTO}</small></div>@if(post.mine){<span class="post-actions"><button (click)="visibility(post)"><i [class]="post.hidden?'pi pi-eye':'pi pi-eye-slash'"></i></button><button (click)="remove(post)"><i class="pi pi-trash"></i></button></span>}</header>@if(post.content){<p class="content">{{post.content}}</p>}@if(post.imageUrls?.length){<div class="gallery" [class.single]="post.imageUrls!.length===1">@for(url of post.imageUrls;track url){<img [src]="url"/>}</div>}<div class="engagement"><button [class.liked]="post.liked" (click)="like(post)"><i [class]="post.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{post.likes}}</b></button><span><i class="pi pi-comments"></i><b>{{post.comments.length}}</b></span></div><div class="comment-list">@for(c of post.comments;track c.id){<div class="comment-thread"><div class="comment"><span class="avatar small">@if(c.author.avatarUrl){<img [src]="c.author.avatarUrl"/>}@else{<i class="pi pi-user"></i>}</span><div class="comment-body"><strong>{{c.author.name}}</strong><p>{{c.content}}</p><span class="comment-meta"><button [class.liked]="c.liked" (click)="commentLike(post,c)"><i [class]="c.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{c.likes}}</b></button><button (click)="startReply(c)">Responder</button></span></div>@if(c.mine){<button class="comment-delete" (click)="removeComment(post,c.id)"><i class="pi pi-times"></i></button>}</div>@if(replyingTo===c.id){<div class="reply-form"><input pInputText [(ngModel)]="replies[c.id]" placeholder="Responder a {{c.author.name}}..." (keyup.enter)="reply(post,c)"/><button (click)="reply(post,c)"><i class="pi pi-send"></i></button></div>}@for(r of c.replies;track r.id){<div class="comment reply"><span class="avatar small">@if(r.author.avatarUrl){<img [src]="r.author.avatarUrl"/>}@else{<i class="pi pi-user"></i>}</span><div class="comment-body"><strong>{{r.author.name}}</strong><p>{{r.content}}</p><span class="comment-meta"><button [class.liked]="r.liked" (click)="commentLike(post,r)"><i [class]="r.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{r.likes}}</b></button></span></div>@if(r.mine){<button class="comment-delete" (click)="removeComment(post,r.id)"><i class="pi pi-times"></i></button>}</div>}</div>}</div><div class="comment-form"><input pInputText [(ngModel)]="comments[post.id]" placeholder="Escreva um comentário..." (keyup.enter)="comment(post)"/><button (click)="comment(post)"><i class="pi pi-send"></i></button></div></article>}@empty{@if(!loading){<div class="state">Ainda não existem publicações. Seja o primeiro!</div>}}</main>
+<main class="feed">
+  <header><small>COMUNIDADE</small>
+    <h1>Feed da igreja</h1>
+    <p>Compartilhe momentos com as pessoas da sua igreja.</p></header>
+  <section class="composer"><textarea [(ngModel)]="content" maxlength="3000"
+                                      placeholder="No que você está pensando?"></textarea>
+    <div class="uploads">@for (key of imageKeys; track $index) {
+      <app-image-upload [ownerId]="ownerId" [cropAspectRatio]="1" [tokenImageUrl]="key"
+                        (eventImageToken)="imageChanged($index,$event)"/>
+    }</div>
+    <footer><span>{{ content.length }}/3000 · {{ imageCount() }}/10 imagens</span>
+      <p-button label="Publicar" icon="pi pi-send" [loading]="saving" [disabled]="!content.trim()&&!imageCount()"
+                (onClick)="publish()"/>
+    </footer>
+  </section>@if (loading) {
+  <div class="state"><i class="pi pi-spin pi-spinner"></i></div>
+}
+  @for (post of posts; track post.id) {
+    <article class="post" [class.hidden]="post.hidden">
+      <header><span class="avatar">@if (post.author.avatarUrl) {
+        <img [src]="post.author.avatarUrl"/>
+      } @else {
+        <i class="pi pi-user"></i>
+      }</span>
+        <div>
+          <strong>{{ post.author.name }}</strong><small>{{ post.createdAt|date:'dd/MM/yyyy HH:mm' }} @if (post.hidden) {
+          · OCULTO
+        }</small></div>@if (post.mine) {
+          <span class="post-actions"><button (click)="visibility(post)"><i
+            [class]="post.hidden?'pi pi-eye':'pi pi-eye-slash'"></i></button><button (click)="remove(post)"><i
+            class="pi pi-trash"></i></button></span>
+        }</header>@if (post.content) {
+      <p class="content">{{ post.content }}</p>
+    }
+      @if (post.imageUrls?.length) {
+        <div class="gallery" [class.single]="post.imageUrls!.length===1">@for (url of post.imageUrls; track url) {
+          <img [src]="url"/>
+        }</div>
+      }
+      <div class="engagement">
+        <button [class.liked]="post.liked" (click)="like(post)"><i
+          [class]="post.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{ post.likes }}</b></button>
+        <span><i class="pi pi-comments"></i><b>{{ post.comments.length }}</b></span></div>
+      <div class="comment-list">@for (c of post.comments; track c.id) {
+        <div class="comment-thread">
+          <div class="comment"><span class="avatar small">@if (c.author.avatarUrl) {
+            <img [src]="c.author.avatarUrl"/>
+          } @else {
+            <i class="pi pi-user"></i>
+          }</span>
+            <div class="comment-body"><strong>{{ c.author.name }}</strong>
+              <p>{{ c.content }}</p><span class="comment-meta"><button [class.liked]="c.liked"
+                                                                       (click)="commentLike(post,c)"><i
+                [class]="c.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{ c.likes }}</b></button><button
+                (click)="startReply(c)">Responder</button></span></div>@if (c.mine) {
+              <button class="comment-delete" (click)="removeComment(post,c.id)"><i class="pi pi-times"></i></button>
+            }</div>@if (replyingTo === c.id) {
+          <div class="reply-form"><input pInputText [(ngModel)]="replies[c.id]"
+                                         placeholder="Responder a {{c.author.name}}..." (keyup.enter)="reply(post,c)"/>
+            <button (click)="reply(post,c)"><i class="pi pi-send"></i></button>
+          </div>
+        }
+          @for (r of c.replies; track r.id) {
+            <div class="comment reply"><span class="avatar small">@if (r.author.avatarUrl) {
+              <img [src]="r.author.avatarUrl"/>
+            } @else {
+              <i class="pi pi-user"></i>
+            }</span>
+              <div class="comment-body"><strong>{{ r.author.name }}</strong>
+                <p>{{ r.content }}</p><span class="comment-meta"><button [class.liked]="r.liked"
+                                                                         (click)="commentLike(post,r)"><i
+                  [class]="r.liked?'pi pi-heart-fill':'pi pi-heart'"></i><b>{{ r.likes }}</b></button></span>
+              </div>@if (r.mine) {
+                <button class="comment-delete" (click)="removeComment(post,r.id)"><i class="pi pi-times"></i></button>
+              }</div>
+          }</div>
+      }</div>
+      <div class="comment-form"><input pInputText [(ngModel)]="comments[post.id]" placeholder="Escreva um comentário..."
+                                       (keyup.enter)="comment(post)"/>
+        <button (click)="comment(post)"><i class="pi pi-send"></i></button>
+      </div>
+    </article>
+  } @empty {
+    @if (!loading) {
+      <div class="state">Ainda não existem publicações. Seja o primeiro!</div>
+    }
+  }</main>

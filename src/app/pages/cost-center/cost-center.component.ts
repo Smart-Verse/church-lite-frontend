@@ -19,30 +19,33 @@ import {RegisterService} from "../../services/register/register.service";
 import {TranslateService} from "../../shared/services/translate/translate.service";
 import {RequestData} from "../../shared/interfaces/request-data";
 import {Action} from "../../shared/components/datatable/datatable.component";
-import {MobileTreeAction, MobileTreeListComponent} from "../../shared/components/mobile-tree-list/mobile-tree-list.component";
+import {
+  MobileTreeAction,
+  MobileTreeListComponent
+} from "../../shared/components/mobile-tree-list/mobile-tree-list.component";
 
 @Component({
-    selector: 'app-cost-center',
-    imports: [
-        SharedCommonModule,
-        ConfirmDialogModule,
-        IconFieldModule,
-        InputIconModule,
-        TreeTableModule,
-        PaginatorModule,
-        TableModule,
-        BreadcrumbModule,
-        MobileTreeListComponent,
-    ],
-    providers: [
-        CrudService,
-        ToastService,
-        ConfirmationService
-    ],
-    templateUrl: './cost-center.component.html',
-    styleUrl: './cost-center.component.scss'
+  selector: 'app-cost-center',
+  imports: [
+    SharedCommonModule,
+    ConfirmDialogModule,
+    IconFieldModule,
+    InputIconModule,
+    TreeTableModule,
+    PaginatorModule,
+    TableModule,
+    BreadcrumbModule,
+    MobileTreeListComponent,
+  ],
+  providers: [
+    CrudService,
+    ToastService,
+    ConfirmationService
+  ],
+  templateUrl: './cost-center.component.html',
+  styleUrl: './cost-center.component.scss'
 })
-export class CostCenterComponent  extends BaseComponent implements OnInit {
+export class CostCenterComponent extends BaseComponent implements OnInit {
 
   configuration: any = {
     header: "financial_costCenter",
@@ -64,7 +67,7 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     private readonly toastService: ToastService,
     public readonly translateService: TranslateService,
     private confirmationService: ConfirmationService,
-  ){
+  ) {
     super();
   }
 
@@ -78,7 +81,7 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     this.onSetPropertiesDatatable(obj);
   }
 
-  onSetPropertiesDatatable(obj: any): void  {
+  onSetPropertiesDatatable(obj: any): void {
     this.datatable.fields = obj.fields;
     this.onLoadAllData(new RequestData());
   }
@@ -88,7 +91,7 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     const append = requestData.append === true;
     this.incrementalLoading = append;
     if (!append) this.showLoading = true;
-    this.crudService.onGetAll(this.configuration.route,requestData).subscribe({
+    this.crudService.onGetAll(this.configuration.route, requestData).subscribe({
       next: (res) => {
         const contents = res.contents ?? [];
         this.datatable.values = append ? this.uniqueById([...this.datatable.values, ...contents]) : contents;
@@ -126,15 +129,15 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
 
   onDelete(id: any): void {
     this.onShowLoading();
-    this.crudService.onDelete(this.configuration.route,id).subscribe({
+    this.crudService.onDelete(this.configuration.route, id).subscribe({
       next: (res) => {
         this.onLoadAllData(new RequestData());
         this.onShowLoading();
-        this.onToast(1,"");
+        this.onToast(1, "");
       },
       error: (err) => {
         this.onShowLoading();
-        this.onToast(0,err.error.message);
+        this.onToast(0, err.error.message);
       }
     });
   }
@@ -148,13 +151,16 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
   }
 
   onRegisterData(item: any, action: Action, rowNode: any): void {
-    if (item && action === 0) { this.onDelete(item.id); return; }
+    if (item && action === 0) {
+      this.onDelete(item.id);
+      return;
+    }
     const target = action === 1 && item ? item.id : "new";
     const parentId = action === 2 && item ? item.id : rowNode?.parent?.data?.id;
     this.router.navigate(["/home/costCenter", target], {queryParams: parentId ? {parentId} : {}});
   }
 
-  onRefreshData(){
+  onRefreshData() {
     this.sidebarVisible = false;
     this.onLoadAllData(new RequestData());
   }
@@ -163,36 +169,36 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
     this.sidebarVisible = !this.sidebarVisible;
   }
 
-  onDeleteData(item: any, action: Action){
+  onDeleteData(item: any, action: Action) {
     this.confirmationService.confirm({
       message: this.translateService.translate("common_message_confirmation_delete"),
       header: this.translateService.translate("common_message_header_confirmation_delete"),
       icon: 'pi pi-info-circle',
-      acceptButtonStyleClass:"p-button-danger p-button-text",
-      rejectButtonStyleClass:"p-button-text p-button-text",
+      acceptButtonStyleClass: "p-button-danger p-button-text",
+      rejectButtonStyleClass: "p-button-text p-button-text",
       acceptLabel: this.translateService.translate("common_action_yes"),
       rejectLabel: this.translateService.translate("common_action_no"),
-      acceptIcon:"none",
-      rejectIcon:"none",
+      acceptIcon: "none",
+      rejectIcon: "none",
       accept: () => {
         this.onRegisterData(item, action, null)
       },
-      reject: () => {}
+      reject: () => {
+      }
     });
   }
 
   onLoadChildren(obj: any[]): any[] {
     var tree: any[] = [];
     obj.forEach(item => {
-      var data:{data: any, children: any[]} = {
+      var data: { data: any, children: any[] } = {
         data: item,
         children: []
       }
-      if(item.children && item.children.length === 0){
+      if (item.children && item.children.length === 0) {
         data.children = item.children;
         tree.push(data);
-      }
-      else {
+      } else {
         var a = this.onLoadChildren(item.children);
         data.children = a;
         tree.push(data);
@@ -203,10 +209,13 @@ export class CostCenterComponent  extends BaseComponent implements OnInit {
   }
 
   onToast(type: number, message: string): void {
-    if(type === 0){
+    if (type === 0) {
       this.toastService.error({summary: "Mensagem", detail: message});
     } else {
-      this.toastService.success({summary: "Mensagem", detail: this.translateService.translate("common_message_success")});
+      this.toastService.success({
+        summary: "Mensagem",
+        detail: this.translateService.translate("common_message_success")
+      });
     }
   }
 

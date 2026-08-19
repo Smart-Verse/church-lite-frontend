@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs';
 import { SharedCommonModule } from '../../shared/common/shared-common.module';
-import { AgendaSnapshot, DashboardFilters, FilterOption, FinancialSnapshot, GroupExpense } from './models/dashboard.models';
+import { AgendaSnapshot, DashboardFilters, EvolutionPoint, FinancialSnapshot, GroupExpense } from './models/dashboard.models';
 import { DashboardService } from './services/dashboard.service';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
@@ -14,10 +14,12 @@ import {TranslateService} from '../../shared/services/translate/translate.servic
   styleUrl: './dash.component.scss'
 })
 export class DashComponent implements OnInit, OnDestroy {
+  evolutionMode: 'ALL' | 'REALIZED' | 'PLANNED' = 'ALL';
   financial?: FinancialSnapshot;
   agenda?: AgendaSnapshot;
   loadingFinancial = true;
   loadingAgenda = true;
+  filterSidebarVisible = false;
   financialError = '';
   agendaError = '';
   readonly currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -26,9 +28,11 @@ export class DashComponent implements OnInit, OnDestroy {
   private readonly filterChanges = new Subject<DashboardFilters>();
   private readonly destroy$ = new Subject<void>();
   featureBlocked = false;
-  bankOptions: FilterOption[] = [];
-  bankAccountOptions: FilterOption[] = [];
-  cashOptions: FilterOption[] = [];
+  selectedBank: any = null;
+  selectedBankAccount: any = null;
+  selectedCash: any = null;
+  selectedCostCenter: any = null;
+  selectedPlanAccount: any = null;
 
   constructor(private readonly dashboardService: DashboardService, private readonly router: Router, public readonly subscription: SubscriptionService, public readonly translate: TranslateService) {}
 
@@ -53,9 +57,6 @@ export class DashComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: response => {
         this.financial = response.data;
-        this.bankOptions = [{ id: '', descricao: 'Todos' }, ...response.data.filtros.bancos];
-        this.bankAccountOptions = [{ id: '', descricao: 'Todas' }, ...response.data.filtros.contasBancarias];
-        this.cashOptions = [{ id: '', descricao: 'Todos' }, ...response.data.filtros.caixas];
       },
       error: () => this.financialError = 'Não foi possível carregar os dados financeiros.'
     });
@@ -65,24 +66,26 @@ export class DashComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void { this.destroy$.next(); this.destroy$.complete(); }
 
-  applyPeriod(period: string): void {
-    const today = new Date();
-    let start = new Date(today);
-    if (period === 'month') start = new Date(today.getFullYear(), today.getMonth(), 1);
-    if (period === '30days') start.setDate(today.getDate() - 29);
-    if (period === 'year') start = new Date(today.getFullYear(), 0, 1);
-    this.filters.dataInicial = start;
-    this.filters.dataFinal = today;
+  applyFilters(): void { this.filterChanges.next({ ...this.filters }); }
+  setRelationFilter(filter: 'bancoId' | 'contaBancariaId' | 'caixaId' | 'centroCustoId' | 'planoContaId', value: any): void {
+    this.filters[filter] = value?.id ?? value?.hash ?? '';
     this.applyFilters();
   }
-
-  applyFilters(): void { this.filterChanges.next({ ...this.filters }); }
-  clearFilters(): void { this.filters = this.defaultFilters(); this.applyFilters(); }
+  clearFilters(): void {
+    this.selectedBank = this.selectedBankAccount = this.selectedCash = this.selectedCostCenter = this.selectedPlanAccount = null;
+    this.filters = this.defaultFilters();
+    this.applyFilters();
+  }
   money(value: number | null | undefined): string { return this.currency.format(value ?? 0); }
   variation(value: number | null): string { return value === null ? 'Sem base anterior' : `${value >= 0 ? '+' : ''}${this.percent.format(value)}%`; }
   variationClass(value: number | null): string { return value === null ? 'neutral' : value >= 0 ? 'positive' : 'negative'; }
-  maxEvolution(): number { return Math.max(1, ...(this.financial?.evolucao.flatMap(item => [item.receitas, item.despesas]) ?? [1])); }
+  maxEvolution(): number { return Math.max(1, ...(this.financial?.evolucao.flatMap(item => this.evolutionValues(item)) ?? [1])); }
   barWidth(value: number, max = this.maxEvolution()): number { return Math.max(value > 0 ? 2 : 0, Math.abs(value) * 100 / Math.max(max, 1)); }
+  evolutionValues(item: EvolutionPoint): number[] {
+    if (this.evolutionMode === 'REALIZED') return [item.receitas, item.despesas];
+    if (this.evolutionMode === 'PLANNED') return [item.receitasPrevistas, item.despesasPrevistas];
+    return [item.receitas, item.receitasPrevistas, item.despesas, item.despesasPrevistas];
+  }
   groupWidth(item: GroupExpense): number { return Math.max(item.valorTotal > 0 ? 2 : 0, item.percentual); }
   goTransactions(): void { this.router.navigate(['/home/transactions']); }
   goAgenda(): void { this.router.navigate(['/home/scheduler']); }

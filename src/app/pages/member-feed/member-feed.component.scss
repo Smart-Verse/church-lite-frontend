@@ -1,1 +1,204 @@
-.feed{max-width:720px;margin:auto;padding:2rem}.feed>header small{color:var(--p-primary-color);font-weight:700;letter-spacing:.08em}.feed>header h1{margin:.3rem 0}.feed>header p{margin:0 0 1.5rem;color:var(--p-text-muted-color)}.composer,.post{margin-bottom:1.25rem;border:1px solid var(--p-content-border-color);border-radius:16px;background:var(--p-content-background);box-shadow:0 6px 22px rgba(15,23,42,.05)}.composer{padding:1rem}.composer textarea{width:100%;min-height:100px;resize:vertical;border:0;outline:0;background:transparent;color:var(--p-text-color);font:inherit}.composer footer{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}.composer footer span{font-size:.75rem;color:var(--p-text-muted-color)}.uploads{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem}.uploads app-image-upload ::ng-deep .image-upload__actions{display:none}.post{overflow:hidden}.post>header{display:flex;align-items:center;gap:.75rem;padding:1rem}.post>header div{display:grid;flex:1}.post>header small{color:var(--p-text-muted-color)}.avatar{display:grid;width:44px;height:44px;place-items:center;overflow:hidden;border-radius:50%;background:var(--p-content-hover-background)}.avatar img{width:100%;height:100%;object-fit:cover}.avatar.small{width:32px;height:32px}.post-actions{display:flex}.post-actions button,.comment button,.comment-form button{border:0;background:transparent;color:var(--p-text-muted-color);cursor:pointer}.content{padding:0 1rem;white-space:pre-wrap}.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}.gallery img{width:100%;aspect-ratio:1;object-fit:cover}.gallery.single{grid-template-columns:1fr}.engagement{display:flex;gap:1rem;padding:.85rem 1rem;border-bottom:1px solid var(--p-content-border-color)}.engagement button{border:0;background:none;cursor:pointer;color:inherit}.engagement .liked{color:#e11d48}.comment-list{padding:.75rem 1rem}.comment{display:flex;align-items:flex-start;gap:.6rem;margin:.65rem 0}.comment>div{flex:1}.comment p{margin:.2rem 0}.comment-form{display:flex;padding:.8rem 1rem;border-top:1px solid var(--p-content-border-color)}.comment-form input{flex:1}.hidden{opacity:.68}.state{padding:3rem;text-align:center;color:var(--p-text-muted-color)}@media(max-width:600px){.feed{padding:1rem}.uploads{grid-template-columns:repeat(3,1fr)}}
+.feed {
+  max-width: 720px;
+  margin: auto;
+  padding: 2rem
+}
+
+.feed > header small {
+  color: var(--p-primary-color);
+  font-weight: 700;
+  letter-spacing: .08em
+}
+
+.feed > header h1 {
+  margin: .3rem 0
+}
+
+.feed > header p {
+  margin: 0 0 1.5rem;
+  color: var(--p-text-muted-color)
+}
+
+.composer, .post {
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: 16px;
+  background: var(--p-content-background);
+  box-shadow: 0 6px 22px rgba(15, 23, 42, .05)
+}
+
+.composer {
+  padding: 1rem
+}
+
+.composer textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--p-text-color);
+  font: inherit
+}
+
+.composer footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem
+}
+
+.composer footer span {
+  font-size: .75rem;
+  color: var(--p-text-muted-color)
+}
+
+.uploads {
+  display: grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap: .6rem
+}
+
+.uploads app-image-upload ::ng-deep .image-upload__actions {
+  display: none
+}
+
+.post {
+  overflow: hidden
+}
+
+.post > header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: 1rem
+}
+
+.post > header div {
+  display: grid;
+  flex: 1
+}
+
+.post > header small {
+  color: var(--p-text-muted-color)
+}
+
+.avatar {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--p-content-hover-background)
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover
+}
+
+.avatar.small {
+  width: 32px;
+  height: 32px
+}
+
+.post-actions {
+  display: flex
+}
+
+.post-actions button, .comment button, .comment-form button {
+  border: 0;
+  background: transparent;
+  color: var(--p-text-muted-color);
+  cursor: pointer
+}
+
+.content {
+  padding: 0 1rem;
+  white-space: pre-wrap
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap: 2px
+}
+
+.gallery img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover
+}
+
+.gallery.single {
+  grid-template-columns:1fr
+}
+
+.engagement {
+  display: flex;
+  gap: 1rem;
+  padding: .85rem 1rem;
+  border-bottom: 1px solid var(--p-content-border-color)
+}
+
+.engagement button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit
+}
+
+.engagement .liked {
+  color: #e11d48
+}
+
+.comment-list {
+  padding: .75rem 1rem
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin: .65rem 0
+}
+
+.comment > div {
+  flex: 1
+}
+
+.comment p {
+  margin: .2rem 0
+}
+
+.comment-form {
+  display: flex;
+  padding: .8rem 1rem;
+  border-top: 1px solid var(--p-content-border-color)
+}
+
+.comment-form input {
+  flex: 1
+}
+
+.hidden {
+  opacity: .68
+}
+
+.state {
+  padding: 3rem;
+  text-align: center;
+  color: var(--p-text-muted-color)
+}
+
+@media(max-width: 600px) {
+  .feed {
+    padding: 1rem
+  }
+  .uploads {
+    grid-template-columns:repeat(3, 1fr)
+  }
+}

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 export interface MemberRegistrationContext {
   churchName: string;
@@ -24,23 +24,27 @@ export class MemberPortalAccessService {
   constructor(private readonly http: HttpClient) {}
 
   context(churchId: string, memberId?: string | null): Observable<MemberRegistrationContext> {
-    return this.http.get<MemberRegistrationContext>(`member-access/${churchId}${memberId ? '/' + memberId : ''}`);
+    return this.http.get<{context: MemberRegistrationContext}>('getMemberRegistrationContext', {
+      params: {...(memberId ? {memberId} : {}), churchId}
+    }).pipe(map(response => response.context));
   }
 
   register(churchId: string, memberId: string | null, request: MemberRegistrationRequest): Observable<{accepted: boolean; existingAccess: boolean}> {
-    return this.http.post<{accepted: boolean; existingAccess: boolean}>(`member-access/${churchId}${memberId ? '/' + memberId : ''}`, request);
+    return this.http.post<{accepted: boolean; existingAccess: boolean}>('registerMemberAccess', {
+      ...request, churchId, memberId
+    });
   }
 
   churchLink(): Observable<{churchId: string; path: string}> {
-    return this.http.get<{churchId: string; path: string}>('memberPortal/link');
+    return this.http.get<{churchId: string; path: string}>('getMemberPortalLink');
   }
 
   memberLink(memberId: string): Observable<{path: string}> {
-    return this.http.get<{path: string}>(`memberPortal/link/${memberId}`);
+    return this.http.get<{path: string}>('getMemberPortalMemberLink', {params: {memberId}});
   }
 
   sendMemberLink(memberId: string): Observable<void> {
-    return this.http.post<void>(`memberPortal/send/${memberId}`, {});
+    return this.http.post<{sent: boolean}>('sendMemberPortalLink', {memberId}).pipe(map(() => void 0));
   }
 
   absoluteUrl(path: string): string {
