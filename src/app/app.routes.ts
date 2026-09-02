@@ -49,6 +49,7 @@ import { MemberProfileComponent } from './pages/member-profile/member-profile.co
 import { MemberFeedComponent } from './pages/member-feed/member-feed.component';
 import { MemberGroupsComponent } from './pages/member-groups/member-groups.component';
 import { MemberGroupDetailComponent } from './pages/member-groups/member-group-detail.component';
+import {BalanceTransfersComponent} from './pages/balance-transfers/balance-transfers.component';
 
 export const routes: Routes = [
   { path: 'member-access/confirm/:token', component: MemberAccessConfirmComponent },
@@ -139,6 +140,7 @@ export const routes: Routes = [
         data: { action: 1 },
       },
       { path: 'transactions', component: TransactionsComponent },
+      { path: 'transfers', component: BalanceTransfersComponent },
       { path: 'cash-history', component: CashHistoryComponent },
       { path: 'bank-statament', component: BankStatementComponent },
       {

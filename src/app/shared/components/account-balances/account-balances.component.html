@@ -1,0 +1,17 @@
+<article class="balances-card">
+  <div class="title"><div><span>Disponibilidade</span><h2>Contas e caixas</h2></div><strong>{{ total | currency:'BRL' }}</strong></div>
+  <div class="accounts-scroll">
+    <h3><i class="pi pi-building-columns"></i> Contas bancárias</h3>
+    <p class="empty" *ngIf="!banks.length">Nenhuma conta considerada.</p>
+    <div class="row" *ngFor="let item of banks">
+      <div><b>{{ item.description }}</b><small>{{ item.detail || 'Conta não informada' }}</small></div>
+      <strong>{{ item.balance | currency:'BRL' }}</strong>
+    </div>
+    <h3><i class="pi pi-inbox"></i> Caixas</h3>
+    <p class="empty" *ngIf="!cashes.length">Nenhum caixa considerado.</p>
+    <div class="row" *ngFor="let item of cashes">
+      <div><b>{{ item.description }} <span class="status" [class.open]="item.open">{{ item.open ? 'ABERTO' : 'FECHADO' }}</span></b><small>{{ item.detail }}</small></div>
+      <strong>{{ item.balance | currency:'BRL' }}</strong>
+    </div>
+  </div>
+</article>

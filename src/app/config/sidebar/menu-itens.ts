@@ -161,6 +161,10 @@ export class MenuItens {
                 route: 'transactions',
               },
               {
+                name: 'Transferências',
+                route: 'transfers',
+              },
+              {
                 name: this.translate.translate('bank_statament'),
                 route: 'bank-statament',
               },
