@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
@@ -6,7 +6,7 @@ import {FloatLabelModule} from "primeng/floatlabel";
 import {TooltipModule} from "primeng/tooltip";
 import {AppControlValueAccessor} from "../../../interfaces/app-control-value";
 import {FieldsService} from "../../../services/fields/fields.service";
-import {AutoCompleteModule} from "primeng/autocomplete";
+import {AutoComplete, AutoCompleteModule} from "primeng/autocomplete";
 import {CrudService} from "../../../services/crud/crud.service";
 import {RequestData} from "../../../interfaces/request-data";
 import {AutoFocusModule} from "primeng/autofocus";
@@ -35,6 +35,8 @@ import {AutoFocusModule} from "primeng/autofocus";
 })
 export class AutoCompleteComponent extends AppControlValueAccessor{
 
+  @ViewChild(AutoComplete) private autoComplete?: AutoComplete;
+
   @Input() optionLabel: string = "";
   @Input() route: string = "";
   @Input() defaultFilter: string = "";
@@ -48,6 +50,13 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
     private readonly crudService: CrudService
   ){
     super(fieldServiceInputText)
+  }
+
+  override writeValue(value: any): void {
+    super.writeValue(value);
+    if (value === null || value === undefined || value === '') {
+      queueMicrotask(() => this.autoComplete?.clear());
+    }
   }
 
   onFilter(value: any): void{

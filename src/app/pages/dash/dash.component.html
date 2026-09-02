@@ -172,25 +172,7 @@
             </div>
           </div>
         </article>
-        <article class="panel balances-card">
-          <div class="panel-title">
-            <div><span class="eyebrow">Disponibilidade</span>
-              <h2>Contas e caixas</h2></div>
-            <strong>{{ money(data.saldos.saldoTotal) }}</strong></div>
-          <h3><i class="pi pi-building-columns"></i> Contas bancárias</h3>
-          <div class="empty compact" *ngIf="!data.saldos.contasBancarias.length"><p>Nenhuma conta considerada.</p></div>
-          <div class="balance-row" *ngFor="let item of data.saldos.contasBancarias">
-            <div><b>{{ item.descricao }}</b><small>{{ item.banco }}
-              · {{ item.numeroConta || 'Conta não informada' }}</small></div>
-            <strong>{{ money(item.saldoAtual) }}</strong></div>
-          <h3><i class="pi pi-inbox"></i> Caixas</h3>
-          <div class="empty compact" *ngIf="!data.saldos.caixas.length"><p>Nenhum caixa considerado.</p></div>
-          <div class="balance-row" *ngFor="let item of data.saldos.caixas">
-            <div><b>{{ item.descricao }} <span class="status"
-                                               [class.open]="item.situacao === 'ABERTO'">{{ item.situacao }}</span></b><small
-              *ngIf="item.dataAbertura">Aberto em {{ item.dataAbertura | date:'dd/MM/yyyy' }}</small></div>
-            <strong>{{ money(item.saldoAtual) }}</strong></div>
-        </article>
+        <app-account-balances [accounts]="dashboardAccounts(data)" />
       </section>
 
       <section class="analytics-grid wide-left">

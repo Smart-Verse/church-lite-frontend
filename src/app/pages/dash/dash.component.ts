@@ -13,14 +13,21 @@ import {
 import {DashboardService} from './services/dashboard.service';
 import {SubscriptionService} from '../../shared/services/subscription/subscription.service';
 import {TranslateService} from '../../shared/services/translate/translate.service';
+import {AccountBalancesComponent, AccountBalanceItem} from '../../shared/components/account-balances/account-balances.component';
 
 @Component({
   selector: 'app-dash',
-  imports: [SharedCommonModule, TooltipModule],
+  imports: [SharedCommonModule, TooltipModule, AccountBalancesComponent],
   templateUrl: './dash.component.html',
   styleUrl: './dash.component.scss'
 })
 export class DashComponent implements OnInit, OnDestroy {
+  dashboardAccounts(data: FinancialSnapshot): AccountBalanceItem[] {
+    return [
+      ...data.saldos.contasBancarias.map(item => ({id: item.contaBancariaId, description: item.descricao, detail: `${item.banco} · ${item.numeroConta || 'Conta não informada'}`, balance: item.saldoAtual, type: 'BANK' as const, open: true})),
+      ...data.saldos.caixas.map(item => ({id: item.caixaId, description: item.descricao, detail: item.dataAbertura ? `Aberto em ${new Date(item.dataAbertura).toLocaleDateString('pt-BR')}` : null, balance: item.saldoAtual, type: 'CASH' as const, open: item.situacao === 'ABERTO'}))
+    ];
+  }
   evolutionMode: 'ALL' | 'REALIZED' | 'PLANNED' = 'ALL';
   financial?: FinancialSnapshot;
   agenda?: AgendaSnapshot;
