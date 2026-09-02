@@ -374,28 +374,6 @@ h3 {
   display: none !important;
 }
 
-.chart-tooltip {
-  background: var(--p-content-background);
-  border: 1px solid var(--p-content-border-color);
-  border-radius: .45rem;
-  box-shadow: 0 .5rem 1.2rem #0003;
-  color: var(--p-text-color);
-  display: none;
-  font-size: .68rem;
-  left: 50%;
-  line-height: 1.45;
-  padding: .5rem .65rem;
-  position: absolute;
-  top: .5rem;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  z-index: 1000;
-}
-
-.bars > span:hover .chart-tooltip {
-  display: block;
-}
-
 .evolution-column small {
   color: var(--p-text-muted-color);
   font-size: .58rem;

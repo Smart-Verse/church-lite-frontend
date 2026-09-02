@@ -71,6 +71,35 @@
   white-space: nowrap;
 }
 
+.datatable__sort {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: inherit;
+  gap: .4rem;
+  letter-spacing: inherit;
+  padding: 0;
+  text-transform: inherit;
+}
+
+.datatable__sort i {
+  font-size: .65rem;
+  opacity: .45;
+}
+
+.datatable__sort:hover,
+.datatable__sort.is-active {
+  color: var(--p-primary-color);
+}
+
+.datatable__sort.is-active i {
+  opacity: 1;
+}
+
 :host ::ng-deep .datatable__prime .p-datatable-tbody > tr > td {
   max-width: 22rem;
   padding: 0.48rem 0.65rem;
@@ -244,6 +273,12 @@
 }
 
 :host ::ng-deep .datatable__filter-field .p-select {
+  width: 100%;
+}
+
+:host ::ng-deep app-auto-complete.datatable__filter-field .p-autocomplete,
+:host ::ng-deep app-input-date.datatable__filter-field .p-datepicker,
+:host ::ng-deep app-dropdown.datatable__filter-field .p-select {
   width: 100%;
 }
 

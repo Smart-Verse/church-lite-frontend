@@ -163,6 +163,18 @@ app-member-feed .reply-form button { border: 0; background: transparent; cursor:
 app-member-feed .comment-meta button { padding: 0; color: var(--p-text-muted-color); font-size: .75rem; }
 app-member-feed .comment-meta .liked { color: #e11d48; }
 app-member-feed .comment.reply { margin-left: 2.65rem; padding-left: .8rem; border-left: 2px solid var(--p-content-border-color); }
+
+.dashboard-chart-tooltip {
+  max-width: none !important;
+  pointer-events: none;
+  white-space: pre-line;
+  z-index: 2147483000 !important;
+}
+
+.dashboard-chart-tooltip .p-tooltip-text {
+  line-height: 1.45;
+  white-space: pre-line;
+}
 app-member-feed .reply-form { display: flex; gap: .4rem; margin: .5rem 0 .75rem 2.65rem; }
 app-member-feed .reply-form input { flex: 1; }
 app-member-feed .reply-form button { color: var(--p-primary-color); }

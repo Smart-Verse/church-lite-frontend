@@ -34,4 +34,4 @@
 .mobile-toolbar__brand strong { color: var(--p-text-color); font-size: .82rem; }
 .mobile-toolbar__brand small { color: var(--p-text-muted-color); font-size: .62rem; }
 @keyframes panel-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-@media (max-width: 600px) { :host { --sidebar-panel: min(276px, calc(100vw - var(--sidebar-rail))); } .sidebar { top: 58px; height: calc(100dvh - 58px); box-shadow: 12px 0 32px rgb(0 0 0 / .22); } .sidebar.expanded { width: min(100vw, calc(var(--sidebar-rail) + var(--sidebar-panel))); } .content, .content.menu-expanded { height: calc(100dvh - 58px); min-height: 0; margin-left: 0; padding: .5rem; } }
+@media (max-width: 600px) { :host { --sidebar-panel: min(276px, calc(100vw - var(--sidebar-rail))); } .sidebar { top: 0; height: 100dvh; box-shadow: 12px 0 32px rgb(0 0 0 / .22); } .sidebar.expanded { width: min(100vw, calc(var(--sidebar-rail) + var(--sidebar-panel))); } .content, .content.menu-expanded { height: calc(100dvh - 58px); min-height: 0; margin-left: 0; padding: .5rem; } }

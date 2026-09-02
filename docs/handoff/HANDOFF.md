@@ -132,7 +132,7 @@ O drawer de filtros foi corrigido para remover corretamente o bloqueio/overlay a
 
 ### Filtros compartilhados
 
-O `DatatableComponent` renderiza os filtros declarados em `src/assets/configuration/view.json`. O estado aplicado é preservado ao paginar e limpo ao atualizar ou trocar de listagem. A busca rápida usa o primeiro campo configurado: `name` nos cadastros de pessoas e `description` nas listagens financeiras.
+O `DatatableComponent` renderiza os filtros declarados em `src/assets/configuration/view.json`. Os cabeçalhos permitem alternar ordenação ascendente, descendente e sem ordem, enviando `campo asc|desc`. Filtros e ordenação são preservados ao paginar e no `sessionStorage` por listagem, permitindo abrir/editar um registro e retornar ao mesmo estado; a ação de limpar/atualizar remove esse estado. A busca rápida usa o primeiro campo configurado: `name` nos cadastros de pessoas e `description` nas listagens financeiras.
 
 Filtros disponíveis em membros, novos convertidos, visitantes e fornecedores:
 
@@ -143,13 +143,14 @@ Filtros disponíveis em membros, novos convertidos, visitantes e fornecedores:
 Filtros disponíveis em receitas e despesas:
 
 - descrição;
-- pessoa por `person.name`;
+- pessoa pesquisável por `person.id`;
+- seletor entre emissão, vencimento e pagamento/recebimento, seguido de data inicial/final;
 - caixa ou conta bancária por `cash.description`;
 - plano de contas por `planAccount.description`;
 - centro de custo por `costCenter.description`;
 - situação derivada de `paymentReceiptDate isNull` (em aberto) e `paymentReceiptDate notNull` (liquidada).
 
-O filtro específico é combinado com o filtro fixo da rota usando `and`, por exemplo `type eq 0 and name eq João`. Valores contendo os conectores textuais ` and ` ou ` or ` são normalizados porque o parser não oferece escape. Não misturar `and` e `or`, não usar parênteses e não adicionar filtros numéricos, booleanos, de data ou intervalo sem confirmar suporte no backend.
+O filtro específico é combinado com o filtro fixo da rota usando `and`, por exemplo `type eq 0 and name eq João`. Valores contendo os conectores textuais ` and ` ou ` or ` são normalizados porque o parser não oferece escape. Não misturar `and` e `or` nem usar parênteses. Datas aceitam `ge`/`le` e datetimes aceitam `gte`/`lte`; novos tipos e operadores ainda devem ser confirmados contra o parser do backend.
 
 O `CrudService.onGetAll` usa `HttpParams` para codificar `size`, `offset`, `filter`, `order` e `displayFields`; não voltar a concatenar esses valores manualmente na URL.
 
@@ -242,6 +243,12 @@ Presentes no menu, mas sem fluxo consolidado:
 
 ## Convenções de desenvolvimento
 
+- Antes de criar controles, consultar `src/app/shared/components` e reutilizar obrigatoriamente o componente existente
+  quando ele atender ao caso. Isso inclui inputs de texto, data, máscara e número, dropdown, autocomplete, multiselect,
+  upload de imagem, datatable, listas mobile e ações compartilhadas.
+- Se um componente compartilhado não cobrir uma necessidade reutilizável, evoluí-lo na própria pasta compartilhada em
+  vez de implementar uma variante local. Usar input HTML ou PrimeNG diretamente somente quando não houver equivalente
+  compartilhado e a exceção estiver tecnicamente justificada.
 - Usar `CrudService` para CRUD padrão e serviço próprio para regras de negócio.
 - Manter metadados/conversão de formulário em `*.config.ts` quando o domínio já usa esse padrão.
 - Preferir interfaces a `any`.
@@ -252,13 +259,15 @@ Presentes no menu, mas sem fluxo consolidado:
 - Traduzir textos novos; ainda existem textos fixos no menu e em orientações recentes.
 - Não tratar uma entrada no menu como funcionalidade concluída.
 - Preservar alterações locais não relacionadas: o worktree pode conter trabalho de dashboard e tenant em andamento.
+- Registrar nos handoffs somente regras, contratos, arquitetura e estado funcional relevante para retomada. Correções
+  pontuais de sustentação pertencem ao `CHANGELOG.md` da raiz do workspace.
 
 ## Pontos de atenção
 
 - O menu ainda mistura traduções e textos fixos.
 - Algumas classes/rotas mantêm nomes legados, como `cost-center-modal`, embora a tela já seja uma página.
 - Testes são principalmente scaffolds; o build é hoje a principal validação automatizada.
-- Validar qualquer novo operador de filtro contra o parser do backend; número, booleano, datas, comparações e intervalos ainda não têm suporte confiável.
+- Validar qualquer novo operador de filtro contra o parser do backend; intervalos de `date` usam `ge`/`le` e de `datetime` usam `gte`/`lte`.
 - Verificar se erro de rede `status 0` não deve encerrar sessão.
 - Validar contratos de recorrência da agenda e datas em timezone local.
 - Não executar `npm audit fix` automaticamente; há vulnerabilidades que exigem revisão de impacto.
@@ -612,9 +621,22 @@ Quando o login recebe a chave `account_confirmation_required`, o frontend chama 
 - URLs de serviços usam o gateway e nunca `localhost:8081/basebackend`;
 - o build Angular foi validado após a integração do perfil, feed, respostas, curtidas e reorganização de rotas.
 
-### Próximo módulo
+### Diretriz do módulo de grupos
 
-Grupos da comunidade ainda não foram implementados. Eles devem reutilizar o feed e os componentes atuais sempre que possível, acrescentando associação, papéis, visibilidade e contexto do grupo sem duplicar a experiência de publicação.
+Grupos da comunidade devem reutilizar o feed e os componentes atuais, acrescentando associação, papéis, visibilidade e
+contexto do grupo sem duplicar a experiência de publicação. A implementação inicial está registrada na atualização
+abaixo.
+
+## Atualização — grupos da comunidade (19/08/2026)
+
+O módulo de grupos foi iniciado no Portal do Membro. A rota `/member/groups` lista e cria grupos públicos ou privados; a
+rota `/member/groups/:id` exibe os detalhes, membros acessíveis, publicações vinculadas e permite publicar no grupo.
+O detalhe reutiliza o `MemberFeedService`, `app-image-upload` e os componentes compartilhados existentes. Falhas ao
+consultar membros, feed ou imagem não impedem o cabeçalho e os dados básicos do grupo de aparecerem; nesses casos a
+seção afetada é exibida vazia.
+
+Os serviços usam as rotas geradas do Social através de `environment.socialApiUrl`. O build de produção foi validado com
+`npm run build` em 19/08/2026; permanece apenas o aviso conhecido de CommonJS do `quill-delta`.
 
 ## Contratos gerados do Portal do Membro (19/08/2026)
 

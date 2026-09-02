@@ -79,6 +79,7 @@ export class RegisterComponent
       config.find((e) => e.view === obj.hash) ?? new RegisterRoutes();
     this.setBreadcrumb();
     this.datatable = new DataTable();
+    this.datatable.storageKey = obj.hash;
     this.datatable.fields = [...obj.fields];
     this.datatable.filters = [...(obj.filters ?? [])];
     this.onLoadAllData(new RequestData());

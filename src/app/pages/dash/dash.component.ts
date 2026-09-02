@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, finalize, switchMap, takeUntil} from 'rxjs';
+import {TooltipModule} from 'primeng/tooltip';
+import {EMPTY, Subject, catchError, debounceTime, distinctUntilChanged, finalize, merge, switchMap, takeUntil} from 'rxjs';
 import {SharedCommonModule} from '../../shared/common/shared-common.module';
 import {
   AgendaSnapshot,
@@ -15,7 +16,7 @@ import {TranslateService} from '../../shared/services/translate/translate.servic
 
 @Component({
   selector: 'app-dash',
-  imports: [SharedCommonModule],
+  imports: [SharedCommonModule, TooltipModule],
   templateUrl: './dash.component.html',
   styleUrl: './dash.component.scss'
 })
@@ -32,6 +33,7 @@ export class DashComponent implements OnInit, OnDestroy {
   readonly percent = new Intl.NumberFormat('pt-BR', {maximumFractionDigits: 1});
   filters: DashboardFilters = this.defaultFilters();
   private readonly filterChanges = new Subject<DashboardFilters>();
+  private readonly refreshChanges = new Subject<DashboardFilters>();
   private readonly destroy$ = new Subject<void>();
   featureBlocked = false;
   selectedBank: any = null;
@@ -49,9 +51,13 @@ export class DashComponent implements OnInit, OnDestroy {
       this.loadingFinancial = this.loadingAgenda = false;
       return;
     }
-    this.filterChanges.pipe(
-      debounceTime(250),
-      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+    merge(
+      this.filterChanges.pipe(
+        debounceTime(250),
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+      ),
+      this.refreshChanges
+    ).pipe(
       switchMap(filters => {
         this.loadingFinancial = true;
         this.financialError = '';
@@ -81,6 +87,11 @@ export class DashComponent implements OnInit, OnDestroy {
 
   applyFilters(): void {
     this.filterChanges.next({...this.filters});
+  }
+
+  refreshDashboard(): void {
+    this.refreshChanges.next({...this.filters});
+    this.loadAgenda();
   }
 
   setRelationFilter(filter: 'bancoId' | 'contaBancariaId' | 'caixaId' | 'centroCustoId' | 'planoContaId', value: any): void {
@@ -118,6 +129,26 @@ export class DashComponent implements OnInit, OnDestroy {
     if (this.evolutionMode === 'REALIZED') return [item.receitas, item.despesas];
     if (this.evolutionMode === 'PLANNED') return [item.receitasPrevistas, item.despesasPrevistas];
     return [item.receitas, item.receitasPrevistas, item.despesas, item.despesasPrevistas];
+  }
+
+  evolutionTooltip(item: EvolutionPoint, type: 'REVENUE' | 'EXPENSE'): string {
+    const period = this.evolutionPeriodLabel(item.periodo);
+    if (type === 'REVENUE') {
+      return `${period}\nReceita realizada: ${this.money(item.receitas)}\nReceita prevista: ${this.money(item.receitasPrevistas)}`;
+    }
+    return `${period}\nDespesa realizada: ${this.money(item.despesas)}\nDespesa prevista: ${this.money(item.despesasPrevistas)}`;
+  }
+
+  evolutionPeriodLabel(period: string): string {
+    const match = /^(\d{4})-(\d{2})$/.exec(period);
+    if (!match) return period;
+
+    const month = Number(match[2]);
+    if (month < 1 || month > 12) return period;
+
+    const label = new Intl.DateTimeFormat('pt-BR', {month: 'long', timeZone: 'UTC'})
+      .format(new Date(Date.UTC(Number(match[1]), month - 1, 1)));
+    return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
   groupWidth(item: GroupExpense): number {

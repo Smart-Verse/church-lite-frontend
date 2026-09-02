@@ -356,9 +356,39 @@
         "label": "common_description"
       },
       {
-        "field": "person.name",
-        "type": "string",
-        "label": "financial_person"
+        "field": "issueDate",
+        "key": "financialDateField",
+        "type": "field-select",
+        "label": "financial_date_filter",
+        "defaultValue": "issueDate",
+        "options": [
+          {"label": "financial_issueDate", "value": "issueDate"},
+          {"label": "financial_dueDate", "value": "dueDate"},
+          {"label": "financial_paymentReceiptDate", "value": "paymentReceiptDate"}
+        ]
+      },
+      {
+        "field": "issueDate",
+        "fieldSourceKey": "financialDateField",
+        "key": "financialDateFrom",
+        "type": "date",
+        "operator": "ge",
+        "label": "financial_date_from"
+      },
+      {
+        "field": "issueDate",
+        "fieldSourceKey": "financialDateField",
+        "key": "financialDateTo",
+        "type": "date",
+        "operator": "le",
+        "label": "financial_date_to"
+      },
+      {
+        "field": "person.id",
+        "type": "entity-select",
+        "label": "financial_person",
+        "route": "person",
+        "optionLabel": "name"
       },
       {
         "field": "cash.id",
@@ -383,6 +413,7 @@
       },
       {
         "field": "paymentReceiptDate",
+        "key": "paymentReceiptStatus",
         "type": "select",
         "operator": "nullability",
         "label": "personal_field_status",
@@ -455,9 +486,39 @@
         "label": "common_description"
       },
       {
-        "field": "person.name",
-        "type": "string",
-        "label": "financial_person"
+        "field": "issueDate",
+        "key": "financialDateField",
+        "type": "field-select",
+        "label": "financial_date_filter",
+        "defaultValue": "issueDate",
+        "options": [
+          {"label": "financial_issueDate", "value": "issueDate"},
+          {"label": "financial_dueDate", "value": "dueDate"},
+          {"label": "financial_paymentReceiptDate", "value": "paymentReceiptDate"}
+        ]
+      },
+      {
+        "field": "issueDate",
+        "fieldSourceKey": "financialDateField",
+        "key": "financialDateFrom",
+        "type": "date",
+        "operator": "ge",
+        "label": "financial_date_from"
+      },
+      {
+        "field": "issueDate",
+        "fieldSourceKey": "financialDateField",
+        "key": "financialDateTo",
+        "type": "date",
+        "operator": "le",
+        "label": "financial_date_to"
+      },
+      {
+        "field": "person.id",
+        "type": "entity-select",
+        "label": "financial_person",
+        "route": "person",
+        "optionLabel": "name"
       },
       {
         "field": "cash.id",
@@ -482,6 +543,7 @@
       },
       {
         "field": "paymentReceiptDate",
+        "key": "paymentReceiptStatus",
         "type": "select",
         "operator": "nullability",
         "label": "personal_field_status",

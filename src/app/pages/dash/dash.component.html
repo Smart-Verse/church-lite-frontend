@@ -16,6 +16,8 @@
         class="pi pi-calendar"></i> {{ filters.dataInicial | date:'dd/MM/yyyy' }}
         — {{ filters.dataFinal | date:'dd/MM/yyyy' }}</span>
         <p-button icon="pi pi-filter" label="Filtros" [outlined]="true" (onClick)="filterSidebarVisible = true"/>
+        <p-button icon="pi pi-refresh" label="Atualizar" [loading]="loadingFinancial || loadingAgenda"
+                  (onClick)="refreshDashboard()"/>
       </div>
     </header>
 
@@ -116,18 +118,25 @@
           <div class="evolution-chart" *ngIf="data.evolucao.length">
             <div class="evolution-column" *ngFor="let item of data.evolucao">
               <div class="bars"><span class="revenue-bar" [style.height.%]="barWidth(item.receitas)"
-                                      [class.is-hidden]="evolutionMode === 'PLANNED'"><span
-                class="chart-tooltip">{{ item.periodo }}<br>Receita realizada: {{ money(item.receitas) }}<br>Receita prevista: {{ money(item.receitasPrevistas) }}</span></span><span
+                                      [class.is-hidden]="evolutionMode === 'PLANNED'"
+                                      [pTooltip]="evolutionTooltip(item, 'REVENUE')" tooltipPosition="top"
+                                      appendTo="body" tooltipStyleClass="dashboard-chart-tooltip"
+                                      tooltipZIndex="2147483000"></span><span
                 class="revenue-bar planned" [style.height.%]="barWidth(item.receitasPrevistas)"
-                [class.is-hidden]="evolutionMode === 'REALIZED'"><span class="chart-tooltip">{{ item.periodo }}<br>Receita prevista: {{ money(item.receitasPrevistas) }}
-                <br>Receita realizada: {{ money(item.receitas) }}</span></span><span class="expense-bar"
-                                                                                     [style.height.%]="barWidth(item.despesas)"
-                                                                                     [class.is-hidden]="evolutionMode === 'PLANNED'"><span
-                class="chart-tooltip">{{ item.periodo }}<br>Despesa realizada: {{ money(item.despesas) }}<br>Despesa prevista: {{ money(item.despesasPrevistas) }}</span></span><span
+                [class.is-hidden]="evolutionMode === 'REALIZED'"
+                [pTooltip]="evolutionTooltip(item, 'REVENUE')" tooltipPosition="top"
+                appendTo="body" tooltipStyleClass="dashboard-chart-tooltip"
+                tooltipZIndex="2147483000"></span><span class="expense-bar"
+                [style.height.%]="barWidth(item.despesas)" [class.is-hidden]="evolutionMode === 'PLANNED'"
+                [pTooltip]="evolutionTooltip(item, 'EXPENSE')" tooltipPosition="top"
+                appendTo="body" tooltipStyleClass="dashboard-chart-tooltip"
+                tooltipZIndex="2147483000"></span><span
                 class="expense-bar planned" [style.height.%]="barWidth(item.despesasPrevistas)"
-                [class.is-hidden]="evolutionMode === 'REALIZED'"><span class="chart-tooltip">{{ item.periodo }}<br>Despesa prevista: {{ money(item.despesasPrevistas) }}
-                <br>Despesa realizada: {{ money(item.despesas) }}</span></span></div>
-              <small>{{ item.periodo }}</small></div>
+                [class.is-hidden]="evolutionMode === 'REALIZED'"
+                [pTooltip]="evolutionTooltip(item, 'EXPENSE')" tooltipPosition="top"
+                appendTo="body" tooltipStyleClass="dashboard-chart-tooltip"
+                tooltipZIndex="2147483000"></span></div>
+              <small>{{ evolutionPeriodLabel(item.periodo) }}</small></div>
           </div>
         </article>
         <article class="panel chart-card">

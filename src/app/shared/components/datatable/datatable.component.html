@@ -48,7 +48,13 @@
             <p-tableHeaderCheckbox/>
           </th>
           @for (col of columns; track col.field) {
-            <th [style.width]="col.width || null">{{ translateService.translate(col.header) }}</th>
+            <th [style.width]="col.width || null">
+              <button type="button" class="datatable__sort" [class.is-active]="isSorted(col.field)"
+                      (click)="onSort(col.field)">
+                <span>{{ translateService.translate(col.header) }}</span>
+                <i [class]="sortIcon(col.field)"></i>
+              </button>
+            </th>
           }
           <th class="datatable__actions-column">{{ translateService.translate('datatable_actions') }}</th>
         </tr>
@@ -176,22 +182,35 @@
   <ng-template pTemplate="content">
     <div class="datatable__filter-form">
       <p class="datatable__filter-description">{{ translateService.translate('datatable_filters_description') }}</p>
-      @for (filter of config.filters; track filter.field) {
-        <label class="datatable__filter-field">
-          <span>{{ translateService.translate(filter.label || filter.field) }}</span>
-          @if (filter.type === 'entity-select') {
-            <p-select [(ngModel)]="filterValues[filter.field]" [options]="filter.options ?? []" optionLabel="label"
-                      optionValue="value" [filter]="true" filterBy="label" [showClear]="true"
-                      [placeholder]="translateService.translate('datatable_all')" appendTo="body"/>
-          } @else if (filter.type === 'select') {
-            <p-select [(ngModel)]="filterValues[filter.field]" [options]="translatedOptions(filter.options)"
+      @for (filter of config.filters; track filter.key || filter.field) {
+        @if (filter.type === 'field-select') {
+          <app-dropdown class="datatable__filter-field" [(ngModel)]="filterValues[filter.key || filter.field]"
+                        [name]="filter.key || filter.field"
+                        [label]="translateService.translate(filter.label || filter.field)"
+                        [options]="translatedOptions(filter.options)" optionLabel="label" optionValue="value"/>
+        } @else if (filter.type === 'entity-select') {
+          <app-auto-complete class="datatable__filter-field" [(ngModel)]="filterValues[filter.key || filter.field]"
+                             [name]="filter.key || filter.field"
+                             [label]="translateService.translate(filter.label || filter.field)"
+                             [route]="filter.route || ''" [optionLabel]="filter.optionLabel || 'description'"
+                             type="text"/>
+        } @else if (filter.type === 'date') {
+          <app-input-date class="datatable__filter-field" [(ngModel)]="filterValues[filter.key || filter.field]"
+                          [name]="filter.key || filter.field"
+                          [label]="translateService.translate(filter.label || filter.field)"/>
+        } @else {
+          <label class="datatable__filter-field">
+            <span>{{ translateService.translate(filter.label || filter.field) }}</span>
+          @if (filter.type === 'select') {
+            <p-select [(ngModel)]="filterValues[filter.key || filter.field]" [options]="translatedOptions(filter.options)"
                       optionLabel="label" optionValue="value" [showClear]="true"
                       [placeholder]="translateService.translate('datatable_all')" appendTo="body"/>
           } @else {
-            <input pInputText [(ngModel)]="filterValues[filter.field]" type="text"
+            <input pInputText [(ngModel)]="filterValues[filter.key || filter.field]" type="text"
                    [placeholder]="translateService.translate('datatable_filter_by') + ' ' + translateService.translate(filter.label || filter.field).toLowerCase()"/>
           }
-        </label>
+          </label>
+        }
       }
       @if (!config.filters.length) {
         <div class="datatable__filter-empty"><i

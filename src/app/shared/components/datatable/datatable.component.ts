@@ -15,7 +15,7 @@ import {
 import {DatePipe, isPlatformBrowser} from '@angular/common';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
-import {DataTable} from './datatable';
+import {DataTable, Filters} from './datatable';
 import {DrawerModule} from 'primeng/drawer';
 import {RequestData} from "../../interfaces/request-data";
 import {IconFieldModule} from "primeng/iconfield";
@@ -30,7 +30,9 @@ import {TranslateService} from '../../services/translate/translate.service';
 import {TooltipModule} from 'primeng/tooltip';
 import {Router} from '@angular/router';
 import {ScreenReportButtonComponent} from '../screen-report-button/screen-report-button.component';
-import {CrudService} from '../../services/crud/crud.service';
+import {InputDateComponent} from '../inputs/input-date/input-date.component';
+import {AutoCompleteComponent} from '../inputs/auto-complete/auto-complete.component';
+import {DropdownComponent} from '../inputs/dropdown/dropdown.component';
 
 
 export enum Action {
@@ -53,7 +55,10 @@ export enum Action {
     FormsModule,
     SelectModule,
     TooltipModule,
-    ScreenReportButtonComponent
+    ScreenReportButtonComponent,
+    InputDateComponent,
+    AutoCompleteComponent,
+    DropdownComponent
   ],
   providers: [
     ConfirmationService,
@@ -67,8 +72,10 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   sidebarVisible: boolean = false;
   quickSearch: string = "";
-  filterValues: Record<string, string> = {};
+  filterValues: Record<string, any> = {};
   appliedFilter: string = "";
+  orderField: string = "";
+  orderDirection: 'asc' | 'desc' | '' = '';
   readonly tableStyle = {width: "100%", "min-width": "42rem"};
   @Input() config: DataTable = new DataTable();
   @Input() loading: boolean = false;
@@ -86,7 +93,6 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     public readonly translateService: TranslateService,
     private datePipe: DatePipe,
     private readonly router: Router,
-    private readonly crudService: CrudService,
     @Inject(PLATFORM_ID) private readonly platformId: object,
   ) {
   }
@@ -96,10 +102,16 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.quickSearch = "";
       this.filterValues = {};
       this.appliedFilter = "";
+      this.orderField = "";
+      this.orderDirection = "";
       this.sidebarVisible = false;
-      this.loadEntityFilterOptions();
+      this.initializeFilterDefaults();
+      this.restoreFilterState();
     }
-    if (changes["config"]?.firstChange) this.loadEntityFilterOptions();
+    if (changes["config"]?.firstChange) {
+      this.initializeFilterDefaults();
+      this.restoreFilterState();
+    }
     if (changes["loading"] && !this.loading) {
       this.requestingNextPage = false;
       if (isPlatformBrowser(this.platformId)) {
@@ -147,6 +159,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     data.size = $event.rows;
     data.offset = $event.page ? $event.page + 1 : 0;
     data.filter = this.appliedFilter;
+    data.order = this.currentOrder();
     this.onRefresh.emit(data);
   }
 
@@ -159,6 +172,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     data.size = this.config.size;
     data.offset = this.config.page + 1;
     data.filter = this.appliedFilter;
+    data.order = this.currentOrder();
     data.append = true;
     this.requestingNextPage = true;
     this.onRefresh.emit(data);
@@ -180,16 +194,22 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
   onRefreshData() {
     this.quickSearch = "";
     this.filterValues = {};
+    this.initializeFilterDefaults();
     this.appliedFilter = "";
+    this.orderField = "";
+    this.orderDirection = "";
     this.sidebarVisible = false;
+    this.clearStoredFilterState();
     this.onRefresh.emit(new RequestData());
   }
 
   onApplyFilters(): void {
     this.appliedFilter = this.buildFilter();
+    this.persistFilterState();
     this.sidebarVisible = false;
     const request = new RequestData();
     request.filter = this.appliedFilter;
+    request.order = this.currentOrder();
     this.onRefresh.emit(request);
   }
 
@@ -198,19 +218,51 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.filterValues = {};
     const field = this.config.filters[0]?.field;
     this.appliedFilter = value && field ? field + " eq " + value : "";
+    this.persistFilterState();
     const request = new RequestData();
     request.filter = this.appliedFilter;
+    request.order = this.currentOrder();
     this.onRefresh.emit(request);
+  }
+
+  onSort(field: string): void {
+    if (this.orderField !== field) {
+      this.orderField = field;
+      this.orderDirection = 'asc';
+    } else if (this.orderDirection === 'asc') {
+      this.orderDirection = 'desc';
+    } else {
+      this.orderField = '';
+      this.orderDirection = '';
+    }
+    this.persistFilterState();
+    const request = new RequestData();
+    request.filter = this.appliedFilter;
+    request.order = this.currentOrder();
+    this.onRefresh.emit(request);
+  }
+
+  sortIcon(field: string): string {
+    if (this.orderField !== field || !this.orderDirection) return 'pi pi-sort-alt';
+    return this.orderDirection === 'asc' ? 'pi pi-sort-amount-up-alt' : 'pi pi-sort-amount-down';
+  }
+
+  isSorted(field: string): boolean {
+    return this.orderField === field && !!this.orderDirection;
   }
 
   private buildFilter(): string {
     return this.config.filters
       .map(filter => {
-        const value = this.sanitizeFilterValue(this.filterValues[filter.field] ?? "");
+        if (filter.type === 'field-select') return '';
+        const value = this.filterValue(filter);
         if (!value) return "";
+        const field = filter.fieldSourceKey
+          ? this.filterValues[filter.fieldSourceKey] || filter.field
+          : filter.field;
         return filter.operator === "nullability"
-          ? filter.field + " " + value
-          : filter.field + " eq " + value;
+          ? field + " " + value
+          : field + " " + (filter.operator ?? "eq") + " " + value;
       })
       .filter(Boolean)
       .join(" and ");
@@ -220,27 +272,97 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
     return value.trim().replace(/\s+(and|or)\s+/gi, " ");
   }
 
-  translatedOptions(options?: { label: string; value: string }[]): { label: string; value: string }[] {
-    return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
+  private filterValue(filter: Filters): string {
+    const value = this.filterValues[filter.key ?? filter.field];
+    if (value === null || value === undefined || value === '') return '';
+    if (filter.type === 'entity-select') return value.id ?? value.hash ?? '';
+    if (filter.type === 'date') return this.localDate(value);
+    return this.sanitizeFilterValue(String(value));
   }
 
-  private loadEntityFilterOptions(): void {
-    this.config.filters.filter(filter => filter.type === 'entity-select' && filter.route).forEach(filter => {
-      const request = new RequestData();
-      request.size = 500;
-      request.offset = 0;
-      this.crudService.onGetAll(filter.route!, request).subscribe({
-        next: response => filter.options = (response.contents ?? []).map((item: any) => ({
-          label: this.nestedValue(item, filter.optionLabel ?? 'description'),
-          value: item.id
-        })),
-        error: () => filter.options = []
-      });
+  private localDate(value: Date | string): string {
+    if (typeof value === 'string') return value;
+    const year = value.getFullYear();
+    const month = String(value.getMonth() + 1).padStart(2, '0');
+    const day = String(value.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private initializeFilterDefaults(): void {
+    this.config.filters.forEach(filter => {
+      if (filter.defaultValue !== undefined) {
+        this.filterValues[filter.key ?? filter.field] = filter.defaultValue;
+      }
     });
   }
 
-  private nestedValue(item: any, field: string): string {
-    return field.split('.').reduce((value, key) => value?.[key], item) ?? '';
+  private restoreFilterState(): void {
+    if (!isPlatformBrowser(this.platformId) || !this.config.storageKey) return;
+    const rawState = sessionStorage.getItem(this.filterStorageKey());
+    if (!rawState) return;
+
+    try {
+      const state = JSON.parse(rawState) as {
+        filterValues?: Record<string, any>;
+        appliedFilter?: string;
+        quickSearch?: string;
+        orderField?: string;
+        orderDirection?: 'asc' | 'desc' | '';
+      };
+      this.filterValues = state.filterValues ?? this.filterValues;
+      this.config.filters.filter(filter => filter.type === 'date').forEach(filter => {
+        const key = filter.key ?? filter.field;
+        const value = this.filterValues[key];
+        if (typeof value === 'string' && value) this.filterValues[key] = new Date(`${value}T00:00:00`);
+      });
+      this.appliedFilter = state.appliedFilter ?? '';
+      this.quickSearch = state.quickSearch ?? '';
+      this.orderField = state.orderField ?? '';
+      this.orderDirection = state.orderDirection ?? '';
+      if (this.appliedFilter || this.currentOrder()) {
+        const request = new RequestData();
+        request.filter = this.appliedFilter;
+        request.order = this.currentOrder();
+        queueMicrotask(() => this.onRefresh.emit(request));
+      }
+    } catch {
+      sessionStorage.removeItem(this.filterStorageKey());
+    }
+  }
+
+  private persistFilterState(): void {
+    if (!isPlatformBrowser(this.platformId) || !this.config.storageKey) return;
+    const serializedValues = {...this.filterValues};
+    this.config.filters.filter(filter => filter.type === 'date').forEach(filter => {
+      const key = filter.key ?? filter.field;
+      const value = serializedValues[key];
+      if (value) serializedValues[key] = this.localDate(value);
+    });
+    sessionStorage.setItem(this.filterStorageKey(), JSON.stringify({
+      filterValues: serializedValues,
+      appliedFilter: this.appliedFilter,
+      quickSearch: this.quickSearch,
+      orderField: this.orderField,
+      orderDirection: this.orderDirection
+    }));
+  }
+
+  private clearStoredFilterState(): void {
+    if (isPlatformBrowser(this.platformId) && this.config.storageKey) {
+      sessionStorage.removeItem(this.filterStorageKey());
+    }
+  }
+
+  private filterStorageKey(): string {
+    return `church-lite:datatable-filters:${this.config.storageKey}`;
+  }
+
+  private currentOrder(): string {
+    return this.orderField && this.orderDirection ? `${this.orderField} ${this.orderDirection}` : '';
+  }
+
+  translatedOptions(options?: { label: string; value: string }[]): { label: string; value: string }[] {
+    return (options ?? []).map(option => ({...option, label: this.translateService.translate(option.label)}));
   }
 
   get reportScreen(): string {
@@ -254,6 +376,7 @@ export class DatatableComponent implements OnChanges, AfterViewInit, OnDestroy {
       size: this.config.size,
       offset: Math.max(0, this.config.page - 1),
       filter: this.appliedFilter,
+      order: this.currentOrder(),
     };
   }
 
