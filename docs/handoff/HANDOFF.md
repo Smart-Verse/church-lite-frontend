@@ -645,3 +645,18 @@ O frontend deixou de consumir as rotas artesanais `/member-api/**`, `/memberPort
 `getMemberDashboard`, `getMemberTransparency`, `getMemberFinancialApprovals`, `getMemberRegistrationContext` e
 `registerMemberAccess`. As respostas seguem os envelopes gerados; os services Angular extraem `dashboard`,
 `transparency`, `configuration`, `statements` ou `statement` antes de expor os contratos às páginas.
+
+## Transferências de saldos (02/09/2026)
+
+A rota `/home/transfers`, no menu `Financeiro > Movimentações > Transferências`, segue a estrutura visual de
+`/home/bank-statament`: breadcrumb com início/Financeiro/Movimentações/Transferências, cabeçalho compacto e conteúdo em
+cards usando `--p-content-background`, `--p-content-border-color` e demais tokens PrimeNG para respeitar os temas.
+
+O card `app-account-balances`, em `src/app/shared/components/account-balances`, é o componente canônico para
+“Disponibilidade — Contas e caixas” e é reutilizado no dashboard e nas transferências. Ele separa bancos e caixas,
+mostra situação/saldo e usa rolagem interna com altura máxima de 27 rem; não duplicar esse card em telas futuras.
+
+O formulário reutiliza `app-auto-complete`, `app-input-number`, `app-input-date`, `app-input-text` e `app-loading`.
+Observações usam obrigatoriamente `fieldType="input-text-area"`. Em caso de sucesso, o formulário é resetado, volta ao
+estado pristine/untouched e conserva apenas a data atual. O `AutoCompleteComponent.writeValue` limpa explicitamente o
+estado visual interno do PrimeNG ao receber nulo, para o texto exibido nunca divergir do valor do `FormControl`.
