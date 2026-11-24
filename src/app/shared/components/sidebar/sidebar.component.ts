@@ -14,7 +14,6 @@ import {UserConfigurationService} from "../../../services/user-configuration/use
 import {ImageUploadService} from "../inputs/image-upload/image-upload.service";
 import {ThemeService} from "../../services/theme/theme.service";
 import {TranslateService} from "../../services/translate/translate.service";
-import {SubscriptionBannerComponent} from '../subscription-banner/subscription-banner.component';
 import {SubscriptionService} from '../../services/subscription/subscription.service';
 import {NotificationService} from '../../../services/notification/notification.service';
 import {CookiesService} from '../../services/cookies/cookies.service';
@@ -33,8 +32,7 @@ import {EnumCookie} from '../../services/cookies/cookie.enum';
         AvatarGroupModule,
         RouterOutlet,
         SidebarSubmenuComponent,
-        MenuModule,
-        SubscriptionBannerComponent
+        MenuModule
     ],
     providers: [
         UserConfigurationService,
